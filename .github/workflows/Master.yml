@@ -20,7 +20,7 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Setup FTP Software
-      run: sudo apt-get update && apt-get install lftp
+      run: sudo apt-get update && sudo apt-get install lftp
     - name: Install dependencies
       run: dotnet restore
     - name: Build
