@@ -30,4 +30,4 @@ jobs:
     - name: Create publish version
       run: dotnet publish
     - name: Deploy to Self Service Portal
-      run: lftp -e "open "${{ HOST }}"; user "${{ USERNAME }}" "${{ PASSWORD }}"; mirror -R --verbose --delete "${{ LOCAL_DIR }}" "${{ REMOTE_DIR }}" --exclude .git/;"
+      run: lftp -e "open $HOST; user $USERNAME $PASSWORD; mirror -R --verbose --delete $LOCAL_DIR $REMOTE_DIR --exclude .git/;"
