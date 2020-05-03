@@ -6,21 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using TimeMate.Models;
 using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
+using BusinessLogicLayer.Logic;
+using DataAccessLayer.Contexts;
 
 namespace TimeMate.Controllers
 {
     public class AccountController : Controller
     {
-        private IAccountContext accountContext;
-        private IAgendaContext agendaContext;
-        private AccountDTO accountDTO;
-
-        public AccountController(AccountDTO accountDTOInput, IAccountContext accountContextInput, IAgendaContext agendaContextInput)
-        {
-            this.accountDTO = accountDTOInput;
-            this.accountContext = accountContextInput;
-            this.agendaContext = agendaContextInput;
-        }
+        AccountLogic accountLogic;
+        AccountDTO accountDTO;
 
 
         [HttpGet]
@@ -35,7 +29,25 @@ namespace TimeMate.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Agenda");
+                accountDTO = new AccountDTO();
+                accountDTO.MailAddress = loginViewModel.Mail;
+                accountDTO.Password = loginViewModel.Password;
+
+                accountLogic = new AccountLogic(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+                string result = accountLogic.UserLogsIn();
+
+                if (result != null)
+                {
+                    accountDTO = new AccountDTO();
+                    accountDTO.AccountID = accountLogic.GetActiveAccountID(accountDTO.MailAddress);
+                    AgendaController agendaController = new AgendaController(accountDTO);
+                    return RedirectToAction("Index", "Agenda");
+                }
+                else
+                {
+                    ModelState.AddModelError("", result);
+                    return View(loginViewModel);
+                }
             }
             else
             {
