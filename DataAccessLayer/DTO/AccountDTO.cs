@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAccessLayer.DTO
 {
-    class AccountDTO
+    public class AccountDTO
     {
     }
 }

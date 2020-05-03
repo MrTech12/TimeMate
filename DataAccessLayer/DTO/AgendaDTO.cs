@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAccessLayer.DTO
 {
-    class AgendaDTO
+    public class AgendaDTO
     {
     }
 }
