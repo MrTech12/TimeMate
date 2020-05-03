@@ -12,8 +12,4 @@
     <Folder Include="Logic\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
-  </ItemGroup>
-
 </Project>

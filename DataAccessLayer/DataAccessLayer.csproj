@@ -11,7 +11,7 @@
   <ItemGroup>
     <Folder Include="DTO\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Context\" />
+    <Folder Include="Contexts\" />
   </ItemGroup>
 
 </Project>
