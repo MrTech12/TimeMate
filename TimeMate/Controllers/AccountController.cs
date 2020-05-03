@@ -5,11 +5,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TimeMate.Models;
 using DataAccessLayer.DTO;
+using DataAccessLayer.Interfaces;
 
 namespace TimeMate.Controllers
 {
     public class AccountController : Controller
     {
+        private IAccountContext accountContext;
+        private IAgendaContext agendaContext;
+        private AccountDTO accountDTO;
+
+        public AccountController(AccountDTO accountDTOInput, IAccountContext accountContextInput, IAgendaContext agendaContextInput)
+        {
+            this.accountDTO = accountDTOInput;
+            this.accountContext = accountContextInput;
+            this.agendaContext = agendaContextInput;
+        }
+
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -22,7 +35,7 @@ namespace TimeMate.Controllers
         {
             if (ModelState.IsValid)
             {
-                return null;
+                return RedirectToAction("Index", "Agenda");
             }
             else
             {

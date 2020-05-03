@@ -6,12 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TimeMate.Controllers
 {
-    public class NormalAppointmentController : AppointmentController
+    public class NormalAppointmentController : Controller
     {
-        public override void Greet()
-        {
-            throw new NotImplementedException();
-        }
 
         public IActionResult Index()
         {
