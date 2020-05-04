@@ -8,20 +8,20 @@ namespace BusinessLogicLayer.Logic
 {
     public class NormalAppointmentLogic : AppointmentLogic
     {
-        private INormalAppointmentContext _nAppointmentContext;
+        private INormalAppointmentContext NAppointmentContext;
         private string messageToUser;
 
         public NormalAppointmentLogic(IAgendaContext agendaContextInput, AppointmentDTO appointmentDTOInput, INormalAppointmentContext normalAppointmentContextInput) : base(appointmentDTOInput, agendaContextInput)
         {
-            this._nAppointmentContext = normalAppointmentContextInput;
+            this.NAppointmentContext = normalAppointmentContextInput;
         }
 
         public override void DeleteAppointment(string appointmentName)
         {
             AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaID = _agendaContext.GetAgendaID(appointmentName, accountDTO);
-            appointmentDTO.AppointmentID = _nAppointmentContext.GetNormalAppointmentID(appointmentDTO, agendaDTO.AgendaID);
-            _nAppointmentContext.DeleteNormalAppointment(appointmentDTO.AppointmentID, agendaDTO.AgendaID);
+            agendaDTO.AgendaID = AgendaContext.GetAgendaID(appointmentName, accountDTO);
+            appointmentDTO.AppointmentID = NAppointmentContext.GetNormalAppointmentID(appointmentDTO, agendaDTO.AgendaID);
+            NAppointmentContext.DeleteNormalAppointment(appointmentDTO.AppointmentID, agendaDTO.AgendaID);
         }
 
         public override void RenameAppointment(string appointmentName)

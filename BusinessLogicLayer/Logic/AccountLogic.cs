@@ -10,8 +10,8 @@ namespace BusinessLogicLayer.Logic
 {
     public class AccountLogic
     {
-        private IAccountContext _accountContext;
-        private IAgendaContext _agendaContext;
+        private IAccountContext AccountContext;
+        private IAgendaContext AgendaContext;
         private AccountDTO accountDTO;
 
         private string returnMessage;
@@ -20,8 +20,8 @@ namespace BusinessLogicLayer.Logic
         public AccountLogic(AccountDTO accountDTO, IAccountContext accountContext, IAgendaContext agendaContext)
         {
             this.accountDTO = accountDTO;
-            this._accountContext = accountContext;
-            this._agendaContext = agendaContext;
+            this.AccountContext = accountContext;
+            this.AgendaContext = agendaContext;
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace BusinessLogicLayer.Logic
         /// </summary>
         public string UserLogsIn()
         {
-            databaseOutput = _accountContext.SearchForPasswordHash(accountDTO.MailAddress);
+            databaseOutput = AccountContext.SearchForPasswordHash(accountDTO.MailAddress);
             if (databaseOutput != null)
             {
                 bool passwordValid = BCrypt.Net.BCrypt.Verify(accountDTO.Password, databaseOutput);
@@ -52,7 +52,7 @@ namespace BusinessLogicLayer.Logic
 
         public int GetActiveAccountID(string mail)
         {
-            int accountID = _accountContext.GetUserID(mail);
+            int accountID = AccountContext.GetUserID(mail);
             return accountID;
         }
 
@@ -99,7 +99,7 @@ namespace BusinessLogicLayer.Logic
             }
             else if (returnMessage == null)
             {
-                databaseOutput = _accountContext.SearchUserByMail(accountDTO.MailAddress);
+                databaseOutput = AccountContext.SearchUserByMail(accountDTO.MailAddress);
                 if (databaseOutput != null)
                 {
                     returnMessage = "Er bestaat al een account met dit mailadres.";
@@ -121,13 +121,13 @@ namespace BusinessLogicLayer.Logic
 
             if (accountDTO.JobCount == 0)
             {
-                _accountContext.RegisterNewUser(accountDTO);
-                accountDTO.AccountID = _accountContext.GetUserID(accountDTO.MailAddress);
+                AccountContext.RegisterNewUser(accountDTO);
+                accountDTO.AccountID = AccountContext.GetUserID(accountDTO.MailAddress);
             }
             else if (accountDTO.JobCount > 0)
             {
-                _accountContext.RegisterNewUser(accountDTO);
-                accountDTO.AccountID = _accountContext.GetUserID(accountDTO.MailAddress);
+                AccountContext.RegisterNewUser(accountDTO);
+                accountDTO.AccountID = AccountContext.GetUserID(accountDTO.MailAddress);
                 CreateWorkAgenda();
             }
         }
@@ -142,7 +142,7 @@ namespace BusinessLogicLayer.Logic
             newAgendaDTO.AgendaColor = agendaDTO.AgendaColor;
             newAgendaDTO.Notification = agendaDTO.Notification;
 
-            _agendaContext.AddNewAgenda(newAgendaDTO, accountDTO);
+            AgendaContext.AddNewAgenda(newAgendaDTO, accountDTO);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace BusinessLogicLayer.Logic
             newAgendaDTO.AgendaName = "Bijbaan";
             newAgendaDTO.AgendaColor = "#FF0000";
             newAgendaDTO.Notification = "Nee";
-            _agendaContext.AddNewJobAgenda(newAgendaDTO, accountDTO);
+            AgendaContext.AddNewJobAgenda(newAgendaDTO, accountDTO);
         }
     }
 }

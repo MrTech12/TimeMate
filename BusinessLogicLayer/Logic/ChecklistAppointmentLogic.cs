@@ -8,12 +8,12 @@ namespace BusinessLogicLayer.Logic
 {
     public class ChecklistAppointmentLogic : AppointmentLogic
     {
-        private IChecklistAppointmentContext _cAppointmentContext;
+        private IChecklistAppointmentContext CAppointmentContext;
         private string messageToUser;
 
         public ChecklistAppointmentLogic(IAgendaContext agendaContextInput, AppointmentDTO appointmentDTOInput, IChecklistAppointmentContext checklistAppointmentContextInput) : base(appointmentDTOInput, agendaContextInput)
         {
-            this._cAppointmentContext = checklistAppointmentContextInput;
+            this.CAppointmentContext = checklistAppointmentContextInput;
         }
 
         public void CheckingOffTask(string taskName, string appointmentName)
@@ -24,9 +24,9 @@ namespace BusinessLogicLayer.Logic
         public override void DeleteAppointment(string appointmentName)
         {
             AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaID = _agendaContext.GetAgendaID(appointmentName, accountDTO);
-            appointmentDTO.AppointmentID = _cAppointmentContext.GetChecklistAppointmentID(appointmentDTO, agendaDTO.AgendaID);
-            _cAppointmentContext.DeleteChecklistAppointment(appointmentDTO.AppointmentID, agendaDTO.AgendaID);
+            agendaDTO.AgendaID = AgendaContext.GetAgendaID(appointmentName, accountDTO);
+            appointmentDTO.AppointmentID = CAppointmentContext.GetChecklistAppointmentID(appointmentDTO, agendaDTO.AgendaID);
+            CAppointmentContext.DeleteChecklistAppointment(appointmentDTO.AppointmentID, agendaDTO.AgendaID);
         }
 
         public override void RenameAppointment(string appointmentName)
