@@ -15,6 +15,7 @@ namespace DataAccessLayer.DTO
         private string job1DayType;
         private double job2HourlyWage;
         private string job2DayType;
+        private double allocatedHours;
 
         public int AccountID { get { return this.accountID; } set { this.accountID = value; } }
 
@@ -33,5 +34,7 @@ namespace DataAccessLayer.DTO
         public double Job2HourlyWage { get { return this.job2HourlyWage; } set { this.job2HourlyWage = value; } }
 
         public string Job2DayType { get { return this.job2DayType; } set { this.job2DayType = value; } }
+
+        public double AllocatedHours { get { return this.allocatedHours; } set { this.allocatedHours = value; } }
     }
 }

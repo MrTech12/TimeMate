@@ -10,18 +10,18 @@ namespace BusinessLogicLayer.Logic
 {
     public class AccountLogic
     {
-        private IAccountContext accountContext;
-        private IAgendaContext agendaContext;
+        private IAccountContext _accountContext;
+        private IAgendaContext _agendaContext;
         private AccountDTO accountDTO;
 
         private string returnMessage;
         private string databaseOutput;
 
-        public AccountLogic(AccountDTO accountDTOInput, IAccountContext accountContextInput, IAgendaContext agendaContextInput)
+        public AccountLogic(AccountDTO accountDTO, IAccountContext accountContext, IAgendaContext agendaContext)
         {
-            this.accountDTO = accountDTOInput;
-            this.accountContext = accountContextInput;
-            this.agendaContext = agendaContextInput;
+            this.accountDTO = accountDTO;
+            this._accountContext = accountContext;
+            this._agendaContext = agendaContext;
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace BusinessLogicLayer.Logic
         /// </summary>
         public string UserLogsIn()
         {
-            databaseOutput = accountContext.SearchForPasswordHash(accountDTO.MailAddress);
+            databaseOutput = _accountContext.SearchForPasswordHash(accountDTO.MailAddress);
             if (databaseOutput != null)
             {
                 bool passwordValid = BCrypt.Net.BCrypt.Verify(accountDTO.Password, databaseOutput);
@@ -52,7 +52,7 @@ namespace BusinessLogicLayer.Logic
 
         public int GetActiveAccountID(string mail)
         {
-            int accountID = accountContext.GetUserID(mail);
+            int accountID = _accountContext.GetUserID(mail);
             return accountID;
         }
 
@@ -99,7 +99,7 @@ namespace BusinessLogicLayer.Logic
             }
             else if (returnMessage == null)
             {
-                databaseOutput = accountContext.SearchUserByMail(accountDTO.MailAddress);
+                databaseOutput = _accountContext.SearchUserByMail(accountDTO.MailAddress);
                 if (databaseOutput != null)
                 {
                     returnMessage = "Er bestaat al een account met dit mailadres.";
@@ -121,13 +121,13 @@ namespace BusinessLogicLayer.Logic
 
             if (accountDTO.JobCount == 0)
             {
-                accountContext.RegisterNewUser(accountDTO);
-                accountDTO.AccountID = accountContext.GetUserID(accountDTO.MailAddress);
+                _accountContext.RegisterNewUser(accountDTO);
+                accountDTO.AccountID = _accountContext.GetUserID(accountDTO.MailAddress);
             }
             else if (accountDTO.JobCount > 0)
             {
-                accountContext.RegisterNewUser(accountDTO);
-                accountDTO.AccountID = accountContext.GetUserID(accountDTO.MailAddress);
+                _accountContext.RegisterNewUser(accountDTO);
+                accountDTO.AccountID = _accountContext.GetUserID(accountDTO.MailAddress);
                 CreateWorkAgenda();
             }
         }
@@ -142,7 +142,7 @@ namespace BusinessLogicLayer.Logic
             newAgendaDTO.AgendaColor = agendaDTO.AgendaColor;
             newAgendaDTO.Notification = agendaDTO.Notification;
 
-            agendaContext.AddNewAgenda(newAgendaDTO, accountDTO);
+            _agendaContext.AddNewAgenda(newAgendaDTO, accountDTO);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace BusinessLogicLayer.Logic
             newAgendaDTO.AgendaName = "Bijbaan";
             newAgendaDTO.AgendaColor = "#FF0000";
             newAgendaDTO.Notification = "Nee";
-            agendaContext.AddNewJobAgenda(newAgendaDTO, accountDTO);
+            _agendaContext.AddNewJobAgenda(newAgendaDTO, accountDTO);
         }
     }
 }

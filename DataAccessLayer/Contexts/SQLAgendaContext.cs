@@ -74,34 +74,38 @@ namespace DataAccessLayer.Contexts
 
                     if (accountDTO.Job1DayType == "Doordeweeks")
                     {
-                        insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week) Values (@0,@1,@2)", databaseConn);
+                        insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) Values (@0,@1,@2,@3)", databaseConn);
                         insertQuerry.Parameters.AddWithValue("0", resultedAgendaID);
                         insertQuerry.Parameters.AddWithValue("1", accountDTO.Job1HourlyWage);
                         insertQuerry.Parameters.AddWithValue("2", "0.00");
+                        insertQuerry.Parameters.AddWithValue("3", accountDTO.AllocatedHours);
                         insertQuerry.ExecuteNonQuery();
                     }
                     else if (accountDTO.Job1DayType == "Weekend")
                     {
-                        insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week) Values (@0,@1,@2)", databaseConn);
+                        insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) Values (@0,@1,@2,@3)", databaseConn);
                         insertQuerry.Parameters.AddWithValue("0", resultedAgendaID);
                         insertQuerry.Parameters.AddWithValue("1", "0.00");
                         insertQuerry.Parameters.AddWithValue("2", accountDTO.Job1HourlyWage);
+                        insertQuerry.Parameters.AddWithValue("3", accountDTO.AllocatedHours);
                         insertQuerry.ExecuteNonQuery();
                     }
                     else if (accountDTO.Job2DayType == "Doordeweeks")
                     {
-                        insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week) Values (@0,@1,@2)", databaseConn);
+                        insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) Values (@0,@1,@2,@3)", databaseConn);
                         insertQuerry.Parameters.AddWithValue("0", resultedAgendaID);
                         insertQuerry.Parameters.AddWithValue("1", accountDTO.Job2HourlyWage);
                         insertQuerry.Parameters.AddWithValue("2", "0.00");
+                        insertQuerry.Parameters.AddWithValue("3", accountDTO.AllocatedHours);
                         insertQuerry.ExecuteNonQuery();
                     }
                     else if (accountDTO.Job2DayType == "Weekend")
                     {
-                        insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week) Values (@0,@1,@2)", databaseConn);
+                        insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) Values (@0,@1,@2,@3)", databaseConn);
                         insertQuerry.Parameters.AddWithValue("0", resultedAgendaID);
                         insertQuerry.Parameters.AddWithValue("1", "0.00");
                         insertQuerry.Parameters.AddWithValue("2", accountDTO.Job2HourlyWage);
+                        insertQuerry.Parameters.AddWithValue("3", accountDTO.AllocatedHours);
                         insertQuerry.ExecuteNonQuery();
                     }
                 }

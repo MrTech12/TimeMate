@@ -8,27 +8,27 @@ namespace BusinessLogicLayer.Logic
 {
     public class AgendaLogic
     {
-        private IAgendaContext agendaContext;
-        private IAccountContext accountContext;
-        private INormalAppointmentContext nAppointmentContext;
-        private IChecklistAppointmentContext cAppointmentContext;
+        private IAgendaContext _agendaContext;
+        private IAccountContext _accountContext;
+        private INormalAppointmentContext _nAppointmentContext;
+        private IChecklistAppointmentContext _cAppointmentContext;
         private AccountDTO accountDTO = new AccountDTO();
 
         private List<string> agendaFromUser = new List<string>();
         private string messageToUser;
 
-        public AgendaLogic(AccountDTO accountDTOInput, IAgendaContext agendaContextInput)
+        public AgendaLogic(AccountDTO accountDTO, IAgendaContext agendaContext)
         {
-            this.agendaContext = agendaContextInput;
-            this.accountDTO = accountDTOInput;
+            this._agendaContext = agendaContext;
+            this.accountDTO = accountDTO;
         }
 
         public AgendaLogic(AccountDTO accountDTOInput, IAgendaContext agendaContextInput, INormalAppointmentContext nAppointmentContextInput, IChecklistAppointmentContext checklistAppointmentContextInput)
         {
-            this.agendaContext = agendaContextInput;
+            this._agendaContext = agendaContextInput;
             this.accountDTO = accountDTOInput;
-            this.nAppointmentContext = nAppointmentContextInput;
-            this.cAppointmentContext = checklistAppointmentContextInput;
+            this._nAppointmentContext = nAppointmentContextInput;
+            this._cAppointmentContext = checklistAppointmentContextInput;
         }
 
         /// <summary>
@@ -37,8 +37,8 @@ namespace BusinessLogicLayer.Logic
         public void RenameAgenda(string agendaName)
         {
             AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaID = agendaContext.GetAgendaID(agendaName, accountDTO);
-            agendaContext.RenameAgenda(agendaDTO.AgendaID, accountDTO);
+            agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
+            _agendaContext.RenameAgenda(agendaDTO.AgendaID, accountDTO);
         }
 
         /// <summary>
@@ -47,8 +47,8 @@ namespace BusinessLogicLayer.Logic
         public void RemoveAgenda(string agendaName)
         {
             AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaID = agendaContext.GetAgendaID(agendaName, accountDTO);
-            agendaContext.DeleteAgenda(agendaDTO.AgendaID, accountDTO);
+            agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
+            _agendaContext.DeleteAgenda(agendaDTO.AgendaID, accountDTO);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace BusinessLogicLayer.Logic
         /// <returns></returns>
         public List<string> GetAgendaNames()
         {
-            agendaFromUser = agendaContext.GetAgendaNamesFromDB(accountDTO);
+            agendaFromUser = _agendaContext.GetAgendaNamesFromDB(accountDTO);
             return agendaFromUser;
         }
 
@@ -68,7 +68,7 @@ namespace BusinessLogicLayer.Logic
         public List<AppointmentDTO> RetrieveAppointments()
         {
             List<AppointmentDTO> appointmentModel = new List<AppointmentDTO>();
-            appointmentModel = agendaContext.GetAllAppointments(accountDTO);
+            appointmentModel = _agendaContext.GetAllAppointments(accountDTO);
 
             return appointmentModel;
         }
@@ -86,8 +86,8 @@ namespace BusinessLogicLayer.Logic
             else
             {
                 AgendaDTO agendaDTO = new AgendaDTO();
-                agendaDTO.AgendaID = agendaContext.GetAgendaID(agendaName, accountDTO);
-                nAppointmentContext.AddNormalAppointment(appointmentDTO, agendaDTO.AgendaID);
+                agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
+                _nAppointmentContext.AddNormalAppointment(appointmentDTO, agendaDTO.AgendaID);
             }
             return messageToUser;
         }
@@ -105,8 +105,8 @@ namespace BusinessLogicLayer.Logic
             else
             {
                 AgendaDTO agendaDTO = new AgendaDTO();
-                agendaDTO.AgendaID = agendaContext.GetAgendaID(agendaName, accountDTO);
-                cAppointmentContext.AddChecklistAppointment(appointmentDTO, agendaDTO.AgendaID);
+                agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
+                _cAppointmentContext.AddChecklistAppointment(appointmentDTO, agendaDTO.AgendaID);
             }
             return messageToUser;
         }
