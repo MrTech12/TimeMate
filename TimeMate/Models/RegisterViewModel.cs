@@ -32,13 +32,13 @@ namespace TimeMate.Models
         [Display(Name = "Voer de uurloon van bijbaan 1 in.")]
         public double job1Wage { get; set; }
 
-        [Display(Name = "Is de bijbaan doordeweeks of in het weekend?.")]
+        [Display(Name = "Is de bijbaan doordeweeks of in het weekend?")]
         public string job1DayType { get; set; }
 
         [Display(Name = "Voer de uurloon van bijbaan 2 in.")]
         public double job2Wage { get; set; }
 
-        [Display(Name = "Is de bijbaan doordeweeks of in het weekend?.")]
+        [Display(Name = "Is de bijbaan doordeweeks of in het weekend?")]
         public string job2DayType { get; set; }
 
         [Display(Name = "Voer in hoeveel uur u beschikbaar wilt stellen voor uw bijbaan.")]

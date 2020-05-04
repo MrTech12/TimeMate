@@ -9,43 +9,44 @@ $(document).ready(function () {
 
 function ShowJobInputBoxes() {
     if (jobAmount == 0) {
-        if ($("#job1-wage").hasClass("d-none") != true) {
-            $("#job1-wage").toggleClass("d-none");
-            $("#job1-dayType").toggleClass("d-none");
+        if ($("#allocated-hours").hasClass("d-none") != true) {
+            $("#allocated-hours").addClass("d-none");
         }
-        else if ($("#job1-wage").hasClass("d-none") == true && $("#job2-wage").hasClass("d-none") != true) {
-            $("#job2-wage").toggleClass("d-none");
-            $("#job2-dayType").toggleClass("d-none");
+
+        if ($("#job1").hasClass("d-none") != true) {
+            $("#job1").addClass("d-none");
         }
-        else if ($("#job1-wage").hasClass("d-none") != true && $("#job2-wage").hasClass("d-none") != true) {
-            $("#job1-wage").toggleClass("d-none");
-            $("#job1-dayType").toggleClass("d-none");
-            $("#job2-wage").toggleClass("d-none");
-            $("#job2-dayType").toggleClass("d-none");
+        else if ($("#job1").hasClass("d-none") == true && $("#job2").hasClass("d-none") != true) {
+            $("#job2").addClass("d-none");;
+        }
+        else if ($("#job1").hasClass("d-none") != true && $("#job2").hasClass("d-none") != true) {
+            $("#job1").addClass("d-none");
+            $("#job2").addClass("d-none");
         }
     }
     else if (jobAmount == 1) {
-        if ($("#job2-wage").hasClass("d-none") != true) {
-            $("#job2-wage").toggleClass("d-none");
-            $("#job2-dayType").toggleClass("d-none");
+        if ($("#allocated-hours").hasClass("d-none") == true) {
+            $("#allocated-hours").removeClass("d-none");
         }
-        else if ($("#job1-wage").toggleClass("d-none") == true){
-            $("#job1-wage").toggleClass("d-none");
-            $("#job1-dayType").toggleClass("d-none");
+
+        if ($("#job2").hasClass("d-none") != true) {
+            $("#job2").addClass("d-none");
+        }
+        else if ($("#job1").toggleClass("d-none") == true) {
+            $("#job1").removeClass("d-none");
         }
     }
     else if (jobAmount == 2) {
-
-        if ($("#job1-wage").toggleClass("d-none") == true) {
-            $("#job1-wage").toggleClass("d-none");
-            $("#job1-dayType").toggleClass("d-none");
-            $("#job2-wage").toggleClass("d-none");
-            $("#job2-dayType").toggleClass("d-none");
+        if ($("#allocated-hours").hasClass("d-none") == true) {
+            $("#allocated-hours").removeClass("d-none");
         }
 
-        else if ($("#job1-wage").toggleClass("d-none") != true && $("#job2-wage").hasClass("d-none") == true) {
-            $("#job2-wage").toggleClass("d-none");
-            $("#job2-dayType").toggleClass("d-none");
+        if ($("#job1").toggleClass("d-none") == true && $("#job2").toggleClass("d-none") == true) {
+            $("#job1").removeClass("d-none");
+            $("#job2").removeClass("d-none");
+        }
+        else if ($("#job1").toggleClass("d-none") != true && $("#job2").hasClass("d-none") == true) {
+            $("#job2").removeClass("d-none");
         }
     }
 };
