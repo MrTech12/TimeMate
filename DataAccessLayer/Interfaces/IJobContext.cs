@@ -7,9 +7,9 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IJobContext
     {
-        JobDTO GetWeeklyWorkHours(AccountDTO accountDTO);
+        double GetWorkdayPay(AccountDTO accountDTO, JobDTO jobDTO);
 
-        JobDTO GetWeeklyPay(AccountDTO accountDTO);
+        double GetWeekendPay(AccountDTO accountDTO, JobDTO jobDTO);
 
         JobDTO GetRegisteredWeeklyHours(AccountDTO accountDTO);
     }

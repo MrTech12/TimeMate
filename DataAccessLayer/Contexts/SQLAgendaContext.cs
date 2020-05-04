@@ -254,5 +254,15 @@ namespace DataAccessLayer.Contexts
             }
             return AppointmentsFromAccount;
         }
+
+        public List<DateTime> GetWorkdayHours(int agendaIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<DateTime> GetWeekendHours(int agendaIndex)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

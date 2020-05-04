@@ -10,6 +10,7 @@ namespace DataAccessLayer.DTO
         private List<DateTime> endDate;
         private double workdayWage;
         private double weekendWage;
+        private double allowedHours;
 
         public List<DateTime> StartDate { get { return this.startDate; } set { this.startDate = value; } }
 
@@ -18,5 +19,7 @@ namespace DataAccessLayer.DTO
         public double WorkdayWage { get { return this.workdayWage; } set { this.workdayWage = value; } }
 
         public double WeekendWage { get { return this.weekendWage; } set { this.weekendWage = value; } }
+
+        public double AllowedHours { get { return this.allowedHours; } set { this.allowedHours = value; } }
     }
 }

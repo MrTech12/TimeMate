@@ -20,5 +20,9 @@ namespace DataAccessLayer.Interfaces
         int GetAgendaID(string agendaName, AccountDTO accountDTO);
 
         List<AppointmentDTO> GetAllAppointments(AccountDTO accountDTO);
+
+        List<DateTime> GetWorkdayHours(int agendaIndex);
+
+        List<DateTime> GetWeekendHours(int agendaIndex);
     }
 }
