@@ -11,6 +11,7 @@ namespace TimeMate.Models
         [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Voor uw voornaam in.")]
         [DataType(DataType.Text)]
+        [RegularExpression("[A-Za-z]+", ErrorMessage = "Gebruik letters in plaats van nummers")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Dit veld is verplicht")]
@@ -30,18 +31,24 @@ namespace TimeMate.Models
         public int JobAmount { get; set; }
 
         [Display(Name = "Voer de uurloon van bijbaan 1 in.")]
-        public double job1Wage { get; set; }
+        [DisplayFormat(DataFormatString = "{0:0,0}")]
+        [RegularExpression(@"\d{1,}(?:\,?\d)*%?", ErrorMessage = "Gebruik een nummer met een komma.")]
+        public string job1Wage { get; set; }
 
         [Display(Name = "Is de bijbaan doordeweeks of in het weekend?")]
         public string job1DayType { get; set; }
 
         [Display(Name = "Voer de uurloon van bijbaan 2 in.")]
-        public double job2Wage { get; set; }
+        [DisplayFormat(DataFormatString = "{0:0,0}")]
+        [RegularExpression(@"\d{1,}(?:\,?\d)*%?", ErrorMessage = "Gebruik een nummer met een komma.")]
+        public string job2Wage { get; set; }
 
         [Display(Name = "Is de bijbaan doordeweeks of in het weekend?")]
         public string job2DayType { get; set; }
 
         [Display(Name = "Voer in hoeveel uur u beschikbaar wilt stellen voor uw bijbaan.")]
-        public double AllocatedHours { get; set; }
+        [DisplayFormat(DataFormatString = "{0:0,0}")]
+        [RegularExpression(@"\d{1,}(?:\,?\d)*%?", ErrorMessage = "Gebruik een nummer met een komma.")]
+        public string AllocatedHours { get; set; }
     }
 }

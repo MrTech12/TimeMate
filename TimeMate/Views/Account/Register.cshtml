@@ -3,11 +3,14 @@
     ViewData["Title"] = "Registeren";
 }
 <script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 <script src="~/js/Register.js"></script>
 
 <h1>Maak een account aan</h1>
 
 <hr />
+
+<div>Voor niet gehele getallen, gebruikt een komma in plaats van een punt.</div>
 
 <div>Wachwoordeisen</div>
 <ul>
@@ -50,7 +53,11 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="job1DayType" class="control-label"></label>
-                    <input asp-for="job1DayType" class="form-control" />
+                    <select asp-for="job1DayType" class="form-control">
+                        <option>Doordeweeks</option>
+                        <option>Weekend</option>
+                    </select>
+                    @*<input asp-for="job1DayType" class="form-control" />*@
                     <span asp-validation-for="job1DayType" class="text-danger"></span>
                 </div>
             </div>
@@ -63,7 +70,11 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="job2DayType" class="control-label"></label>
-                    <input asp-for="job2DayType" class="form-control" />
+                    <select asp-for="job2DayType" class="form-control">
+                        <option>Doordeweeks</option>
+                        <option>Weekend</option>
+                    </select>
+                    @*<input asp-for="job2DayType" class="form-control" />*@
                     <span asp-validation-for="job2DayType" class="text-danger"></span>
                 </div>
             </div>

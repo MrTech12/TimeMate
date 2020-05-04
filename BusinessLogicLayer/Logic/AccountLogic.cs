@@ -65,18 +65,10 @@ namespace BusinessLogicLayer.Logic
             string specialCharacterValidate = @"[~`!@#$%^&*()+=|\\{}':;.,<>/?[\]""_-]";
             string nameValidate = @"^[a-zA-Z]+$";
 
-            if (Regex.IsMatch(accountDTO.FirstName, nameValidate) == false)
-            {
-                returnMessage = "Er mogen geen cijfers in het voornaam veld ingevuld worden.";
-            }
-            else if (Regex.IsMatch(accountDTO.MailAddress, mailValidate) == false)
+            if (Regex.IsMatch(accountDTO.MailAddress, mailValidate) == false)
             {
                 returnMessage = "Het emailadres is niet geldig.";
             }
-            //else if (accountDTO.Password.Length < 9)
-            //{
-            //    returnMessage = "Wachtwoord voldoet niet aan de lengte.";
-            //}
             else if (accountDTO.Password.Any(char.IsUpper) == false)
             {
                 returnMessage = "Wachtwoord moet een hoofdletter bevatten.";
@@ -88,10 +80,6 @@ namespace BusinessLogicLayer.Logic
             else if (accountDTO.Password.Any(char.IsDigit) == false)
             {
                 returnMessage = "Het wachtwoord moet een cijfer bevatten.";
-            }
-            else if (accountDTO.Job1HourlyWage != 0 && accountDTO.Job1DayType == "" || accountDTO.Job2HourlyWage != 0 && accountDTO.Job2DayType == "")
-            {
-                returnMessage = "Er is niet ingevuld of de bijbaan doordeweeks & in het weekend uitgevoerd wordt.";
             }
             else if (returnMessage == null)
             {
