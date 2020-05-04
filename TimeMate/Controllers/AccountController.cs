@@ -16,7 +16,6 @@ namespace TimeMate.Controllers
         AccountLogic accountLogic;
         AccountDTO accountDTO;
 
-
         [HttpGet]
         public IActionResult Index()
         {
@@ -38,15 +37,14 @@ namespace TimeMate.Controllers
 
                 if (result != null)
                 {
-                    accountDTO = new AccountDTO();
-                    accountDTO.AccountID = accountLogic.GetActiveAccountID(accountDTO.MailAddress);
-                    AgendaController agendaController = new AgendaController(accountDTO);
-                    return RedirectToAction("Index", "Agenda");
+                    ModelState.AddModelError("", result);
+                    return View(loginViewModel);
                 }
                 else
                 {
-                    ModelState.AddModelError("", result);
-                    return View(loginViewModel);
+                    accountDTO.AccountID = accountLogic.GetActiveAccountID(accountDTO.MailAddress);
+                    AgendaController agendaController = new AgendaController(accountDTO);
+                    return RedirectToAction("Index", "Agenda");
                 }
             }
             else
@@ -67,7 +65,32 @@ namespace TimeMate.Controllers
         {
             if (ModelState.IsValid)
             {
-                return null;
+                accountDTO = new AccountDTO();
+                accountDTO.FirstName = registerViewModel.FirstName;
+                accountDTO.MailAddress = registerViewModel.Mail;
+                accountDTO.Password = registerViewModel.Password;
+                accountDTO.JobCount = registerViewModel.JobAmount;
+                accountDTO.Job1HourlyWage = registerViewModel.job1Wage;
+                accountDTO.Job1DayType = registerViewModel.job1DayType;
+                accountDTO.Job2HourlyWage = registerViewModel.job2Wage;
+                accountDTO.Job2DayType = registerViewModel.job2DayType;
+                accountDTO.AllocatedHours = registerViewModel.AllocatedHours;
+
+                accountLogic = new AccountLogic(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+
+                string result = accountLogic.NewAccountValidation();
+
+                if (result != null)
+                {
+                    ModelState.AddModelError("", result);
+                    return View(registerViewModel);
+                }
+                else
+                {
+                    accountDTO.AccountID = accountLogic.GetActiveAccountID(accountDTO.MailAddress);
+                    AgendaController agendaController = new AgendaController(accountDTO);
+                    return RedirectToAction("Index", "Agenda");
+                }
             }
             else
             {

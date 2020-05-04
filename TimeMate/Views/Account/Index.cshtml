@@ -1,12 +1,11 @@
 ﻿@model TimeMate.Models.LogInViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Inloggen";
 }
 
-<h1>Index</h1>
+<h1>Log in</h1>
 
-<h4>LogInViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,14 +22,12 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Inloggen" class="btn btn-primary" />
+                <br />
+                <a asp-action="Register">Registeren</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

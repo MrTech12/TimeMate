@@ -69,18 +69,14 @@ namespace BusinessLogicLayer.Logic
             {
                 returnMessage = "Er mogen geen cijfers in het voornaam veld ingevuld worden.";
             }
-            //if (int.TryParse(firstName, out int i))
-            //{
-            //    userOutput = "Er mogen geen getalllen in het voornaam veld getoond worden.";
-            //}
             else if (Regex.IsMatch(accountDTO.MailAddress, mailValidate) == false)
             {
                 returnMessage = "Het emailadres is niet geldig.";
             }
-            else if (accountDTO.Password.Length < 9)
-            {
-                returnMessage = "Wachtwoord voldoet niet aan de lengte.";
-            }
+            //else if (accountDTO.Password.Length < 9)
+            //{
+            //    returnMessage = "Wachtwoord voldoet niet aan de lengte.";
+            //}
             else if (accountDTO.Password.Any(char.IsUpper) == false)
             {
                 returnMessage = "Wachtwoord moet een hoofdletter bevatten.";

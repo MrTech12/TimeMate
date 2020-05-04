@@ -1,13 +1,22 @@
 ﻿@model TimeMate.Models.RegisterViewModel
-
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registeren";
 }
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/Register.js"></script>
 
-<h1>Register</h1>
+<h1>Maak een account aan</h1>
 
-<h4>RegisterViewModel</h4>
 <hr />
+
+<div>Wachwoordeisen</div>
+<ul>
+    <li>Minimaal 9 tekens lang</li>
+    <li>1 hoofdletter bevatten</li>
+    <li>1 cijfer bevatten</li>
+    <li>1 speciale teken bevatten</li>
+</ul>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Register">
@@ -29,28 +38,33 @@
             </div>
             <div class="form-group">
                 <label asp-for="JobAmount" class="control-label"></label>
-                <input asp-for="JobAmount" class="form-control" />
+                <input asp-for="JobAmount" class="form-control" id="job-amount" min="0" max="2"/>
                 <span asp-validation-for="JobAmount" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group d-none" id="job1-wage">
                 <label asp-for="job1Wage" class="control-label"></label>
                 <input asp-for="job1Wage" class="form-control" />
                 <span asp-validation-for="job1Wage" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group d-none" id="job1-dayType">
                 <label asp-for="job1DayType" class="control-label"></label>
                 <input asp-for="job1DayType" class="form-control" />
                 <span asp-validation-for="job1DayType" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group d-none" id="job2-wage">
                 <label asp-for="job2Wage" class="control-label"></label>
                 <input asp-for="job2Wage" class="form-control" />
                 <span asp-validation-for="job2Wage" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group d-none" id="job2-dayType">
                 <label asp-for="job2DayType" class="control-label"></label>
                 <input asp-for="job2DayType" class="form-control" />
                 <span asp-validation-for="job2DayType" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none" id="allocated-hours">
+                <label asp-for="AllocatedHours" class="control-label"></label>
+                <input asp-for="AllocatedHours" class="form-control" />
+                <span asp-validation-for="AllocatedHours" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
