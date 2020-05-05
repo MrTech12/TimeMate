@@ -1,0 +1,24 @@
+﻿@model List<DataAccessLayer.DTO.AppointmentDTO>
+
+@{
+    ViewData["Title"] = "Agenda weergave";
+}
+
+<h1>Agenda weergave</h1>
+
+<input type="button" value="Normale afspraak toevoegen" onclick="location.href='@Url.Action("Index", "NormalAppointment")'" class="btn btn-success" />
+<input type="button" value="Afspraak met takenlijst toevoegen" onclick="location.href='@Url.Action("Index", "ChecklistAppointment")'" class="btn btn-success" />
+<input type="button" value="Agenda toevoegen" onclick="location.href='@Url.Action("AddAgenda", "Agenda")'" class="btn btn-success" />
+
+@for (int i = 0; i < Model.Count; i++)
+{
+<div>
+    @Model[i].AppointmentName
+    @Model[i].StartDate
+    @Model[i].AgendaName
+</div>
+}
+
+<div>
+    <input type="button" value="Uitloggen" onclick="location.href='@Url.Action("Index", "Account")'" class="btn btn-warning" />
+</div>

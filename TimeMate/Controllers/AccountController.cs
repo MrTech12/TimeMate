@@ -43,8 +43,7 @@ namespace TimeMate.Controllers
                 else
                 {
                     accountDTO.AccountID = accountLogic.GetActiveAccountID(accountDTO.MailAddress);
-                    AgendaController agendaController = new AgendaController(accountDTO);
-                    return RedirectToAction("Index", "Agenda");
+                    return RedirectToAction("Index", "Agenda", new {id = accountDTO.AccountID});
                 }
             }
             else
@@ -88,8 +87,7 @@ namespace TimeMate.Controllers
                 else
                 {
                     accountDTO.AccountID = accountLogic.GetActiveAccountID(accountDTO.MailAddress);
-                    AgendaController agendaController = new AgendaController(accountDTO);
-                    return RedirectToAction("Index", "Agenda");
+                    return RedirectToAction("Index", "Agenda", new { id = accountDTO.AccountID });
                 }
             }
             else

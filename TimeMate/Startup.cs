@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DataAccessLayer.Contexts;
+using DataAccessLayer.DTO;
 
 namespace TimeMate
 {
@@ -28,6 +29,11 @@ namespace TimeMate
         {
             services.AddControllersWithViews();
 
+            services.AddTransient<AccountDTO>();
+            services.AddTransient<AgendaDTO>();
+            services.AddTransient<AppointmentDTO>();
+            services.AddTransient<JobDTO>();
+            //services.AddTransient<AccountDTO, AccountDTO>();
             //services.Configure<DapperContext>(this.Configuration.GetSection("connectionStrings"));
         }
 

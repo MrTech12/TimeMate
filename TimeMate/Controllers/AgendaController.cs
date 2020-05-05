@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogicLayer.Logic;
+using DataAccessLayer.Contexts;
 using DataAccessLayer.DTO;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,14 +13,16 @@ namespace TimeMate.Controllers
     {
         AccountDTO accountDTO = new AccountDTO();
 
-        public AgendaController(AccountDTO accountDTO)
+        [HttpGet]
+        public IActionResult Index(int id)
         {
-            this.accountDTO = accountDTO;
-        }
+            accountDTO.AccountID = id;
+            AgendaLogic agenda = new AgendaLogic(accountDTO, new SQLAgendaContext());
+            List<AppointmentDTO> appointmentModelForView = new List<AppointmentDTO>();
 
-        public IActionResult Index()
-        {
-            return View();
+            appointmentModelForView = agenda.RetrieveAppointments();
+
+            return View(appointmentModelForView);
         }
     }
 }

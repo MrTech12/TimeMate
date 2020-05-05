@@ -2,6 +2,8 @@
 using DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace BusinessLogicLayer.Logic
@@ -69,6 +71,7 @@ namespace BusinessLogicLayer.Logic
         {
             List<AppointmentDTO> appointmentModel = new List<AppointmentDTO>();
             appointmentModel = AgendaContext.GetAllAppointments(accountDTO);
+            appointmentModel.OrderBy(x => x.StartDate);
 
             return appointmentModel;
         }

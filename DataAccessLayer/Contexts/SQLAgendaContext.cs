@@ -231,11 +231,8 @@ namespace DataAccessLayer.Contexts
 
                     SqlCommand insertQuerry;
                     insertQuerry = new SqlCommand
-                        ("SELECT Normal_Appointment.Name, Normal_Appointment.Starting," +
-                        "Normal_Appointment.Ending, Normal_Appointment.Details, Agenda.Name AS AgendaName " +
-                        "FROM [Normal_Appointment]" +
-                        "INNER JOIN Agenda ON Normal_Appointment.AgendaID = Agenda.AgendaID " +
-                        "AND Agenda.AccountID = @0; ", databaseConn);
+                        ("SELECT Appointment.Name, Appointment.Starting, Appointment.Ending, Agenda.Name AS AgendaName FROM [Appointment] " +
+                        "INNER JOIN Agenda ON Appointment.AgendaID = Agenda.AgendaID AND Agenda.AccountID = @0", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
                     SqlDataReader dataReader = insertQuerry.ExecuteReader();
@@ -247,7 +244,6 @@ namespace DataAccessLayer.Contexts
                         appointmentModel.StartDate = Convert.ToDateTime(dataReader["Starting"]);
                         appointmentModel.EndDate = Convert.ToDateTime(dataReader["Ending"]);
                         appointmentModel.AgendaName = Convert.ToString(dataReader["AgendaName"]);
-                        appointmentModel.Description = Convert.ToString(dataReader["Details"]);
                         AppointmentsFromAccount.Add(appointmentModel);
                     }
                 }
