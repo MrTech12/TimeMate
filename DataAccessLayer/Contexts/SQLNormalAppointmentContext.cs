@@ -9,7 +9,12 @@ namespace DataAccessLayer.Contexts
 {
     public class SQLNormalAppointmentContext : INormalAppointmentContext
     {
-        string dbConnectionstring = "Server = mssql.fhict.local; Database=dbi400050; User Id = dbi400050; Password = EuAIC1a!jcW2Hwn$";
+        private readonly SqlConnection sqlConnection;
+
+        public SQLNormalAppointmentContext(IDatabaseContext databaseContext)
+        {
+            sqlConnection = databaseContext.GetConnection();
+        }
 
         /// <summary>
         /// Add a normal appointment to an agenda.
@@ -18,12 +23,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(dbConnectionstring))
+                using (SqlConnection databaseConn = sqlConnection)
                 {
-                    databaseConn.Open();
-
-                    SqlCommand insertQuerry;
-                    insertQuerry = new SqlCommand("INSERT INTO [Normal_Appointment](AgendaID, Name, Starting, Ending, Details) VALUES (@0, @1, @2, @3, @4)", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Normal_Appointment](AgendaID, Name, Starting, Ending, Details) VALUES (@0, @1, @2, @3, @4)", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", agendaIndex);
                     insertQuerry.Parameters.AddWithValue("1", appointmentDTO.AppointmentName);

@@ -9,12 +9,16 @@ namespace DataAccessLayer.Contexts
 {
     public class SQLAgendaContext : IAgendaContext
     {
-        private string dbConnectionstring = "Server = mssql.fhict.local; Database=dbi400050; User Id = dbi400050; Password = EuAIC1a!jcW2Hwn$";
-        private SqlCommand deleteQuerry;
+        private readonly SqlConnection sqlConnection;
 
         private AgendaDTO agendaDTO = new AgendaDTO();
 
         private List<string> agendaNames = new List<string>();
+
+        public SQLAgendaContext(IDatabaseContext databaseContext)
+        {
+            sqlConnection = databaseContext.GetConnection();
+        }
 
         /// <summary>
         /// Add a new agenda into the database.
@@ -24,12 +28,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(dbConnectionstring))
+                using (SqlConnection databaseConn = sqlConnection)
                 {
-                    databaseConn.Open();
-
-                    SqlCommand insertQuerry;
-                    insertQuerry = new SqlCommand("INSERT INTO [Agenda](AccountID, Name, Color, Notification_type, Enabled)  VALUES (@0,@1,@2,@3,@4)", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Agenda](AccountID, Name, Color, Notification_type, Enabled)  VALUES (@0,@1,@2,@3,@4)", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
                     insertQuerry.Parameters.AddWithValue("1", agendaDTO.AgendaName);
@@ -55,20 +56,16 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(dbConnectionstring))
+                using (SqlConnection databaseConn = sqlConnection)
                 {
-                    databaseConn.Open();
-
-                    SqlCommand insertQuerry;
-                    insertQuerry = new SqlCommand("INSERT INTO [Agenda](AccountID, Name, Color, Enabled) Values (@0,@1,@2,@3)", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Agenda](AccountID, Name, Color, Enabled) Values (@0,@1,@2,@3)", databaseConn);
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
                     insertQuerry.Parameters.AddWithValue("1", newAgendaDTO.AgendaName);
                     insertQuerry.Parameters.AddWithValue("2", newAgendaDTO.AgendaColor);
                     insertQuerry.Parameters.AddWithValue("3", true);
                     insertQuerry.ExecuteNonQuery();
 
-                    SqlCommand selectQuerry;
-                    selectQuerry = new SqlCommand("SELECT AgendaID FROM [Agenda] WHERE AccountID = @0", databaseConn);
+                    SqlCommand selectQuerry = new SqlCommand("SELECT AgendaID FROM [Agenda] WHERE AccountID = @0", databaseConn);
                     selectQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
                     var resultedAgendaID = selectQuerry.ExecuteScalar();
 
@@ -123,11 +120,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(dbConnectionstring))
+                using (SqlConnection databaseConn = sqlConnection)
                 {
-                    databaseConn.Open();
-
-                    deleteQuerry = new SqlCommand("DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1", databaseConn);
+                    SqlCommand deleteQuerry = new SqlCommand("DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1", databaseConn);
 
                     deleteQuerry.Parameters.AddWithValue("0", AgendaIndexInput);
                     deleteQuerry.Parameters.AddWithValue("1", accountDTO.AccountID);
@@ -157,12 +152,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(dbConnectionstring))
+                using (SqlConnection databaseConn = sqlConnection)
                 {
-                    databaseConn.Open();
-
-                    SqlCommand insertQuerry;
-                    insertQuerry = new SqlCommand("SELECT Name FROM [Agenda] WHERE AccountID = @0", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand("SELECT Name FROM [Agenda] WHERE AccountID = @0", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
 
@@ -193,12 +185,9 @@ namespace DataAccessLayer.Contexts
             int AgendaID;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(dbConnectionstring))
+                using (SqlConnection databaseConn = sqlConnection)
                 {
-                    databaseConn.Open();
-
-                    SqlCommand insertQuerry;
-                    insertQuerry = new SqlCommand("SELECT AgendaID FROM [Agenda] WHERE AccountID = @0 AND Name = @1", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand("SELECT AgendaID FROM [Agenda] WHERE AccountID = @0 AND Name = @1", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
                     insertQuerry.Parameters.AddWithValue("1", agendaNameInput);
@@ -225,12 +214,9 @@ namespace DataAccessLayer.Contexts
 
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(dbConnectionstring))
+                using (SqlConnection databaseConn = sqlConnection)
                 {
-                    databaseConn.Open();
-
-                    SqlCommand insertQuerry;
-                    insertQuerry = new SqlCommand
+                    SqlCommand insertQuerry = new SqlCommand
                         ("SELECT Appointment.Name, Appointment.Starting, Appointment.Ending, Agenda.Name AS AgendaName FROM [Appointment] " +
                         "INNER JOIN Agenda ON Appointment.AgendaID = Agenda.AgendaID AND Agenda.AccountID = @0", databaseConn);
 

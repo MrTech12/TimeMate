@@ -13,8 +13,13 @@ namespace DataAccessLayer.Contexts
 {
     public class SQLAccountContext : IAccountContext
     {
-        private string dbConnectionstring = "Server = mssql.fhict.local; Database=dbi400050; User Id = dbi400050; Password = EuAIC1a!jcW2Hwn$";
+        private readonly SqlConnection sqlConnection;
         private string databaseOutput;
+
+        public SQLAccountContext(IDatabaseContext databaseContext)
+        {
+            sqlConnection = databaseContext.GetConnection();
+        }
 
         /// <summary>
         /// Getting the account ID from the database.
@@ -24,12 +29,9 @@ namespace DataAccessLayer.Contexts
             int accountID;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(dbConnectionstring))
+                using (SqlConnection databaseConn = sqlConnection)
                 {
-                    databaseConn.Open();
-
-                    SqlCommand selectQuerry;
-                    selectQuerry = new SqlCommand("SELECT AccountID FROM [Account] WHERE Mail = @0", databaseConn);
+                    SqlCommand selectQuerry = new SqlCommand("SELECT AccountID FROM [Account] WHERE Mail = @0", databaseConn);
 
                     selectQuerry.Parameters.AddWithValue("0", mail);
 
@@ -53,12 +55,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(dbConnectionstring))
+                using (SqlConnection databaseConn = sqlConnection)
                 {
-                    databaseConn.Open();
-
-                    SqlCommand selectQuerry;
-                    selectQuerry = new SqlCommand("SELECT Password FROM [Account] WHERE Mail = @0", databaseConn);
+                    SqlCommand selectQuerry = new SqlCommand("SELECT Password FROM [Account] WHERE Mail = @0", databaseConn);
 
                     selectQuerry.Parameters.AddWithValue("0", mail);
                     var resultedPasswordHash = selectQuerry.ExecuteScalar();
@@ -87,12 +86,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(dbConnectionstring))
+                using (SqlConnection databaseConn = sqlConnection)
                 {
-                    databaseConn.Open();
-
-                    SqlCommand selectQuerry;
-                    selectQuerry = new SqlCommand("SELECT AccountID FROM [Account] WHERE Mail = @0", databaseConn);
+                    SqlCommand selectQuerry = new SqlCommand("SELECT AccountID FROM [Account] WHERE Mail = @0", databaseConn);
 
                     selectQuerry.Parameters.AddWithValue("0", mail);
                     var resultedAccountID = selectQuerry.ExecuteScalar();
@@ -123,12 +119,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(dbConnectionstring))
+                using (SqlConnection databaseConn = sqlConnection)
                 {
-                    databaseConn.Open();
-
-                    SqlCommand insertQuerry;
-                    insertQuerry = new SqlCommand("INSERT INTO [Account](First_name, Mail, Password) Values (@0,@1,@2)", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Account](First_name, Mail, Password) Values (@0,@1,@2)", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.FirstName);
                     insertQuerry.Parameters.AddWithValue("1", accountDTO.MailAddress);

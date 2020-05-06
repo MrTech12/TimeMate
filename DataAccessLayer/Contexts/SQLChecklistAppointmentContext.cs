@@ -9,18 +9,21 @@ namespace DataAccessLayer.Contexts
 {
     public class SQLChecklistAppointmentContext : IChecklistAppointmentContext
     {
-        string dbConnectionstring = "Server = mssql.fhict.local; Database=dbi400050; User Id = dbi400050; Password = EuAIC1a!jcW2Hwn$";
+        private readonly SqlConnection sqlConnection;
+        private string databaseOutput;
+
+        public SQLChecklistAppointmentContext(IDatabaseContext databaseContext)
+        {
+            sqlConnection = databaseContext.GetConnection();
+        }
 
         public void AddChecklistAppointment(AppointmentDTO appointmentDTO, int agendaIndex)
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(dbConnectionstring))
+                using (SqlConnection databaseConn = sqlConnection)
                 {
-                    databaseConn.Open();
-
-                    SqlCommand insertQuerry;
-                    insertQuerry = new SqlCommand("INSERT INTO [Checklist_Appointment](AgendaID, Name, Starting, Ending) VALUES (@0, @1, @2, @3)", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Checklist_Appointment](AgendaID, Name, Starting, Ending) VALUES (@0, @1, @2, @3)", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", agendaIndex);
                     insertQuerry.Parameters.AddWithValue("1", appointmentDTO.AppointmentName);
