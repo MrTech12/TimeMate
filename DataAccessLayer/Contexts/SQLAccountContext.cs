@@ -13,12 +13,13 @@ namespace DataAccessLayer.Contexts
 {
     public class SQLAccountContext : IAccountContext
     {
-        private readonly SqlConnection sqlConnection;
+        private readonly string sqlConnection;
+        private readonly SQLDatabaseContext SQLDatabaseContext;
         private string databaseOutput;
 
-        public SQLAccountContext(IDatabaseContext databaseContext)
+        public SQLAccountContext(SQLDatabaseContext sqlDatabaseContext)
         {
-            sqlConnection = databaseContext.GetConnection();
+            sqlConnection = sqlDatabaseContext.ConnectiongString;
         }
 
         /// <summary>
@@ -29,8 +30,9 @@ namespace DataAccessLayer.Contexts
             int accountID;
             try
             {
-                using (SqlConnection databaseConn = sqlConnection)
+                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
                 {
+                    databaseConn.Open();
                     SqlCommand selectQuerry = new SqlCommand("SELECT AccountID FROM [Account] WHERE Mail = @0", databaseConn);
 
                     selectQuerry.Parameters.AddWithValue("0", mail);
@@ -55,8 +57,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = sqlConnection)
+                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
                 {
+                    databaseConn.Open();
                     SqlCommand selectQuerry = new SqlCommand("SELECT Password FROM [Account] WHERE Mail = @0", databaseConn);
 
                     selectQuerry.Parameters.AddWithValue("0", mail);
@@ -86,8 +89,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = sqlConnection)
+                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
                 {
+                    databaseConn.Open();
                     SqlCommand selectQuerry = new SqlCommand("SELECT AccountID FROM [Account] WHERE Mail = @0", databaseConn);
 
                     selectQuerry.Parameters.AddWithValue("0", mail);
@@ -119,8 +123,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = sqlConnection)
+                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
                 {
+                    databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Account](First_name, Mail, Password) Values (@0,@1,@2)", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.FirstName);

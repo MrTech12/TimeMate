@@ -9,15 +9,16 @@ namespace DataAccessLayer.Contexts
 {
     public class SQLAgendaContext : IAgendaContext
     {
-        private readonly SqlConnection sqlConnection;
-
         private AgendaDTO agendaDTO = new AgendaDTO();
 
         private List<string> agendaNames = new List<string>();
 
-        public SQLAgendaContext(IDatabaseContext databaseContext)
+        private readonly string sqlConnection;
+        private readonly SQLDatabaseContext SQLDatabaseContext;
+
+        public SQLAgendaContext(SQLDatabaseContext sqlDatabaseContext)
         {
-            sqlConnection = databaseContext.GetConnection();
+            sqlConnection = sqlDatabaseContext.ConnectiongString;
         }
 
         /// <summary>
@@ -28,8 +29,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = sqlConnection)
+                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
                 {
+                    databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Agenda](AccountID, Name, Color, Notification_type, Enabled)  VALUES (@0,@1,@2,@3,@4)", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
@@ -56,8 +58,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = sqlConnection)
+                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
                 {
+                    databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Agenda](AccountID, Name, Color, Enabled) Values (@0,@1,@2,@3)", databaseConn);
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
                     insertQuerry.Parameters.AddWithValue("1", newAgendaDTO.AgendaName);
@@ -120,8 +123,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = sqlConnection)
+                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
                 {
+                    databaseConn.Open();
                     SqlCommand deleteQuerry = new SqlCommand("DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1", databaseConn);
 
                     deleteQuerry.Parameters.AddWithValue("0", AgendaIndexInput);
@@ -152,8 +156,9 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = sqlConnection)
+                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
                 {
+                    databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand("SELECT Name FROM [Agenda] WHERE AccountID = @0", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
@@ -185,8 +190,9 @@ namespace DataAccessLayer.Contexts
             int AgendaID;
             try
             {
-                using (SqlConnection databaseConn = sqlConnection)
+                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
                 {
+                    databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand("SELECT AgendaID FROM [Agenda] WHERE AccountID = @0 AND Name = @1", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
@@ -214,8 +220,9 @@ namespace DataAccessLayer.Contexts
 
             try
             {
-                using (SqlConnection databaseConn = sqlConnection)
+                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
                 {
+                    databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand
                         ("SELECT Appointment.Name, Appointment.Starting, Appointment.Ending, Agenda.Name AS AgendaName FROM [Appointment] " +
                         "INNER JOIN Agenda ON Appointment.AgendaID = Agenda.AgendaID AND Agenda.AccountID = @0", databaseConn);

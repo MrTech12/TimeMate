@@ -9,20 +9,23 @@ namespace DataAccessLayer.Contexts
 {
     public class SQLChecklistAppointmentContext : IChecklistAppointmentContext
     {
-        private readonly SqlConnection sqlConnection;
         private string databaseOutput;
 
-        public SQLChecklistAppointmentContext(IDatabaseContext databaseContext)
+        private readonly string sqlConnection;
+        private readonly SQLDatabaseContext SQLDatabaseContext;
+
+        public SQLChecklistAppointmentContext(SQLDatabaseContext sqlDatabaseContext)
         {
-            sqlConnection = databaseContext.GetConnection();
+            sqlConnection = sqlDatabaseContext.ConnectiongString;
         }
 
         public void AddChecklistAppointment(AppointmentDTO appointmentDTO, int agendaIndex)
         {
             try
             {
-                using (SqlConnection databaseConn = sqlConnection)
+                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
                 {
+                    databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Checklist_Appointment](AgendaID, Name, Starting, Ending) VALUES (@0, @1, @2, @3)", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", agendaIndex);
