@@ -8,19 +8,19 @@ namespace TimeMate.Models
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Dit veld is verplicht")]
+        [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Voor uw voornaam in.")]
         [DataType(DataType.Text)]
         [RegularExpression("[A-Za-z]+", ErrorMessage = "Gebruik letters in plaats van nummers")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Dit veld is verplicht")]
+        [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Voor een geldige E-mailadres in.")]
         [DataType(DataType.EmailAddress)]
         [EmailAddress(ErrorMessage = "Voor een geldige E-mailadres in.")]
         public string Mail { get; set; }
 
-        [Required(ErrorMessage = "Dit veld is verplicht")]
+        [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Voor een wachtwoord in.")]
         [DataType(DataType.Password)]
         [MinLength(9)]
