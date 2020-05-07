@@ -11,10 +11,8 @@ namespace DataAccessLayer.DTO
         private string mailAddress;
         private string password;
         private int jobCount;
-        private double job1HourlyWage;
-        private string job1DayType;
-        private double job2HourlyWage;
-        private string job2DayType;
+        private List<double> jobHourlyWage = new List<double>();
+        private List<string> jobDayType = new List<string>();
         private double allocatedHours;
 
         public int AccountID { get { return this.accountID; } set { this.accountID = value; } }
@@ -27,13 +25,9 @@ namespace DataAccessLayer.DTO
 
         public int JobCount { get { return this.jobCount; } set { this.jobCount = value; } }
 
-        public double Job1HourlyWage { get { return this.job1HourlyWage; } set { this.job1HourlyWage = value; } }
+        public List<double> JobHourlyWage { get { return this.jobHourlyWage; } set { this.jobHourlyWage = value; } }
 
-        public string Job1DayType { get { return this.job1DayType; } set { this.job1DayType = value; } }
-
-        public double Job2HourlyWage { get { return this.job2HourlyWage; } set { this.job2HourlyWage = value; } }
-
-        public string Job2DayType { get { return this.job2DayType; } set { this.job2DayType = value; } }
+        public List<string> JobDayType { get { return this.jobDayType; } set { this.jobDayType = value; } }
 
         public double AllocatedHours { get { return this.allocatedHours; } set { this.allocatedHours = value; } }
     }

@@ -17,7 +17,7 @@ namespace TimeMate.Models
         [Required(ErrorMessage = "Dit veld is verplicht")]
         [Display(Name = "Voor een geldige E-mailadres in.")]
         [DataType(DataType.EmailAddress)]
-        [EmailAddress (ErrorMessage = "Voor een geldige E-mailadres in.")]
+        [EmailAddress(ErrorMessage = "Voor een geldige E-mailadres in.")]
         public string Mail { get; set; }
 
         [Required(ErrorMessage = "Dit veld is verplicht")]
@@ -27,7 +27,7 @@ namespace TimeMate.Models
         public string Password { get; set; }
 
         [Display(Name = "Kies het aantal bijbanen.")]
-        [Range(0,2)]
+        [Range(0, 2)]
         public int JobAmount { get; set; }
 
         [Display(Name = "Voer de uurloon van bijbaan 1 in.")]
