@@ -52,8 +52,8 @@ namespace BusinessLogicLayer.Logic
 
         public int GetActiveAccountID(string mail)
         {
-            int accountID = AccountContext.GetUserID(mail);
-            return accountID;
+            string accountID = AccountContext.GetUserID(mail);
+            return Convert.ToInt32(accountID);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace BusinessLogicLayer.Logic
             }
             else if (returnMessage == null)
             {
-                databaseOutput = AccountContext.SearchUserByMail(accountDTO.MailAddress);
+                databaseOutput = AccountContext.GetUserID(accountDTO.MailAddress);
                 if (databaseOutput != null)
                 {
                     returnMessage = "Er bestaat al een account met dit mailadres.";
@@ -106,12 +106,12 @@ namespace BusinessLogicLayer.Logic
             if (accountDTO.JobCount == 0)
             {
                 AccountContext.RegisterNewUser(accountDTO);
-                accountDTO.AccountID = AccountContext.GetUserID(accountDTO.MailAddress);
+                accountDTO.AccountID = Convert.ToInt32(AccountContext.GetUserID(accountDTO.MailAddress));
             }
             else if (accountDTO.JobCount > 0)
             {
                 AccountContext.RegisterNewUser(accountDTO);
-                accountDTO.AccountID = AccountContext.GetUserID(accountDTO.MailAddress);
+                accountDTO.AccountID = Convert.ToInt32(AccountContext.GetUserID(accountDTO.MailAddress));
                 CreateWorkAgenda();
             }
         }

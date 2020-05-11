@@ -19,9 +19,8 @@ namespace DataAccessLayer.Contexts
         /// <summary>
         /// Getting the account ID from the database.
         /// </summary>
-        public int GetUserID(string mail)
+        public string GetUserID(string mail)
         {
-            int accountID;
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
@@ -30,10 +29,16 @@ namespace DataAccessLayer.Contexts
                     SqlCommand selectQuerry = new SqlCommand("SELECT AccountID FROM [Account] WHERE Mail = @0", databaseConn);
 
                     selectQuerry.Parameters.AddWithValue("0", mail);
-
                     var resultedAccountID = selectQuerry.ExecuteScalar();
 
-                    accountID = Convert.ToInt32(resultedAccountID); //Storing the accountID.
+                    if (resultedAccountID == null)
+                    {
+                        databaseOutput = null;
+                    }
+                    else
+                    {
+                        databaseOutput = resultedAccountID.ToString();
+                    }
                 }
             }
             catch (SqlException)
@@ -41,7 +46,7 @@ namespace DataAccessLayer.Contexts
                 //Display the error.
                 throw;
             }
-            return accountID;
+            return databaseOutput;
         }
 
         /// <summary>
@@ -71,39 +76,6 @@ namespace DataAccessLayer.Contexts
             }
             catch (SqlException)
             {
-                throw;
-            }
-            return databaseOutput;
-        }
-
-        /// <summary>
-        /// Search for a mailaddress in the database.
-        /// </summary>
-        public string SearchUserByMail(string mail)
-        {
-            try
-            {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
-                {
-                    databaseConn.Open();
-                    SqlCommand selectQuerry = new SqlCommand("SELECT AccountID FROM [Account] WHERE Mail = @0", databaseConn);
-
-                    selectQuerry.Parameters.AddWithValue("0", mail);
-                    var resultedAccountID = selectQuerry.ExecuteScalar();
-
-                    if (resultedAccountID == null)
-                    {
-                        databaseOutput = null;
-                    }
-                    else
-                    {
-                        databaseOutput = resultedAccountID.ToString();
-                    }
-                }
-            }
-            catch (SqlException)
-            {
-                //Display the error.
                 throw;
             }
             return databaseOutput;

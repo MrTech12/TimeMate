@@ -9,12 +9,12 @@ namespace TimeMateTest.Stubs
     class StubAccountContext : IAccountContext
     {
         string returnMessage;
-        public int GetUserID(string mail)
+        public string GetUserID(string mail)
         {
-            int accountID = 0;
+            string accountID = null;
             if (mail == "bert@gmail.com")
             {
-                accountID = 0;
+                accountID = "0";
             }
             return accountID;
         }
@@ -36,16 +36,6 @@ namespace TimeMateTest.Stubs
             }
 
             return returnMessage;
-        }
-
-        public string SearchUserByMail(string mail)
-        {
-            string accountID = null;
-            if (mail == "bert@gmail.com")
-            {
-                accountID = "0";
-            }
-            return accountID;
         }
     }
 }
