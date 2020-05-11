@@ -8,14 +8,14 @@ namespace BusinessLogicLayer.Logic
 {
     public class JobLogic
     {
-        private IJobContext JobContext;
+        private IJobContext _jobContext;
         private AccountDTO accountDTO;
         private string messageToUser;
 
         public JobLogic(AccountDTO accountDTOInput, IJobContext jobContextInput)
         {
             this.accountDTO = accountDTOInput;
-            this.JobContext = jobContextInput;
+            this._jobContext = jobContextInput;
         }
 
         public double ShowWeeklyWorkHours()
