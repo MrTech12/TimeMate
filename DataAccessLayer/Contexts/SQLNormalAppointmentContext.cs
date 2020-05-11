@@ -9,13 +9,7 @@ namespace DataAccessLayer.Contexts
 {
     public class SQLNormalAppointmentContext : INormalAppointmentContext
     {
-        private readonly string sqlConnection;
-        private readonly SQLDatabaseContext SQLDatabaseContext;
-
-        public SQLNormalAppointmentContext(SQLDatabaseContext sqlDatabaseContext)
-        {
-            sqlConnection = sqlDatabaseContext.ConnectiongString;
-        }
+        private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
 
         /// <summary>
         /// Add a normal appointment to an agenda.
@@ -24,7 +18,7 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Normal_Appointment](AgendaID, Name, Starting, Ending, Details) VALUES (@0, @1, @2, @3, @4)", databaseConn);

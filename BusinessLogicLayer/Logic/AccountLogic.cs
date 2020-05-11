@@ -35,7 +35,7 @@ namespace BusinessLogicLayer.Logic
                 bool passwordValid = BCrypt.Net.BCrypt.Verify(accountDTO.Password, databaseOutput);
                 if (!passwordValid)
                 {
-                    returnMessage = "Er bestaat geen account met deze gegevens.";
+                    returnMessage = "Verkeerd mailadres en/of wachtwoord.";
                 }
                 else
                 {
@@ -44,7 +44,7 @@ namespace BusinessLogicLayer.Logic
             }
             else
             {
-                returnMessage = "Er bestaat geen account met deze gegevens.";
+                returnMessage = "Verkeerd mailadres en/of wachtwoord.";
             }
 
             return returnMessage;
@@ -71,7 +71,7 @@ namespace BusinessLogicLayer.Logic
             }
             else if (accountDTO.Password.Any(char.IsUpper) == false)
             {
-                returnMessage = "Wachtwoord moet een hoofdletter bevatten.";
+                returnMessage = "Het wachtwoord moet een hoofdletter bevatten.";
             }
             else if (Regex.IsMatch(accountDTO.Password, specialCharacterValidate) == false)
             {

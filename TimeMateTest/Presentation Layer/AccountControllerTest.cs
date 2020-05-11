@@ -1,10 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using TimeMate.Controllers;
+using TimeMate.Models;
+using Xunit;
 
 namespace TimeMateTest.Presentation_Layer
 {
-    class AccountControllerTest
+    public class AccountControllerTest
     {
+        AccountController accountController;
+
+        [Fact]
+        public void LoggingInWithNoPassword()
+        {
+            
+        }
     }
 }

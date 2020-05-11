@@ -13,13 +13,7 @@ namespace DataAccessLayer.Contexts
 
         private List<string> agendaNames = new List<string>();
 
-        private readonly string sqlConnection;
-        private readonly SQLDatabaseContext SQLDatabaseContext;
-
-        public SQLAgendaContext(SQLDatabaseContext sqlDatabaseContext)
-        {
-            sqlConnection = sqlDatabaseContext.ConnectiongString;
-        }
+        private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
 
         /// <summary>
         /// Add a new agenda into the database.
@@ -29,7 +23,7 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Agenda](AccountID, Name, Color, Notification_type)  VALUES (@0,@1,@2,@3)", databaseConn);
@@ -57,7 +51,7 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Agenda](AccountID, Name, Color) Values (@0,@1,@2)", databaseConn);
@@ -106,7 +100,7 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
                     SqlCommand deleteQuerry = new SqlCommand("DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1", databaseConn);
@@ -139,7 +133,7 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand("SELECT Name FROM [Agenda] WHERE AccountID = @0", databaseConn);
@@ -173,7 +167,7 @@ namespace DataAccessLayer.Contexts
             int AgendaID;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand("SELECT AgendaID FROM [Agenda] WHERE AccountID = @0 AND Name = @1", databaseConn);
@@ -203,7 +197,7 @@ namespace DataAccessLayer.Contexts
 
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(sqlConnection))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand

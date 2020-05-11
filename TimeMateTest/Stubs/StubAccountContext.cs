@@ -11,7 +11,12 @@ namespace TimeMateTest.Stubs
         string returnMessage;
         public int GetUserID(string mail)
         {
-            throw new NotImplementedException();
+            int accountID = 0;
+            if (mail == "bert@gmail.com")
+            {
+                accountID = 0;
+            }
+            return accountID;
         }
 
         public void RegisterNewUser(AccountDTO AccountDTO)
@@ -25,13 +30,22 @@ namespace TimeMateTest.Stubs
             {
                 returnMessage = null;
             }
+            else if (mail == "bert@gmail.com")
+            {
+                returnMessage = "$2b$10$s.mU04TYPOSCHn.BOh3iIehsM5sGUyvoAGoXgOojrTxtEF/5aptLS";
+            }
 
             return returnMessage;
         }
 
         public string SearchUserByMail(string mail)
         {
-            throw new NotImplementedException();
+            string accountID = null;
+            if (mail == "bert@gmail.com")
+            {
+                accountID = "0";
+            }
+            return accountID;
         }
     }
 }

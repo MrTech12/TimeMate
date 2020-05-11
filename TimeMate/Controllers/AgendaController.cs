@@ -18,7 +18,7 @@ namespace TimeMate.Controllers
         public IActionResult Index(int id)
         {
             accountDTO.AccountID = id;
-            AgendaLogic agendaLogic = new AgendaLogic(accountDTO, new SQLAgendaContext(new SQLDatabaseContext()));
+            AgendaLogic agendaLogic = new AgendaLogic(accountDTO, new SQLAgendaContext());
             List<AppointmentDTO> appointmentModelForView = new List<AppointmentDTO>();
 
             appointmentModelForView = agendaLogic.RetrieveAppointments();
@@ -39,7 +39,7 @@ namespace TimeMate.Controllers
             if (ModelState.IsValid)
             {
                 AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = viewModel.Name, AgendaColor = viewModel.Color, Notification = viewModel.NotificationType };
-                AccountLogic accountLogic = new AccountLogic(accountDTO, new SQLAccountContext(new SQLDatabaseContext()), new SQLAgendaContext(new SQLDatabaseContext()));
+                AccountLogic accountLogic = new AccountLogic(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
                 accountLogic.CreateAgenda(agendaDTO);
                 return RedirectToAction("Index", "Agenda", new { id = accountDTO.AccountID });
             }
