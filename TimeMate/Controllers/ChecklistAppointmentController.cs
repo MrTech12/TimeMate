@@ -8,6 +8,7 @@ namespace TimeMate.Controllers
 {
     public class ChecklistAppointmentController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
