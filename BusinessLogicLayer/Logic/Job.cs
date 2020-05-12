@@ -12,10 +12,10 @@ namespace BusinessLogicLayer.Logic
         private AccountDTO accountDTO;
         private string messageToUser;
 
-        public Job(AccountDTO accountDTOInput, IJobContext jobContextInput)
+        public Job(AccountDTO accountDTO, IJobContext jobContext)
         {
-            this.accountDTO = accountDTOInput;
-            this._jobContext = jobContextInput;
+            this.accountDTO = accountDTO;
+            this._jobContext = jobContext;
         }
 
         public double ShowWeeklyWorkHours()

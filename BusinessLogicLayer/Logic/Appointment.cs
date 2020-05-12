@@ -18,8 +18,6 @@ namespace BusinessLogicLayer.Logic
             this._agendaContext = agendaContext;
         }
 
-        public abstract void DeleteAppointment(string appointmentName);
-
         public abstract void RenameAppointment(string appointmentName);
     }
 }

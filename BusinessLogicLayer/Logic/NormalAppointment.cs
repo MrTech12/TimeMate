@@ -11,17 +11,9 @@ namespace BusinessLogicLayer.Logic
         private INormalAppointmentContext _nAppointmentContext;
         private string messageToUser;
 
-        public NormalAppointment(IAgendaContext agendaContextInput, AppointmentDTO appointmentDTOInput, INormalAppointmentContext normalAppointmentContextInput) : base(appointmentDTOInput, agendaContextInput)
+        public NormalAppointment(IAgendaContext agendaContextInput, AppointmentDTO appointmentDTOInput, INormalAppointmentContext normalAppointmentContext) : base(appointmentDTOInput, agendaContextInput)
         {
-            this._nAppointmentContext = normalAppointmentContextInput;
-        }
-
-        public override void DeleteAppointment(string appointmentName)
-        {
-            AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaID = _agendaContext.GetAgendaID(appointmentName, accountDTO);
-            appointmentDTO.AppointmentID = _nAppointmentContext.GetNormalAppointmentID(appointmentDTO, agendaDTO.AgendaID);
-            _nAppointmentContext.DeleteNormalAppointment(appointmentDTO.AppointmentID, agendaDTO.AgendaID);
+            this._nAppointmentContext = normalAppointmentContext;
         }
 
         public override void RenameAppointment(string appointmentName)

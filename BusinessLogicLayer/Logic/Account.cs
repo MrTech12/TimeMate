@@ -17,6 +17,8 @@ namespace BusinessLogicLayer.Logic
         private string returnMessage;
         private string databaseOutput;
 
+        private List<string> agendaFromUser = new List<string>();
+
         public Account(AccountDTO accountDTO, IAccountContext accountContext, IAgendaContext agendaContext)
         {
             this.accountDTO = accountDTO;
@@ -140,5 +142,26 @@ namespace BusinessLogicLayer.Logic
             newAgendaDTO.Notification = "Nee";
             _agendaContext.AddNewJobAgenda(newAgendaDTO, accountDTO);
         }
+
+        /// <summary>
+        /// Get the agenda names of the current user.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetAgendaNames()
+        {
+            agendaFromUser = _agendaContext.GetAgendaNamesFromDB(accountDTO);
+            return agendaFromUser;
+        }
+
+        /// <summary>
+        /// Remove an agenda
+        /// </summary>
+        public void RemoveAgenda(string agendaName)
+        {
+            AgendaDTO agendaDTO = new AgendaDTO();
+            agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
+            _agendaContext.DeleteAgenda(agendaDTO.AgendaID, accountDTO);
+        }
+
     }
 }

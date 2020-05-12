@@ -15,8 +15,8 @@ namespace BusinessLogicLayer.Logic
         private INormalAppointmentContext _nAppointmentContext;
         private IChecklistAppointmentContext _cAppointmentContext;
         private AccountDTO accountDTO = new AccountDTO();
+        private AppointmentDTO appointmentDTO = new AppointmentDTO();
 
-        private List<string> agendaFromUser = new List<string>();
         private string messageToUser;
 
         public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext)
@@ -25,12 +25,21 @@ namespace BusinessLogicLayer.Logic
             this.accountDTO = accountDTO;
         }
 
-        public Agenda(AccountDTO accountDTOInput, IAgendaContext agendaContextInput, INormalAppointmentContext nAppointmentContextInput, IChecklistAppointmentContext checklistAppointmentContextInput)
+        public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext, INormalAppointmentContext nAppointmentContext, IChecklistAppointmentContext checklistAppointmentContext)
         {
-            this._agendaContext = agendaContextInput;
-            this.accountDTO = accountDTOInput;
-            this._nAppointmentContext = nAppointmentContextInput;
-            this._cAppointmentContext = checklistAppointmentContextInput;
+            this._agendaContext = agendaContext;
+            this.accountDTO = accountDTO;
+            this._nAppointmentContext = nAppointmentContext;
+            this._cAppointmentContext = checklistAppointmentContext;
+        }
+
+        public Agenda(AccountDTO accountDTO, AppointmentDTO appointmentDTO , IAgendaContext agendaContext, INormalAppointmentContext nAppointmentContext, IChecklistAppointmentContext checklistAppointmentContext)
+        {
+            this._agendaContext = agendaContext;
+            this.appointmentDTO = appointmentDTO;
+            this.accountDTO = accountDTO;
+            this._nAppointmentContext = nAppointmentContext;
+            this._cAppointmentContext = checklistAppointmentContext;
         }
 
         /// <summary>
@@ -41,26 +50,6 @@ namespace BusinessLogicLayer.Logic
             AgendaDTO agendaDTO = new AgendaDTO();
             agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
             _agendaContext.RenameAgenda(agendaDTO.AgendaID, accountDTO);
-        }
-
-        /// <summary>
-        /// Remove an agenda
-        /// </summary>
-        public void RemoveAgenda(string agendaName)
-        {
-            AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
-            _agendaContext.DeleteAgenda(agendaDTO.AgendaID, accountDTO);
-        }
-
-        /// <summary>
-        /// Get the agenda names of the current user.
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetAgendaNames()
-        {
-            agendaFromUser = _agendaContext.GetAgendaNamesFromDB(accountDTO);
-            return agendaFromUser;
         }
 
         /// <summary>
@@ -112,6 +101,24 @@ namespace BusinessLogicLayer.Logic
                 _cAppointmentContext.AddChecklistAppointment(appointmentDTO, agendaDTO.AgendaID);
             }
             return messageToUser;
+        }
+
+        public void DeleteAppointment(string appointmentName)
+        {
+            if (appointmentDTO.ChecklistItemName[0] != null)
+            {
+                AgendaDTO agendaDTO = new AgendaDTO();
+                agendaDTO.AgendaID = _agendaContext.GetAgendaID(appointmentName, accountDTO);
+                appointmentDTO.AppointmentID = _cAppointmentContext.GetChecklistAppointmentID(appointmentDTO, agendaDTO.AgendaID);
+                _cAppointmentContext.DeleteChecklistAppointment(appointmentDTO.AppointmentID, agendaDTO.AgendaID);
+            }
+            else
+            {
+                AgendaDTO agendaDTO = new AgendaDTO();
+                agendaDTO.AgendaID = _agendaContext.GetAgendaID(appointmentName, accountDTO);
+                appointmentDTO.AppointmentID = _nAppointmentContext.GetNormalAppointmentID(appointmentDTO, agendaDTO.AgendaID);
+                _nAppointmentContext.DeleteNormalAppointment(appointmentDTO.AppointmentID, agendaDTO.AgendaID);
+            }
         }
     }
 }
