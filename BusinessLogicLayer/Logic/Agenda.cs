@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BusinessLogicLayer.Logic
 {
-    public class AgendaLogic
+    public class Agenda
     {
         private IAgendaContext _agendaContext;
         private IAccountContext _accountContext;
@@ -19,13 +19,13 @@ namespace BusinessLogicLayer.Logic
         private List<string> agendaFromUser = new List<string>();
         private string messageToUser;
 
-        public AgendaLogic(AccountDTO accountDTO, IAgendaContext agendaContext)
+        public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext)
         {
             this._agendaContext = agendaContext;
             this.accountDTO = accountDTO;
         }
 
-        public AgendaLogic(AccountDTO accountDTOInput, IAgendaContext agendaContextInput, INormalAppointmentContext nAppointmentContextInput, IChecklistAppointmentContext checklistAppointmentContextInput)
+        public Agenda(AccountDTO accountDTOInput, IAgendaContext agendaContextInput, INormalAppointmentContext nAppointmentContextInput, IChecklistAppointmentContext checklistAppointmentContextInput)
         {
             this._agendaContext = agendaContextInput;
             this.accountDTO = accountDTOInput;

@@ -13,7 +13,7 @@ namespace TimeMate.Controllers
 {
     public class AccountController : Controller
     {
-        AccountLogic accountLogic;
+        Account accountLogic;
         AccountDTO accountDTO;
 
         [HttpGet]
@@ -32,7 +32,7 @@ namespace TimeMate.Controllers
                 accountDTO.MailAddress = loginViewModel.Mail;
                 accountDTO.Password = loginViewModel.Password;
 
-                accountLogic = new AccountLogic(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+                accountLogic = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
                 string result = accountLogic.UserLogsIn();
 
                 if (result != null)
@@ -76,7 +76,7 @@ namespace TimeMate.Controllers
                 accountDTO.JobDayType.Add(registerViewModel.job2DayType);
                 accountDTO.AllocatedHours = Convert.ToDouble(registerViewModel.AllocatedHours);
 
-                accountLogic = new AccountLogic(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+                accountLogic = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
 
                 string result = accountLogic.NewAccountValidation();
 

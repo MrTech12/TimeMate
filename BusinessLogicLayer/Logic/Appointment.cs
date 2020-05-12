@@ -6,13 +6,13 @@ using System.Text;
 
 namespace BusinessLogicLayer.Logic
 {
-    abstract public class AppointmentLogic
+    abstract public class Appointment
     {
         public IAgendaContext _agendaContext;
         public AccountDTO accountDTO;
         public AppointmentDTO appointmentDTO;
 
-        public AppointmentLogic(AppointmentDTO appointmentDTO, IAgendaContext agendaContext)
+        public Appointment(AppointmentDTO appointmentDTO, IAgendaContext agendaContext)
         {
             this.appointmentDTO = appointmentDTO;
             this._agendaContext = agendaContext;

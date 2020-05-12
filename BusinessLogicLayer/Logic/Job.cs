@@ -6,13 +6,13 @@ using System.Text;
 
 namespace BusinessLogicLayer.Logic
 {
-    public class JobLogic
+    public class Job
     {
         private IJobContext _jobContext;
         private AccountDTO accountDTO;
         private string messageToUser;
 
-        public JobLogic(AccountDTO accountDTOInput, IJobContext jobContextInput)
+        public Job(AccountDTO accountDTOInput, IJobContext jobContextInput)
         {
             this.accountDTO = accountDTOInput;
             this._jobContext = jobContextInput;

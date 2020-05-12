@@ -6,12 +6,12 @@ using System.Text;
 
 namespace BusinessLogicLayer.Logic
 {
-    public class ChecklistAppointmentLogic : AppointmentLogic
+    public class ChecklistAppointment : Appointment
     {
         private IChecklistAppointmentContext _cAppointmentContext;
         private string messageToUser;
 
-        public ChecklistAppointmentLogic(IAgendaContext agendaContextInput, AppointmentDTO appointmentDTOInput, IChecklistAppointmentContext checklistAppointmentContextInput) : base(appointmentDTOInput, agendaContextInput)
+        public ChecklistAppointment(IAgendaContext agendaContextInput, AppointmentDTO appointmentDTOInput, IChecklistAppointmentContext checklistAppointmentContextInput) : base(appointmentDTOInput, agendaContextInput)
         {
             this._cAppointmentContext = checklistAppointmentContextInput;
         }

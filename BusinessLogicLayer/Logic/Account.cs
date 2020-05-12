@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace BusinessLogicLayer.Logic
 {
-    public class AccountLogic
+    public class Account
     {
         private IAccountContext _accountContext;
         private IAgendaContext _agendaContext;
@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Logic
         private string returnMessage;
         private string databaseOutput;
 
-        public AccountLogic(AccountDTO accountDTO, IAccountContext accountContext, IAgendaContext agendaContext)
+        public Account(AccountDTO accountDTO, IAccountContext accountContext, IAgendaContext agendaContext)
         {
             this.accountDTO = accountDTO;
             this._accountContext = accountContext;

@@ -8,7 +8,7 @@ namespace TimeMateTest.BLL
 {
     public class AccountLogicTest
     {
-        AccountLogic accountLogic;
+        Account accountLogic;
         AccountDTO accountDTO;
 
         [Fact]
@@ -16,7 +16,7 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { MailAddress = "test@gmail.com", Password = "test123"};
-            accountLogic = new AccountLogic(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = accountLogic.UserLogsIn();
 
@@ -28,7 +28,7 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "cmck323kc" };
-            accountLogic = new AccountLogic(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = accountLogic.UserLogsIn();
 
@@ -40,7 +40,7 @@ namespace TimeMateTest.BLL
         {
             int output;
             accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "cmck323kc" };
-            accountLogic = new AccountLogic(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = accountLogic.GetActiveAccountID(accountDTO.MailAddress);
 
@@ -52,7 +52,7 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwieiwi231@#" };
-            accountLogic = new AccountLogic(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = accountLogic.NewAccountValidation();
 
@@ -64,7 +64,7 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwiEEWwi231WE" };
-            accountLogic = new AccountLogic(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = accountLogic.NewAccountValidation();
 
@@ -76,7 +76,7 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwieiwieWE@#" };
-            accountLogic = new AccountLogic(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = accountLogic.NewAccountValidation();
 
@@ -88,7 +88,7 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Bert", MailAddress = "bert@gmail.com", Password = "qwieEW12iwieWE@#" };
-            accountLogic = new AccountLogic(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = accountLogic.NewAccountValidation();
 

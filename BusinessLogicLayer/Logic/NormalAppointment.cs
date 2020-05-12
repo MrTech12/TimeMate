@@ -6,12 +6,12 @@ using System.Text;
 
 namespace BusinessLogicLayer.Logic
 {
-    public class NormalAppointmentLogic : AppointmentLogic
+    public class NormalAppointment : Appointment
     {
         private INormalAppointmentContext _nAppointmentContext;
         private string messageToUser;
 
-        public NormalAppointmentLogic(IAgendaContext agendaContextInput, AppointmentDTO appointmentDTOInput, INormalAppointmentContext normalAppointmentContextInput) : base(appointmentDTOInput, agendaContextInput)
+        public NormalAppointment(IAgendaContext agendaContextInput, AppointmentDTO appointmentDTOInput, INormalAppointmentContext normalAppointmentContextInput) : base(appointmentDTOInput, agendaContextInput)
         {
             this._nAppointmentContext = normalAppointmentContextInput;
         }
