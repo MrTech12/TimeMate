@@ -1,15 +1,12 @@
-﻿@model TimeMate.Models.NAppointmentViewModel
+﻿@model TimeMate.Models.CAppointmentViewModel
 
 @{
-    ViewData["Title"] = "Nieuwe afspraak toevoegen";
+    ViewData["Title"] = "Index";
 }
 
-<link rel="stylesheet" type="text/css" href="~/css/AddNormalAppointment.css" />
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/js/AddNormalAppointment.js"></script>
+<h1>Index</h1>
 
-<h1>Nieuwe afspraak toevoegen</h1>
-
+<h4>CAppointmentViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -45,22 +42,44 @@
                 @Html.DropDownListFor(x => x.AgendaName, new SelectList(Model.AgendaName))
                 <span asp-validation-for="AgendaName" class="text-danger"></span>
             </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input type="button" id="qwerty" class="btn btn-secondary" value="Maak text dikgedrukt" />
-                @*<input type="text" asp-for="Description" class="form-control" id="description" />*@
-                @*<textarea class="description" rows="10" cols="70" contenteditable="true"></textarea>*@
-                <input type="text" id="sendController" asp-for="Description" hidden="hidden" />
 
-                <div class="description" id="descriptionBox" contenteditable="true" style="width:360px; height: 120px" ; border: 1px solid #ccc;></div>
-                <span asp-validation-for="Description" class="text-danger"></span>
+
+            <div class="form-group">
+                <label asp-for="Task[0]" class="control-label"></label>
+                <input asp-for="Task[0]" class="form-control" />
+                <span asp-validation-for="Task[0]" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Task[1]" class="control-label"></label>
+                <input asp-for="Task[1]" class="form-control" />
+                <span asp-validation-for="Task[1]" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Task[2]" class="control-label"></label>
+                <input asp-for="Task[2]" class="form-control" />
+                <span asp-validation-for="Task[2]" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Task[3]" class="control-label"></label>
+                <input asp-for="Task[3]" class="form-control" />
+                <span asp-validation-for="Task[3]" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Task[4]" class="control-label"></label>
+                <input asp-for="Task[4]" class="form-control" />
+                <span asp-validation-for="Task[4]" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
+
         </form>
     </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

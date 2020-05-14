@@ -24,13 +24,13 @@ namespace TimeMate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(LogInViewModel loginViewModel)
+        public IActionResult Index(LogInViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 accountDTO = new AccountDTO();
-                accountDTO.MailAddress = loginViewModel.Mail;
-                accountDTO.Password = loginViewModel.Password;
+                accountDTO.MailAddress = viewModel.Mail;
+                accountDTO.Password = viewModel.Password;
 
                 accountLogic = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
                 string result = accountLogic.UserLogsIn();
@@ -38,7 +38,7 @@ namespace TimeMate.Controllers
                 if (result != null)
                 {
                     ModelState.AddModelError("", result);
-                    return View(loginViewModel);
+                    return View(viewModel);
                 }
                 else
                 {
@@ -48,7 +48,7 @@ namespace TimeMate.Controllers
             }
             else
             {
-                return View(loginViewModel);
+                return View(viewModel);
             }
         }
 
@@ -60,21 +60,21 @@ namespace TimeMate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterViewModel registerViewModel)
+        public IActionResult Register(RegisterViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 accountDTO = new AccountDTO();
-                accountDTO.FirstName = registerViewModel.FirstName;
-                accountDTO.MailAddress = registerViewModel.Mail;
-                accountDTO.Password = registerViewModel.Password;
-                accountDTO.JobCount = registerViewModel.JobAmount;
+                accountDTO.FirstName = viewModel.FirstName;
+                accountDTO.MailAddress = viewModel.Mail;
+                accountDTO.Password = viewModel.Password;
+                accountDTO.JobCount = viewModel.JobAmount;
 
-                accountDTO.JobHourlyWage.Add(Convert.ToDouble(registerViewModel.job1Wage));
-                accountDTO.JobDayType.Add(registerViewModel.job1DayType);
-                accountDTO.JobHourlyWage.Add(Convert.ToDouble(registerViewModel.job2Wage));
-                accountDTO.JobDayType.Add(registerViewModel.job2DayType);
-                accountDTO.AllocatedHours = Convert.ToDouble(registerViewModel.AllocatedHours);
+                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.job1Wage));
+                accountDTO.JobDayType.Add(viewModel.job1DayType);
+                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.job2Wage));
+                accountDTO.JobDayType.Add(viewModel.job2DayType);
+                accountDTO.AllocatedHours = Convert.ToDouble(viewModel.AllocatedHours);
 
                 accountLogic = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
 
@@ -83,7 +83,7 @@ namespace TimeMate.Controllers
                 if (result != null)
                 {
                     ModelState.AddModelError("", result);
-                    return View(registerViewModel);
+                    return View(viewModel);
                 }
                 else
                 {
@@ -93,7 +93,7 @@ namespace TimeMate.Controllers
             }
             else
             {
-                return View(registerViewModel);
+                return View(viewModel);
             }
         }
     }

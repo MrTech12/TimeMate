@@ -14,6 +14,8 @@ namespace TimeMate.Controllers
     {
         AccountDTO accountDTO = new AccountDTO();
         Account account;
+        Agenda agenda;
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -24,9 +26,28 @@ namespace TimeMate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(NAppointmentViewModel nAppointmentViewModel)
+        public IActionResult Index(NAppointmentViewModel viewModel)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                AppointmentDTO appointmentDTO = new AppointmentDTO();
+                appointmentDTO.AppointmentName = viewModel.Name;
+                appointmentDTO.StartDate = viewModel.StartDate + viewModel.StartTime;
+                appointmentDTO.EndDate = viewModel.EndDate + viewModel.EndTime;
+                appointmentDTO.AgendaName = viewModel.AgendaName[0];
+                appointmentDTO.Description = viewModel.Description;
+
+                agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLNormalAppointmentContext(), new SQLChecklistAppointmentContext());
+
+                agenda.CreateNAppointment(appointmentDTO, appointmentDTO.AgendaName);
+
+                return RedirectToAction("Index", "Agenda", new { id = accountDTO.AccountID });
+            }
+            else
+            {
+                return View(viewModel);
+            }
+
         }
     }
 }

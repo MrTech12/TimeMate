@@ -1,4 +1,11 @@
-﻿#description {
-    width: 150%;
-    height: 200px;
+﻿.description{
+    
+}
+
+.bolding {
+    font-weight: bold;
+}
+
+.normal-text {
+    font-weight: normal;
 }
