@@ -31,9 +31,9 @@ namespace TimeMate.Controllers
             if (ModelState.IsValid)
             {
                 AppointmentDTO appointmentDTO = new AppointmentDTO();
-                appointmentDTO.AppointmentName = viewModel.Name;
-                appointmentDTO.StartDate = viewModel.StartDate + viewModel.StartTime;
-                appointmentDTO.EndDate = viewModel.EndDate + viewModel.EndTime;
+                appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.Name;
+                appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
+                appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
                 appointmentDTO.AgendaName = viewModel.AgendaName[0];
                 appointmentDTO.Description = viewModel.Description;
 

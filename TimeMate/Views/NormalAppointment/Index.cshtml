@@ -16,32 +16,32 @@
         <form asp-action="Index">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="AppointmentViewModel.Name" class="control-label"></label>
+                <input asp-for="AppointmentViewModel.Name" class="form-control" />
+                <span asp-validation-for="AppointmentViewModel.Name" class="text-danger"></span>
             </div>
             <div class="row">
                 <div class="col form-group">
-                    <label asp-for="StartDate" class="control-label"></label>
-                    <input type="date" asp-for="StartDate" class="form-control" />
-                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                    <label asp-for="AppointmentViewModel.StartDate" class="control-label"></label>
+                    <input type="date" asp-for="AppointmentViewModel.StartDate" class="form-control" />
+                    <span asp-validation-for="AppointmentViewModel.StartDate" class="text-danger"></span>
                 </div>
                 <div class="col form-group">
-                    <label asp-for="StartTime" class="control-label"></label>
-                    <input type="time" asp-for="StartTime" class="form-control" />
-                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                    <label asp-for="AppointmentViewModel.StartTime" class="control-label"></label>
+                    <input type="time" asp-for="AppointmentViewModel.StartTime" class="form-control" />
+                    <span asp-validation-for="AppointmentViewModel.StartTime" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="col form-group">
-                    <label asp-for="EndDate" class="control-label"></label>
-                    <input type="date" asp-for="EndDate" class="form-control" />
-                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                    <label asp-for="AppointmentViewModel.EndDate" class="control-label"></label>
+                    <input type="date" asp-for="AppointmentViewModel.EndDate" class="form-control" />
+                    <span asp-validation-for="AppointmentViewModel.EndDate" class="text-danger"></span>
                 </div>
                 <div class="col form-group">
-                    <label asp-for="EndTime" class="control-label"></label>
-                    <input type="time" asp-for="EndTime" class="form-control" />
-                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                    <label asp-for="AppointmentViewModel.EndTime" class="control-label"></label>
+                    <input type="time" asp-for="AppointmentViewModel.EndTime" class="form-control" />
+                    <span asp-validation-for="AppointmentViewModel.EndTime" class="text-danger"></span>
                 </div>
             </div>
             <br />
@@ -54,6 +54,7 @@
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input type="button" id="bolding-text" class="btn btn-secondary" value="Maak text dikgedrukt" />
+                <input type="button" id="bolding-text" class="btn btn-secondary" value="Tekst opslaan" onclick="GetDescriptionInput()" />
                 <div class="description" id="descriptionBox" contenteditable="true" style="width:360px; height: 120px" ; border: 1px solid #ccc;></div>
                 <span asp-validation-for="Description" class="text-danger"></span>
                 <input type="text" id="sendController" asp-for="Description" hidden="hidden" />
