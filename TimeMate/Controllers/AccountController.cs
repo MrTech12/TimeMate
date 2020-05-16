@@ -13,7 +13,7 @@ namespace TimeMate.Controllers
 {
     public class AccountController : Controller
     {
-        Account accountLogic;
+        Account account;
         AccountDTO accountDTO;
 
         [HttpGet]
@@ -39,8 +39,8 @@ namespace TimeMate.Controllers
                 accountDTO.MailAddress = viewModel.Mail;
                 accountDTO.Password = viewModel.Password;
 
-                accountLogic = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
-                string result = accountLogic.UserLogsIn();
+                account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+                string result = account.UserLogsIn();
 
                 if (result != null)
                 {
@@ -49,7 +49,7 @@ namespace TimeMate.Controllers
                 }
                 else
                 {
-                    accountDTO.AccountID = accountLogic.GetActiveAccountID(accountDTO.MailAddress);
+                    accountDTO.AccountID = account.GetActiveAccountID(accountDTO.MailAddress);
                     HttpContext.Session.SetInt32("accountID", accountDTO.AccountID);
                     return RedirectToAction("Index", "Agenda");
                 }
@@ -84,9 +84,9 @@ namespace TimeMate.Controllers
                 accountDTO.JobDayType.Add(viewModel.job2DayType);
                 accountDTO.AllocatedHours = Convert.ToDouble(viewModel.AllocatedHours);
 
-                accountLogic = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+                account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
 
-                string result = accountLogic.NewAccountValidation();
+                string result = account.NewAccountValidation();
 
                 if (result != null)
                 {
@@ -95,7 +95,7 @@ namespace TimeMate.Controllers
                 }
                 else
                 {
-                    accountDTO.AccountID = accountLogic.GetActiveAccountID(accountDTO.MailAddress);
+                    accountDTO.AccountID = account.GetActiveAccountID(accountDTO.MailAddress);
                     HttpContext.Session.SetInt32("accountID", accountDTO.AccountID);
                     return RedirectToAction("Index", "Agenda");
                 }
