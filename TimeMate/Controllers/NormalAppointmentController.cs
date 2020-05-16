@@ -37,7 +37,7 @@ namespace TimeMate.Controllers
                 appointmentDTO.AgendaName = viewModel.AgendaName[0];
                 appointmentDTO.Description = viewModel.Description;
 
-                agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLNormalAppointmentContext(), new SQLChecklistAppointmentContext());
+                agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext(), new SQLNormalAppointmentContext());
 
                 agenda.CreateNAppointment(appointmentDTO, appointmentDTO.AgendaName);
 

@@ -8,22 +8,7 @@ namespace TimeMateTest.Stubs
 {
     class StubNormalAppointmentContext : INormalAppointmentContext
     {
-        public void AddNormalAppointment(AppointmentDTO appointmentDTO, int agendaIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteNormalAppointment(int normalAppointmentIndex, int agendaIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetNormalAppointmentID(AppointmentDTO appointmentDTO, int agendaIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RenameNormalAppointment(int normalAppointmentIndex, int agendaIndex)
+        public void AddDescription(AppointmentDTO appointmentDTO)
         {
             throw new NotImplementedException();
         }

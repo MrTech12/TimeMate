@@ -12,22 +12,20 @@ namespace DataAccessLayer.Contexts
         private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
 
         /// <summary>
-        /// Add a normal appointment to an agenda.
+        /// Add a description of an appointment to the db.
         /// </summary>
-        public void AddNormalAppointment(AppointmentDTO appointmentDTO, int agendaIndex)
+        /// <param name="appointmentDTO"></param>
+        public void AddDescription(AppointmentDTO appointmentDTO)
         {
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Normal_Appointment](AgendaID, Name, Starting, Ending, Details) VALUES (@0, @1, @2, @3, @4)", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Appointment_Details](AppointmentID, Details) VALUES (@0, @1)", databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", agendaIndex);
-                    insertQuerry.Parameters.AddWithValue("1", appointmentDTO.AppointmentName);
-                    insertQuerry.Parameters.AddWithValue("2", appointmentDTO.StartDate);
-                    insertQuerry.Parameters.AddWithValue("3", appointmentDTO.EndDate);
-                    insertQuerry.Parameters.AddWithValue("4", appointmentDTO.Description);
+                    insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
+                    insertQuerry.Parameters.AddWithValue("1", appointmentDTO.Description);
 
                     insertQuerry.ExecuteNonQuery();
                 }
@@ -37,21 +35,6 @@ namespace DataAccessLayer.Contexts
                 //Display the error.
                 throw;
             }
-        }
-
-        public void DeleteNormalAppointment(int normalAppointmentIndex, int agendaIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetNormalAppointmentID(AppointmentDTO appointmentDTO, int agendaIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RenameNormalAppointment(int normalAppointmentIndex, int agendaIndex)
-        {
-            throw new NotImplementedException();
         }
     }
 }

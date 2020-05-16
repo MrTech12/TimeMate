@@ -160,7 +160,7 @@ namespace DataAccessLayer.Contexts
         }
 
         /// <summary>
-        /// Get the agendaID of an account.
+        /// Get the agendaID of an agenda.
         /// </summary>
         public int GetAgendaID(string agendaNameInput, AccountDTO accountDTO)
         {
