@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TimeMate.Models;
 using DataAccessLayer.DTO;
-using DataAccessLayer.Interfaces;
 using BusinessLogicLayer.Logic;
 using DataAccessLayer.Contexts;
+using Microsoft.AspNetCore.Http;
 
 namespace TimeMate.Controllers
 {
@@ -19,8 +19,15 @@ namespace TimeMate.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            LogInViewModel loginViewModel = new LogInViewModel();
-            return View(loginViewModel);
+            if (HttpContext.Session.GetInt32("accountID") != null)
+            {
+                return RedirectToAction("Index", "Agenda");
+            }
+            else
+            {
+                LogInViewModel loginViewModel = new LogInViewModel();
+                return View(loginViewModel);
+            }
         }
 
         [HttpPost]
@@ -43,7 +50,8 @@ namespace TimeMate.Controllers
                 else
                 {
                     accountDTO.AccountID = accountLogic.GetActiveAccountID(accountDTO.MailAddress);
-                    return RedirectToAction("Index", "Agenda", new {id = accountDTO.AccountID});
+                    HttpContext.Session.SetInt32("accountID", accountDTO.AccountID);
+                    return RedirectToAction("Index", "Agenda");
                 }
             }
             else
@@ -88,13 +96,20 @@ namespace TimeMate.Controllers
                 else
                 {
                     accountDTO.AccountID = accountLogic.GetActiveAccountID(accountDTO.MailAddress);
-                    return RedirectToAction("Index", "Agenda", new { id = accountDTO.AccountID });
+                    HttpContext.Session.SetInt32("accountID", accountDTO.AccountID);
+                    return RedirectToAction("Index", "Agenda");
                 }
             }
             else
             {
                 return View(viewModel);
             }
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("accountID");
+            return RedirectToAction("Index", "Account");
         }
     }
 }
