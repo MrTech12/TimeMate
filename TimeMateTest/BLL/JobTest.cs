@@ -4,7 +4,7 @@ using Xunit;
 
 namespace TimeMateTest.BLL
 {
-    class AgendaLogicTest
+    class JobTest
     {
     }
 }

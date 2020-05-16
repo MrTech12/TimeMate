@@ -6,9 +6,9 @@ using Xunit;
 
 namespace TimeMateTest.BLL
 {
-    public class AccountLogicTest
+    public class AccountTest
     {
-        Account accountLogic;
+        Account account;
         AccountDTO accountDTO;
 
         [Fact]
@@ -16,9 +16,9 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { MailAddress = "test@gmail.com", Password = "test123"};
-            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = accountLogic.UserLogsIn();
+            output = account.UserLogsIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
@@ -28,9 +28,9 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "cmck323kc" };
-            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = accountLogic.UserLogsIn();
+            output = account.UserLogsIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
@@ -40,9 +40,9 @@ namespace TimeMateTest.BLL
         {
             int output;
             accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "cmck323kc" };
-            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = accountLogic.GetActiveAccountID(accountDTO.MailAddress);
+            output = account.GetActiveAccountID(accountDTO.MailAddress);
 
             Assert.Equal(0, output);
         }
@@ -52,9 +52,9 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwieiwi231@#" };
-            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = accountLogic.NewAccountValidation();
+            output = account.NewAccountValidation();
 
             Assert.Equal("Het wachtwoord moet een hoofdletter bevatten.", output);
         }
@@ -64,9 +64,9 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwiEEWwi231WE" };
-            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = accountLogic.NewAccountValidation();
+            output = account.NewAccountValidation();
 
             Assert.Equal("Het wachtwoord moet een speciale karakter bevatten.", output);
         }
@@ -76,9 +76,9 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwieiwieWE@#" };
-            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = accountLogic.NewAccountValidation();
+            output = account.NewAccountValidation();
 
             Assert.Equal("Het wachtwoord moet een cijfer bevatten.", output);
         }
@@ -88,9 +88,9 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Bert", MailAddress = "bert@gmail.com", Password = "qwieEW12iwieWE@#" };
-            accountLogic = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = accountLogic.NewAccountValidation();
+            output = account.NewAccountValidation();
 
             Assert.Equal("Er bestaat al een account met dit mailadres.", output);
         }
