@@ -46,7 +46,7 @@ namespace TimeMate.Controllers
 
             agenda.CreateCAppointment(appointmentDTO, appointmentDTO.AgendaName);
 
-            return RedirectToAction("Index", "Agenda", new { id = accountDTO.AccountID });
+            return RedirectToAction("Index", "Agenda");
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.Logic;
 using DataAccessLayer.Contexts;
 using DataAccessLayer.DTO;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TimeMate.Models;
 
@@ -15,15 +16,23 @@ namespace TimeMate.Controllers
         AccountDTO accountDTO = new AccountDTO();
 
         [HttpGet]
-        public IActionResult Index(int id)
+        public IActionResult Index()
         {
-            accountDTO.AccountID = id;
-            Agenda agendaLogic = new Agenda(accountDTO, new SQLAgendaContext());
-            List<AppointmentDTO> appointmentModelForView = new List<AppointmentDTO>();
+            if (HttpContext.Session.GetInt32("accountID") != null)
+            {
+                var accountID = HttpContext.Session.GetInt32("accountID");
+                accountDTO.AccountID = Convert.ToInt32(accountID);
+                Agenda agendaLogic = new Agenda(accountDTO, new SQLAgendaContext());
+                List<AppointmentDTO> appointmentModelForView = new List<AppointmentDTO>();
 
-            appointmentModelForView = agendaLogic.RetrieveAppointments();
+                appointmentModelForView = agendaLogic.RetrieveAppointments();
 
-            return View(appointmentModelForView);
+                return View(appointmentModelForView);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Account");
+            }
         }
 
         [HttpGet]
@@ -41,7 +50,7 @@ namespace TimeMate.Controllers
                 AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = viewModel.Name, AgendaColor = viewModel.Color, Notification = viewModel.NotificationType };
                 Account accountLogic = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
                 accountLogic.CreateAgenda(agendaDTO);
-                return RedirectToAction("Index", "Agenda", new { id = accountDTO.AccountID });
+                return RedirectToAction("Index", "Agenda");
             }
             else
             {
