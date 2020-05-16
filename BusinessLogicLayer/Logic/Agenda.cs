@@ -88,7 +88,10 @@ namespace BusinessLogicLayer.Logic
 
             if (appointmentDTO.ChecklistItemName[0] != "")
             {
-                _cAppointmentContext.AddTask(appointmentDTO);
+                foreach (var item in appointmentDTO.ChecklistItemName)
+                {
+                    _cAppointmentContext.AddTask(appointmentDTO.AppointmentID, item);
+                }
             }
         }
 

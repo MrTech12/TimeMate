@@ -9,10 +9,6 @@ namespace DataAccessLayer.Contexts
 {
     public class SQLAgendaContext : IAgendaContext
     {
-        private AgendaDTO agendaDTO = new AgendaDTO();
-
-        private List<string> agendaNames = new List<string>();
-
         private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
 
         /// <summary>
@@ -131,6 +127,7 @@ namespace DataAccessLayer.Contexts
         /// <returns></returns>
         public List<string> GetAgendaNamesFromDB(AccountDTO accountDTO)
         {
+            List<string> agendaNames = new List<string>();
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))

@@ -8,7 +8,7 @@ namespace TimeMateTest.Stubs
 {
     class StubChecklistAppointmentContext : IChecklistAppointmentContext
     {
-        public void AddTask(AppointmentDTO appointmentDTO)
+        public void AddTask(int appointmentID, string taskName)
         {
             throw new NotImplementedException();
         }

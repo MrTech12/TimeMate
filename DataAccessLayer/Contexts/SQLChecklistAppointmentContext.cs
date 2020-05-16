@@ -15,8 +15,7 @@ namespace DataAccessLayer.Contexts
         /// <summary>
         /// Add task(s) of an appointment to the db.
         /// </summary>
-        /// <param name="appointmentDTO"></param>
-        public void AddTask(AppointmentDTO appointmentDTO)
+        public void AddTask(int appointmentID, string taskName)
         {
             try
             {
@@ -26,14 +25,10 @@ namespace DataAccessLayer.Contexts
 
                     SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Task](AppointmentID, Task_name, Task_checked) VALUES (@0, @1, @2)", databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
+                    insertQuerry.Parameters.AddWithValue("0", appointmentID);
+                    insertQuerry.Parameters.AddWithValue("1", taskName);
                     insertQuerry.Parameters.AddWithValue("2", false);
-
-                    foreach (var item in appointmentDTO.ChecklistItemName)
-                    {
-                        insertQuerry.Parameters.AddWithValue("1", item);
-                        insertQuerry.ExecuteNonQuery();
-                    }
+                    insertQuerry.ExecuteNonQuery();
                 }
             }
             catch (SqlException)
