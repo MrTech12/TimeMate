@@ -4,9 +4,9 @@
     ViewData["Title"] = "Nieuwe afspraak toevoegen";
 }
 
-<link rel="stylesheet" type="text/css" href="~/css/AddNormalAppointment.css" />
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/js/AddNormalAppointment.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/AddNormalAppointment.css" />
 
 <h1>Nieuwe afspraak toevoegen</h1>
 
@@ -20,26 +20,31 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input type="date" asp-for="StartDate" class="form-control" />
-                <span asp-validation-for="StartDate" class="text-danger"></span>
+            <div class="row">
+                <div class="col form-group">
+                    <label asp-for="StartDate" class="control-label"></label>
+                    <input type="date" asp-for="StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="col form-group">
+                    <label asp-for="StartTime" class="control-label"></label>
+                    <input type="time" asp-for="StartTime" class="form-control" />
+                    <span asp-validation-for="StartTime" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
-                <input type="time" asp-for="StartTime" class="form-control" />
-                <span asp-validation-for="StartTime" class="text-danger"></span>
+            <div class="row">
+                <div class="col form-group">
+                    <label asp-for="EndDate" class="control-label"></label>
+                    <input type="date" asp-for="EndDate" class="form-control" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+                <div class="col form-group">
+                    <label asp-for="EndTime" class="control-label"></label>
+                    <input type="time" asp-for="EndTime" class="form-control" />
+                    <span asp-validation-for="EndTime" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input type="date" asp-for="EndDate" class="form-control" />
-                <span asp-validation-for="EndDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
-                <input type="time" asp-for="EndTime" class="form-control" />
-                <span asp-validation-for="EndTime" class="text-danger"></span>
-            </div>
+            <br />
             <div class="form-group">
                 <label asp-for="AgendaName" class="control-label"></label>
                 @Html.DropDownListFor(x => x.AgendaName, new SelectList(Model.AgendaName))
@@ -48,16 +53,14 @@
             <br />
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input type="button" id="qwerty" class="btn btn-secondary" value="Maak text dikgedrukt" />
-                @*<input type="text" asp-for="Description" class="form-control" id="description" />*@
-                @*<textarea class="description" rows="10" cols="70" contenteditable="true"></textarea>*@
-                <input type="text" id="sendController" asp-for="Description" hidden="hidden" />
-
+                <input type="button" id="bolding-text" class="btn btn-secondary" value="Maak text dikgedrukt" />
                 <div class="description" id="descriptionBox" contenteditable="true" style="width:360px; height: 120px" ; border: 1px solid #ccc;></div>
                 <span asp-validation-for="Description" class="text-danger"></span>
+                <input type="text" id="sendController" asp-for="Description" hidden="hidden" />
+                @*<textarea class="description" rows="10" cols="70" contenteditable="true"></textarea>*@
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Afspraak toevoegen" class="btn btn-primary" />
             </div>
         </form>
     </div>

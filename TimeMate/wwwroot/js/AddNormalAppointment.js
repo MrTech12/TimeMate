@@ -1,7 +1,7 @@
 ﻿var index = 0;
 
 $(document).ready(function () {
-    $("#qwerty").click(function () {
+    $("#bolding-text").click(function () {
         ////var text = window.getSelection();
         //console.log("Version 1: " + document.getElementById("test").selectionStart, document.getElementById("test").selectionEnd)
         //if (document.getSelection()) {

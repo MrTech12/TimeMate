@@ -1,5 +1,7 @@
-﻿.description{
-    
+﻿#descriptionBox {
+    width: 360px;
+    height: 120px;
+    border: 1px solid #ccc;
 }
 
 .bolding {

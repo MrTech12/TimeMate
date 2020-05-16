@@ -36,7 +36,7 @@ namespace TimeMate.Models
         [Display(Name = "Kies een agenda uit.")]
         public List<string> AgendaName { get; set; }
 
-        [Display(Name = "Voer een aantal taken in.")]
+        [Display(Name = "Voer een taak in.")]
         public List<string> Task { get; set; }
     }
 }

@@ -12,8 +12,8 @@ namespace DataAccessLayer.DTO
         private DateTime endDate;
         private string agendaName;
         private string description;
-        private List<string> checklistItemName;
-        private List<bool> checklistItemChecked;
+        private List<string> checklistItemName = new List<string>();
+        private List<bool> checklistItemChecked = new List<bool>();
 
         public int AppointmentID
         {

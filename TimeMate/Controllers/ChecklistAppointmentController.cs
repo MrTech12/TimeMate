@@ -33,11 +33,11 @@ namespace TimeMate.Controllers
             appointmentDTO.StartDate = viewModel.StartDate + viewModel.StartTime;
             appointmentDTO.EndDate = viewModel.EndDate + viewModel.EndTime;
             appointmentDTO.AgendaName = viewModel.AgendaName[0];
-
-            foreach (var item in viewModel.Task)
-            {
-                appointmentDTO.ChecklistItemName.Add(item);
-            }
+            appointmentDTO.ChecklistItemName.AddRange(viewModel.Task);
+            //foreach (var item in viewModel.Task)
+            //{
+            //    appointmentDTO.ChecklistItemName.Add(item);
+            //}
             agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLNormalAppointmentContext(), new SQLChecklistAppointmentContext());
 
             agenda.CreateCAppointment(appointmentDTO, appointmentDTO.AgendaName);

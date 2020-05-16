@@ -3,6 +3,7 @@ using DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 
 namespace DataAccessLayer.Contexts
@@ -37,7 +38,7 @@ namespace DataAccessLayer.Contexts
 
                     insertQuerry = new SqlCommand("INSERT INTO [Task](CAppointmentID, Task_name, Task_checked) VALUES (@0, @1, @2)", databaseConn);
 
-                    foreach (var item in appointmentDTO.ChecklistItemName)
+                    foreach (var item in appointmentDTO.ChecklistItemName.Where(x => !x.Contains("")))
                     {
                         insertQuerry.Parameters.AddWithValue("0", resultedAppointmentID);
                         insertQuerry.Parameters.AddWithValue("1", item);
