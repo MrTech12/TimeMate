@@ -7,6 +7,7 @@ using DataAccessLayer.Contexts;
 using DataAccessLayer.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TimeMate.Models;
 
 namespace TimeMate.Controllers
@@ -14,6 +15,7 @@ namespace TimeMate.Controllers
     public class AgendaController : Controller
     {
         AccountDTO accountDTO = new AccountDTO();
+        Agenda agenda;
 
         [HttpGet]
         public IActionResult Index()
@@ -56,6 +58,51 @@ namespace TimeMate.Controllers
             {
                 return View(viewModel);
             }
+        }
+
+        [HttpGet]
+        public IActionResult RetrieveAppointmentDetails(string json)
+        {
+            var selectedAppointment = JsonConvert.DeserializeObject<List<string>>(json);
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            appointmentDTO.AppointmentName = selectedAppointment[0];
+            appointmentDTO.StartDate = Convert.ToDateTime(selectedAppointment[1]);
+            appointmentDTO.EndDate = Convert.ToDateTime(selectedAppointment[2]);
+            appointmentDTO.AgendaName = selectedAppointment[3];
+
+            NormalAppointment normalAppointment = new NormalAppointment(appointmentDTO, new SQLNormalAppointmentContext());
+            ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, new SQLChecklistAppointmentContext());
+
+            agenda = new Agenda(accountDTO, new SQLAgendaContext());
+            int agendaID = agenda.GetAgendaID(appointmentDTO.AgendaName);
+            appointmentDTO.AppointmentID = agenda.GetAppointmentID(appointmentDTO, agendaID);
+            string description = normalAppointment.RetrieveDescription(appointmentDTO.AppointmentID);
+
+            if (description == null)
+            {
+                appointmentDTO = checklistAppointment.RetrieveTask(appointmentDTO.AppointmentID);
+
+                if (appointmentDTO.ChecklistItemName != null)
+                {
+                    List<string> tasks = new List<string>();
+                    for (int i = 0; i < appointmentDTO.ChecklistItemName.Count; i++)
+                    {
+                        tasks.Add(appointmentDTO.ChecklistItemName[i]);
+                        tasks.Add(Convert.ToString(appointmentDTO.ChecklistItemChecked[i]));
+                    }
+
+                    return Json(appointmentDTO);
+                }
+                else
+                {
+                    return Json(null);
+                }
+            }
+            else if (description != null)
+            {
+                return Json(description);
+            }
+            return View();
         }
     }
 }

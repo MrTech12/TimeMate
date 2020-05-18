@@ -17,5 +17,10 @@ namespace TimeMateTest.Stubs
         {
             throw new NotImplementedException();
         }
+
+        public AppointmentDTO GetTask(int appointmentIndex)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

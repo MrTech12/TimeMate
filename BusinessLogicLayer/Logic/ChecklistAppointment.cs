@@ -11,9 +11,16 @@ namespace BusinessLogicLayer.Logic
         private IChecklistAppointmentContext _cAppointmentContext;
         private string messageToUser;
 
-        public ChecklistAppointment(IAgendaContext agendaContextInput, AppointmentDTO appointmentDTOInput, IChecklistAppointmentContext checklistAppointmentContext) : base(appointmentDTOInput, agendaContextInput)
+        public ChecklistAppointment(AppointmentDTO appointmentDTO, IChecklistAppointmentContext checklistAppointmentContext) : base(appointmentDTO)
         {
             this._cAppointmentContext = checklistAppointmentContext;
+        }
+
+        public AppointmentDTO RetrieveTask(int appointmentIndex)
+        {
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            appointmentDTO = _cAppointmentContext.GetTask(appointmentIndex);
+            return appointmentDTO;
         }
 
         public void CheckingOffTask(string taskName, string appointmentName)
@@ -21,7 +28,7 @@ namespace BusinessLogicLayer.Logic
 
         }
 
-        public override void RenameAppointment(string appointmentName)
+        public override void RenameAppointment(AppointmentDTO appointmentDTO)
         {
             throw new NotImplementedException();
         }

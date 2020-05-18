@@ -12,5 +12,10 @@ namespace TimeMateTest.Stubs
         {
             throw new NotImplementedException();
         }
+
+        public string GetDescription(int appointmentID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

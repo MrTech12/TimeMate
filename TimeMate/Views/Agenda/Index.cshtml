@@ -4,21 +4,49 @@
     ViewData["Title"] = "Agenda weergave";
 }
 
-<h1>Agenda weergave</h1>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/AgendaView.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/AgendaView.css" />
 
-<input type="button" value="Normale afspraak toevoegen" onclick="location.href='@Url.Action("Index", "NormalAppointment")'" class="btn btn-success" />
-<input type="button" value="Afspraak met takenlijst toevoegen" onclick="location.href='@Url.Action("Index", "ChecklistAppointment")'" class="btn btn-success" />
-<input type="button" value="Agenda toevoegen" onclick="location.href='@Url.Action("AddAgenda", "Agenda")'" class="btn btn-success" />
-
-@for (int i = 0; i < Model.Count; i++)
-{
-<div>
-    @Model[i].AppointmentName
-    @Model[i].StartDate
-    @Model[i].AgendaName
+<div class="row">
+    <div class="col">
+        <h1>Agenda weergave</h1>
+    </div>
+    <div class="col text-right">
+        <input type="button" value="Uitloggen" onclick="location.href='@Url.Action("Logout", "Account")'" class="btn btn-warning" />
+    </div>
 </div>
-}
+
+<br />
+<div class="row">
+    <div class="col">
+        <input type="button" value="Normale afspraak toevoegen" onclick="location.href='@Url.Action("Index", "NormalAppointment")'" class="btn btn-success" />
+        <input type="button" value="Afspraak met takenlijst toevoegen" onclick="location.href='@Url.Action("Index", "ChecklistAppointment")'" class="btn btn-success" />
+        <input type="button" value="Agenda toevoegen" onclick="location.href='@Url.Action("AddAgenda", "Agenda")'" class="btn btn-success" />
+    </div>
+</div>
+
+<br />
+<table id="appointmentTable">
+    <tr>
+        <th>Afspraaknaam</th>
+        <th>Startdatum/tijd</th>
+        <th>Einddatum/tijd</th>
+        <th>Agendanaam</th>
+    </tr>
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <tr>
+            <td class="appointmentName" onclick="GetDetails()">@Model[i].AppointmentName</td>
+            <td>@Model[i].StartDate</td>
+            <td>@Model[i].EndDate</td>
+            <td>@Model[i].AgendaName</td>
+        </tr>
+    }
+</table>
+<br />
+
 
 <div>
-    <input type="button" value="Uitloggen" onclick="location.href='@Url.Action("Logout", "Account")'" class="btn btn-warning" />
+
 </div>

@@ -36,5 +36,28 @@ namespace DataAccessLayer.Contexts
                 throw;
             }
         }
+
+        public string GetDescription(int appointmentID)
+        {
+            string description;
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                {
+                    databaseConn.Open();
+                    SqlCommand insertQuerry = new SqlCommand("SELECT Details FROM [Appointment_Details] WHERE AppointmentID = @0", databaseConn);
+
+                    insertQuerry.Parameters.AddWithValue("0", appointmentID);
+
+                    description = Convert.ToString(insertQuerry.ExecuteScalar());
+                }
+            }
+            catch (SqlException)
+            {
+                //Display the error.
+                throw;
+            }
+            return description;
+        }
     }
 }

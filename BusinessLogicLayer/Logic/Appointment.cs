@@ -8,16 +8,13 @@ namespace BusinessLogicLayer.Logic
 {
     abstract public class Appointment
     {
-        public IAgendaContext _agendaContext;
-        public AccountDTO accountDTO;
         public AppointmentDTO appointmentDTO;
 
-        public Appointment(AppointmentDTO appointmentDTO, IAgendaContext agendaContext)
+        public Appointment(AppointmentDTO appointmentDTO)
         {
             this.appointmentDTO = appointmentDTO;
-            this._agendaContext = agendaContext;
         }
 
-        public abstract void RenameAppointment(string appointmentName);
+        public abstract void RenameAppointment(AppointmentDTO appointmentDTO);
     }
 }

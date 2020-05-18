@@ -39,6 +39,18 @@ namespace BusinessLogicLayer.Logic
             this._cAppointmentContext = cAppointmentContext;
         }
 
+        public int GetAgendaID(string agendaName)
+        {
+            int ID = _agendaContext.GetAgendaID(agendaName, accountDTO);
+            return ID;
+        }
+
+        public int GetAppointmentID(AppointmentDTO appointmentDTO, int agendaID)
+        {
+            int ID = _appointmentContext.GetAppointmentID(appointmentDTO, agendaID);
+            return ID;
+        }
+
         /// <summary>
         /// Rename an agenda
         /// </summary>
@@ -100,7 +112,7 @@ namespace BusinessLogicLayer.Logic
             AgendaDTO agendaDTO = new AgendaDTO();
             AppointmentDTO appointmentDTO = new AppointmentDTO();
             agendaDTO.AgendaID = _agendaContext.GetAgendaID(appointmentName, accountDTO);
-            appointmentDTO.AppointmentID = _appointmentContext.GetAppointmentID(appointmentName, agendaDTO.AgendaID);
+            appointmentDTO.AppointmentID = _appointmentContext.GetAppointmentID(appointmentDTO, agendaDTO.AgendaID);
             _appointmentContext.DeleteAppointment(appointmentDTO.AppointmentID, agendaDTO.AgendaID);
         }
     }
