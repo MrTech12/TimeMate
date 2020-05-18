@@ -73,12 +73,12 @@ namespace TimeMate.Controllers
             NormalAppointment normalAppointment = new NormalAppointment(appointmentDTO, new SQLNormalAppointmentContext());
             ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, new SQLChecklistAppointmentContext());
 
-            agenda = new Agenda(accountDTO, new SQLAgendaContext());
+            agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext());
             int agendaID = agenda.GetAgendaID(appointmentDTO.AgendaName);
             appointmentDTO.AppointmentID = agenda.GetAppointmentID(appointmentDTO, agendaID);
             string description = normalAppointment.RetrieveDescription(appointmentDTO.AppointmentID);
 
-            if (description == null)
+            if (description == "")
             {
                 appointmentDTO = checklistAppointment.RetrieveTask(appointmentDTO.AppointmentID);
 
@@ -98,7 +98,7 @@ namespace TimeMate.Controllers
                     return Json(null);
                 }
             }
-            else if (description != null)
+            else if (description != "")
             {
                 return Json(description);
             }

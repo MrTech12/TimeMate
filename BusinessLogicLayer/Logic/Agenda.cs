@@ -23,6 +23,13 @@ namespace BusinessLogicLayer.Logic
             this.accountDTO = accountDTO;
         }
 
+        public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext, IAppointmentContext appointmentContext)
+        {
+            this.accountDTO = accountDTO;
+            this._agendaContext = agendaContext;
+            this._appointmentContext = appointmentContext;
+        }
+
         public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext, IAppointmentContext appointmentContext , INormalAppointmentContext nAppointmentContext)
         {
             this.accountDTO = accountDTO;
