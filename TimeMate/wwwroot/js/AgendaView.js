@@ -80,12 +80,12 @@ $(document).ready(function() {
     };
 
     function GetPopoverTitle() {
-        return appointmentData[0]
+        return appointmentData[0] + " Details";
     };
 
     function GetPopoverContent() {
-        console.log("pop: " + popoverData)
-        return appointmentData[1] + "<br>" + appointmentData[2] + "<br>" + appointmentData[3] + "<br>" + popoverData;
+        var popoverContents = popoverContents = "Starttijd: " + appointmentData[1] + "<br>" + "Eindtijd: " + appointmentData[2] + "<br>" + "Agendanaam: " + appointmentData[3] + "<br>" + "Details: " + "<br>" + popoverData;
+        return popoverContents;
     };
 });
 
