@@ -91,7 +91,7 @@ namespace TimeMate.Controllers
                         tasks.Add(Convert.ToString(appointmentDTO.ChecklistItemChecked[i]));
                     }
 
-                    return Json(appointmentDTO);
+                    return Json(tasks);
                 }
                 else
                 {

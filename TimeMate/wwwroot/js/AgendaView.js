@@ -43,11 +43,17 @@ function GetDetails() {
                 datatype: "text",
                 traditional: true,
                 success: function (data) {
-                    $(".appointmentName").popover({
-                        title: rowSelected.cells[0].innerHTML + " details",
-                        content: rowSelected.cells[1].innerHTML + "<br>" + rowSelected.cells[2].innerHTML + "<br>" + rowSelected.cells[3].innerHTML + "<br>" + data,
-                        html: true
-                    });
+
+                    if (Array.isArray(data)) {
+                        data.forEach(function (entry) {
+                            console.log(entry);
+                        });
+                    }
+                    //$(".appointmentName").popover({
+                    //    title: rowSelected.cells[0].innerHTML + " details",
+                    //    content: rowSelected.cells[1].innerHTML + "<br>" + rowSelected.cells[2].innerHTML + "<br>" + rowSelected.cells[3].innerHTML + "<br>" + data,
+                    //    html: true
+                    //});
                 },
                 error: function (ts) {
                     onError(checkbox, ts)
