@@ -1,64 +1,94 @@
-﻿$(document).ready(function () {
+﻿var appointmentData = [];
+var jsonData;
+var popoverData = null;
+
+$(document).ready(function() {
     $('[data-toggle="popover"]').popover();
-});
 
-function GetDetails() {
-    var table = document.getElementById('appointmentTable');
-    var cells = table.getElementsByTagName('td');
+    $(".appointmentName").click(function () { //Main Entry
+        GetAppointmentInfo();
+        jsonData = JSON.stringify(appointmentData);
+        console.info("From view: " + appointmentData);
 
-    for (var i = 0; i < cells.length; i++) {
-        // Take each cell
-        var cell = cells[i];
+        if (appointmentData.length != 0) {
+            RetrieveAppointmentDetails();
+        }
 
-        // do something on onclick event for cell
-        cell.onclick = function () {
+        console.log("From DB: " + popoverData);
+        CreatePopover();
+    });
 
-            var appointmentData = [];
-            appointmentData.length = 0;
+    function GetAppointmentInfo() {
+        var table = document.getElementById('appointmentTable');
+        var cells = table.getElementsByTagName('td');
 
-            // Get the row id where the cell exists
-            var rowId = this.parentNode.rowIndex;
+        for (var i = 0; i < cells.length; i++) {
+            // Take each cell
+            var cell = cells[i];
 
-            var rowSelected = table.getElementsByTagName('tr')[rowId];
-            //rowSelected.style.backgroundColor = "yellow";
-            //rowSelected.className += " selected";
+            cell.onclick = function () {
 
-            appointmentData.push(rowSelected.cells[0].innerHTML);
-            appointmentData.push(rowSelected.cells[1].innerHTML);
-            appointmentData.push(rowSelected.cells[2].innerHTML);
-            appointmentData.push(rowSelected.cells[3].innerHTML);
+                appointmentData.length = 0;
 
-            msg = 'The ID of the company is: ' + rowSelected.cells[0].innerHTML;
-            msg += '\nThe cell value is: ' + this.innerHTML;
+                // Get the row id where the cell exists
+                var rowId = this.parentNode.rowIndex;
 
-            //alert(appointmentData);
+                var rowSelected = table.getElementsByTagName('tr')[rowId];
 
-            var jsonData = JSON.stringify(appointmentData);
-
-            $.ajax({
-                type: "GET",
-                url: "Agenda/RetrieveAppointmentDetails",
-                contentType: "application/json; charset=utf-8",
-                data: { json: jsonData },
-                datatype: "text",
-                traditional: true,
-                success: function (data) {
-
-                    if (Array.isArray(data)) {
-                        data.forEach(function (entry) {
-                            console.log(entry);
-                        });
-                    }
-                    //$(".appointmentName").popover({
-                    //    title: rowSelected.cells[0].innerHTML + " details",
-                    //    content: rowSelected.cells[1].innerHTML + "<br>" + rowSelected.cells[2].innerHTML + "<br>" + rowSelected.cells[3].innerHTML + "<br>" + data,
-                    //    html: true
-                    //});
-                },
-                error: function (ts) {
-                    onError(checkbox, ts)
-                }
-            });
+                appointmentData.push(rowSelected.cells[0].innerHTML);
+                appointmentData.push(rowSelected.cells[1].innerHTML);
+                appointmentData.push(rowSelected.cells[2].innerHTML);
+                appointmentData.push(rowSelected.cells[3].innerHTML);
+            }
         }
     }
-}
+
+    function RetrieveAppointmentDetails() {
+        $.ajax({
+            type: "get",
+            async: "no",
+            url: "agenda/retrieveappointmentdetails",
+            contenttype: "application/json; charset=utf-8",
+            data: { json: jsonData },
+            datatype: "text",
+            traditional: true,
+            success: function (data) {
+                popoverData = "";
+
+                 if (Array.isArray(data)) {
+                     for (var i = 0; i < data.length; i++) {
+                         popoverData += data[i] + "<br>";
+                     };
+                     //data.foreach(function (entry) {
+                     //    console.log(entry);
+                     //});
+                 }
+                 else {
+                     popoverData += data;
+                 }
+            },
+            error: function (ts) {
+                onerror(checkbox, ts)
+            }
+        });
+    };
+
+    function CreatePopover() {
+        $(".appointmentName").popover({
+            title: GetPopoverTitle, content: GetPopoverContent, html: true
+        });
+    };
+
+    function GetPopoverTitle() {
+        return appointmentData[0]
+    };
+
+    function GetPopoverContent() {
+        console.log("pop: " + popoverData)
+        return appointmentData[1] + "<br>" + appointmentData[2] + "<br>" + appointmentData[3] + "<br>" + popoverData;
+    };
+});
+
+
+
+
