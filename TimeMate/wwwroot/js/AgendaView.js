@@ -15,7 +15,11 @@ $(document).ready(function() {
         }
 
         console.log("From DB: " + popoverData);
-        CreatePopover();
+
+        if (popoverData != null) {
+            CreatePopover();
+        }
+
     });
 
     function GetAppointmentInfo() {
@@ -57,11 +61,20 @@ $(document).ready(function() {
 
                  if (Array.isArray(data)) {
                      for (var i = 0; i < data.length; i++) {
-                         popoverData += data[i] + "<br>";
+                         if (i % 2 == 0 == false) {
+                             if (data[i] == "False") {
+                                 popoverData += '<img id="taskImage" src="https://img.icons8.com/ios/50/000000/unchecked-checkbox.png"/>';
+                                 popoverData += " <br> ";
+                             }
+                             if (data[i] == "True") {
+                                 popoverData += '<img id="taskImage" src="https://img.icons8.com/ios/50/000000/checked-checkbox.png"/>';
+                                 popoverData += " <br> ";
+                             }
+                         }
+                         else {
+                             popoverData += '<div id="taskName">' + data[i];
+                         }
                      };
-                     //data.foreach(function (entry) {
-                     //    console.log(entry);
-                     //});
                  }
                  else {
                      popoverData += data;
@@ -75,7 +88,7 @@ $(document).ready(function() {
 
     function CreatePopover() {
         $(".appointmentName").popover({
-            title: GetPopoverTitle, content: GetPopoverContent, html: true
+            title: GetPopoverTitle, content: GetPopoverContent, html: true,
         });
     };
 

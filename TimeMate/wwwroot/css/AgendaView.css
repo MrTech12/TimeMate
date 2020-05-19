@@ -14,3 +14,7 @@ th {
 td.appointmentName {
     color: #1563F5;
 }
+
+img#taskImage {
+    width: 25px;
+}
