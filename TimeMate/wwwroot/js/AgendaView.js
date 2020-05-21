@@ -6,14 +6,13 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 
     $(".appointmentName").click(function () { //Main Entry
-        GetAppointmentInfo();
+        appointmentData.length = 0;
+        GetAppointmentInfo(this);
+
         jsonData = JSON.stringify(appointmentData);
         console.info("From view: " + appointmentData);
 
-        if (appointmentData.length != 0) {
-            RetrieveAppointmentDetails();
-        }
-
+        RetrieveAppointmentDetails();
         console.log("From DB: " + popoverData);
 
         if (popoverData != null) {
@@ -22,6 +21,20 @@ $(document).ready(function() {
 
     });
 
+
+    function GetAppointmentInfo(selectedRow) {
+        $(selectedRow).closest('tr').find('td').each(function () {
+            appointmentData.push($(this).text());
+        });
+
+        //var $row = $(el).closest("tr");    // Find the row
+        //var $tds = $row.find("td");
+        //$.each($tds, function () {
+        //    appointmentData.push($(this).text());
+        //});
+    }
+
+    /*
     function GetAppointmentInfo() {
         var table = document.getElementById('appointmentTable');
         var cells = table.getElementsByTagName('td');
@@ -46,6 +59,7 @@ $(document).ready(function() {
             }
         }
     }
+    */
 
     function RetrieveAppointmentDetails() {
         $.ajax({
