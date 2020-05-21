@@ -30,15 +30,22 @@ namespace TimeMate.Controllers
         {
             if (ModelState.IsValid)
             {
-                string newDescription = viewModel.Description.Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
-                    .Replace("<span class=\"normal-text\">", "</b>");
-
                 AppointmentDTO appointmentDTO = new AppointmentDTO();
                 appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.Name;
                 appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
                 appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
                 appointmentDTO.AgendaName = viewModel.AgendaName[0];
-                appointmentDTO.Description = newDescription;
+
+                if (viewModel.Description != null)
+                {
+                    string newDescription = viewModel.Description.Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
+                        .Replace("<span class=\"normal-text\">", "</b>");
+                    appointmentDTO.Description = newDescription;
+                }
+                else
+                {
+                    appointmentDTO.Description = null;
+                }
 
                 agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext(), new SQLNormalAppointmentContext());
 

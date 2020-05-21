@@ -1,5 +1,5 @@
 ﻿var appointmentData = [];
-var jsonData;
+var jsonData = null;
 var popoverData = null;
 
 $(document).ready(function() {
@@ -18,20 +18,12 @@ $(document).ready(function() {
         if (popoverData != null) {
             CreatePopover();
         }
-
     });
-
 
     function GetAppointmentInfo(selectedRow) {
         $(selectedRow).closest('tr').find('td').each(function () {
             appointmentData.push($(this).text());
         });
-
-        //var $row = $(el).closest("tr");    // Find the row
-        //var $tds = $row.find("td");
-        //$.each($tds, function () {
-        //    appointmentData.push($(this).text());
-        //});
     }
 
     /*
@@ -72,8 +64,7 @@ $(document).ready(function() {
             traditional: true,
             success: function (data) {
                 popoverData = "";
-
-                 if (Array.isArray(data)) {
+                if (Array.isArray(data)) {
                      for (var i = 0; i < data.length; i++) {
                          if (i % 2 == 0 == false) {
                              if (data[i] == "False") {
@@ -111,8 +102,12 @@ $(document).ready(function() {
     };
 
     function GetPopoverContent() {
-        var popoverContents = popoverContents = "Starttijd: " + appointmentData[1] + "<br>" + "Eindtijd: " + appointmentData[2] + "<br>" + "Agendanaam: " + appointmentData[3] + "<br>" + "Details: " + "<br>" + popoverData;
-        return popoverContents;
+        var popoverContent = popoverContent = "Starttijd: " + appointmentData[1] + "<br>" + "Eindtijd: " + appointmentData[2] + "<br>" + "Agendanaam: " + appointmentData[3] + "<br>";
+
+        if (popoverData != "") {
+            popoverContent+= "Details: " + "<br>" + popoverData
+        }
+        return popoverContent;
     };
 });
 

@@ -90,7 +90,7 @@ namespace BusinessLogicLayer.Logic
             agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
             appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO, agendaDTO.AgendaID);
 
-            if (appointmentDTO.Description != "")
+            if (appointmentDTO.Description != null)
             {
                 _nAppointmentContext.AddDescription(appointmentDTO);
             }
@@ -105,12 +105,9 @@ namespace BusinessLogicLayer.Logic
             agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
             appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO, agendaDTO.AgendaID);
 
-            if (appointmentDTO.ChecklistItemName[0] != "")
+            foreach (var item in appointmentDTO.ChecklistItemName)
             {
-                foreach (var item in appointmentDTO.ChecklistItemName)
-                {
-                    _cAppointmentContext.AddTask(appointmentDTO.AppointmentID, item);
-                }
+                _cAppointmentContext.AddTask(appointmentDTO.AppointmentID, item);
             }
         }
 
