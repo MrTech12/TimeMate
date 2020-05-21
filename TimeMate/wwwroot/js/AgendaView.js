@@ -86,7 +86,7 @@ $(document).ready(function() {
                  }
             },
             error: function (ts) {
-                onerror(checkbox, ts)
+                onerror(console.info(ts));
             }
         });
     };
