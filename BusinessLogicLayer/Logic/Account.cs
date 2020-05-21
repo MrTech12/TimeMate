@@ -93,6 +93,8 @@ namespace BusinessLogicLayer.Logic
                 else
                 {
                     CreateUserInDB();
+                    Mail mail = new Mail();
+                    //mail.SendMail("sina1240@gmail.com");
                     returnMessage = Convert.ToString(accountDTO.AccountID);
                 }
             }
