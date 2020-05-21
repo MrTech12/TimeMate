@@ -10,5 +10,7 @@ namespace DataAccessLayer.Interfaces
         void AddTask(int appointmentID, string taskName);
 
         void CheckOffTask(AppointmentDTO appointmentDTO);
+
+        AppointmentDTO GetTask(int appointmentIndex);
     }
 }

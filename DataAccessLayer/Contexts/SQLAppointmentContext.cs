@@ -43,9 +43,29 @@ namespace DataAccessLayer.Contexts
             return appointmentID;
         }
 
-        public int GetAppointmentID(string appointmentName, int agendaIndex)
+        public int GetAppointmentID(AppointmentDTO appointmentDTO, int agendaIndex)
         {
-            throw new NotImplementedException();
+            int appointmentID = 0;
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                {
+                    databaseConn.Open();
+                    SqlCommand insertQuerry = new SqlCommand("SELECT AppointmentID FROM [Appointment] WHERE AgendaID = @0 AND (Name = @1 AND Starting = @2);", databaseConn);
+
+                    insertQuerry.Parameters.AddWithValue("0", agendaIndex);
+                    insertQuerry.Parameters.AddWithValue("1", appointmentDTO.AppointmentName);
+                    insertQuerry.Parameters.AddWithValue("2", appointmentDTO.StartDate);
+
+                    appointmentID = Convert.ToInt32(insertQuerry.ExecuteScalar());
+                }
+            }
+            catch (SqlException)
+            {
+                //Display the error.
+                throw;
+            }
+            return appointmentID;
         }
 
         public void DeleteAppointment(int appointmentIndex, int agendaIndex)

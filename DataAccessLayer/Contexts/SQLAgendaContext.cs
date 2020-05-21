@@ -15,21 +15,22 @@ namespace DataAccessLayer.Contexts
         /// Add a new agenda into the database.
         /// </summary>
         /// <returns></returns>
-        public void AddNewAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
+        public int AddNewAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
+            int agendaID = 0;
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Agenda](AccountID, Name, Color, Notification_type)  VALUES (@0,@1,@2,@3)", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Agenda](AccountID, Name, Color, Notification_type)  VALUES (@0,@1,@2,@3); SELECT SCOPE_IDENTITY();", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
                     insertQuerry.Parameters.AddWithValue("1", agendaDTO.AgendaName);
                     insertQuerry.Parameters.AddWithValue("2", agendaDTO.AgendaColor);
                     insertQuerry.Parameters.AddWithValue("3", agendaDTO.Notification);
 
-                    insertQuerry.ExecuteNonQuery();
+                    agendaID = Convert.ToInt32(insertQuerry.ExecuteScalar());
                 }
             }
             catch (SqlException)
@@ -37,6 +38,7 @@ namespace DataAccessLayer.Contexts
                 //Display the error.
                 throw;
             }
+            return agendaID;
         }
 
         /// <summary>
@@ -50,22 +52,13 @@ namespace DataAccessLayer.Contexts
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Agenda](AccountID, Name, Color) Values (@0,@1,@2)", databaseConn);
-                    insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
-                    insertQuerry.Parameters.AddWithValue("1", newAgendaDTO.AgendaName);
-                    insertQuerry.Parameters.AddWithValue("2", newAgendaDTO.AgendaColor);
-                    insertQuerry.ExecuteNonQuery();
-
-                    SqlCommand selectQuerry = new SqlCommand("SELECT AgendaID FROM [Agenda] WHERE AccountID = @0", databaseConn);
-                    selectQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
-                    var resultedAgendaID = selectQuerry.ExecuteScalar();
 
                     for (int i = 0; i < accountDTO.JobHourlyWage.Count; i++)
                     {
                         if (accountDTO.JobDayType[i] == "Doordeweeks" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) Values (@0,@1,@2,@3)", databaseConn);
-                            insertQuerry.Parameters.AddWithValue("0", resultedAgendaID);
+                            SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) Values (@0,@1,@2,@3)", databaseConn);
+                            insertQuerry.Parameters.AddWithValue("0", newAgendaDTO.AgendaID);
                             insertQuerry.Parameters.AddWithValue("1", accountDTO.JobHourlyWage[i]);
                             insertQuerry.Parameters.AddWithValue("2", "0.00");
                             insertQuerry.Parameters.AddWithValue("3", accountDTO.AllocatedHours);
@@ -73,8 +66,8 @@ namespace DataAccessLayer.Contexts
                         }
                         else if (accountDTO.JobDayType[i] == "Weekend" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) Values (@0,@1,@2,@3)", databaseConn);
-                            insertQuerry.Parameters.AddWithValue("0", resultedAgendaID);
+                            SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) Values (@0,@1,@2,@3)", databaseConn);
+                            insertQuerry.Parameters.AddWithValue("0", newAgendaDTO.AgendaID);
                             insertQuerry.Parameters.AddWithValue("1", "0.00");
                             insertQuerry.Parameters.AddWithValue("2", accountDTO.JobHourlyWage[i]);
                             insertQuerry.Parameters.AddWithValue("3", accountDTO.AllocatedHours);

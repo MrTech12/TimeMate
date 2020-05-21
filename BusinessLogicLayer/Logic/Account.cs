@@ -41,7 +41,7 @@ namespace BusinessLogicLayer.Logic
                 }
                 else
                 {
-                    returnMessage = null;
+                    returnMessage = _accountContext.GetUserID(accountDTO.MailAddress);
                 }
             }
             else
@@ -93,6 +93,7 @@ namespace BusinessLogicLayer.Logic
                 else
                 {
                     CreateUserInDB();
+                    returnMessage = Convert.ToString(accountDTO.AccountID);
                 }
             }
             return returnMessage;
@@ -107,13 +108,11 @@ namespace BusinessLogicLayer.Logic
 
             if (accountDTO.JobCount == 0)
             {
-                _accountContext.RegisterNewUser(accountDTO);
-                accountDTO.AccountID = Convert.ToInt32(_accountContext.GetUserID(accountDTO.MailAddress));
+                accountDTO.AccountID = _accountContext.RegisterNewUser(accountDTO);
             }
             else if (accountDTO.JobCount > 0)
             {
-                _accountContext.RegisterNewUser(accountDTO);
-                accountDTO.AccountID = Convert.ToInt32(_accountContext.GetUserID(accountDTO.MailAddress));
+                accountDTO.AccountID = _accountContext.RegisterNewUser(accountDTO);
                 CreateWorkAgenda();
             }
         }
@@ -140,7 +139,10 @@ namespace BusinessLogicLayer.Logic
             newAgendaDTO.AgendaName = "Bijbaan";
             newAgendaDTO.AgendaColor = "#FF0000";
             newAgendaDTO.Notification = "Nee";
-            _agendaContext.AddNewJobAgenda(newAgendaDTO, accountDTO);
+
+            newAgendaDTO.AgendaID = _agendaContext.AddNewAgenda(newAgendaDTO, accountDTO);
+
+            _agendaContext.AddNewJobAgenda(newAgendaDTO,accountDTO);
         }
 
         /// <summary>

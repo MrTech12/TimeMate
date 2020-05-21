@@ -38,6 +38,39 @@ namespace DataAccessLayer.Contexts
             }
         }
 
+        public AppointmentDTO GetTask(int appointmentIndex)
+        {
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                {
+                    databaseConn.Open();
+
+                    SqlCommand insertQuerry = new SqlCommand("SELECT Task_name, Task_checked FROM [Task] WHERE AppointmentID = @0", databaseConn);
+
+                    insertQuerry.Parameters.AddWithValue("0", appointmentIndex);
+
+                    SqlDataReader dataReader = insertQuerry.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        AppointmentDTO appointmentModel = new AppointmentDTO();
+                        string taskName = dataReader["Task_name"].ToString();
+                        bool taskComplete = Convert.ToBoolean(dataReader["Task_checked"]);
+                        appointmentDTO.ChecklistItemName.Add(taskName);
+                        appointmentDTO.ChecklistItemChecked.Add(taskComplete);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                //Display the error.
+                throw;
+            }
+            return appointmentDTO;
+        }
+
         /// <summary>
         /// Check off a task in the db.
         /// </summary>

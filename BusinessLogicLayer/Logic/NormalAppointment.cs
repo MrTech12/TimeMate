@@ -11,14 +11,20 @@ namespace BusinessLogicLayer.Logic
         private INormalAppointmentContext _nAppointmentContext;
         private string messageToUser;
 
-        public NormalAppointment(IAgendaContext agendaContextInput, AppointmentDTO appointmentDTOInput, INormalAppointmentContext normalAppointmentContext) : base(appointmentDTOInput, agendaContextInput)
+        public NormalAppointment(AppointmentDTO appointmentDTO, INormalAppointmentContext normalAppointmentContext) : base(appointmentDTO)
         {
             this._nAppointmentContext = normalAppointmentContext;
         }
 
-        public override void RenameAppointment(string appointmentName)
+        public override void RenameAppointment(AppointmentDTO appointmentDTO)
         {
             throw new NotImplementedException();
+        }
+
+        public string RetrieveDescription(int appointmentID)
+        {
+            string description = _nAppointmentContext.GetDescription(appointmentID);
+            return description;
         }
     }
 }

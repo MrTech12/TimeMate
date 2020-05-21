@@ -9,7 +9,7 @@ namespace DataAccessLayer.Interfaces
     {
         int AddAppointment(AppointmentDTO appointmentDTO, int agendaIndex);
 
-        int GetAppointmentID(string appointmentName, int agendaIndex);
+        int GetAppointmentID(AppointmentDTO appointmentDTO, int agendaIndex);
 
         void DeleteAppointment(int appointmentIndex, int agendaIndex);
 

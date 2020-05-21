@@ -17,7 +17,7 @@ namespace TimeMateTest.Stubs
             throw new NotImplementedException();
         }
 
-        public int GetAppointmentID(string appointmentName, int agendaIndex)
+        public int GetAppointmentID(AppointmentDTO appointmentDTO, int agendaIndex)
         {
             throw new NotImplementedException();
         }

@@ -85,20 +85,21 @@ namespace DataAccessLayer.Contexts
         /// Inserting a new account into the database.
         /// </summary>
         /// <returns></returns>
-        public void RegisterNewUser(AccountDTO accountDTO)
+        public int RegisterNewUser(AccountDTO accountDTO)
         {
+            int accountID;
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Account](First_name, Mail, Password) Values (@0,@1,@2)", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Account](First_name, Mail, Password) Values (@0,@1,@2); SELECT SCOPE_IDENTITY();", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.FirstName);
                     insertQuerry.Parameters.AddWithValue("1", accountDTO.MailAddress);
                     insertQuerry.Parameters.AddWithValue("2", accountDTO.Password);
 
-                    insertQuerry.ExecuteNonQuery();
+                    accountID = Convert.ToInt32(insertQuerry.ExecuteScalar());
                 }
             }
             catch (SqlException)
@@ -106,6 +107,7 @@ namespace DataAccessLayer.Contexts
                 //Display the error.
                 throw;
             }
+            return accountID;
         }
     }
 }
