@@ -42,15 +42,14 @@ namespace TimeMate.Controllers
                 account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
                 string result = account.UserLogsIn();
 
-                if (result != null)
+                if (!result.All(char.IsDigit))
                 {
                     ModelState.AddModelError("", result);
                     return View(viewModel);
                 }
                 else
                 {
-                    accountDTO.AccountID = account.GetActiveAccountID(accountDTO.MailAddress);
-                    HttpContext.Session.SetInt32("accountID", accountDTO.AccountID);
+                    HttpContext.Session.SetInt32("accountID", Convert.ToInt32(result));
                     return RedirectToAction("Index", "Agenda");
                 }
             }
@@ -88,15 +87,14 @@ namespace TimeMate.Controllers
 
                 string result = account.NewAccountValidation();
 
-                if (result != null)
+                if (!result.All(char.IsDigit))
                 {
                     ModelState.AddModelError("", result);
                     return View(viewModel);
                 }
                 else
                 {
-                    accountDTO.AccountID = account.GetActiveAccountID(accountDTO.MailAddress);
-                    HttpContext.Session.SetInt32("accountID", accountDTO.AccountID);
+                    HttpContext.Session.SetInt32("accountID", Convert.ToInt32(result));
                     return RedirectToAction("Index", "Agenda");
                 }
             }
