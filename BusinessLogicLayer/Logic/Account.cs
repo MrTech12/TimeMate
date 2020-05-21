@@ -140,7 +140,10 @@ namespace BusinessLogicLayer.Logic
             newAgendaDTO.AgendaName = "Bijbaan";
             newAgendaDTO.AgendaColor = "#FF0000";
             newAgendaDTO.Notification = "Nee";
-            _agendaContext.AddNewJobAgenda(newAgendaDTO, accountDTO);
+
+            newAgendaDTO.AgendaID = _agendaContext.AddNewAgenda(newAgendaDTO, accountDTO);
+
+            _agendaContext.AddNewJobAgenda(newAgendaDTO,accountDTO);
         }
 
         /// <summary>
