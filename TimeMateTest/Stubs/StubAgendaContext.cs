@@ -8,14 +8,23 @@ namespace TimeMateTest.Stubs
 {
     class StubAgendaContext : IAgendaContext
     {
-        public void AddNewAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
+        public int AddNewAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
-            throw new NotImplementedException();
+            int agendaID = 0;
+            if (accountDTO.AccountID == 12)
+            {
+                agendaDTO.AgendaID = 12;
+            }
+            return agendaID;
         }
 
         public void AddNewJobAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
-            throw new NotImplementedException();
+            int jobID;
+            if (agendaDTO.AgendaID == 12)
+            {
+                jobID = 12;
+            }
         }
 
         public void DeleteAgenda(int AgendaIndex, AccountDTO accountDTO)
@@ -30,7 +39,14 @@ namespace TimeMateTest.Stubs
 
         public List<string> GetAgendaNamesFromDB(AccountDTO accountDTO)
         {
-            throw new NotImplementedException();
+            List<string> agendaNames = new List<string>();
+            if (accountDTO.AccountID == 12)
+            {
+                agendaNames.Add("Work");
+                agendaNames.Add("Personal");
+            }
+
+            return agendaNames;
         }
 
         public List<AppointmentDTO> GetAllAppointments(AccountDTO accountDTO)
@@ -52,5 +68,7 @@ namespace TimeMateTest.Stubs
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

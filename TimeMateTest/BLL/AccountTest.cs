@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.Logic;
 using DataAccessLayer.DTO;
 using System;
+using System.Collections.Generic;
 using TimeMateTest.Stubs;
 using Xunit;
 
@@ -8,8 +9,20 @@ namespace TimeMateTest.BLL
 {
     public class AccountTest
     {
-        Account account;
-        AccountDTO accountDTO;
+        private Account account;
+        private AccountDTO accountDTO;
+
+        [Fact]
+        public void LoggingInTest()
+        {
+            string output;
+            accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "qoe2ieiwiir" };
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+
+            output = account.UserLogsIn();
+
+            Assert.Equal("0", output);
+        }
 
         [Fact]
         public void WrongMailaddressTest()
@@ -36,15 +49,39 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void GetAccountIDTest()
+        public void CreateAccountWithNoJobTest()
         {
-            int output;
-            accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "cmck323kc" };
+            string output;
+            accountDTO = new AccountDTO();
+            accountDTO.FirstName = "Hans";
+            accountDTO.MailAddress = "sina1240@gmail.com";
+            accountDTO.Password = "QWEwieiwi231@#";
+
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.GetActiveAccountID(accountDTO.MailAddress);
+            output = account.NewAccountValidation();
 
-            Assert.Equal(0, output);
+            Assert.Equal("12", output);
+        }
+
+        [Fact]
+        public void CreateAccountWithJobTest()
+        {
+            string output;
+            accountDTO = new AccountDTO();
+            accountDTO.FirstName = "Hans";
+            accountDTO.MailAddress = "sina1240@gmail.com";
+            accountDTO.Password = "QWEwieiwi231@#";
+            accountDTO.JobCount = 1;
+            accountDTO.JobHourlyWage.Add(1.20);
+            accountDTO.JobDayType.Add("Doordeweeks");
+            accountDTO.AllocatedHours = 2;
+
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+
+            output = account.NewAccountValidation();
+
+            Assert.Equal("12", output);
         }
 
         [Fact]
@@ -93,6 +130,22 @@ namespace TimeMateTest.BLL
             output = account.NewAccountValidation();
 
             Assert.Equal("Er bestaat al een account met dit mailadres.", output);
+        } 
+
+
+        [Fact]
+        public void GetAgendaNamesTest()
+        {
+            List<string> output = new List<string>();
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+
+            output = account.GetAgendaNames();
+
+            Assert.Contains("Work", output);
+            Assert.True(output.Count == 2);
         }
+
+
     }
 }

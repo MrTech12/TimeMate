@@ -8,9 +8,13 @@ namespace TimeMateTest.BLL
 {
     public class AgendaTest
     {
-        Account account;
-        Agenda agenda;
-        AccountDTO accountDTO;
-        AgendaDTO agendaDTO;
+        private Account account;
+        private Agenda agenda;
+        private AccountDTO accountDTO;
+        private AgendaDTO agendaDTO;
+
+
+
+
     }
 }

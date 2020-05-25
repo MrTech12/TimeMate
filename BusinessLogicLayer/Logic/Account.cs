@@ -52,12 +52,6 @@ namespace BusinessLogicLayer.Logic
             return returnMessage;
         }
 
-        public int GetActiveAccountID(string mail)
-        {
-            string accountID = _accountContext.GetUserID(mail);
-            return Convert.ToInt32(accountID);
-        }
-
         /// <summary>
         /// Checking the input for creating a new account.
         /// </summary>

@@ -19,9 +19,14 @@ namespace TimeMateTest.Stubs
             return accountID;
         }
 
-        public void RegisterNewUser(AccountDTO AccountDTO)
+        public int RegisterNewUser(AccountDTO AccountDTO)
         {
-            throw new NotImplementedException();
+            int accountID = 0;
+            if (AccountDTO.MailAddress == "sina1240@gmail.com")
+            {
+                accountID = 12;
+            }
+            return accountID;
         }
 
         public string SearchForPasswordHash(string mail)
