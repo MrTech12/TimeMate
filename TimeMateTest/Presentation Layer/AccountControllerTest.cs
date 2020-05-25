@@ -11,13 +11,10 @@ namespace TimeMateTest.Presentation_Layer
     {
         private readonly IWebDriver _driver;
 
-        AccountController accountController;
-
         public AccountControllerTest()
         {
             _driver = new ChromeDriver();
         }
-
 
         public void Dispose()
         {
@@ -28,7 +25,12 @@ namespace TimeMateTest.Presentation_Layer
         [Fact]
         public void LoggingInWithNoPassword()
         {
-            
+            _driver.Navigate().GoToUrl("https://localhost:44329/Account/Index");
+
+            Assert.Equal("Inloggen - TimeMate", _driver.Title);
         }
+
+
+
     }
 }

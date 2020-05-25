@@ -19,7 +19,13 @@ namespace TimeMateTest.Stubs
 
         public int GetAppointmentID(AppointmentDTO appointmentDTO, int agendaIndex)
         {
-            throw new NotImplementedException();
+            int appointmentID = 0;
+            if (appointmentDTO.AppointmentName == "Shopping")
+            {
+                appointmentID = 8;
+            }
+
+            return appointmentID;
         }
 
         public void RenameAppointment(int appointmentIndex, int agendaIndex)

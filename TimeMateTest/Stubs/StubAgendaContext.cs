@@ -34,7 +34,13 @@ namespace TimeMateTest.Stubs
 
         public int GetAgendaID(string agendaName, AccountDTO accountDTO)
         {
-            throw new NotImplementedException();
+            int agendaID = 0;
+            if (agendaName == "Personal")
+            {
+                agendaID = 12;
+            }
+
+            return agendaID;
         }
 
         public List<string> GetAgendaNamesFromDB(AccountDTO accountDTO)
