@@ -57,7 +57,24 @@ namespace TimeMateTest.Stubs
 
         public List<AppointmentDTO> GetAllAppointments(AccountDTO accountDTO)
         {
-            throw new NotImplementedException();
+            List<AppointmentDTO> appointmentDTO = new List<AppointmentDTO>(3);
+
+            AppointmentDTO appointment1 = new AppointmentDTO();
+            appointment1.AppointmentName = "Walk the dog";
+            appointment1.StartDate = DateTime.Now.AddHours(3);
+            appointmentDTO.Add(appointment1);
+
+            AppointmentDTO appointment2 = new AppointmentDTO();
+            appointment2.AppointmentName = "Do the dishes";
+            appointment2.StartDate = DateTime.Now.AddHours(2);
+            appointmentDTO.Add(appointment2);
+
+            AppointmentDTO appointment3 = new AppointmentDTO();
+            appointment3.AppointmentName = "Sleep for 7 hours";
+            appointment3.StartDate = DateTime.Now.AddHours(7);
+            appointmentDTO.Add(appointment3);
+
+            return appointmentDTO;
         }
 
         public List<DateTime> GetWeekendHours(int agendaIndex)

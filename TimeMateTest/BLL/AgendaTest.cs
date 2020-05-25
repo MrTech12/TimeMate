@@ -1,6 +1,8 @@
 ﻿using BusinessLogicLayer.Logic;
 using DataAccessLayer.DTO;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TimeMateTest.Stubs;
 using Xunit;
 
@@ -10,36 +12,42 @@ namespace TimeMateTest.BLL
     {
         private Agenda agenda;
         private AccountDTO accountDTO;
-        private AgendaDTO agendaDTO;
+        private AppointmentDTO appointmentDTO;
 
         [Fact]
         public void GetAgendaID()
         {
-            int agendaID;
+            int output;
             accountDTO = new AccountDTO(){ AccountID = 12};
             agenda = new Agenda(accountDTO, new StubAgendaContext());
 
-            agendaID = agenda.GetAgendaID("Personal");
-            Assert.Equal(12, agendaID);
+            output = agenda.GetAgendaID("Personal");
+            Assert.Equal(12, output);
         }
 
         [Fact]
         public void GetAppointmentID()
         {
-            int appointmentID;
+            int output;
             AppointmentDTO appointmentDTO = new AppointmentDTO() { AppointmentName = "Shopping"};
-
             accountDTO = new AccountDTO() { AccountID = 12 };
             agenda = new Agenda(accountDTO, new StubAgendaContext(), new StubAppointmentContext());
 
-            appointmentID = agenda.GetAppointmentID(appointmentDTO, 12);
-            Assert.Equal(8, appointmentID);
+            output = agenda.GetAppointmentID(appointmentDTO, 12);
+            Assert.Equal(8, output);
         }
 
         [Fact]
         public void RetrieveAppointmentsTest()
         {
+            List<AppointmentDTO> output = new List<AppointmentDTO>();
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            agenda = new Agenda(accountDTO, new StubAgendaContext());
 
+            output = agenda.RetrieveAppointments();
+
+            Assert.Contains("Walk the dog", output[1].AppointmentName);
+            Assert.True(output.Count == 3);
         }
     }
 }

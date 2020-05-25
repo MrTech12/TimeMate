@@ -20,6 +20,14 @@ namespace TimeMateTest.Stubs
 
         public AppointmentDTO GetTask(int appointmentIndex)
         {
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            if (appointmentIndex == 6)
+            {
+                appointmentDTO.ChecklistItemName.Add("Water the plants.");
+                appointmentDTO.ChecklistItemName.Add("Mow the lawn");
+                appointmentDTO.ChecklistItemName.Add("Collect grapes");
+            }
+            return appointmentDTO; 
             throw new NotImplementedException();
         }
     }

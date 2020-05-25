@@ -15,7 +15,13 @@ namespace TimeMateTest.Stubs
 
         public string GetDescription(int appointmentID)
         {
-            throw new NotImplementedException();
+            string description = null;
+
+            if (appointmentID == 12)
+            {
+                description = "This needs to happen.";
+            }
+            return description;
         }
     }
 }

@@ -145,7 +145,5 @@ namespace TimeMateTest.BLL
             Assert.Contains("Work", output);
             Assert.True(output.Count == 2);
         }
-
-
     }
 }

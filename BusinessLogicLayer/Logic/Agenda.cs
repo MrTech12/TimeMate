@@ -76,7 +76,7 @@ namespace BusinessLogicLayer.Logic
         {
             List<AppointmentDTO> appointmentModel = new List<AppointmentDTO>();
             appointmentModel = _agendaContext.GetAllAppointments(accountDTO);
-            appointmentModel.OrderBy(x => x.StartDate);
+            appointmentModel = appointmentModel.OrderBy(x => x.StartDate).ToList();
 
             return appointmentModel;
         }
