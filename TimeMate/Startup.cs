@@ -33,8 +33,6 @@ namespace TimeMate
             services.AddTransient<AgendaDTO>();
             services.AddTransient<AppointmentDTO>();
             services.AddTransient<JobDTO>();
-            //services.AddTransient<AccountDTO, AccountDTO>();
-            //services.Configure<DapperContext>(this.Configuration.GetSection("connectionStrings"));
 
             services.AddSession();
         }

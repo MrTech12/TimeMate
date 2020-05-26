@@ -31,5 +31,9 @@ namespace TimeMate.Models
         [Display(Name = "Kies een eindtijd.")]
         [DataType(DataType.Time)]
         public TimeSpan EndTime { get; set; }
+
+        [Required(ErrorMessage = "Dit veld is verplicht.")]
+        [Display(Name = "Kies een agenda uit.")]
+        public List<string> AgendaName { get; set; }
     }
 }

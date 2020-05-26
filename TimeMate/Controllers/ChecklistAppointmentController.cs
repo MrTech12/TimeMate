@@ -21,7 +21,7 @@ namespace TimeMate.Controllers
         {
             CAppointmentViewModel cAppointmentViewModel = new CAppointmentViewModel();
             account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
-            cAppointmentViewModel.AgendaName = account.GetAgendaNames();
+            cAppointmentViewModel.AppointmentViewModel.AgendaName = account.GetAgendaNames();
             return View(cAppointmentViewModel);
         }
 
@@ -32,7 +32,7 @@ namespace TimeMate.Controllers
             appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.Name;
             appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
             appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
-            appointmentDTO.AgendaName = viewModel.AgendaName[0];
+            appointmentDTO.AgendaName = viewModel.AppointmentViewModel.AgendaName[0];
 
             foreach (var item in viewModel.Task)
             {

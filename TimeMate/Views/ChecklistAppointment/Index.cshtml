@@ -15,12 +15,6 @@
             <partial name="_AddAppointment" for="@Model.AppointmentViewModel" />
 
             <div class="form-group">
-                <label asp-for="AgendaName" class="control-label"></label>
-                @Html.DropDownListFor(x => x.AgendaName, new SelectList(Model.AgendaName))
-                <span asp-validation-for="AgendaName" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
                 <label asp-for="Task" class="control-label"></label>
                 <input asp-for="Task[0]" class="form-control" />
                 <span asp-validation-for="Task[0]" class="text-danger"></span>
