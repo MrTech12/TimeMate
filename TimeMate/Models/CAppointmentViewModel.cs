@@ -8,11 +8,6 @@ namespace TimeMate.Models
 {
     public class CAppointmentViewModel
     {
-        public CAppointmentViewModel()
-        {
-            this.AppointmentViewModel = new AppointmentViewModel();
-        }
-
         public AppointmentViewModel AppointmentViewModel { get; set; }
 
         [Required(ErrorMessage = "Dit veld is verplicht.")]

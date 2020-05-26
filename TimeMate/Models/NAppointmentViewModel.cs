@@ -10,11 +10,6 @@ namespace TimeMate.Models
 {
     public class NAppointmentViewModel
     {
-        public NAppointmentViewModel()
-        {
-            this.AppointmentViewModel = new AppointmentViewModel();
-        }
-
         public AppointmentViewModel AppointmentViewModel { get; set; }
 
         [Required(ErrorMessage = "Dit veld is verplicht.")]
