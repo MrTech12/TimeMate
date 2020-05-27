@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccessLayer.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -34,6 +35,10 @@ namespace TimeMate.Models
 
         [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Kies een agenda uit.")]
-        public List<string> AgendaName { get; set; }
+        public List<AgendaDTO> AgendaDTO { get; set; }
+
+        //[Required(ErrorMessage = "Dit veld is verplicht.")]
+        //[Display(Name = "Kies een agenda uit.")]
+        //public List<string> AgendaName { get; set; }
     }
 }

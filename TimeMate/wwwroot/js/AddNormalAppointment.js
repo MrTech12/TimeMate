@@ -2,20 +2,6 @@
 
 $(document).ready(function () {
     $("#bolding-text").click(function () {
-        ////var text = window.getSelection();
-        //console.log("Version 1: " + document.getElementById("test").selectionStart, document.getElementById("test").selectionEnd)
-        //if (document.getSelection()) {
-        //    alert("Version 2: " + text);
-        //}
-        //var text = window.getSelection().toString();
-        //var highlight = window.getSelection();
-        //console.log("Version 3: " + highlight);
-        //var span = '<span class="bold">' + highlight + '</span>';
-        //var field = $('#test').html();
-        //console.log(field);
-        //var newTextField = field.replace(highlight, span);
-        //$('#test').html(newTextField);
-        //$('#test').html(field.replace(highlight, span));
 
         highlight = window.getSelection();
         
@@ -28,6 +14,10 @@ $(document).ready(function () {
             index--;
         }
     });
+    $("#add-appointment").click(function () {
+        GetDataForTransfer();
+    });
+
 });
 
 function MakeTextBold() {
@@ -60,3 +50,28 @@ function GetDescriptionInput() {
     var descriptionText = document.getElementById('descriptionBox').innerHTML;
     $("#sendController").val(descriptionText);
 };
+
+function GetDataForTransfer()
+{
+    var appointmentInfo = [];
+    appointmentInfo.push($("#AppointmentViewModel_Name").val());
+    appointmentInfo.push($("#AppointmentViewModel_StartDate").val());
+    appointmentInfo.push($("#AppointmentViewModel_StartTime").val());
+    appointmentInfo.push($("#AppointmentViewModel_EndDate").val());
+    appointmentInfo.push($("#AppointmentViewModel_EndTime").val());
+
+    var selectInput = document.getElementById("AppointmentViewModel_AgendaDTO_0__AgendaName");
+    appointmentInfo.push(selectInput.options[selectInput.selectedIndex].value);
+    appointmentInfo.push(selectInput.options[selectInput.selectedIndex].id);
+    appointmentInfo.push(document.getElementById('descriptionBox').innerHTML);
+    console.info(appointmentInfo);
+    //Get data from input fields.
+    //Get selected value option from select box.
+    //Get id from select value option.
+    //Get description.
+    //Write AJAX method to send data to controller. Data gets send via array.
+    //Controller puts data in AppointmentDTO.
+    //Data gets saved into DB.
+    //AJAX send user to Agenda Page.
+    //**Do the same for adding checklist appointment.**
+}

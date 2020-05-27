@@ -15,7 +15,7 @@ namespace DataAccessLayer.Interfaces
 
         void DeleteAgenda(int AgendaIndex, AccountDTO accountDTO);
 
-        List<string> GetAgendaNamesFromDB(AccountDTO accountDTO);
+        List<AgendaDTO> GetAllAgendas(AccountDTO accountDTO);
 
         int GetAgendaID(string agendaName, AccountDTO accountDTO);
 

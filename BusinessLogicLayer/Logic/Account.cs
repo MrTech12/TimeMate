@@ -17,8 +17,6 @@ namespace BusinessLogicLayer.Logic
         private string returnMessage;
         private string databaseOutput;
 
-        private List<string> agendaFromUser = new List<string>();
-
         public Account(AccountDTO accountDTO, IAccountContext accountContext, IAgendaContext agendaContext)
         {
             this.accountDTO = accountDTO;
@@ -145,10 +143,11 @@ namespace BusinessLogicLayer.Logic
         /// Get the agenda names of the current user.
         /// </summary>
         /// <returns></returns>
-        public List<string> GetAgendaNames()
+        public List<AgendaDTO> GetAgendaNames()
         {
-            agendaFromUser = _agendaContext.GetAgendaNamesFromDB(accountDTO);
-            return agendaFromUser;
+            List<AgendaDTO> agendasFromUser = new List<AgendaDTO>();
+            agendasFromUser = _agendaContext.GetAllAgendas(accountDTO);
+            return agendasFromUser;
         }
     }
 }

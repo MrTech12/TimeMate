@@ -55,7 +55,7 @@ namespace TimeMateTest.Stubs
             return agendaID;
         }
 
-        public List<string> GetAgendaNamesFromDB(AccountDTO accountDTO)
+        public List<string> GetAllAgendas(AccountDTO accountDTO)
         {
             List<string> agendaNames = new List<string>();
             if (accountDTO.AccountID == 12)
@@ -90,6 +90,11 @@ namespace TimeMateTest.Stubs
             return appointmentDTO;
         }
 
+        List<AgendaDTO> IAgendaContext.GetAllAgendas(AccountDTO accountDTO)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<DateTime> GetWeekendHours(int agendaIndex)
         {
             throw new NotImplementedException();
@@ -104,7 +109,5 @@ namespace TimeMateTest.Stubs
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

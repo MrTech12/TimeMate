@@ -118,15 +118,15 @@ namespace DataAccessLayer.Contexts
         /// Get all the agenda names that the account has.
         /// </summary>
         /// <returns></returns>
-        public List<string> GetAgendaNamesFromDB(AccountDTO accountDTO)
+        public List<AgendaDTO> GetAllAgendas(AccountDTO accountDTO)
         {
-            List<string> agendaNames = new List<string>();
+            List<AgendaDTO> agendas = new List<AgendaDTO>();
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand("SELECT Name FROM [Agenda] WHERE AccountID = @0", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand("SELECT a.* FROM [Agenda] a WHERE AccountID = @0", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
 
@@ -134,10 +134,10 @@ namespace DataAccessLayer.Contexts
 
                     while (dataReader.Read())
                     {
-                        for (int i = 0; i < dataReader.FieldCount; i++)
-                        {
-                            agendaNames.Add(dataReader.GetValue(i).ToString());
-                        }
+                        AgendaDTO agendaDTO = new AgendaDTO();
+                        agendaDTO.AgendaID = Convert.ToInt32(dataReader["AgendaID"]);
+                        agendaDTO.AgendaName = dataReader["Name"].ToString();
+                        agendas.Add(agendaDTO);
                     }
                 }
             }
@@ -146,7 +146,7 @@ namespace DataAccessLayer.Contexts
                 //Display the error.
                 throw;
             }
-            return agendaNames;
+            return agendas;
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace DataAccessLayer.Contexts
                         appointmentModel.AppointmentName = dataReader["Name"].ToString();
                         appointmentModel.StartDate = Convert.ToDateTime(dataReader["Starting"]);
                         appointmentModel.EndDate = Convert.ToDateTime(dataReader["Ending"]);
-                        appointmentModel.AgendaName = Convert.ToString(dataReader["AgendaName"]);
+                        appointmentModel.AgendaName = dataReader["AgendaName"].ToString();
                         AppointmentsFromAccount.Add(appointmentModel);
                     }
                 }
