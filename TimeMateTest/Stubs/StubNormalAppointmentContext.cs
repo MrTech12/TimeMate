@@ -10,7 +10,11 @@ namespace TimeMateTest.Stubs
     {
         public void AddDescription(AppointmentDTO appointmentDTO)
         {
-            throw new NotImplementedException();
+            int appointmentID;
+            if (appointmentDTO.AppointmentName == "This is <b> a </b> test.")
+            {
+                appointmentID = 366;
+            }
         }
 
         public string GetDescription(int appointmentID)

@@ -25,10 +25,46 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
+        public void EmptyLoginTest()
+        {
+            string output;
+            accountDTO = new AccountDTO() { MailAddress = "", Password = "" };
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+
+            output = account.UserLogsIn();
+
+            Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
+        }
+
+        [Fact]
         public void WrongMailaddressTest()
         {
             string output;
             accountDTO = new AccountDTO() { MailAddress = "test@gmail.com", Password = "test123"};
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+
+            output = account.UserLogsIn();
+
+            Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
+        }
+
+        [Fact]
+        public void EmptyMailTest()
+        {
+            string output;
+            accountDTO = new AccountDTO() { MailAddress = "", Password = "test123" };
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+
+            output = account.UserLogsIn();
+
+            Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
+        }
+
+        [Fact]
+        public void IncompleteMailTest()
+        {
+            string output;
+            accountDTO = new AccountDTO() { MailAddress = "test@gmail.", Password = "test123" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.UserLogsIn();
@@ -49,6 +85,18 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
+        public void EmptyPasswordTest()
+        {
+            string output;
+            accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "" };
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+
+            output = account.UserLogsIn();
+
+            Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
+        }
+
+        [Fact]
         public void CreateAccountWithNoJobTest()
         {
             string output;
@@ -61,7 +109,7 @@ namespace TimeMateTest.BLL
 
             output = account.NewAccountValidation();
 
-            Assert.Equal("12", output);
+            Assert.Equal("6", output);
         }
 
         [Fact]
@@ -81,7 +129,7 @@ namespace TimeMateTest.BLL
 
             output = account.NewAccountValidation();
 
-            Assert.Equal("12", output);
+            Assert.Equal("6", output);
         }
 
         [Fact]
@@ -130,8 +178,50 @@ namespace TimeMateTest.BLL
             output = account.NewAccountValidation();
 
             Assert.Equal("Er bestaat al een account met dit mailadres.", output);
-        } 
+        }
 
+        [Fact]
+        public void CreateAccountWithIncorrectMailTest()
+        {
+            string output;
+            accountDTO = new AccountDTO() { FirstName = "Bert", MailAddress = "bert@gmail.", Password = "qwieEW12iwieWE@#" };
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+
+            output = account.NewAccountValidation();
+
+            Assert.Equal("Het emailadres is niet geldig.", output);
+        }
+
+        [Fact]
+        public void CreateAgendaTest()
+        {
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            Agenda agenda = new Agenda(accountDTO, new StubAgendaContext());
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "0x0000", Notification = "Nee" };
+            
+            string before = Convert.ToString(agenda.GetAgendaID(null));
+            account.CreateAgenda(agendaDTO);
+            string after = Convert.ToString(agenda.GetAgendaID("Homework"));
+
+            Assert.Equal("-1", before);
+            Assert.Equal("24", after);
+        }
+
+        [Fact]
+        public void CreateWorkAgendaTest()
+        {
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            Agenda agenda = new Agenda(accountDTO, new StubAgendaContext());
+
+            string before = Convert.ToString(agenda.GetAgendaID(null));
+            account.CreateWorkAgenda();
+            string after = Convert.ToString(agenda.GetAgendaID("Bijbaan"));
+
+            Assert.Equal("-1", before);
+            Assert.Equal("4", after);
+        }
 
         [Fact]
         public void GetAgendaNamesTest()

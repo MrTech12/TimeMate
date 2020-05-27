@@ -150,16 +150,5 @@ namespace BusinessLogicLayer.Logic
             agendaFromUser = _agendaContext.GetAgendaNamesFromDB(accountDTO);
             return agendaFromUser;
         }
-
-        /// <summary>
-        /// Remove an agenda
-        /// </summary>
-        public void RemoveAgenda(string agendaName)
-        {
-            AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
-            _agendaContext.DeleteAgenda(agendaDTO.AgendaID, accountDTO);
-        }
-
     }
 }

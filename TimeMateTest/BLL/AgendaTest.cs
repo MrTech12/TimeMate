@@ -3,6 +3,7 @@ using DataAccessLayer.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using TimeMateTest.Stubs;
 using Xunit;
 
@@ -22,7 +23,7 @@ namespace TimeMateTest.BLL
             agenda = new Agenda(accountDTO, new StubAgendaContext());
 
             output = agenda.GetAgendaID("Personal");
-            Assert.Equal(12, output);
+            Assert.Equal(2, output);
         }
 
         [Fact]
@@ -33,7 +34,8 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { AccountID = 12 };
             agenda = new Agenda(accountDTO, new StubAgendaContext(), new StubAppointmentContext());
 
-            output = agenda.GetAppointmentID(appointmentDTO, 12);
+            output = agenda.GetAppointmentID(appointmentDTO, 36);
+
             Assert.Equal(8, output);
         }
 
@@ -48,6 +50,50 @@ namespace TimeMateTest.BLL
 
             Assert.Contains("Walk the dog", output[1].AppointmentName);
             Assert.True(output.Count == 3);
+        }
+
+        [Fact]
+        public void CreateNAppointmentTest()
+        {
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            agenda = new Agenda(accountDTO, new StubAgendaContext(), new StubAppointmentContext(), new StubNormalAppointmentContext());
+            AppointmentDTO appointmentDTOFake = new AppointmentDTO() { AppointmentName = null, StartDate = DateTime.Today};
+
+            appointmentDTO = new AppointmentDTO()
+            {
+                AppointmentName = "Reorder cables",
+                StartDate = DateTime.Now.AddHours(2),
+                EndDate = DateTime.Now.AddHours(4),
+                Description = "This is <b> a </b> test."
+            };
+
+            string before = Convert.ToString(agenda.GetAppointmentID(appointmentDTOFake, 0));
+            agenda.CreateNAppointment(appointmentDTO, "Personal");
+            string after = Convert.ToString(agenda.GetAppointmentID(appointmentDTO, 2));
+
+            Assert.Equal("-1", before);
+            Assert.Equal("8", after);
+        }
+
+        [Fact]
+        public void CreateCAppointmentTest()
+        {
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            agenda = new Agenda(accountDTO, new StubAgendaContext(), new StubAppointmentContext(), new StubChecklistAppointmentContext());
+            AppointmentDTO appointmentDTOFake = new AppointmentDTO() { AppointmentName = null, StartDate = DateTime.Today };
+
+            appointmentDTO = new AppointmentDTO();
+            appointmentDTO.AppointmentName = "Create 3D render";
+            appointmentDTO.StartDate = DateTime.Now.AddHours(3);
+            appointmentDTO.EndDate = DateTime.Now.AddHours(4);
+            appointmentDTO.ChecklistItemName.Add("Get inspiration");
+
+            string before = Convert.ToString(agenda.GetAppointmentID(appointmentDTOFake, 0));
+            agenda.CreateCAppointment(appointmentDTO, "Personal");
+            string after = Convert.ToString(agenda.GetAppointmentID(appointmentDTO, 2));
+
+            Assert.Equal("-1", before);
+            Assert.Equal("48", after);
         }
     }
 }

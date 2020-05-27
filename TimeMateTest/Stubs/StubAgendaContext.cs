@@ -21,7 +21,7 @@ namespace TimeMateTest.Stubs
         public void AddNewJobAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
             int jobID;
-            if (agendaDTO.AgendaID == 12)
+            if (agendaDTO.AgendaID == 12 && accountDTO.AccountID == 12)
             {
                 jobID = 12;
             }
@@ -35,9 +35,21 @@ namespace TimeMateTest.Stubs
         public int GetAgendaID(string agendaName, AccountDTO accountDTO)
         {
             int agendaID = 0;
-            if (agendaName == "Personal")
+            if (agendaName == "Personal" && accountDTO.AccountID == 12)
             {
-                agendaID = 12;
+                agendaID = 2;
+            }
+            else if (agendaName == null && accountDTO.AccountID == 12)
+            {
+                agendaID = -1;
+            }
+            else if (agendaName == "Homework" && accountDTO.AccountID == 12)
+            {
+                agendaID = 24;
+            }
+            else if (agendaName == "Bijbaan" && accountDTO.AccountID == 12)
+            {
+                agendaID = 4;
             }
 
             return agendaID;
@@ -57,23 +69,24 @@ namespace TimeMateTest.Stubs
 
         public List<AppointmentDTO> GetAllAppointments(AccountDTO accountDTO)
         {
-            List<AppointmentDTO> appointmentDTO = new List<AppointmentDTO>(3);
+            List<AppointmentDTO> appointmentDTO = new List<AppointmentDTO>();
+            if (accountDTO.AccountID == 12)
+            {
+                AppointmentDTO appointment1 = new AppointmentDTO();
+                appointment1.AppointmentName = "Walk the dog";
+                appointment1.StartDate = DateTime.Now.AddHours(3);
+                appointmentDTO.Add(appointment1);
 
-            AppointmentDTO appointment1 = new AppointmentDTO();
-            appointment1.AppointmentName = "Walk the dog";
-            appointment1.StartDate = DateTime.Now.AddHours(3);
-            appointmentDTO.Add(appointment1);
+                AppointmentDTO appointment2 = new AppointmentDTO();
+                appointment2.AppointmentName = "Do the dishes";
+                appointment2.StartDate = DateTime.Now.AddHours(2);
+                appointmentDTO.Add(appointment2);
 
-            AppointmentDTO appointment2 = new AppointmentDTO();
-            appointment2.AppointmentName = "Do the dishes";
-            appointment2.StartDate = DateTime.Now.AddHours(2);
-            appointmentDTO.Add(appointment2);
-
-            AppointmentDTO appointment3 = new AppointmentDTO();
-            appointment3.AppointmentName = "Sleep for 7 hours";
-            appointment3.StartDate = DateTime.Now.AddHours(7);
-            appointmentDTO.Add(appointment3);
-
+                AppointmentDTO appointment3 = new AppointmentDTO();
+                appointment3.AppointmentName = "Sleep for 7 hours";
+                appointment3.StartDate = DateTime.Now.AddHours(7);
+                appointmentDTO.Add(appointment3);
+            }
             return appointmentDTO;
         }
 

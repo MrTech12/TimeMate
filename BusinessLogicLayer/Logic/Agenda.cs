@@ -58,15 +58,6 @@ namespace BusinessLogicLayer.Logic
             return ID;
         }
 
-        /// <summary>
-        /// Rename an agenda
-        /// </summary>
-        public void RenameAgenda(string agendaName)
-        {
-            AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
-            _agendaContext.RenameAgenda(agendaDTO.AgendaID, accountDTO);
-        }
 
         /// <summary>
         /// Get all appointments of the current user.
@@ -109,15 +100,6 @@ namespace BusinessLogicLayer.Logic
             {
                 _cAppointmentContext.AddTask(appointmentDTO.AppointmentID, item);
             }
-        }
-
-        public void DeleteAppointment(string appointmentName)
-        {
-            AgendaDTO agendaDTO = new AgendaDTO();
-            AppointmentDTO appointmentDTO = new AppointmentDTO();
-            agendaDTO.AgendaID = _agendaContext.GetAgendaID(appointmentName, accountDTO);
-            appointmentDTO.AppointmentID = _appointmentContext.GetAppointmentID(appointmentDTO, agendaDTO.AgendaID);
-            _appointmentContext.DeleteAppointment(appointmentDTO.AppointmentID, agendaDTO.AgendaID);
         }
     }
 }

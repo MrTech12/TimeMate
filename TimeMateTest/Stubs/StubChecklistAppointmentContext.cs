@@ -10,7 +10,11 @@ namespace TimeMateTest.Stubs
     {
         public void AddTask(int appointmentID, string taskName)
         {
-            throw new NotImplementedException();
+            string qwerty;
+            if (appointmentID == 48 && taskName == "Get inspiration")
+            {
+                qwerty = "nothing";
+            }
         }
 
         public void CheckOffTask(AppointmentDTO appointmentDTO)
@@ -27,8 +31,7 @@ namespace TimeMateTest.Stubs
                 appointmentDTO.ChecklistItemName.Add("Mow the lawn");
                 appointmentDTO.ChecklistItemName.Add("Collect grapes");
             }
-            return appointmentDTO; 
-            throw new NotImplementedException();
+            return appointmentDTO;
         }
     }
 }

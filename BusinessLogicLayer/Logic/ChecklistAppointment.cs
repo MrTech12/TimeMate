@@ -23,11 +23,6 @@ namespace BusinessLogicLayer.Logic
             return appointmentDTO;
         }
 
-        public void CheckingOffTask(string taskName, string appointmentName)
-        {
-
-        }
-
         public override void RenameAppointment(AppointmentDTO appointmentDTO)
         {
             throw new NotImplementedException();
