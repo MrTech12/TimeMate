@@ -85,7 +85,7 @@ namespace DataAccessLayer.Contexts
         /// Inserting a new account into the database.
         /// </summary>
         /// <returns></returns>
-        public int RegisterNewUser(AccountDTO accountDTO)
+        public int CreateNewAccount(AccountDTO accountDTO)
         {
             int accountID;
             try

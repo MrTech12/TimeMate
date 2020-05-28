@@ -7,9 +7,9 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IAgendaContext
     {
-        int AddNewAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO);
+        int AddAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO);
 
-        void AddNewJobAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO);
+        void AddJobAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO);
 
         void RenameAgenda(int agendaIndex, AccountDTO accountDTO);
 

@@ -12,12 +12,12 @@ namespace TimeMateTest.BLL
         private ChecklistAppointment checklistAppointment;
 
         [Fact]
-        public void RetrieveTaskTest()
+        public void RetrieveTasksTest()
         {
             AppointmentDTO output = new AppointmentDTO() { AppointmentID = 6};
             checklistAppointment = new ChecklistAppointment(output, new StubChecklistAppointmentContext());
 
-            output = checklistAppointment.RetrieveTask(output.AppointmentID);
+            output = checklistAppointment.RetrieveTasks(output.AppointmentID);
 
             Assert.Contains("Mow the lawn", output.ChecklistItemName[1]);
             Assert.True(output.ChecklistItemName.Count == 3);

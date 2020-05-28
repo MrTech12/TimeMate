@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace TimeMate.Models
 {
-    public class CAppointmentViewModel
+    public class ChecklistAppointmentViewModel
     {
-        public CAppointmentViewModel()
+        public ChecklistAppointmentViewModel()
         {
             this.AppointmentViewModel = new AppointmentViewModel();
         }

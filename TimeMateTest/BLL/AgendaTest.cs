@@ -58,7 +58,7 @@ namespace TimeMateTest.BLL
             };
 
             string before = Convert.ToString(agenda.GetAppointmentID(appointmentDTOFake, 0));
-            agenda.CreateNAppointment(appointmentDTO);
+            agenda.CreateNormalAppointment(appointmentDTO);
             string after = Convert.ToString(agenda.GetAppointmentID(appointmentDTO, 2));
 
             Assert.Equal("-1", before);
@@ -80,7 +80,7 @@ namespace TimeMateTest.BLL
             appointmentDTO.ChecklistItemName.Add("Get inspiration");
 
             string before = Convert.ToString(agenda.GetAppointmentID(appointmentDTOFake, 0));
-            agenda.CreateCAppointment(appointmentDTO);
+            agenda.CreateChecklistAppointment(appointmentDTO);
             string after = Convert.ToString(agenda.GetAppointmentID(appointmentDTO, 2));
 
             Assert.Equal("-1", before);

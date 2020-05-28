@@ -27,7 +27,7 @@ namespace BusinessLogicLayer.Logic
         /// <summary>
         /// Letting the user log into their account, with their entered credentials.
         /// </summary>
-        public string UserLogsIn()
+        public string LoggingIn()
         {
             databaseOutput = _accountContext.SearchForPasswordHash(accountDTO.MailAddress);
             if (databaseOutput != null)
@@ -84,7 +84,7 @@ namespace BusinessLogicLayer.Logic
                 }
                 else
                 {
-                    CreateUserInDB();
+                    CreateAccount();
                     Mail mail = new Mail();
                     mail.SendMail(accountDTO.MailAddress);
                     returnMessage = Convert.ToString(accountDTO.AccountID);
@@ -96,17 +96,17 @@ namespace BusinessLogicLayer.Logic
         /// <summary>
         /// Create an account for the user, with their entered input.
         /// </summary>
-        public void CreateUserInDB()
+        public void CreateAccount()
         {
             accountDTO.Password = BCrypt.Net.BCrypt.HashPassword(accountDTO.Password, 10);
 
             if (accountDTO.JobCount == 0)
             {
-                accountDTO.AccountID = _accountContext.RegisterNewUser(accountDTO);
+                accountDTO.AccountID = _accountContext.CreateNewAccount(accountDTO);
             }
             else if (accountDTO.JobCount > 0)
             {
-                accountDTO.AccountID = _accountContext.RegisterNewUser(accountDTO);
+                accountDTO.AccountID = _accountContext.CreateNewAccount(accountDTO);
                 CreateWorkAgenda();
             }
         }
@@ -121,7 +121,7 @@ namespace BusinessLogicLayer.Logic
             newAgendaDTO.AgendaColor = agendaDTO.AgendaColor;
             newAgendaDTO.Notification = agendaDTO.Notification;
 
-            _agendaContext.AddNewAgenda(newAgendaDTO, accountDTO);
+            _agendaContext.AddAgenda(newAgendaDTO, accountDTO);
         }
 
         /// <summary>
@@ -134,16 +134,16 @@ namespace BusinessLogicLayer.Logic
             newAgendaDTO.AgendaColor = "#FF0000";
             newAgendaDTO.Notification = "Nee";
 
-            newAgendaDTO.AgendaID = _agendaContext.AddNewAgenda(newAgendaDTO, accountDTO);
+            newAgendaDTO.AgendaID = _agendaContext.AddAgenda(newAgendaDTO, accountDTO);
 
-            _agendaContext.AddNewJobAgenda(newAgendaDTO,accountDTO);
+            _agendaContext.AddJobAgenda(newAgendaDTO,accountDTO);
         }
 
         /// <summary>
         /// Get the agenda names of the current user.
         /// </summary>
         /// <returns></returns>
-        public List<AgendaDTO> GetAgendaNames()
+        public List<AgendaDTO> RetrieveAgendas()
         {
             List<AgendaDTO> agendasFromUser = new List<AgendaDTO>();
             agendasFromUser = _agendaContext.GetAllAgendas(accountDTO);

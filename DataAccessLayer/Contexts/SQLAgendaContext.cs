@@ -15,7 +15,7 @@ namespace DataAccessLayer.Contexts
         /// Add a new agenda into the database.
         /// </summary>
         /// <returns></returns>
-        public int AddNewAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
+        public int AddAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
             int agendaID = 0;
             try
@@ -46,7 +46,7 @@ namespace DataAccessLayer.Contexts
         /// Add a new agenda for work into the database.
         /// </summary>
         /// <returns></returns>
-        public void AddNewJobAgenda(AgendaDTO newAgendaDTO, AccountDTO accountDTO)
+        public void AddJobAgenda(AgendaDTO newAgendaDTO, AccountDTO accountDTO)
         {
             try
             {

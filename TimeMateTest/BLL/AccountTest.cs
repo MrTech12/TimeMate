@@ -20,7 +20,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "qoe2ieiwiir" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("0", output);
         }
@@ -32,7 +32,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "", Password = "" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
@@ -44,7 +44,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "test@gmail.com", Password = "test123"};
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
@@ -56,7 +56,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "", Password = "test123" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
@@ -68,7 +68,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "test@gmail.", Password = "test123" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
@@ -80,7 +80,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "cmck323kc" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
@@ -92,13 +92,13 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
 
         [Fact]
-        public void CreateAccountWithNoJobTest()
+        public void CreateAccountNoJobTest()
         {
             string output;
             accountDTO = new AccountDTO();
@@ -114,7 +114,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountWithJobTest()
+        public void CreateAccountJobTest()
         {
             string output;
             accountDTO = new AccountDTO();
@@ -134,7 +134,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountWithLowerCasePasswordTest()
+        public void CreateAccountLowerCasePasswordTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwieiwi231@#" };
@@ -146,7 +146,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountWithNoSpecialCharactersInPasswordTest()
+        public void CreateAccountNoSpecialCharactersInPasswordTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwiEEWwi231WE" };
@@ -158,7 +158,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountWithNoNumbersInPasswordTest()
+        public void CreateAccountNoNumbersInPasswordTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwieiwieWE@#" };
@@ -170,7 +170,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountWithExistingMailTest()
+        public void CreateAccounExistingMailTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Bert", MailAddress = "bert@gmail.com", Password = "qwieEW12iwieWE@#" };
@@ -182,7 +182,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountWithIncorrectMailTest()
+        public void CreateAccountIncorrectMailTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Bert", MailAddress = "bert@gmail.", Password = "qwieEW12iwieWE@#" };
@@ -247,7 +247,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { AccountID = 12 };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.GetAgendaNames();
+            output = account.RetrieveAgendas();
 
             Assert.Contains("Work", output[0].AgendaName);
             Assert.True(output.Count == 2);

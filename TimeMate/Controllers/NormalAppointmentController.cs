@@ -20,10 +20,10 @@ namespace TimeMate.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            NAppointmentViewModel nAppointmentViewModel = new NAppointmentViewModel();
+            NormalAppointmentViewModel viewModel = new NormalAppointmentViewModel();
             account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
-            nAppointmentViewModel.AppointmentViewModel.AgendaDTO = account.GetAgendaNames();
-            return View(nAppointmentViewModel);
+            viewModel.AppointmentViewModel.AgendaDTO = account.RetrieveAgendas();
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -51,7 +51,7 @@ namespace TimeMate.Controllers
 
             agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext(), new SQLNormalAppointmentContext());
 
-            agenda.CreateNAppointment(appointmentDTO);
+            agenda.CreateNormalAppointment(appointmentDTO);
 
             return Ok();
         }

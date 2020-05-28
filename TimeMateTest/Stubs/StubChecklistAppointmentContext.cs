@@ -22,7 +22,7 @@ namespace TimeMateTest.Stubs
             throw new NotImplementedException();
         }
 
-        public AppointmentDTO GetTask(int appointmentIndex)
+        public AppointmentDTO GetTasks(int appointmentIndex)
         {
             AppointmentDTO appointmentDTO = new AppointmentDTO();
             if (appointmentIndex == 6)

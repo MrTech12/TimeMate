@@ -80,7 +80,7 @@ namespace TimeMate.Controllers
             if (description == "")
             {
                 ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, new SQLChecklistAppointmentContext());
-                appointmentDTO = checklistAppointment.RetrieveTask(appointmentDTO.AppointmentID);
+                appointmentDTO = checklistAppointment.RetrieveTasks(appointmentDTO.AppointmentID);
 
                 if (appointmentDTO.ChecklistItemName != null)
                 {

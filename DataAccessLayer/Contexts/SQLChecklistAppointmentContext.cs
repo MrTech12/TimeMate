@@ -38,7 +38,7 @@ namespace DataAccessLayer.Contexts
             }
         }
 
-        public AppointmentDTO GetTask(int appointmentIndex)
+        public AppointmentDTO GetTasks(int appointmentIndex)
         {
             AppointmentDTO appointmentDTO = new AppointmentDTO();
             try

@@ -68,7 +68,7 @@ namespace BusinessLogicLayer.Logic
         /// <summary>
         /// Create appointment with description.
         /// </summary>
-        public void CreateNAppointment(AppointmentDTO appointmentDTO)
+        public void CreateNormalAppointment(AppointmentDTO appointmentDTO)
         {
             appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO, appointmentDTO.AgendaID);
 
@@ -81,7 +81,7 @@ namespace BusinessLogicLayer.Logic
         /// <summary>
         /// Create appointment with checklist.
         /// </summary>
-        public void CreateCAppointment(AppointmentDTO appointmentDTO)
+        public void CreateChecklistAppointment(AppointmentDTO appointmentDTO)
         {
             appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO, appointmentDTO.AgendaID);
 

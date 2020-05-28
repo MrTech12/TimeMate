@@ -9,7 +9,7 @@ namespace TimeMateTest.Stubs
 {
     class StubAgendaContext : IAgendaContext
     {
-        public int AddNewAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
+        public int AddAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
             int agendaID = 0;
 
@@ -23,7 +23,7 @@ namespace TimeMateTest.Stubs
             return agendaID;
         }
 
-        public void AddNewJobAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
+        public void AddJobAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
             if (accountDTO.AccountID == 12)
             {
