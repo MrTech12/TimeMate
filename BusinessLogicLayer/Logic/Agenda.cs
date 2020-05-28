@@ -46,18 +46,11 @@ namespace BusinessLogicLayer.Logic
             this._cAppointmentContext = cAppointmentContext;
         }
 
-        public int GetAgendaID(string agendaName)
-        {
-            int ID = _agendaContext.GetAgendaID(agendaName, accountDTO);
-            return ID;
-        }
-
         public int GetAppointmentID(AppointmentDTO appointmentDTO, int agendaID)
         {
             int ID = _appointmentContext.GetAppointmentID(appointmentDTO, agendaID);
             return ID;
         }
-
 
         /// <summary>
         /// Get all appointments of the current user.

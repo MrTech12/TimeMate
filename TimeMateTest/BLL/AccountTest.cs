@@ -2,6 +2,7 @@
 using DataAccessLayer.DTO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using TimeMateTest.Stubs;
 using Xunit;
 
@@ -198,14 +199,14 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { AccountID = 12 };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
             Agenda agenda = new Agenda(accountDTO, new StubAgendaContext());
-            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "0x0000", Notification = "Nee" };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 42, AgendaName = "Homework", AgendaColor = "0x0000", Notification = "Nee" };
             
-            string before = Convert.ToString(agenda.GetAgendaID(null));
             account.CreateAgenda(agendaDTO);
-            string after = Convert.ToString(agenda.GetAgendaID("Homework"));
+            string[] file = File.ReadAllLines("C:\\tmp\\addagendaTest.txt");
+            File.Delete("C:\\tmp\\addagendaTest.txt");
 
-            Assert.Equal("-1", before);
-            Assert.Equal("24", after);
+            Assert.Contains("Homework", file[1]);
+            Assert.Contains("0x0000", file[2]);
         }
 
         [Fact]
@@ -215,12 +216,12 @@ namespace TimeMateTest.BLL
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
             Agenda agenda = new Agenda(accountDTO, new StubAgendaContext());
 
-            string before = Convert.ToString(agenda.GetAgendaID(null));
             account.CreateWorkAgenda();
-            string after = Convert.ToString(agenda.GetAgendaID("Bijbaan"));
+            string[] file = File.ReadAllLines("C:\\tmp\\addworkagendaTest.txt");
+            File.Delete("C:\\tmp\\addworkagendaTest.txt");
 
-            Assert.Equal("-1", before);
-            Assert.Equal("4", after);
+            Assert.Contains("Bijbaan", file[1]);
+            Assert.Contains("#FF0000", file[2]);
         }
 
         [Fact]

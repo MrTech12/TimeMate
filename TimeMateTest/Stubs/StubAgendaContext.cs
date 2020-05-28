@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
@@ -11,48 +12,35 @@ namespace TimeMateTest.Stubs
         public int AddNewAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
             int agendaID = 0;
-            if (accountDTO.AccountID == 12)
+            if (accountDTO.AccountID == 12 && agendaDTO.AgendaName == "Homework")
             {
-                agendaDTO.AgendaID = 12;
+                using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addagendaTest.txt"))
+                {
+                    streamWriter.WriteLine(agendaDTO.AgendaID);
+                    streamWriter.WriteLine(agendaDTO.AgendaName);
+                    streamWriter.WriteLine(agendaDTO.AgendaColor);
+                }
             }
+           
             return agendaID;
         }
 
         public void AddNewJobAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
-            int jobID;
-            if (agendaDTO.AgendaID == 12 && accountDTO.AccountID == 12)
+            if (accountDTO.AccountID == 12)
             {
-                jobID = 12;
+                using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addworkagendaTest.txt"))
+                {
+                    streamWriter.WriteLine(agendaDTO.AgendaID);
+                    streamWriter.WriteLine(agendaDTO.AgendaName);
+                    streamWriter.WriteLine(agendaDTO.AgendaColor);
+                }
             }
         }
 
         public void DeleteAgenda(int AgendaIndex, AccountDTO accountDTO)
         {
             throw new NotImplementedException();
-        }
-
-        public int GetAgendaID(string agendaName, AccountDTO accountDTO)
-        {
-            int agendaID = 0;
-            if (agendaName == "Personal" && accountDTO.AccountID == 12)
-            {
-                agendaID = 2;
-            }
-            else if (agendaName == null && accountDTO.AccountID == 12)
-            {
-                agendaID = -1;
-            }
-            else if (agendaName == "Homework" && accountDTO.AccountID == 12)
-            {
-                agendaID = 24;
-            }
-            else if (agendaName == "Bijbaan" && accountDTO.AccountID == 12)
-            {
-                agendaID = 4;
-            }
-
-            return agendaID;
         }
 
         public List<AgendaDTO> GetAllAgendas(AccountDTO accountDTO)

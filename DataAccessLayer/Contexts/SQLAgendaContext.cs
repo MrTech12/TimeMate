@@ -153,34 +153,6 @@ namespace DataAccessLayer.Contexts
         }
 
         /// <summary>
-        /// Get the agendaID of an agenda.
-        /// </summary>
-        public int GetAgendaID(string agendaNameInput, AccountDTO accountDTO)
-        {
-            int AgendaID;
-            try
-            {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
-                {
-                    databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand(@"SELECT AgendaID FROM [Agenda] WHERE AccountID = @0 AND Name = @1", databaseConn);
-
-                    insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
-                    insertQuerry.Parameters.AddWithValue("1", agendaNameInput);
-
-                    var result = insertQuerry.ExecuteScalar();
-                    AgendaID = Convert.ToInt32(result); //Store agendaID.
-                }
-            }
-            catch (SqlException)
-            {
-                //Display the error.
-                throw;
-            }
-            return AgendaID;
-        }
-
-        /// <summary>
         /// Get all appointments of the user, from the database.
         /// </summary>
         /// <returns></returns>
