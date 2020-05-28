@@ -13,8 +13,8 @@ namespace TimeMate.Controllers
 {
     public class AccountController : Controller
     {
-        Account account;
-        AccountDTO accountDTO;
+        private Account account;
+        private AccountDTO accountDTO;
 
         [HttpGet]
         public IActionResult Index()

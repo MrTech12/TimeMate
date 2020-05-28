@@ -14,8 +14,8 @@ namespace TimeMate.Controllers
 {
     public class AgendaController : Controller
     {
-        AccountDTO accountDTO = new AccountDTO();
-        Agenda agenda;
+        private AccountDTO accountDTO = new AccountDTO();
+        private Agenda agenda;
 
         [HttpGet]
         public IActionResult Index()

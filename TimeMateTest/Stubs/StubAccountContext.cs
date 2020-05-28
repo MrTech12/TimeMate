@@ -8,7 +8,6 @@ namespace TimeMateTest.Stubs
 {
     class StubAccountContext : IAccountContext
     {
-        string returnMessage;
         public string GetUserID(string mail)
         {
             string accountID = null;
@@ -31,6 +30,7 @@ namespace TimeMateTest.Stubs
 
         public string SearchForPasswordHash(string mail)
         {
+            string returnMessage = null;
             if (mail == "test@gmail.com")
             {
                 returnMessage = null;

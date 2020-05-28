@@ -199,14 +199,30 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { AccountID = 12 };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
             Agenda agenda = new Agenda(accountDTO, new StubAgendaContext());
-            AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 42, AgendaName = "Homework", AgendaColor = "0x0000", Notification = "Nee" };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000", Notification = "Nee" };
             
             account.CreateAgenda(agendaDTO);
             string[] file = File.ReadAllLines("C:\\tmp\\addagendaTest.txt");
             File.Delete("C:\\tmp\\addagendaTest.txt");
 
-            Assert.Contains("Homework", file[1]);
-            Assert.Contains("0x0000", file[2]);
+            Assert.Contains("Homework", file[0]);
+            Assert.Contains("#0x0000", file[1]);
+        }
+
+        [Fact]
+        public void CreateAgendaTest2()
+        {
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            Agenda agenda = new Agenda(accountDTO, new StubAgendaContext());
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560", Notification = "Nee" };
+
+            account.CreateAgenda(agendaDTO);
+            string[] file = File.ReadAllLines("C:\\tmp\\addagendaTest.txt");
+            File.Delete("C:\\tmp\\addagendaTest.txt");
+
+            Assert.Contains("Skype", file[0]);
+            Assert.Contains("#15F560", file[1]);
         }
 
         [Fact]
@@ -220,8 +236,8 @@ namespace TimeMateTest.BLL
             string[] file = File.ReadAllLines("C:\\tmp\\addworkagendaTest.txt");
             File.Delete("C:\\tmp\\addworkagendaTest.txt");
 
-            Assert.Contains("Bijbaan", file[1]);
-            Assert.Contains("#FF0000", file[2]);
+            Assert.Contains("Bijbaan", file[0]);
+            Assert.Contains("#FF0000", file[1]);
         }
 
         [Fact]

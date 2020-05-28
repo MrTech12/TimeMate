@@ -13,9 +13,9 @@ namespace TimeMate.Controllers
 {
     public class ChecklistAppointmentController : Controller
     {
-        AccountDTO accountDTO = new AccountDTO();
-        Account account;
-        Agenda agenda;
+        private AccountDTO accountDTO = new AccountDTO();
+        private Account account;
+        private Agenda agenda;
 
         [HttpGet]
         public IActionResult Index()
