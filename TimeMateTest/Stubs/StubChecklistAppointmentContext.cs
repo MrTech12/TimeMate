@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
@@ -10,10 +11,12 @@ namespace TimeMateTest.Stubs
     {
         public void AddTask(int appointmentID, string taskName)
         {
-            string qwerty;
-            if (appointmentID == 48 && taskName == "Get inspiration")
+            if (appointmentID == 60)
             {
-                qwerty = "nothing";
+                using (StreamWriter streamWriter = File.AppendText("C:\\tmp\\addAppointmentTest.txt"))
+                {
+                    streamWriter.WriteLine(taskName);
+                }
             }
         }
 

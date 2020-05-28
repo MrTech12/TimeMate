@@ -202,7 +202,7 @@ namespace TimeMateTest.BLL
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000", Notification = "Nee" };
             
             account.CreateAgenda(agendaDTO);
-            string[] file = File.ReadAllLines("C:\\tmp\\addagendaTest.txt");
+            string[] file = File.ReadAllLines("C:\\tmp\\addAgendaTest.txt");
             File.Delete("C:\\tmp\\addagendaTest.txt");
 
             Assert.Contains("Homework", file[0]);
@@ -218,7 +218,7 @@ namespace TimeMateTest.BLL
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560", Notification = "Nee" };
 
             account.CreateAgenda(agendaDTO);
-            string[] file = File.ReadAllLines("C:\\tmp\\addagendaTest.txt");
+            string[] file = File.ReadAllLines("C:\\tmp\\addAgendaTest.txt");
             File.Delete("C:\\tmp\\addagendaTest.txt");
 
             Assert.Contains("Skype", file[0]);
@@ -233,7 +233,7 @@ namespace TimeMateTest.BLL
             Agenda agenda = new Agenda(accountDTO, new StubAgendaContext());
 
             account.CreateWorkAgenda();
-            string[] file = File.ReadAllLines("C:\\tmp\\addworkagendaTest.txt");
+            string[] file = File.ReadAllLines("C:\\tmp\\addWorkAgendaTest.txt");
             File.Delete("C:\\tmp\\addworkagendaTest.txt");
 
             Assert.Contains("Bijbaan", file[0]);

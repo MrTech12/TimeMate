@@ -18,7 +18,7 @@ namespace TimeMateTest.Stubs
             return accountID;
         }
 
-        public int CreateNewAccount(AccountDTO AccountDTO)
+        public int CreateAccount(AccountDTO AccountDTO)
         {
             int accountID = 0;
             if (AccountDTO.MailAddress == "sina1240@gmail.com")

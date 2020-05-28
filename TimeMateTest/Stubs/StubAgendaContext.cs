@@ -13,26 +13,22 @@ namespace TimeMateTest.Stubs
         {
             int agendaID = 0;
 
-            using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addagendaTest.txt"))
+            using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addAgendaTest.txt"))
             {
                 streamWriter.WriteLine(agendaDTO.AgendaName);
                 streamWriter.WriteLine(agendaDTO.AgendaColor);
                 streamWriter.WriteLine(agendaDTO.Notification);
-            }
-           
+            }          
             return agendaID;
         }
 
         public void AddJobAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
-            if (accountDTO.AccountID == 12)
+            using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addWorkAgendaTest.txt"))
             {
-                using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addworkagendaTest.txt"))
-                {
-                    streamWriter.WriteLine(agendaDTO.AgendaName);
-                    streamWriter.WriteLine(agendaDTO.AgendaColor);
-                    streamWriter.WriteLine(agendaDTO.Notification);
-                }
+                streamWriter.WriteLine(agendaDTO.AgendaName);
+                streamWriter.WriteLine(agendaDTO.AgendaColor);
+                streamWriter.WriteLine(agendaDTO.Notification);
             }
         }
 

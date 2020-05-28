@@ -102,11 +102,11 @@ namespace BusinessLogicLayer.Logic
 
             if (accountDTO.JobCount == 0)
             {
-                accountDTO.AccountID = _accountContext.CreateNewAccount(accountDTO);
+                accountDTO.AccountID = _accountContext.CreateAccount(accountDTO);
             }
             else if (accountDTO.JobCount > 0)
             {
-                accountDTO.AccountID = _accountContext.CreateNewAccount(accountDTO);
+                accountDTO.AccountID = _accountContext.CreateAccount(accountDTO);
                 CreateWorkAgenda();
             }
         }

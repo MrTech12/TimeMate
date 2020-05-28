@@ -2,6 +2,7 @@
 using DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 namespace TimeMateTest.Stubs
 {
@@ -10,13 +11,14 @@ namespace TimeMateTest.Stubs
         public int AddAppointment(AppointmentDTO appointmentDTO, int agendaIndex)
         {
             int appointmentID = 0;
-            if (appointmentDTO.AppointmentName == "Reorder cables" && agendaIndex == 2)
+
+            using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addAppointmentTest.txt"))
             {
-                appointmentID = 8;
-            }
-            else if (appointmentDTO.AppointmentName == "Create 3D render" && agendaIndex == 2)
-            {
-                appointmentID = 48;
+                streamWriter.WriteLine(appointmentDTO.AppointmentName);
+                streamWriter.WriteLine(appointmentDTO.StartDate);
+                streamWriter.WriteLine(appointmentDTO.EndDate);
+                streamWriter.WriteLine(appointmentDTO.AgendaName);
+                appointmentID = 60;
             }
             return appointmentID;
         }
