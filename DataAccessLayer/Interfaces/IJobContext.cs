@@ -10,7 +10,5 @@ namespace DataAccessLayer.Interfaces
         double GetWorkdayPay(AccountDTO accountDTO, JobDTO jobDTO);
 
         double GetWeekendPay(AccountDTO accountDTO, JobDTO jobDTO);
-
-        JobDTO GetRegisteredWeeklyHours(AccountDTO accountDTO);
     }
 }

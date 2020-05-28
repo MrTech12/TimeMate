@@ -24,7 +24,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { AccountID = 12 };
             agenda = new Agenda(accountDTO, new StubAgendaContext(), new StubAppointmentContext());
 
-            output = agenda.GetAppointmentID(appointmentDTO);
+            output = agenda.RetrieveAppointmentID(appointmentDTO);
 
             Assert.Equal(8, output);
         }
@@ -34,7 +34,7 @@ namespace TimeMateTest.BLL
         {
             List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = 12 };
-            agenda = new Agenda(accountDTO, new StubAgendaContext());
+            agenda = new Agenda(accountDTO, new StubAgendaContext(), new StubAppointmentContext());
 
             output = agenda.RetrieveAppointments();
 

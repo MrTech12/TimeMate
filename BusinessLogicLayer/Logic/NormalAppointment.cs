@@ -9,7 +9,6 @@ namespace BusinessLogicLayer.Logic
     public class NormalAppointment : Appointment
     {
         private INormalAppointmentContext _nAppointmentContext;
-        private string messageToUser;
 
         public NormalAppointment(AppointmentDTO appointmentDTO, INormalAppointmentContext normalAppointmentContext) : base(appointmentDTO)
         {

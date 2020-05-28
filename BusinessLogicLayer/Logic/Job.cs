@@ -18,20 +18,15 @@ namespace BusinessLogicLayer.Logic
             this._jobContext = jobContext;
         }
 
-        public double ShowWeeklyWorkHours()
+        public double RetrieveWeeklyWorkHours()
         {
 
             return 0.0;
         }
 
-        public double ShowWeeklyPay()
+        public double RetrieveWeeklyPay()
         {
             return 0.0;
-        }
-
-        public string GetAdvice()
-        {
-            return null;
         }
     }
 }

@@ -17,10 +17,5 @@ namespace DataAccessLayer.Contexts
         {
             throw new NotImplementedException();
         }
-
-        public JobDTO GetRegisteredWeeklyHours(AccountDTO accountDTO)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

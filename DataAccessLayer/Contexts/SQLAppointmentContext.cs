@@ -70,6 +70,46 @@ namespace DataAccessLayer.Contexts
             return appointmentID;
         }
 
+        /// <summary>
+        /// Get all appointments of the user, from the database.
+        /// </summary>
+        /// <returns></returns>
+        public List<AppointmentDTO> GetAllAppointments(AccountDTO accountDTO)
+        {
+            List<AppointmentDTO> AppointmentsFromAccount = new List<AppointmentDTO>();
+
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                {
+                    databaseConn.Open();
+                    SqlCommand insertQuerry = new SqlCommand
+                        (@"SELECT Appointment.Name, Appointment.Starting, Appointment.Ending, Agenda.Name AS AgendaName, 
+                        Agenda.AgendaID AS AgendaID FROM [Appointment] INNER JOIN Agenda ON Appointment.AgendaID = Agenda.AgendaID 
+                        AND Agenda.AccountID = @0", databaseConn);
+
+                    insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
+                    SqlDataReader dataReader = insertQuerry.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        AppointmentDTO appointmentModel = new AppointmentDTO();
+                        appointmentModel.AppointmentName = dataReader["Name"].ToString();
+                        appointmentModel.StartDate = Convert.ToDateTime(dataReader["Starting"]);
+                        appointmentModel.EndDate = Convert.ToDateTime(dataReader["Ending"]);
+                        appointmentModel.AgendaName = dataReader["AgendaName"].ToString();
+                        appointmentModel.AgendaID = Convert.ToInt32(dataReader["AgendaID"]);
+                        AppointmentsFromAccount.Add(appointmentModel);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            return AppointmentsFromAccount;
+        }
+
         public void DeleteAppointment(int appointmentIndex, int agendaIndex)
         {
             throw new NotImplementedException();

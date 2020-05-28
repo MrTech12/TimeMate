@@ -11,6 +11,8 @@ namespace DataAccessLayer.Interfaces
 
         int GetAppointmentID(AppointmentDTO appointmentDTO);
 
+        List<AppointmentDTO> GetAllAppointments(AccountDTO accountDTO);
+
         void DeleteAppointment(int appointmentIndex, int agendaIndex);
 
         void RenameAppointment(int appointmentIndex, int agendaIndex);

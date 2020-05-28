@@ -77,11 +77,10 @@ namespace TimeMate.Controllers
                 accountDTO.Password = viewModel.Password;
                 accountDTO.JobCount = viewModel.JobAmount;
 
-                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.job1Wage));
+                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.job1HourlyWage));
                 accountDTO.JobDayType.Add(viewModel.job1DayType);
-                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.job2Wage));
+                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.job2HourlyWage));
                 accountDTO.JobDayType.Add(viewModel.job2DayType);
-                accountDTO.AllocatedHours = Convert.ToDouble(viewModel.AllocatedHours);
 
                 account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
 

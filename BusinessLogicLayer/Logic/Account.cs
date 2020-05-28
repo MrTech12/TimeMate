@@ -94,7 +94,7 @@ namespace BusinessLogicLayer.Logic
         }
 
         /// <summary>
-        /// Create an account for the user, with their entered input.
+        /// Create a new account for the user, with their entered input.
         /// </summary>
         public void CreateAccount()
         {
@@ -112,7 +112,7 @@ namespace BusinessLogicLayer.Logic
         }
 
         /// <summary>
-        /// Checking the input for the new agenda.
+        /// Create a new agenda for the user.
         /// </summary>
         public void CreateAgenda(AgendaDTO agendaDTO)
         {
@@ -125,7 +125,7 @@ namespace BusinessLogicLayer.Logic
         }
 
         /// <summary>
-        /// Create a work agenda.
+        /// Create a work agenda for the user.
         /// </summary>
         public void CreateWorkAgenda()
         {
@@ -140,7 +140,7 @@ namespace BusinessLogicLayer.Logic
         }
 
         /// <summary>
-        /// Get the agenda names of the current user.
+        /// Get the info of all the agenda's that belong to the current user.
         /// </summary>
         /// <returns></returns>
         public List<AgendaDTO> RetrieveAgendas()

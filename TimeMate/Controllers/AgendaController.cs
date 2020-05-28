@@ -24,7 +24,7 @@ namespace TimeMate.Controllers
             {
                 var accountID = HttpContext.Session.GetInt32("accountID");
                 accountDTO.AccountID = Convert.ToInt32(accountID);
-                Agenda agendaLogic = new Agenda(accountDTO, new SQLAgendaContext());
+                Agenda agendaLogic = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext());
                 List<AppointmentDTO> appointmentModelForView = new List<AppointmentDTO>();
 
                 appointmentModelForView = agendaLogic.RetrieveAppointments();
@@ -74,7 +74,7 @@ namespace TimeMate.Controllers
             agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext());
             NormalAppointment normalAppointment = new NormalAppointment(appointmentDTO, new SQLNormalAppointmentContext());
 
-            appointmentDTO.AppointmentID = agenda.GetAppointmentID(appointmentDTO);
+            appointmentDTO.AppointmentID = agenda.RetrieveAppointmentID(appointmentDTO);
             string description = normalAppointment.RetrieveDescription(appointmentDTO.AppointmentID);
 
             if (description == "")

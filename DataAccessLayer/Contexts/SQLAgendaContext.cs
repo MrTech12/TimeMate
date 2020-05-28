@@ -58,22 +58,20 @@ namespace DataAccessLayer.Contexts
                     {
                         if (accountDTO.JobDayType[i] == "Doordeweeks" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) 
-                                                                    Values (@0,@1,@2,@3)", databaseConn);
+                            SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week) 
+                                                                    Values (@0,@1,@2)", databaseConn);
                             insertQuerry.Parameters.AddWithValue("0", newAgendaDTO.AgendaID);
                             insertQuerry.Parameters.AddWithValue("1", accountDTO.JobHourlyWage[i]);
                             insertQuerry.Parameters.AddWithValue("2", "0.00");
-                            insertQuerry.Parameters.AddWithValue("3", accountDTO.AllocatedHours);
                             insertQuerry.ExecuteNonQuery();
                         }
                         else if (accountDTO.JobDayType[i] == "Weekend" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) 
-                                                                    Values (@0,@1,@2,@3)", databaseConn);
+                            SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week) 
+                                                                    Values (@0,@1,@2)", databaseConn);
                             insertQuerry.Parameters.AddWithValue("0", newAgendaDTO.AgendaID);
                             insertQuerry.Parameters.AddWithValue("1", "0.00");
                             insertQuerry.Parameters.AddWithValue("2", accountDTO.JobHourlyWage[i]);
-                            insertQuerry.Parameters.AddWithValue("3", accountDTO.AllocatedHours);
                             insertQuerry.ExecuteNonQuery();
                         }
                     }
@@ -150,46 +148,6 @@ namespace DataAccessLayer.Contexts
                 throw;
             }
             return agendas;
-        }
-
-        /// <summary>
-        /// Get all appointments of the user, from the database.
-        /// </summary>
-        /// <returns></returns>
-        public List<AppointmentDTO> GetAllAppointments(AccountDTO accountDTO)
-        {
-            List<AppointmentDTO> AppointmentsFromAccount = new List<AppointmentDTO>();
-
-            try
-            {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
-                {
-                    databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand
-                        (@"SELECT Appointment.Name, Appointment.Starting, Appointment.Ending, Agenda.Name AS AgendaName, 
-                        Agenda.AgendaID AS AgendaID FROM [Appointment] INNER JOIN Agenda ON Appointment.AgendaID = Agenda.AgendaID 
-                        AND Agenda.AccountID = @0", databaseConn);
-
-                    insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
-                    SqlDataReader dataReader = insertQuerry.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        AppointmentDTO appointmentModel = new AppointmentDTO();
-                        appointmentModel.AppointmentName = dataReader["Name"].ToString();
-                        appointmentModel.StartDate = Convert.ToDateTime(dataReader["Starting"]);
-                        appointmentModel.EndDate = Convert.ToDateTime(dataReader["Ending"]);
-                        appointmentModel.AgendaName = dataReader["AgendaName"].ToString();
-                        appointmentModel.AgendaID = Convert.ToInt32(dataReader["AgendaID"]);
-                        AppointmentsFromAccount.Add(appointmentModel);
-                    }
-                }
-            }
-            catch (SqlException)
-            {
-                throw;
-            }
-            return AppointmentsFromAccount;
         }
 
         public List<DateTime> GetWorkdayHours(int agendaIndex)

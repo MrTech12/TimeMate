@@ -46,7 +46,7 @@ namespace BusinessLogicLayer.Logic
             this._cAppointmentContext = cAppointmentContext;
         }
 
-        public int GetAppointmentID(AppointmentDTO appointmentDTO)
+        public int RetrieveAppointmentID(AppointmentDTO appointmentDTO)
         {
             int ID = _appointmentContext.GetAppointmentID(appointmentDTO);
             return ID;
@@ -59,7 +59,7 @@ namespace BusinessLogicLayer.Logic
         public List<AppointmentDTO> RetrieveAppointments()
         {
             List<AppointmentDTO> appointmentModel = new List<AppointmentDTO>();
-            appointmentModel = _agendaContext.GetAllAppointments(accountDTO);
+            appointmentModel = _appointmentContext.GetAllAppointments(accountDTO);
             appointmentModel = appointmentModel.OrderBy(x => x.StartDate).ToList();
 
             return appointmentModel;

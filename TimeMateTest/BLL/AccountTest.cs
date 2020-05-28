@@ -124,7 +124,6 @@ namespace TimeMateTest.BLL
             accountDTO.JobCount = 1;
             accountDTO.JobHourlyWage.Add(1.20);
             accountDTO.JobDayType.Add("Doordeweeks");
-            accountDTO.AllocatedHours = 2;
 
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 

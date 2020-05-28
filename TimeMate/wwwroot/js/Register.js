@@ -9,10 +9,6 @@ $(document).ready(function () {
 
 function ShowJobInputBoxes() {
     if (jobAmount == 0) {
-        if ($("#allocated-hours").hasClass("d-none") != true) {
-            $("#allocated-hours").addClass("d-none");
-        }
-
         if ($("#job1").hasClass("d-none") != true) {
             $("#job1").addClass("d-none");
         }
@@ -25,10 +21,6 @@ function ShowJobInputBoxes() {
         }
     }
     else if (jobAmount == 1) {
-        if ($("#allocated-hours").hasClass("d-none") == true) {
-            $("#allocated-hours").removeClass("d-none");
-        }
-
         if ($("#job2").hasClass("d-none") != true) {
             $("#job2").addClass("d-none");
         }
@@ -37,10 +29,6 @@ function ShowJobInputBoxes() {
         }
     }
     else if (jobAmount == 2) {
-        if ($("#allocated-hours").hasClass("d-none") == true) {
-            $("#allocated-hours").removeClass("d-none");
-        }
-
         if ($("#job1").toggleClass("d-none") == true && $("#job2").toggleClass("d-none") == true) {
             $("#job1").removeClass("d-none");
             $("#job2").removeClass("d-none");

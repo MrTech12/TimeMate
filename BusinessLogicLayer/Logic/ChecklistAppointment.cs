@@ -9,7 +9,6 @@ namespace BusinessLogicLayer.Logic
     public class ChecklistAppointment : Appointment
     {
         private IChecklistAppointmentContext _cAppointmentContext;
-        private string messageToUser;
 
         public ChecklistAppointment(AppointmentDTO appointmentDTO, IChecklistAppointmentContext checklistAppointmentContext) : base(appointmentDTO)
         {
