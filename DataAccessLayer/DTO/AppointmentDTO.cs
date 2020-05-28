@@ -10,6 +10,7 @@ namespace DataAccessLayer.DTO
         private string appointmentName;
         private DateTime startDate;
         private DateTime endDate;
+        private int agendaID;
         private string agendaName;
         private string description;
         private List<string> checklistItemName = new List<string>();
@@ -35,6 +36,11 @@ namespace DataAccessLayer.DTO
         {
             get { return this.endDate; }
             set { this.endDate = value; }
+        }
+        public int AgendaID
+        {
+            get { return this.agendaID; }
+            set { this.agendaID = value; }
         }
         public string AgendaName
         {

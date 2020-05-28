@@ -22,11 +22,12 @@
             <br />
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input type="button" id="bolding-text" class="btn btn-secondary" value="Maak text dikgedrukt" />
-                <input type="button" id="bolding-text" class="btn btn-secondary" value="Tekst opslaan" onclick="GetDescriptionInput()" />
+                <input type="button" id="bolding-text" class="btn btn-info" value="Maak text dikgedrukt/niet dikgedrukt" />
+                @*<input type="button" id="bolding-text" class="btn btn-secondary" value="Tekst opslaan" onclick="GetDescriptionInput()" />*@
                 <div class="description" id="descriptionBox" contenteditable="true" style="width:360px; height: 120px" ; border: 1px solid #ccc;></div>
                 <span asp-validation-for="Description" class="text-danger"></span>
-                <input type="text" id="sendController" asp-for="Description" hidden="hidden" />
+                @*<input type="text" id="sendController" asp-for="Description" hidden="hidden" />*@
+
                 @*<textarea class="description" rows="10" cols="70" contenteditable="true"></textarea>*@
             </div>
             <div class="form-group">

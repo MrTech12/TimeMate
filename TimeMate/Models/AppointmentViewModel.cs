@@ -36,9 +36,5 @@ namespace TimeMate.Models
         [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Kies een agenda uit.")]
         public List<AgendaDTO> AgendaDTO { get; set; }
-
-        //[Required(ErrorMessage = "Dit veld is verplicht.")]
-        //[Display(Name = "Kies een agenda uit.")]
-        //public List<string> AgendaName { get; set; }
     }
 }

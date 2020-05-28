@@ -223,17 +223,17 @@ namespace TimeMateTest.BLL
             Assert.Equal("4", after);
         }
 
-        [Fact]
-        public void GetAgendaNamesTest()
-        {
-            List<string> output = new List<string>();
-            accountDTO = new AccountDTO() { AccountID = 12 };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+        //[Fact]
+        //public void GetAgendaNamesTest()
+        //{
+        //    List<string> output = new List<string>();
+        //    accountDTO = new AccountDTO() { AccountID = 12 };
+        //    account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.GetAgendaNames();
+        //    output = account.GetAgendaNames();
 
-            Assert.Contains("Work", output);
-            Assert.True(output.Count == 2);
-        }
+        //    Assert.Contains("Work", output);
+        //    Assert.True(output.Count == 2);
+        //}
     }
 }

@@ -1,4 +1,6 @@
 ﻿var index = 0;
+var appointmentInfo = [];
+var jsonData = 0;
 
 $(document).ready(function () {
     $("#bolding-text").click(function () {
@@ -15,7 +17,10 @@ $(document).ready(function () {
         }
     });
     $("#add-appointment").click(function () {
-        GetDataForTransfer();
+        GetEnteredInformation();
+        jsonData = JSON.stringify(appointmentInfo);
+        console.info(jsonData);
+        SendInformationToController();
     });
 
 });
@@ -29,7 +34,6 @@ function MakeTextBold() {
         var range = highlight.getRangeAt(0);
         range.deleteContents(); 
         range.insertNode(e);
-        GetDescriptionInput();
     }
 };
 
@@ -42,18 +46,12 @@ function MakeTextNormal() {
         var range = highlight.getRangeAt(0);
         range.deleteContents();
         range.insertNode(e);
-        GetDescriptionInput();
     }
 };
 
-function GetDescriptionInput() {
-    var descriptionText = document.getElementById('descriptionBox').innerHTML;
-    $("#sendController").val(descriptionText);
-};
 
-function GetDataForTransfer()
-{
-    var appointmentInfo = [];
+function GetEnteredInformation() {
+    appointmentInfo = [];
     appointmentInfo.push($("#AppointmentViewModel_Name").val());
     appointmentInfo.push($("#AppointmentViewModel_StartDate").val());
     appointmentInfo.push($("#AppointmentViewModel_StartTime").val());
@@ -64,14 +62,22 @@ function GetDataForTransfer()
     appointmentInfo.push(selectInput.options[selectInput.selectedIndex].value);
     appointmentInfo.push(selectInput.options[selectInput.selectedIndex].id);
     appointmentInfo.push(document.getElementById('descriptionBox').innerHTML);
-    console.info(appointmentInfo);
-    //Get data from input fields.
-    //Get selected value option from select box.
-    //Get id from select value option.
-    //Get description.
-    //Write AJAX method to send data to controller. Data gets send via array.
-    //Controller puts data in AppointmentDTO.
-    //Data gets saved into DB.
-    //AJAX send user to Agenda Page.
-    //**Do the same for adding checklist appointment.**
+}
+
+function SendInformationToController() {
+    $.ajax({
+        type: "POST",
+        async: "no",
+        url: "normalappointment/index",
+        contenttype: "application/json; charset=utf-8",
+        data: { json: jsonData },
+        datatype: "text",
+        traditional: true,
+        success: function (data) {
+            window.location.href = "/Agenda/Index";
+        },
+        error: function (ts) {
+            onerror(console.info(ts));
+        }
+    });
 }

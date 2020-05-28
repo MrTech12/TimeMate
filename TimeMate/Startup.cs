@@ -34,7 +34,12 @@ namespace TimeMate
             services.AddTransient<AppointmentDTO>();
             services.AddTransient<JobDTO>();
 
-            services.AddSession();
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = false;
+                options.Cookie.IsEssential = true;
+                options.Cookie.Name = "Empyrean";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

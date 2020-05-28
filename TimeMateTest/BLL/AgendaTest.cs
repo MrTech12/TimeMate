@@ -52,28 +52,28 @@ namespace TimeMateTest.BLL
             Assert.True(output.Count == 3);
         }
 
-        [Fact]
-        public void CreateNAppointmentTest()
-        {
-            accountDTO = new AccountDTO() { AccountID = 12 };
-            agenda = new Agenda(accountDTO, new StubAgendaContext(), new StubAppointmentContext(), new StubNormalAppointmentContext());
-            AppointmentDTO appointmentDTOFake = new AppointmentDTO() { AppointmentName = null, StartDate = DateTime.Today};
+        //[Fact]
+        //public void CreateNAppointmentTest()
+        //{
+        //    accountDTO = new AccountDTO() { AccountID = 12 };
+        //    agenda = new Agenda(accountDTO, new StubAgendaContext(), new StubAppointmentContext(), new StubNormalAppointmentContext());
+        //    AppointmentDTO appointmentDTOFake = new AppointmentDTO() { AppointmentName = null, StartDate = DateTime.Today};
 
-            appointmentDTO = new AppointmentDTO()
-            {
-                AppointmentName = "Reorder cables",
-                StartDate = DateTime.Now.AddHours(2),
-                EndDate = DateTime.Now.AddHours(4),
-                Description = "This is <b> a </b> test."
-            };
+        //    appointmentDTO = new AppointmentDTO()
+        //    {
+        //        AppointmentName = "Reorder cables",
+        //        StartDate = DateTime.Now.AddHours(2),
+        //        EndDate = DateTime.Now.AddHours(4),
+        //        Description = "This is <b> a </b> test."
+        //    };
 
-            string before = Convert.ToString(agenda.GetAppointmentID(appointmentDTOFake, 0));
-            agenda.CreateNAppointment(appointmentDTO, "Personal");
-            string after = Convert.ToString(agenda.GetAppointmentID(appointmentDTO, 2));
+        //    string before = Convert.ToString(agenda.GetAppointmentID(appointmentDTOFake, 0));
+        //    agenda.CreateNAppointment(appointmentDTO, "Personal");
+        //    string after = Convert.ToString(agenda.GetAppointmentID(appointmentDTO, 2));
 
-            Assert.Equal("-1", before);
-            Assert.Equal("8", after);
-        }
+        //    Assert.Equal("-1", before);
+        //    Assert.Equal("8", after);
+        //}
 
         [Fact]
         public void CreateCAppointmentTest()

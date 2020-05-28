@@ -75,11 +75,9 @@ namespace BusinessLogicLayer.Logic
         /// <summary>
         /// Create appointment with description.
         /// </summary>
-        public void CreateNAppointment(AppointmentDTO appointmentDTO, string agendaName)
+        public void CreateNAppointment(AppointmentDTO appointmentDTO)
         {
-            AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
-            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO, agendaDTO.AgendaID);
+            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO, appointmentDTO.AgendaID);
 
             if (appointmentDTO.Description != null)
             {

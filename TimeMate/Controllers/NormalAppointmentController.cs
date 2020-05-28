@@ -6,6 +6,7 @@ using BusinessLogicLayer.Logic;
 using DataAccessLayer.Contexts;
 using DataAccessLayer.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TimeMate.Models;
 
 namespace TimeMate.Controllers
@@ -26,38 +27,33 @@ namespace TimeMate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(NAppointmentViewModel viewModel)
+        public IActionResult Index(string json)
         {
-            if (ModelState.IsValid)
+            var newAgenda = JsonConvert.DeserializeObject<List<string>>(json);
+
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            appointmentDTO.AppointmentName = newAgenda[0];
+            appointmentDTO.StartDate = Convert.ToDateTime(newAgenda[1]) + TimeSpan.Parse(newAgenda[2]);
+            appointmentDTO.EndDate = Convert.ToDateTime(newAgenda[3]) + TimeSpan.Parse(newAgenda[4]);
+            appointmentDTO.AgendaName = newAgenda[5];
+            appointmentDTO.AgendaID = Convert.ToInt32(newAgenda[6]);
+
+            if (newAgenda[7] != null)
             {
-                AppointmentDTO appointmentDTO = new AppointmentDTO();
-                appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.Name;
-                appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
-                appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
-                appointmentDTO.AgendaName = viewModel.AppointmentViewModel.AgendaDTO[0].AgendaName;
-
-                if (viewModel.Description != null)
-                {
-                    string newDescription = viewModel.Description.Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
-                        .Replace("<span class=\"normal-text\">", "</b>");
-                    appointmentDTO.Description = newDescription;
-                }
-                else
-                {
-                    appointmentDTO.Description = null;
-                }
-
-                agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext(), new SQLNormalAppointmentContext());
-
-                agenda.CreateNAppointment(appointmentDTO, appointmentDTO.AgendaName);
-
-                return RedirectToAction("Index", "Agenda");
+                string newDescription = newAgenda[7].Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
+                    .Replace("<span class=\"normal-text\">", "</b>");
+                appointmentDTO.Description = newDescription;
             }
             else
             {
-                return View(viewModel);
+                appointmentDTO.Description = null;
             }
 
+            agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext(), new SQLNormalAppointmentContext());
+
+            agenda.CreateNAppointment(appointmentDTO);
+
+            return Ok();
         }
     }
 }
