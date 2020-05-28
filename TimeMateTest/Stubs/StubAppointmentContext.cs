@@ -8,7 +8,7 @@ namespace TimeMateTest.Stubs
 {
     class StubAppointmentContext : IAppointmentContext
     {
-        public int AddAppointment(AppointmentDTO appointmentDTO, int agendaIndex)
+        public int AddAppointment(AppointmentDTO appointmentDTO)
         {
             int appointmentID = 0;
 

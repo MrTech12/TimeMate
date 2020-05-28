@@ -9,15 +9,16 @@ namespace TimeMateTest.Stubs
 {
     class StubChecklistAppointmentContext : IChecklistAppointmentContext
     {
-        public void AddTask(int appointmentID, string taskName)
+        public void AddTask(AppointmentDTO appointmentDTO)
         {
-            if (appointmentID == 60)
+            if (appointmentDTO.AppointmentID == 60)
             {
                 using (StreamWriter streamWriter = File.AppendText("C:\\tmp\\addAppointmentTest.txt"))
                 {
-                    streamWriter.WriteLine(taskName);
+                    streamWriter.WriteLine(appointmentDTO.ChecklistItemName[0]);
                 }
             }
+
         }
 
         public void CheckOffTask(AppointmentDTO appointmentDTO)

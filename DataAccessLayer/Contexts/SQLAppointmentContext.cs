@@ -17,7 +17,7 @@ namespace DataAccessLayer.Contexts
         /// <param name="appointmentDTO"></param>
         /// <param name="agendaIndex"></param>
         /// <returns></returns>
-        public int AddAppointment(AppointmentDTO appointmentDTO, int agendaIndex)
+        public int AddAppointment(AppointmentDTO appointmentDTO)
         {
             int appointmentID = 0;
             try
@@ -28,7 +28,7 @@ namespace DataAccessLayer.Contexts
                     SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Appointment](AgendaID, Name, Starting, Ending)
                                                             VALUES (@0, @1, @2, @3); SELECT SCOPE_IDENTITY();", databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", agendaIndex);
+                    insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AgendaID);
                     insertQuerry.Parameters.AddWithValue("1", appointmentDTO.AppointmentName);
                     insertQuerry.Parameters.AddWithValue("2", appointmentDTO.StartDate);
                     insertQuerry.Parameters.AddWithValue("3", appointmentDTO.EndDate);

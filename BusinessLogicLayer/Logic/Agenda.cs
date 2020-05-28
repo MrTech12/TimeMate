@@ -70,7 +70,7 @@ namespace BusinessLogicLayer.Logic
         /// </summary>
         public void CreateNormalAppointment(AppointmentDTO appointmentDTO)
         {
-            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO, appointmentDTO.AgendaID);
+            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO);
 
             if (appointmentDTO.Description != null)
             {
@@ -83,12 +83,9 @@ namespace BusinessLogicLayer.Logic
         /// </summary>
         public void CreateChecklistAppointment(AppointmentDTO appointmentDTO)
         {
-            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO, appointmentDTO.AgendaID);
+            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO);
 
-            foreach (var item in appointmentDTO.ChecklistItemName)
-            {
-                _cAppointmentContext.AddTask(appointmentDTO.AppointmentID, item);
-            }
+            _cAppointmentContext.AddTask(appointmentDTO);
         }
     }
 }

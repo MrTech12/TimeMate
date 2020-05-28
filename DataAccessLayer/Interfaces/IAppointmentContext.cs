@@ -7,7 +7,7 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IAppointmentContext
     {
-        int AddAppointment(AppointmentDTO appointmentDTO, int agendaIndex);
+        int AddAppointment(AppointmentDTO appointmentDTO);
 
         int GetAppointmentID(AppointmentDTO appointmentDTO, int agendaIndex);
 
