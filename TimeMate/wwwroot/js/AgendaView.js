@@ -12,12 +12,12 @@ $(document).ready(function() {
         jsonData = JSON.stringify(appointmentData);
         console.info("From view: " + appointmentData);
 
-        //RetrieveAppointmentDetails();
-        //console.log("From DB: " + popoverData);
+        RetrieveAppointmentDetails();
+        console.log("From DB: " + popoverData);
 
-        //if (popoverData != null) {
-        //    CreatePopover();
-        //}
+        if (popoverData != null) {
+            CreatePopover();
+        }
     });
 
     function GetAppointmentInfo(selectedRow) {
@@ -76,7 +76,7 @@ $(document).ready(function() {
     };
 
     function GetPopoverContent() {
-        var popoverContent = popoverContent = "Starttijd: " + appointmentData[1] + "<br>" + "Eindtijd: " + appointmentData[2] + "<br>" + "Agendanaam: " + appointmentData[3] + "<br>";
+        var popoverContent = popoverContent = "Starttijd: " + appointmentData[2] + "<br>" + "Eindtijd: " + appointmentData[4] + "<br>" + "Agendanaam: " + appointmentData[6] + "<br>";
 
         if (popoverData != "") {
             popoverContent+= "Details: " + "<br>" + popoverData
