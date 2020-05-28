@@ -55,13 +55,20 @@ namespace TimeMateTest.Stubs
             return agendaID;
         }
 
-        public List<string> GetAllAgendas(AccountDTO accountDTO)
+        public List<AgendaDTO> GetAllAgendas(AccountDTO accountDTO)
         {
-            List<string> agendaNames = new List<string>();
+            List<AgendaDTO> agendaNames = new List<AgendaDTO>();
             if (accountDTO.AccountID == 12)
             {
-                agendaNames.Add("Work");
-                agendaNames.Add("Personal");
+                AgendaDTO agenda1 = new AgendaDTO();
+                agenda1.AgendaID = 0;
+                agenda1.AgendaName = "Work";
+                agendaNames.Add(agenda1);
+
+                AgendaDTO agenda2 = new AgendaDTO();
+                agenda2.AgendaID = 1;
+                agenda2.AgendaName = "Personal";
+                agendaNames.Add(agenda2);
             }
 
             return agendaNames;
@@ -88,11 +95,6 @@ namespace TimeMateTest.Stubs
                 appointmentDTO.Add(appointment3);
             }
             return appointmentDTO;
-        }
-
-        List<AgendaDTO> IAgendaContext.GetAllAgendas(AccountDTO accountDTO)
-        {
-            throw new NotImplementedException();
         }
 
         public List<DateTime> GetWeekendHours(int agendaIndex)

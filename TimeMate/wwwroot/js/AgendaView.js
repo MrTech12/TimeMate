@@ -12,17 +12,18 @@ $(document).ready(function() {
         jsonData = JSON.stringify(appointmentData);
         console.info("From view: " + appointmentData);
 
-        RetrieveAppointmentDetails();
-        console.log("From DB: " + popoverData);
+        //RetrieveAppointmentDetails();
+        //console.log("From DB: " + popoverData);
 
-        if (popoverData != null) {
-            CreatePopover();
-        }
+        //if (popoverData != null) {
+        //    CreatePopover();
+        //}
     });
 
     function GetAppointmentInfo(selectedRow) {
         $(selectedRow).closest('tr').find('td').each(function () {
             appointmentData.push($(this).text());
+            appointmentData.push($(this).attr('id'));
         });
     }
 

@@ -23,7 +23,8 @@ namespace DataAccessLayer.Contexts
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Agenda](AccountID, Name, Color, Notification_type)  VALUES (@0,@1,@2,@3); SELECT SCOPE_IDENTITY();", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Agenda](AccountID, Name, Color, Notification_type) 
+                                                            VALUES (@0,@1,@2,@3); SELECT SCOPE_IDENTITY();", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
                     insertQuerry.Parameters.AddWithValue("1", agendaDTO.AgendaName);
@@ -57,7 +58,8 @@ namespace DataAccessLayer.Contexts
                     {
                         if (accountDTO.JobDayType[i] == "Doordeweeks" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) Values (@0,@1,@2,@3)", databaseConn);
+                            SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) 
+                                                                    Values (@0,@1,@2,@3)", databaseConn);
                             insertQuerry.Parameters.AddWithValue("0", newAgendaDTO.AgendaID);
                             insertQuerry.Parameters.AddWithValue("1", accountDTO.JobHourlyWage[i]);
                             insertQuerry.Parameters.AddWithValue("2", "0.00");
@@ -66,7 +68,8 @@ namespace DataAccessLayer.Contexts
                         }
                         else if (accountDTO.JobDayType[i] == "Weekend" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) Values (@0,@1,@2,@3)", databaseConn);
+                            SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week, Allowed_hours) 
+                                                                    Values (@0,@1,@2,@3)", databaseConn);
                             insertQuerry.Parameters.AddWithValue("0", newAgendaDTO.AgendaID);
                             insertQuerry.Parameters.AddWithValue("1", "0.00");
                             insertQuerry.Parameters.AddWithValue("2", accountDTO.JobHourlyWage[i]);
@@ -92,7 +95,7 @@ namespace DataAccessLayer.Contexts
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand deleteQuerry = new SqlCommand("DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1", databaseConn);
+                    SqlCommand deleteQuerry = new SqlCommand(@"DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1", databaseConn);
 
                     deleteQuerry.Parameters.AddWithValue("0", AgendaIndexInput);
                     deleteQuerry.Parameters.AddWithValue("1", accountDTO.AccountID);
@@ -126,7 +129,7 @@ namespace DataAccessLayer.Contexts
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand("SELECT a.* FROM [Agenda] a WHERE AccountID = @0", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand(@"SELECT a.* FROM [Agenda] a WHERE AccountID = @0", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
 
@@ -160,7 +163,7 @@ namespace DataAccessLayer.Contexts
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand("SELECT AgendaID FROM [Agenda] WHERE AccountID = @0 AND Name = @1", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand(@"SELECT AgendaID FROM [Agenda] WHERE AccountID = @0 AND Name = @1", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
                     insertQuerry.Parameters.AddWithValue("1", agendaNameInput);
@@ -191,8 +194,9 @@ namespace DataAccessLayer.Contexts
                 {
                     databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand
-                        ("SELECT Appointment.Name, Appointment.Starting, Appointment.Ending, Agenda.Name AS AgendaName FROM [Appointment] " +
-                        "INNER JOIN Agenda ON Appointment.AgendaID = Agenda.AgendaID AND Agenda.AccountID = @0", databaseConn);
+                        (@"SELECT Appointment.Name, Appointment.Starting, Appointment.Ending, Agenda.Name AS AgendaName, 
+                        Agenda.AgendaID AS AgendaID FROM [Appointment] INNER JOIN Agenda ON Appointment.AgendaID = Agenda.AgendaID 
+                        AND Agenda.AccountID = @0", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
                     SqlDataReader dataReader = insertQuerry.ExecuteReader();
@@ -204,6 +208,7 @@ namespace DataAccessLayer.Contexts
                         appointmentModel.StartDate = Convert.ToDateTime(dataReader["Starting"]);
                         appointmentModel.EndDate = Convert.ToDateTime(dataReader["Ending"]);
                         appointmentModel.AgendaName = dataReader["AgendaName"].ToString();
+                        appointmentModel.AgendaID = Convert.ToInt32(dataReader["AgendaID"]);
                         AppointmentsFromAccount.Add(appointmentModel);
                     }
                 }

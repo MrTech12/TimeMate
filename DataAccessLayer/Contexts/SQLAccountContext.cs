@@ -26,7 +26,7 @@ namespace DataAccessLayer.Contexts
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand selectQuerry = new SqlCommand("SELECT AccountID FROM [Account] WHERE Mail = @0", databaseConn);
+                    SqlCommand selectQuerry = new SqlCommand(@"SELECT AccountID FROM [Account] WHERE Mail = @0", databaseConn);
 
                     selectQuerry.Parameters.AddWithValue("0", mail);
                     var resultedAccountID = selectQuerry.ExecuteScalar();
@@ -59,7 +59,7 @@ namespace DataAccessLayer.Contexts
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand selectQuerry = new SqlCommand("SELECT Password FROM [Account] WHERE Mail = @0", databaseConn);
+                    SqlCommand selectQuerry = new SqlCommand(@"SELECT Password FROM [Account] WHERE Mail = @0", databaseConn);
 
                     selectQuerry.Parameters.AddWithValue("0", mail);
                     var resultedPasswordHash = selectQuerry.ExecuteScalar();
@@ -93,7 +93,8 @@ namespace DataAccessLayer.Contexts
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Account](First_name, Mail, Password) Values (@0,@1,@2); SELECT SCOPE_IDENTITY();", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Account](First_name, Mail, Password) 
+                                                            Values (@0,@1,@2); SELECT SCOPE_IDENTITY();", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.FirstName);
                     insertQuerry.Parameters.AddWithValue("1", accountDTO.MailAddress);

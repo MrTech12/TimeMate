@@ -23,7 +23,7 @@ namespace DataAccessLayer.Contexts
                 {
                     databaseConn.Open();
 
-                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Task](AppointmentID, Task_name, Task_checked) VALUES (@0, @1, @2)", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Task](AppointmentID, Task_name, Task_checked) VALUES (@0, @1, @2)", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", appointmentID);
                     insertQuerry.Parameters.AddWithValue("1", taskName);
@@ -47,7 +47,7 @@ namespace DataAccessLayer.Contexts
                 {
                     databaseConn.Open();
 
-                    SqlCommand insertQuerry = new SqlCommand("SELECT Task_name, Task_checked FROM [Task] WHERE AppointmentID = @0", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand(@"SELECT Task_name, Task_checked FROM [Task] WHERE AppointmentID = @0", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", appointmentIndex);
 
