@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
@@ -10,10 +11,12 @@ namespace TimeMateTest.Stubs
     {
         public void AddDescription(AppointmentDTO appointmentDTO)
         {
-            int appointmentID;
-            if (appointmentDTO.AppointmentName == "This is <b> a </b> test.")
+            if (appointmentDTO.AppointmentName == "Reorder cables")
             {
-                appointmentID = 366;
+                using (StreamWriter streamWriter = File.AppendText("C:\\tmp\\addAppointmentTest.txt"))
+                {
+                    streamWriter.WriteLine(appointmentDTO.Description);
+                }
             }
         }
 

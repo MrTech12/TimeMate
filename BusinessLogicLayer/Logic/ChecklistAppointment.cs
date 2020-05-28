@@ -16,10 +16,10 @@ namespace BusinessLogicLayer.Logic
             this._cAppointmentContext = checklistAppointmentContext;
         }
 
-        public AppointmentDTO RetrieveTask(int appointmentIndex)
+        public AppointmentDTO RetrieveTasks(int appointmentIndex)
         {
             AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO = _cAppointmentContext.GetTask(appointmentIndex);
+            appointmentDTO = _cAppointmentContext.GetTasks(appointmentIndex);
             return appointmentDTO;
         }
 

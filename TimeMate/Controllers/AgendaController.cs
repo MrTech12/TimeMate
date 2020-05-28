@@ -14,8 +14,8 @@ namespace TimeMate.Controllers
 {
     public class AgendaController : Controller
     {
-        AccountDTO accountDTO = new AccountDTO();
-        Agenda agenda;
+        private AccountDTO accountDTO = new AccountDTO();
+        private Agenda agenda;
 
         [HttpGet]
         public IActionResult Index()
@@ -66,21 +66,21 @@ namespace TimeMate.Controllers
             var selectedAppointment = JsonConvert.DeserializeObject<List<string>>(json);
             AppointmentDTO appointmentDTO = new AppointmentDTO();
             appointmentDTO.AppointmentName = selectedAppointment[0];
-            appointmentDTO.StartDate = Convert.ToDateTime(selectedAppointment[1]);
-            appointmentDTO.EndDate = Convert.ToDateTime(selectedAppointment[2]);
-            appointmentDTO.AgendaName = selectedAppointment[3];
-
-            NormalAppointment normalAppointment = new NormalAppointment(appointmentDTO, new SQLNormalAppointmentContext());
-            ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, new SQLChecklistAppointmentContext());
+            appointmentDTO.StartDate = Convert.ToDateTime(selectedAppointment[2]);
+            appointmentDTO.EndDate = Convert.ToDateTime(selectedAppointment[4]);
+            appointmentDTO.AgendaName = selectedAppointment[6];
+            appointmentDTO.AgendaID = Convert.ToInt32(selectedAppointment[7]);
 
             agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext());
-            int agendaID = agenda.GetAgendaID(appointmentDTO.AgendaName);
-            appointmentDTO.AppointmentID = agenda.GetAppointmentID(appointmentDTO, agendaID);
+            NormalAppointment normalAppointment = new NormalAppointment(appointmentDTO, new SQLNormalAppointmentContext());
+
+            appointmentDTO.AppointmentID = agenda.GetAppointmentID(appointmentDTO);
             string description = normalAppointment.RetrieveDescription(appointmentDTO.AppointmentID);
 
             if (description == "")
             {
-                appointmentDTO = checklistAppointment.RetrieveTask(appointmentDTO.AppointmentID);
+                ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, new SQLChecklistAppointmentContext());
+                appointmentDTO = checklistAppointment.RetrieveTasks(appointmentDTO.AppointmentID);
 
                 if (appointmentDTO.ChecklistItemName != null)
                 {

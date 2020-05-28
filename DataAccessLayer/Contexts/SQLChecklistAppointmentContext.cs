@@ -15,7 +15,7 @@ namespace DataAccessLayer.Contexts
         /// <summary>
         /// Add task(s) of an appointment to the db.
         /// </summary>
-        public void AddTask(int appointmentID, string taskName)
+        public void AddTask(AppointmentDTO appointmentDTO)
         {
             try
             {
@@ -23,12 +23,16 @@ namespace DataAccessLayer.Contexts
                 {
                     databaseConn.Open();
 
-                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Task](AppointmentID, Task_name, Task_checked) VALUES (@0, @1, @2)", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Task](AppointmentID, Task_name, Task_checked) VALUES (@0, @1, @2)", databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", appointmentID);
-                    insertQuerry.Parameters.AddWithValue("1", taskName);
-                    insertQuerry.Parameters.AddWithValue("2", false);
-                    insertQuerry.ExecuteNonQuery();
+                    foreach (var item in appointmentDTO.ChecklistItemName)
+                    {
+                        insertQuerry.Parameters.Clear();
+                        insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
+                        insertQuerry.Parameters.AddWithValue("1", item);
+                        insertQuerry.Parameters.AddWithValue("2", false);
+                        insertQuerry.ExecuteNonQuery();
+                    }
                 }
             }
             catch (SqlException)
@@ -38,7 +42,7 @@ namespace DataAccessLayer.Contexts
             }
         }
 
-        public AppointmentDTO GetTask(int appointmentIndex)
+        public AppointmentDTO GetTasks(int appointmentIndex)
         {
             AppointmentDTO appointmentDTO = new AppointmentDTO();
             try
@@ -47,7 +51,7 @@ namespace DataAccessLayer.Contexts
                 {
                     databaseConn.Open();
 
-                    SqlCommand insertQuerry = new SqlCommand("SELECT Task_name, Task_checked FROM [Task] WHERE AppointmentID = @0", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand(@"SELECT Task_name, Task_checked FROM [Task] WHERE AppointmentID = @0", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", appointmentIndex);
 

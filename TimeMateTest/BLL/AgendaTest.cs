@@ -2,6 +2,7 @@
 using DataAccessLayer.DTO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using TimeMateTest.Stubs;
@@ -16,25 +17,14 @@ namespace TimeMateTest.BLL
         private AppointmentDTO appointmentDTO;
 
         [Fact]
-        public void GetAgendaID()
-        {
-            int output;
-            accountDTO = new AccountDTO(){ AccountID = 12};
-            agenda = new Agenda(accountDTO, new StubAgendaContext());
-
-            output = agenda.GetAgendaID("Personal");
-            Assert.Equal(2, output);
-        }
-
-        [Fact]
         public void GetAppointmentID()
         {
             int output;
-            AppointmentDTO appointmentDTO = new AppointmentDTO() { AppointmentName = "Shopping"};
+            AppointmentDTO appointmentDTO = new AppointmentDTO() { AgendaID = 36, AppointmentName = "Shopping"};
             accountDTO = new AccountDTO() { AccountID = 12 };
             agenda = new Agenda(accountDTO, new StubAgendaContext(), new StubAppointmentContext());
 
-            output = agenda.GetAppointmentID(appointmentDTO, 36);
+            output = agenda.GetAppointmentID(appointmentDTO);
 
             Assert.Equal(8, output);
         }
@@ -53,47 +43,47 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateNAppointmentTest()
+        public void CreateNormalAppointmentTest()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             agenda = new Agenda(accountDTO, new StubAgendaContext(), new StubAppointmentContext(), new StubNormalAppointmentContext());
-            AppointmentDTO appointmentDTOFake = new AppointmentDTO() { AppointmentName = null, StartDate = DateTime.Today};
 
             appointmentDTO = new AppointmentDTO()
             {
                 AppointmentName = "Reorder cables",
                 StartDate = DateTime.Now.AddHours(2),
                 EndDate = DateTime.Now.AddHours(4),
-                Description = "This is <b> a </b> test."
+                Description = "This is <b> a </b> test.",
+                AgendaName = "Firefox"
             };
 
-            string before = Convert.ToString(agenda.GetAppointmentID(appointmentDTOFake, 0));
-            agenda.CreateNAppointment(appointmentDTO, "Personal");
-            string after = Convert.ToString(agenda.GetAppointmentID(appointmentDTO, 2));
+            agenda.CreateNormalAppointment(appointmentDTO);
+            string[] file = File.ReadAllLines("C:\\tmp\\addAppointmentTest.txt");
+            File.Delete("C:\\tmp\\addAppointmentTest.txt");
 
-            Assert.Equal("-1", before);
-            Assert.Equal("8", after);
+            Assert.Contains("Reorder cables", file[0]);
+            Assert.Contains("This is <b> a </b> test.", file[4]);
         }
 
         [Fact]
-        public void CreateCAppointmentTest()
+        public void CreateChecklistAppointmentTest()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             agenda = new Agenda(accountDTO, new StubAgendaContext(), new StubAppointmentContext(), new StubChecklistAppointmentContext());
-            AppointmentDTO appointmentDTOFake = new AppointmentDTO() { AppointmentName = null, StartDate = DateTime.Today };
 
             appointmentDTO = new AppointmentDTO();
             appointmentDTO.AppointmentName = "Create 3D render";
             appointmentDTO.StartDate = DateTime.Now.AddHours(3);
             appointmentDTO.EndDate = DateTime.Now.AddHours(4);
+            appointmentDTO.AgendaName = "Firefox";
             appointmentDTO.ChecklistItemName.Add("Get inspiration");
 
-            string before = Convert.ToString(agenda.GetAppointmentID(appointmentDTOFake, 0));
-            agenda.CreateCAppointment(appointmentDTO, "Personal");
-            string after = Convert.ToString(agenda.GetAppointmentID(appointmentDTO, 2));
+            agenda.CreateChecklistAppointment(appointmentDTO);
+            string[] file = File.ReadAllLines("C:\\tmp\\addAppointmentTest.txt");
+            File.Delete("C:\\tmp\\addAppointmentTest.txt");
 
-            Assert.Equal("-1", before);
-            Assert.Equal("48", after);
+            Assert.Contains("Create 3D render", file[0]);
+            Assert.Contains("Get inspiration", file[4]);
         }
     }
 }

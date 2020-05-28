@@ -7,10 +7,10 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IChecklistAppointmentContext
     {
-        void AddTask(int appointmentID, string taskName);
+        void AddTask(AppointmentDTO appointmentDTO);
 
         void CheckOffTask(AppointmentDTO appointmentDTO);
 
-        AppointmentDTO GetTask(int appointmentIndex);
+        AppointmentDTO GetTasks(int appointmentIndex);
     }
 }

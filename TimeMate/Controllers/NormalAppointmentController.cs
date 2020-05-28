@@ -6,58 +6,54 @@ using BusinessLogicLayer.Logic;
 using DataAccessLayer.Contexts;
 using DataAccessLayer.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TimeMate.Models;
 
 namespace TimeMate.Controllers
 {
     public class NormalAppointmentController : Controller
     {
-        AccountDTO accountDTO = new AccountDTO();
-        Account account;
-        Agenda agenda;
+        private AccountDTO accountDTO = new AccountDTO();
+        private Account account;
+        private Agenda agenda;
 
         [HttpGet]
         public IActionResult Index()
         {
-            NAppointmentViewModel nAppointmentViewModel = new NAppointmentViewModel();
+            NormalAppointmentViewModel viewModel = new NormalAppointmentViewModel();
             account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
-            nAppointmentViewModel.AppointmentViewModel.AgendaName = account.GetAgendaNames();
-            return View(nAppointmentViewModel);
+            viewModel.AppointmentViewModel.AgendaDTO = account.RetrieveAgendas();
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Index(NAppointmentViewModel viewModel)
+        public IActionResult Index(string json)
         {
-            if (ModelState.IsValid)
+            var newAppointment = JsonConvert.DeserializeObject<List<string>>(json);
+
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            appointmentDTO.AppointmentName = newAppointment[0];
+            appointmentDTO.StartDate = Convert.ToDateTime(newAppointment[1]) + TimeSpan.Parse(newAppointment[2]);
+            appointmentDTO.EndDate = Convert.ToDateTime(newAppointment[3]) + TimeSpan.Parse(newAppointment[4]);
+            appointmentDTO.AgendaName = newAppointment[5];
+            appointmentDTO.AgendaID = Convert.ToInt32(newAppointment[6]);
+
+            if (newAppointment[7] != null)
             {
-                AppointmentDTO appointmentDTO = new AppointmentDTO();
-                appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.Name;
-                appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
-                appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
-                appointmentDTO.AgendaName = viewModel.AppointmentViewModel.AgendaName[0];
-
-                if (viewModel.Description != null)
-                {
-                    string newDescription = viewModel.Description.Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
-                        .Replace("<span class=\"normal-text\">", "</b>");
-                    appointmentDTO.Description = newDescription;
-                }
-                else
-                {
-                    appointmentDTO.Description = null;
-                }
-
-                agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext(), new SQLNormalAppointmentContext());
-
-                agenda.CreateNAppointment(appointmentDTO, appointmentDTO.AgendaName);
-
-                return RedirectToAction("Index", "Agenda");
+                string newDescription = newAppointment[7].Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
+                    .Replace("<span class=\"normal-text\">", "</b>");
+                appointmentDTO.Description = newDescription;
             }
             else
             {
-                return View(viewModel);
+                appointmentDTO.Description = null;
             }
 
+            agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext(), new SQLNormalAppointmentContext());
+
+            agenda.CreateNormalAppointment(appointmentDTO);
+
+            return Ok();
         }
     }
 }

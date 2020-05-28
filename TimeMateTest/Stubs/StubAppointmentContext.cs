@@ -2,21 +2,23 @@
 using DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 namespace TimeMateTest.Stubs
 {
     class StubAppointmentContext : IAppointmentContext
     {
-        public int AddAppointment(AppointmentDTO appointmentDTO, int agendaIndex)
+        public int AddAppointment(AppointmentDTO appointmentDTO)
         {
             int appointmentID = 0;
-            if (appointmentDTO.AppointmentName == "Reorder cables" && agendaIndex == 2)
+
+            using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addAppointmentTest.txt"))
             {
-                appointmentID = 8;
-            }
-            else if (appointmentDTO.AppointmentName == "Create 3D render" && agendaIndex == 2)
-            {
-                appointmentID = 48;
+                streamWriter.WriteLine(appointmentDTO.AppointmentName);
+                streamWriter.WriteLine(appointmentDTO.StartDate);
+                streamWriter.WriteLine(appointmentDTO.EndDate);
+                streamWriter.WriteLine(appointmentDTO.AgendaName);
+                appointmentID = 60;
             }
             return appointmentID;
         }
@@ -26,22 +28,22 @@ namespace TimeMateTest.Stubs
             throw new NotImplementedException();
         }
 
-        public int GetAppointmentID(AppointmentDTO appointmentDTO, int agendaIndex)
+        public int GetAppointmentID(AppointmentDTO appointmentDTO)
         {
             int appointmentID = 0;
-            if (appointmentDTO.AppointmentName == "Shopping" && agendaIndex == 36)
+            if (appointmentDTO.AppointmentName == "Shopping" && appointmentDTO.AgendaID == 36)
             {
                 appointmentID = 8;
             }
-            else if (appointmentDTO.AppointmentName == null && agendaIndex == 0)
+            else if (appointmentDTO.AppointmentName == null && appointmentDTO.AgendaID == 0)
             {
                 appointmentID = -1;
             }
-            else if (appointmentDTO.AppointmentName == "Reorder cables" && agendaIndex == 2)
+            else if (appointmentDTO.AppointmentName == "Reorder cables" && appointmentDTO.AgendaID == 2)
             {
                 appointmentID = 8;
             }
-            else if (appointmentDTO.AppointmentName == "Create 3D render" && agendaIndex == 2)
+            else if (appointmentDTO.AppointmentName == "Create 3D render" && appointmentDTO.AgendaID == 2)
             {
                 appointmentID = 48;
             }

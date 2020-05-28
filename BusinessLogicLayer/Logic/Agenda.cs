@@ -46,18 +46,11 @@ namespace BusinessLogicLayer.Logic
             this._cAppointmentContext = cAppointmentContext;
         }
 
-        public int GetAgendaID(string agendaName)
+        public int GetAppointmentID(AppointmentDTO appointmentDTO)
         {
-            int ID = _agendaContext.GetAgendaID(agendaName, accountDTO);
+            int ID = _appointmentContext.GetAppointmentID(appointmentDTO);
             return ID;
         }
-
-        public int GetAppointmentID(AppointmentDTO appointmentDTO, int agendaID)
-        {
-            int ID = _appointmentContext.GetAppointmentID(appointmentDTO, agendaID);
-            return ID;
-        }
-
 
         /// <summary>
         /// Get all appointments of the current user.
@@ -75,11 +68,9 @@ namespace BusinessLogicLayer.Logic
         /// <summary>
         /// Create appointment with description.
         /// </summary>
-        public void CreateNAppointment(AppointmentDTO appointmentDTO, string agendaName)
+        public void CreateNormalAppointment(AppointmentDTO appointmentDTO)
         {
-            AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
-            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO, agendaDTO.AgendaID);
+            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO);
 
             if (appointmentDTO.Description != null)
             {
@@ -90,16 +81,11 @@ namespace BusinessLogicLayer.Logic
         /// <summary>
         /// Create appointment with checklist.
         /// </summary>
-        public void CreateCAppointment(AppointmentDTO appointmentDTO, string agendaName)
+        public void CreateChecklistAppointment(AppointmentDTO appointmentDTO)
         {
-            AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
-            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO, agendaDTO.AgendaID);
+            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO);
 
-            foreach (var item in appointmentDTO.ChecklistItemName)
-            {
-                _cAppointmentContext.AddTask(appointmentDTO.AppointmentID, item);
-            }
+            _cAppointmentContext.AddTask(appointmentDTO);
         }
     }
 }

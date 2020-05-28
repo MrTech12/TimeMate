@@ -13,8 +13,8 @@ namespace TimeMate.Controllers
 {
     public class AccountController : Controller
     {
-        Account account;
-        AccountDTO accountDTO;
+        private Account account;
+        private AccountDTO accountDTO;
 
         [HttpGet]
         public IActionResult Index()
@@ -40,7 +40,7 @@ namespace TimeMate.Controllers
                 accountDTO.Password = viewModel.Password;
 
                 account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
-                string result = account.UserLogsIn();
+                string result = account.LoggingIn();
 
                 if (!result.All(char.IsDigit))
                 {

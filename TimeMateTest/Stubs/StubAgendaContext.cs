@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
@@ -8,22 +9,26 @@ namespace TimeMateTest.Stubs
 {
     class StubAgendaContext : IAgendaContext
     {
-        public int AddNewAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
+        public int AddAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
             int agendaID = 0;
-            if (accountDTO.AccountID == 12)
+
+            using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addAgendaTest.txt"))
             {
-                agendaDTO.AgendaID = 12;
-            }
+                streamWriter.WriteLine(agendaDTO.AgendaName);
+                streamWriter.WriteLine(agendaDTO.AgendaColor);
+                streamWriter.WriteLine(agendaDTO.Notification);
+            }          
             return agendaID;
         }
 
-        public void AddNewJobAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
+        public void AddJobAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
-            int jobID;
-            if (agendaDTO.AgendaID == 12 && accountDTO.AccountID == 12)
+            using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addWorkAgendaTest.txt"))
             {
-                jobID = 12;
+                streamWriter.WriteLine(agendaDTO.AgendaName);
+                streamWriter.WriteLine(agendaDTO.AgendaColor);
+                streamWriter.WriteLine(agendaDTO.Notification);
             }
         }
 
@@ -32,36 +37,20 @@ namespace TimeMateTest.Stubs
             throw new NotImplementedException();
         }
 
-        public int GetAgendaID(string agendaName, AccountDTO accountDTO)
+        public List<AgendaDTO> GetAllAgendas(AccountDTO accountDTO)
         {
-            int agendaID = 0;
-            if (agendaName == "Personal" && accountDTO.AccountID == 12)
-            {
-                agendaID = 2;
-            }
-            else if (agendaName == null && accountDTO.AccountID == 12)
-            {
-                agendaID = -1;
-            }
-            else if (agendaName == "Homework" && accountDTO.AccountID == 12)
-            {
-                agendaID = 24;
-            }
-            else if (agendaName == "Bijbaan" && accountDTO.AccountID == 12)
-            {
-                agendaID = 4;
-            }
-
-            return agendaID;
-        }
-
-        public List<string> GetAgendaNamesFromDB(AccountDTO accountDTO)
-        {
-            List<string> agendaNames = new List<string>();
+            List<AgendaDTO> agendaNames = new List<AgendaDTO>();
             if (accountDTO.AccountID == 12)
             {
-                agendaNames.Add("Work");
-                agendaNames.Add("Personal");
+                AgendaDTO agenda1 = new AgendaDTO();
+                agenda1.AgendaID = 0;
+                agenda1.AgendaName = "Work";
+                agendaNames.Add(agenda1);
+
+                AgendaDTO agenda2 = new AgendaDTO();
+                agenda2.AgendaID = 1;
+                agenda2.AgendaName = "Personal";
+                agendaNames.Add(agenda2);
             }
 
             return agendaNames;
@@ -104,7 +93,5 @@ namespace TimeMateTest.Stubs
         {
             throw new NotImplementedException();
         }
-
-
     }
 }

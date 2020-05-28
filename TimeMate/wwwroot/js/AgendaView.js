@@ -23,35 +23,9 @@ $(document).ready(function() {
     function GetAppointmentInfo(selectedRow) {
         $(selectedRow).closest('tr').find('td').each(function () {
             appointmentData.push($(this).text());
+            appointmentData.push($(this).attr('id'));
         });
     }
-
-    /*
-    function GetAppointmentInfo() {
-        var table = document.getElementById('appointmentTable');
-        var cells = table.getElementsByTagName('td');
-
-        for (var i = 0; i < cells.length; i++) {
-            // Take each cell
-            var cell = cells[i];
-
-            cell.onclick = function () {
-
-                appointmentData.length = 0;
-
-                // Get the row id where the cell exists
-                var rowId = this.parentNode.rowIndex;
-
-                var rowSelected = table.getElementsByTagName('tr')[rowId];
-
-                appointmentData.push(rowSelected.cells[0].innerHTML);
-                appointmentData.push(rowSelected.cells[1].innerHTML);
-                appointmentData.push(rowSelected.cells[2].innerHTML);
-                appointmentData.push(rowSelected.cells[3].innerHTML);
-            }
-        }
-    }
-    */
 
     function RetrieveAppointmentDetails() {
         $.ajax({
@@ -102,7 +76,7 @@ $(document).ready(function() {
     };
 
     function GetPopoverContent() {
-        var popoverContent = popoverContent = "Starttijd: " + appointmentData[1] + "<br>" + "Eindtijd: " + appointmentData[2] + "<br>" + "Agendanaam: " + appointmentData[3] + "<br>";
+        var popoverContent = popoverContent = "Starttijd: " + appointmentData[2] + "<br>" + "Eindtijd: " + appointmentData[4] + "<br>" + "Agendanaam: " + appointmentData[6] + "<br>";
 
         if (popoverData != "") {
             popoverContent+= "Details: " + "<br>" + popoverData

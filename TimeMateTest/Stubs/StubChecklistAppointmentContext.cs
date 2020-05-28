@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
@@ -8,13 +9,16 @@ namespace TimeMateTest.Stubs
 {
     class StubChecklistAppointmentContext : IChecklistAppointmentContext
     {
-        public void AddTask(int appointmentID, string taskName)
+        public void AddTask(AppointmentDTO appointmentDTO)
         {
-            string qwerty;
-            if (appointmentID == 48 && taskName == "Get inspiration")
+            if (appointmentDTO.AppointmentID == 60)
             {
-                qwerty = "nothing";
+                using (StreamWriter streamWriter = File.AppendText("C:\\tmp\\addAppointmentTest.txt"))
+                {
+                    streamWriter.WriteLine(appointmentDTO.ChecklistItemName[0]);
+                }
             }
+
         }
 
         public void CheckOffTask(AppointmentDTO appointmentDTO)
@@ -22,7 +26,7 @@ namespace TimeMateTest.Stubs
             throw new NotImplementedException();
         }
 
-        public AppointmentDTO GetTask(int appointmentIndex)
+        public AppointmentDTO GetTasks(int appointmentIndex)
         {
             AppointmentDTO appointmentDTO = new AppointmentDTO();
             if (appointmentIndex == 6)

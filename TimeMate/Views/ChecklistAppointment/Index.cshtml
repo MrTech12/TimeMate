@@ -1,8 +1,11 @@
-﻿@model TimeMate.Models.CAppointmentViewModel
+﻿@model TimeMate.Models.ChecklistAppointmentViewModel
 
 @{
     ViewData["Title"] = "Nieuwe afspraak met taken toevoegen";
 }
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/AddChecklistAppointment.js"></script>
 
 <h1>Nieuwe afspraak met taken toevoegen</h1>
 
@@ -41,7 +44,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Afspraak toevoegen" class="btn btn-primary" />
+                <input id="add-appointment" type="button" value="Afspraak toevoegen" class="btn btn-primary" />
             </div>
         </form>
     </div>

@@ -2,6 +2,7 @@
 using DataAccessLayer.DTO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using TimeMateTest.Stubs;
 using Xunit;
 
@@ -19,7 +20,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "qoe2ieiwiir" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("0", output);
         }
@@ -31,7 +32,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "", Password = "" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
@@ -43,7 +44,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "test@gmail.com", Password = "test123"};
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
@@ -55,7 +56,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "", Password = "test123" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
@@ -67,7 +68,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "test@gmail.", Password = "test123" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
@@ -79,7 +80,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "cmck323kc" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
@@ -91,13 +92,13 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.UserLogsIn();
+            output = account.LoggingIn();
 
             Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
         }
 
         [Fact]
-        public void CreateAccountWithNoJobTest()
+        public void CreateAccountNoJobTest()
         {
             string output;
             accountDTO = new AccountDTO();
@@ -113,7 +114,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountWithJobTest()
+        public void CreateAccountJobTest()
         {
             string output;
             accountDTO = new AccountDTO();
@@ -133,7 +134,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountWithLowerCasePasswordTest()
+        public void CreateAccountLowerCasePasswordTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwieiwi231@#" };
@@ -145,7 +146,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountWithNoSpecialCharactersInPasswordTest()
+        public void CreateAccountNoSpecialCharactersInPasswordTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwiEEWwi231WE" };
@@ -157,7 +158,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountWithNoNumbersInPasswordTest()
+        public void CreateAccountNoNumbersInPasswordTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwieiwieWE@#" };
@@ -169,7 +170,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountWithExistingMailTest()
+        public void CreateAccounExistingMailTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Bert", MailAddress = "bert@gmail.com", Password = "qwieEW12iwieWE@#" };
@@ -181,7 +182,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountWithIncorrectMailTest()
+        public void CreateAccountIncorrectMailTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Bert", MailAddress = "bert@gmail.", Password = "qwieEW12iwieWE@#" };
@@ -198,14 +199,30 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { AccountID = 12 };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
             Agenda agenda = new Agenda(accountDTO, new StubAgendaContext());
-            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "0x0000", Notification = "Nee" };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000", Notification = "Nee" };
             
-            string before = Convert.ToString(agenda.GetAgendaID(null));
             account.CreateAgenda(agendaDTO);
-            string after = Convert.ToString(agenda.GetAgendaID("Homework"));
+            string[] file = File.ReadAllLines("C:\\tmp\\addAgendaTest.txt");
+            File.Delete("C:\\tmp\\addagendaTest.txt");
 
-            Assert.Equal("-1", before);
-            Assert.Equal("24", after);
+            Assert.Contains("Homework", file[0]);
+            Assert.Contains("#0x0000", file[1]);
+        }
+
+        [Fact]
+        public void CreateAgendaTest2()
+        {
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            Agenda agenda = new Agenda(accountDTO, new StubAgendaContext());
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560", Notification = "Nee" };
+
+            account.CreateAgenda(agendaDTO);
+            string[] file = File.ReadAllLines("C:\\tmp\\addAgendaTest.txt");
+            File.Delete("C:\\tmp\\addagendaTest.txt");
+
+            Assert.Contains("Skype", file[0]);
+            Assert.Contains("#15F560", file[1]);
         }
 
         [Fact]
@@ -215,24 +232,24 @@ namespace TimeMateTest.BLL
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
             Agenda agenda = new Agenda(accountDTO, new StubAgendaContext());
 
-            string before = Convert.ToString(agenda.GetAgendaID(null));
             account.CreateWorkAgenda();
-            string after = Convert.ToString(agenda.GetAgendaID("Bijbaan"));
+            string[] file = File.ReadAllLines("C:\\tmp\\addWorkAgendaTest.txt");
+            File.Delete("C:\\tmp\\addworkagendaTest.txt");
 
-            Assert.Equal("-1", before);
-            Assert.Equal("4", after);
+            Assert.Contains("Bijbaan", file[0]);
+            Assert.Contains("#FF0000", file[1]);
         }
 
         [Fact]
         public void GetAgendaNamesTest()
         {
-            List<string> output = new List<string>();
+            List<AgendaDTO> output = new List<AgendaDTO>();
             accountDTO = new AccountDTO() { AccountID = 12 };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
-            output = account.GetAgendaNames();
+            output = account.RetrieveAgendas();
 
-            Assert.Contains("Work", output);
+            Assert.Contains("Work", output[0].AgendaName);
             Assert.True(output.Count == 2);
         }
     }

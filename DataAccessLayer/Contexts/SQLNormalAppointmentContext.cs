@@ -22,7 +22,7 @@ namespace DataAccessLayer.Contexts
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand("INSERT INTO [Appointment_Details](AppointmentID, Details) VALUES (@0, @1)", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Appointment_Details](AppointmentID, Details) VALUES (@0, @1)", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
                     insertQuerry.Parameters.AddWithValue("1", appointmentDTO.Description);
@@ -45,7 +45,7 @@ namespace DataAccessLayer.Contexts
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand("SELECT Details FROM [Appointment_Details] WHERE AppointmentID = @0", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand(@"SELECT Details FROM [Appointment_Details] WHERE AppointmentID = @0", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", appointmentID);
 
