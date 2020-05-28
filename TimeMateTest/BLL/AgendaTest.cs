@@ -20,11 +20,11 @@ namespace TimeMateTest.BLL
         public void GetAppointmentID()
         {
             int output;
-            AppointmentDTO appointmentDTO = new AppointmentDTO() { AppointmentName = "Shopping"};
+            AppointmentDTO appointmentDTO = new AppointmentDTO() { AgendaID = 36, AppointmentName = "Shopping"};
             accountDTO = new AccountDTO() { AccountID = 12 };
             agenda = new Agenda(accountDTO, new StubAgendaContext(), new StubAppointmentContext());
 
-            output = agenda.GetAppointmentID(appointmentDTO, 36);
+            output = agenda.GetAppointmentID(appointmentDTO);
 
             Assert.Equal(8, output);
         }

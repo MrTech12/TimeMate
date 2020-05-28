@@ -74,7 +74,7 @@ namespace TimeMate.Controllers
             agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext());
             NormalAppointment normalAppointment = new NormalAppointment(appointmentDTO, new SQLNormalAppointmentContext());
 
-            appointmentDTO.AppointmentID = agenda.GetAppointmentID(appointmentDTO, appointmentDTO.AgendaID);
+            appointmentDTO.AppointmentID = agenda.GetAppointmentID(appointmentDTO);
             string description = normalAppointment.RetrieveDescription(appointmentDTO.AppointmentID);
 
             if (description == "")

@@ -28,22 +28,22 @@ namespace TimeMateTest.Stubs
             throw new NotImplementedException();
         }
 
-        public int GetAppointmentID(AppointmentDTO appointmentDTO, int agendaIndex)
+        public int GetAppointmentID(AppointmentDTO appointmentDTO)
         {
             int appointmentID = 0;
-            if (appointmentDTO.AppointmentName == "Shopping" && agendaIndex == 36)
+            if (appointmentDTO.AppointmentName == "Shopping" && appointmentDTO.AgendaID == 36)
             {
                 appointmentID = 8;
             }
-            else if (appointmentDTO.AppointmentName == null && agendaIndex == 0)
+            else if (appointmentDTO.AppointmentName == null && appointmentDTO.AgendaID == 0)
             {
                 appointmentID = -1;
             }
-            else if (appointmentDTO.AppointmentName == "Reorder cables" && agendaIndex == 2)
+            else if (appointmentDTO.AppointmentName == "Reorder cables" && appointmentDTO.AgendaID == 2)
             {
                 appointmentID = 8;
             }
-            else if (appointmentDTO.AppointmentName == "Create 3D render" && agendaIndex == 2)
+            else if (appointmentDTO.AppointmentName == "Create 3D render" && appointmentDTO.AgendaID == 2)
             {
                 appointmentID = 48;
             }

@@ -46,9 +46,9 @@ namespace BusinessLogicLayer.Logic
             this._cAppointmentContext = cAppointmentContext;
         }
 
-        public int GetAppointmentID(AppointmentDTO appointmentDTO, int agendaID)
+        public int GetAppointmentID(AppointmentDTO appointmentDTO)
         {
-            int ID = _appointmentContext.GetAppointmentID(appointmentDTO, agendaID);
+            int ID = _appointmentContext.GetAppointmentID(appointmentDTO);
             return ID;
         }
 
