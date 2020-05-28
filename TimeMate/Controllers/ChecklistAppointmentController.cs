@@ -6,6 +6,7 @@ using BusinessLogicLayer.Logic;
 using DataAccessLayer.Contexts;
 using DataAccessLayer.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TimeMate.Models;
 
 namespace TimeMate.Controllers
@@ -26,27 +27,30 @@ namespace TimeMate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(CAppointmentViewModel viewModel)
+        public IActionResult Index(string json)
         {
-            AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.Name;
-            appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
-            appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
-            appointmentDTO.AgendaName = viewModel.AppointmentViewModel.AgendaDTO[0].AgendaName;
+            var newAppointment = JsonConvert.DeserializeObject<List<string>>(json);
 
-            foreach (var item in viewModel.Task)
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            appointmentDTO.AppointmentName = newAppointment[0];
+            appointmentDTO.StartDate = Convert.ToDateTime(newAppointment[1]) + TimeSpan.Parse(newAppointment[2]);
+            appointmentDTO.EndDate = Convert.ToDateTime(newAppointment[3]) + TimeSpan.Parse(newAppointment[4]);
+            appointmentDTO.AgendaName = newAppointment[5];
+            appointmentDTO.AgendaID = Convert.ToInt32(newAppointment[6]);
+
+            for (int i = 7; i < newAppointment.Count; i++)
             {
-                if (item != null)
+                if (newAppointment[i] != "")
                 {
-                    appointmentDTO.ChecklistItemName.Add(item);
+                    appointmentDTO.ChecklistItemName.Add(newAppointment[i]);
                 }
             }
 
             agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext(), new SQLChecklistAppointmentContext());
 
-            agenda.CreateCAppointment(appointmentDTO, appointmentDTO.AgendaName);
+            agenda.CreateCAppointment(appointmentDTO);
 
-            return RedirectToAction("Index", "Agenda");
+            return Ok();
         }
     }
 }

@@ -29,18 +29,18 @@ namespace TimeMate.Controllers
         [HttpPost]
         public IActionResult Index(string json)
         {
-            var newAgenda = JsonConvert.DeserializeObject<List<string>>(json);
+            var newAppointment = JsonConvert.DeserializeObject<List<string>>(json);
 
             AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO.AppointmentName = newAgenda[0];
-            appointmentDTO.StartDate = Convert.ToDateTime(newAgenda[1]) + TimeSpan.Parse(newAgenda[2]);
-            appointmentDTO.EndDate = Convert.ToDateTime(newAgenda[3]) + TimeSpan.Parse(newAgenda[4]);
-            appointmentDTO.AgendaName = newAgenda[5];
-            appointmentDTO.AgendaID = Convert.ToInt32(newAgenda[6]);
+            appointmentDTO.AppointmentName = newAppointment[0];
+            appointmentDTO.StartDate = Convert.ToDateTime(newAppointment[1]) + TimeSpan.Parse(newAppointment[2]);
+            appointmentDTO.EndDate = Convert.ToDateTime(newAppointment[3]) + TimeSpan.Parse(newAppointment[4]);
+            appointmentDTO.AgendaName = newAppointment[5];
+            appointmentDTO.AgendaID = Convert.ToInt32(newAppointment[6]);
 
-            if (newAgenda[7] != null)
+            if (newAppointment[7] != null)
             {
-                string newDescription = newAgenda[7].Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
+                string newDescription = newAppointment[7].Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
                     .Replace("<span class=\"normal-text\">", "</b>");
                 appointmentDTO.Description = newDescription;
             }

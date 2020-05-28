@@ -88,11 +88,9 @@ namespace BusinessLogicLayer.Logic
         /// <summary>
         /// Create appointment with checklist.
         /// </summary>
-        public void CreateCAppointment(AppointmentDTO appointmentDTO, string agendaName)
+        public void CreateCAppointment(AppointmentDTO appointmentDTO)
         {
-            AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaID = _agendaContext.GetAgendaID(agendaName, accountDTO);
-            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO, agendaDTO.AgendaID);
+            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO, appointmentDTO.AgendaID);
 
             foreach (var item in appointmentDTO.ChecklistItemName)
             {
