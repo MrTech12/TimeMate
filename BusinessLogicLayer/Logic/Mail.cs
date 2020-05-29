@@ -7,6 +7,9 @@ namespace BusinessLogicLayer.Logic
 {
     class Mail
     {
+        /// <summary>
+        /// Send a mail to the mailaddress of the newly created acount.
+        /// </summary>
         public void SendMail(string mailUser)
         {
             try

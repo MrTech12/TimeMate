@@ -9,7 +9,7 @@ namespace DataAccessLayer.Interfaces
     {
         int AddAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO);
 
-        void AddJobAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO);
+        void AddPayDetails(AgendaDTO agendaDTO, AccountDTO accountDTO);
 
         void RenameAgenda(int agendaIndex, AccountDTO accountDTO);
 

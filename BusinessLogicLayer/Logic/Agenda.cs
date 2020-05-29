@@ -53,7 +53,7 @@ namespace BusinessLogicLayer.Logic
         }
 
         /// <summary>
-        /// Get all appointments of the current user.
+        /// Retrieve all appointments that belong to the current actor.
         /// </summary>
         /// <returns></returns>
         public List<AppointmentDTO> RetrieveAppointments()

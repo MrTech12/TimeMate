@@ -12,7 +12,7 @@ namespace DataAccessLayer.Contexts
         private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
 
         /// <summary>
-        /// Add a new agenda into the database.
+        /// Add an agenda into the database.
         /// </summary>
         /// <returns></returns>
         public int AddAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
@@ -43,10 +43,10 @@ namespace DataAccessLayer.Contexts
         }
 
         /// <summary>
-        /// Add a new agenda for work into the database.
+        /// Add the pay details into the agenda.
         /// </summary>
         /// <returns></returns>
-        public void AddJobAgenda(AgendaDTO newAgendaDTO, AccountDTO accountDTO)
+        public void AddPayDetails(AgendaDTO newAgendaDTO, AccountDTO accountDTO)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace DataAccessLayer.Contexts
         }
 
         /// <summary>
-        /// Get all the agenda names that the account has.
+        /// Get all the agenda details that the current account has.
         /// </summary>
         /// <returns></returns>
         public List<AgendaDTO> GetAllAgendas(AccountDTO accountDTO)
@@ -150,11 +150,17 @@ namespace DataAccessLayer.Contexts
             return agendas;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public List<DateTime> GetWorkdayHours(int agendaIndex)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public List<DateTime> GetWeekendHours(int agendaIndex)
         {
             throw new NotImplementedException();

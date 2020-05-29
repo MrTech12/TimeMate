@@ -15,11 +15,17 @@ namespace BusinessLogicLayer.Logic
             this._nAppointmentContext = normalAppointmentContext;
         }
 
+        /// <summary>
+        /// Rename an appointment.
+        /// </summary>
         public override void RenameAppointment(AppointmentDTO appointmentDTO)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Retrieve the description that belongs to the appointment.
+        /// </summary>
         public string RetrieveDescription(int appointmentID)
         {
             string description = _nAppointmentContext.GetDescription(appointmentID);

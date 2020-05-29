@@ -22,7 +22,7 @@ namespace TimeMateTest.Stubs
             return agendaID;
         }
 
-        public void AddJobAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
+        public void AddPayDetails(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
             using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addWorkAgendaTest.txt"))
             {

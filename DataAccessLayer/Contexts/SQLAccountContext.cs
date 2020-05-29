@@ -17,7 +17,7 @@ namespace DataAccessLayer.Contexts
         private string databaseOutput;
 
         /// <summary>
-        /// Getting the account ID from the database.
+        /// Get the account ID from the database.
         /// </summary>
         public string GetUserID(string mail)
         {
@@ -50,7 +50,7 @@ namespace DataAccessLayer.Contexts
         }
 
         /// <summary>
-        /// Getting the password hash from the database.
+        /// Get the password hash from the database.
         /// </summary>
         public string SearchForPasswordHash(string mail)
         {
@@ -82,9 +82,8 @@ namespace DataAccessLayer.Contexts
         }
 
         /// <summary>
-        /// Inserting a new account into the database.
+        /// Insert an account into the database.
         /// </summary>
-        /// <returns></returns>
         public int CreateAccount(AccountDTO accountDTO)
         {
             int accountID;

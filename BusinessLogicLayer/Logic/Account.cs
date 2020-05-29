@@ -25,7 +25,7 @@ namespace BusinessLogicLayer.Logic
         }
 
         /// <summary>
-        /// Letting the user log into their account, with their entered credentials.
+        /// Checking the entered credentials to give an actor access to a specific account.
         /// </summary>
         public string LoggingIn()
         {
@@ -94,7 +94,7 @@ namespace BusinessLogicLayer.Logic
         }
 
         /// <summary>
-        /// Create a new account for the user, with their entered input.
+        /// Create a new account for the actor, with their entered input.
         /// </summary>
         public void CreateAccount()
         {
@@ -112,7 +112,7 @@ namespace BusinessLogicLayer.Logic
         }
 
         /// <summary>
-        /// Create a new agenda for the user.
+        /// Create an agenda for the actor.
         /// </summary>
         public void CreateAgenda(AgendaDTO agendaDTO)
         {
@@ -120,7 +120,7 @@ namespace BusinessLogicLayer.Logic
         }
 
         /// <summary>
-        /// Create a work agenda for the user.
+        /// Create a work agenda for the actor.
         /// </summary>
         public void CreateWorkAgenda()
         {
@@ -131,11 +131,11 @@ namespace BusinessLogicLayer.Logic
 
             newAgendaDTO.AgendaID = _agendaContext.AddAgenda(newAgendaDTO, accountDTO);
 
-            _agendaContext.AddJobAgenda(newAgendaDTO,accountDTO);
+            _agendaContext.AddPayDetails(newAgendaDTO,accountDTO);
         }
 
         /// <summary>
-        /// Get the info of all the agenda's that belong to the current active user.
+        /// Get the info of all the agenda's that belong to the current active actor.
         /// </summary>
         /// <returns></returns>
         public List<AgendaDTO> RetrieveAgendas()

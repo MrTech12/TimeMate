@@ -15,6 +15,9 @@ namespace BusinessLogicLayer.Logic
             this.appointmentDTO = appointmentDTO;
         }
 
+        /// <summary>
+        /// Rename an appointment.
+        /// </summary>
         public abstract void RenameAppointment(AppointmentDTO appointmentDTO);
     }
 }
