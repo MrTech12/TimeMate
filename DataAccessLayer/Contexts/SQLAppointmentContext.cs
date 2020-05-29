@@ -109,15 +109,5 @@ namespace DataAccessLayer.Contexts
             }
             return AppointmentsFromAccount;
         }
-
-        public void DeleteAppointment(int appointmentIndex, int agendaIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RenameAppointment(int appointmentIndex, int agendaIndex)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

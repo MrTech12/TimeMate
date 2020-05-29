@@ -23,11 +23,6 @@ namespace TimeMateTest.Stubs
             return appointmentID;
         }
 
-        public void DeleteAppointment(int appointmentIndex, int agendaIndex)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<AppointmentDTO> GetAllAppointments(AccountDTO accountDTO)
         {
             List<AppointmentDTO> appointmentDTO = new List<AppointmentDTO>();
@@ -71,11 +66,6 @@ namespace TimeMateTest.Stubs
                 appointmentID = 48;
             }
             return appointmentID;
-        }
-
-        public void RenameAppointment(int appointmentIndex, int agendaIndex)
-        {
-            throw new NotImplementedException();
         }
     }
 }
