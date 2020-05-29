@@ -116,12 +116,7 @@ namespace BusinessLogicLayer.Logic
         /// </summary>
         public void CreateAgenda(AgendaDTO agendaDTO)
         {
-            AgendaDTO newAgendaDTO = new AgendaDTO();
-            newAgendaDTO.AgendaName = agendaDTO.AgendaName;
-            newAgendaDTO.AgendaColor = agendaDTO.AgendaColor;
-            newAgendaDTO.Notification = agendaDTO.Notification;
-
-            _agendaContext.AddAgenda(newAgendaDTO, accountDTO);
+            _agendaContext.AddAgenda(agendaDTO, accountDTO);
         }
 
         /// <summary>
@@ -140,7 +135,7 @@ namespace BusinessLogicLayer.Logic
         }
 
         /// <summary>
-        /// Get the info of all the agenda's that belong to the current user.
+        /// Get the info of all the agenda's that belong to the current active user.
         /// </summary>
         /// <returns></returns>
         public List<AgendaDTO> RetrieveAgendas()
