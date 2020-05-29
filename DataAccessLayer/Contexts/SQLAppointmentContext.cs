@@ -12,11 +12,8 @@ namespace DataAccessLayer.Contexts
         private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
 
         /// <summary>
-        /// Add an appointment to the db.
+        /// Add an appointment to the database.
         /// </summary>
-        /// <param name="appointmentDTO"></param>
-        /// <param name="agendaIndex"></param>
-        /// <returns></returns>
         public int AddAppointment(AppointmentDTO appointmentDTO)
         {
             int appointmentID = 0;
@@ -44,6 +41,9 @@ namespace DataAccessLayer.Contexts
             return appointmentID;
         }
 
+        /// <summary>
+        /// Get the appointmentID from an appointemt, out of the database.
+        /// </summary>
         public int GetAppointmentID(AppointmentDTO appointmentDTO)
         {
             int appointmentID = 0;
@@ -71,7 +71,7 @@ namespace DataAccessLayer.Contexts
         }
 
         /// <summary>
-        /// Get all appointments of the user, from the database.
+        /// Get all appointments of the current account, from the database.
         /// </summary>
         /// <returns></returns>
         public List<AppointmentDTO> GetAllAppointments(AccountDTO accountDTO)

@@ -151,7 +151,7 @@ namespace DataAccessLayer.Contexts
         }
 
         /// <summary>
-        /// 
+        /// Get the work hours for business days from the "Bijbaan" agenda.
         /// </summary>
         public List<DateTime> GetWorkdayHours(int agendaIndex)
         {
@@ -159,7 +159,7 @@ namespace DataAccessLayer.Contexts
         }
 
         /// <summary>
-        /// 
+        /// Get the work hours for the weekend from the "Bijbaan" agenda.
         /// </summary>
         public List<DateTime> GetWeekendHours(int agendaIndex)
         {

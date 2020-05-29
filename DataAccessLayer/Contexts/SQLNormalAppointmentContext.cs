@@ -12,7 +12,7 @@ namespace DataAccessLayer.Contexts
         private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
 
         /// <summary>
-        /// Add a description of an appointment to the db.
+        /// Add a description of an appointment to the database.
         /// </summary>
         /// <param name="appointmentDTO"></param>
         public void AddDescription(AppointmentDTO appointmentDTO)
@@ -37,6 +37,9 @@ namespace DataAccessLayer.Contexts
             }
         }
 
+        /// <summary>
+        /// Get the description of an appointment, from the database.
+        /// </summary>
         public string GetDescription(int appointmentID)
         {
             string description;

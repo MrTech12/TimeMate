@@ -13,7 +13,7 @@ namespace DataAccessLayer.Contexts
         private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
 
         /// <summary>
-        /// Add task(s) of an appointment to the db.
+        /// Add task(s) of an appointment to the database.
         /// </summary>
         public void AddTask(AppointmentDTO appointmentDTO)
         {
@@ -42,6 +42,9 @@ namespace DataAccessLayer.Contexts
             }
         }
 
+        /// <summary>
+        /// Get the task(s) of an appointment, from the database.
+        /// </summary>
         public AppointmentDTO GetTasks(int appointmentIndex)
         {
             AppointmentDTO appointmentDTO = new AppointmentDTO();
