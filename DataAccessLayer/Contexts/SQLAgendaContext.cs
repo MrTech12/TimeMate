@@ -86,7 +86,7 @@ namespace DataAccessLayer.Contexts
         /// <summary>
         /// Delete an agenda from the db.
         /// </summary>
-        public void DeleteAgenda(int AgendaIndexInput, AccountDTO accountDTO)
+        public void DeleteAgenda(int AgendaID, AccountDTO accountDTO)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace DataAccessLayer.Contexts
                     databaseConn.Open();
                     SqlCommand deleteQuerry = new SqlCommand(@"DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1", databaseConn);
 
-                    deleteQuerry.Parameters.AddWithValue("0", AgendaIndexInput);
+                    deleteQuerry.Parameters.AddWithValue("0", AgendaID);
                     deleteQuerry.Parameters.AddWithValue("1", accountDTO.AccountID);
 
                     deleteQuerry.ExecuteNonQuery();

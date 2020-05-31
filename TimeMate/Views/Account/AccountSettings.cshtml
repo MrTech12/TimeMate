@@ -1,0 +1,61 @@
+﻿@model List<DataAccessLayer.DTO.AgendaDTO>
+
+@{
+    ViewData["Title"] = "Accountinstellingen";
+}
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/AccountSettings.js"></script>
+
+<h1>Accountinstellingen</h1>
+
+<div class="row">
+        <div class="form-group">
+            <select id="agendaList">
+                @foreach (var item in Model)
+                {
+                    <option id="@item.AgendaID">
+
+                        @foreach (var qwerty in item.AgendaName)
+                        {
+                            @qwerty
+                        }
+                    </option>
+
+                }
+            </select>
+        </div>
+
+    <div>
+        <button type="button" id="deleteAgenda" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+        Verwijderen
+        </button>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Verwijderen van agenda</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Weet je zeker dat je de agenda <label id="agendaName"></label> wilt verwijderen?
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" id="confirmDeletion" class="btn btn-danger" data-dismiss="modal">Ja</button>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Nee</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
