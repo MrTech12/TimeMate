@@ -20,7 +20,7 @@ $(document).ready(function () {
         GetEnteredInformation();
         jsonData = JSON.stringify(appointmentInfo);
         console.info(jsonData);
-        SendInformationToController();
+        SendDeletionRequest();
     });
 
 });
@@ -64,7 +64,7 @@ function GetEnteredInformation() {
     appointmentInfo.push(document.getElementById('descriptionBox').innerHTML);
 }
 
-function SendInformationToController() {
+function SendDeletionRequest() {
     $.ajax({
         type: "POST",
         async: "no",

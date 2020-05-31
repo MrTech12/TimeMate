@@ -144,5 +144,13 @@ namespace BusinessLogicLayer.Logic
             agendasFromUser = _agendaContext.GetAllAgendas(accountDTO);
             return agendasFromUser;
         }
+
+        /// <summary>
+        /// Delete an agenda from the account of the current active actor.
+        /// </summary>
+        public void DeleteAgenda(int agendaID)
+        {
+            _agendaContext.DeleteAgenda(agendaID, accountDTO);
+        }
     }
 }

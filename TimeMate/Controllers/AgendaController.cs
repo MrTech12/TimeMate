@@ -60,6 +60,18 @@ namespace TimeMate.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult DeleteAgenda(string json)
+        {
+            int agendaID = JsonConvert.DeserializeObject<int>(json);
+            accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
+            Account account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+
+            account.DeleteAgenda(agendaID);
+
+            return Ok();
+        }
+
         [HttpGet]
         public IActionResult RetrieveAppointmentDetails(string json)
         {

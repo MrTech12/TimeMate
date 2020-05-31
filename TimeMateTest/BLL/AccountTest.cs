@@ -1,4 +1,5 @@
 ﻿using BusinessLogicLayer.Logic;
+using DataAccessLayer.Contexts;
 using DataAccessLayer.DTO;
 using System;
 using System.Collections.Generic;
@@ -202,7 +203,7 @@ namespace TimeMateTest.BLL
             
             account.CreateAgenda(agendaDTO);
             string[] file = File.ReadAllLines("C:\\tmp\\addAgendaTest.txt");
-            File.Delete("C:\\tmp\\addagendaTest.txt");
+            File.Delete("C:\\tmp\\addAgendaTest.txt");
 
             Assert.Contains("Homework", file[0]);
             Assert.Contains("#0x0000", file[1]);
@@ -218,7 +219,7 @@ namespace TimeMateTest.BLL
 
             account.CreateAgenda(agendaDTO);
             string[] file = File.ReadAllLines("C:\\tmp\\addAgendaTest.txt");
-            File.Delete("C:\\tmp\\addagendaTest.txt");
+            File.Delete("C:\\tmp\\addAgendaTest.txt");
 
             Assert.Contains("Skype", file[0]);
             Assert.Contains("#15F560", file[1]);
@@ -233,7 +234,7 @@ namespace TimeMateTest.BLL
 
             account.CreateWorkAgenda();
             string[] file = File.ReadAllLines("C:\\tmp\\addWorkAgendaTest.txt");
-            File.Delete("C:\\tmp\\addworkagendaTest.txt");
+            File.Delete("C:\\tmp\\addWorkAgendaTest.txt");
 
             Assert.Contains("Bijbaan", file[0]);
             Assert.Contains("#FF0000", file[1]);
@@ -250,6 +251,30 @@ namespace TimeMateTest.BLL
 
             Assert.Contains("Work", output[0].AgendaName);
             Assert.True(output.Count == 2);
+        }
+
+        [Fact]
+        public void RemoveAgenda()
+        {
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", Notification = "Nee"};
+            Account account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+
+            using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\removeAgendaTest.txt"))
+            {
+                streamWriter.WriteLine(agendaDTO.AgendaID);
+                streamWriter.WriteLine(agendaDTO.AgendaName);
+                streamWriter.WriteLine(agendaDTO.AgendaColor);
+                streamWriter.WriteLine(agendaDTO.Notification);
+            }
+
+            account.DeleteAgenda(agendaDTO.AgendaID);
+
+            string[] file = File.ReadAllLines("C:\\tmp\\removeAgendaTest.txt");
+            File.Delete("C:\\tmp\\removeAgendaTest.txt");
+
+            Assert.Equal("System.String[]", file.ToString());
+
         }
     }
 }

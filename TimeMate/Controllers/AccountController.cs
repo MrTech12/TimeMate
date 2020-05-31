@@ -103,6 +103,17 @@ namespace TimeMate.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult AccountSettings()
+        {
+            accountDTO = new AccountDTO();
+            accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
+
+            account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+            var viewModel = account.RetrieveAgendas();
+            return View(viewModel);
+        }
+
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("accountID");
