@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
@@ -32,9 +33,12 @@ namespace TimeMateTest.Stubs
             }
         }
 
-        public void DeleteAgenda(int AgendaIndex, AccountDTO accountDTO)
+        public void DeleteAgenda(int AgendaID, AccountDTO accountDTO)
         {
-            throw new NotImplementedException();
+            if (AgendaID == 51 && accountDTO.AccountID == 12)
+            {
+                File.WriteAllText("C:\\tmp\\removeAgendaTest.txt", String.Empty);
+            }
         }
 
         public List<AgendaDTO> GetAllAgendas(AccountDTO accountDTO)

@@ -13,17 +13,6 @@ $(document).ready(function () {
     $("#confirmDeletion").click(function () {
         SendDeletionRequest();
     });
-
-    $("#renameAgenda").click(function () {
-        GetSelectedInformation();
-        $("#agendaName").text(agendaName);
-        console.log("Name: " + agendaName + "; Id: " + agendaID);
-    });
-
-    $("#confirmRenaming").click(function () {
-        SendRenameRequest();
-    });
-
 });
 
 function GetSelectedInformation() {
@@ -33,23 +22,6 @@ function GetSelectedInformation() {
 };
 
 function SendDeletionRequest() {
-    $.ajax({
-        type: "POST",
-        url: "/Agenda/DeleteAgenda",
-        contenttype: "application/json; charset=utf-8",
-        data: { json: agendaID },
-        datatype: "text",
-        traditional: true,
-        success: function (data) {
-            selectInput.remove(selectInput.selectedIndex);
-        },
-        error: function (ts) {
-            onerror(console.info(ts));
-        }
-    });
-};
-
-function SendRenameRequest() {
     $.ajax({
         type: "POST",
         url: "/Agenda/DeleteAgenda",
