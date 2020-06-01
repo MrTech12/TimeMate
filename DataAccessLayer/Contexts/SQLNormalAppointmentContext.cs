@@ -7,60 +7,60 @@ using System.Text;
 
 namespace DataAccessLayer.Contexts
 {
-    public class SQLNormalAppointmentContext : INormalAppointmentContext
-    {
-        private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
+    //public class SQLNormalAppointmentContext : INormalAppointmentContext
+    //{
+    //    private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
 
-        /// <summary>
-        /// Add a description of an appointment to the database.
-        /// </summary>
-        /// <param name="appointmentDTO"></param>
-        public void AddDescription(AppointmentDTO appointmentDTO)
-        {
-            try
-            {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
-                {
-                    databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Appointment_Details](AppointmentID, Details) VALUES (@0, @1)", databaseConn);
+    //    /// <summary>
+    //    /// Add a description of an appointment to the database.
+    //    /// </summary>
+    //    /// <param name="appointmentDTO"></param>
+    //    public void AddDescription(AppointmentDTO appointmentDTO)
+    //    {
+    //        try
+    //        {
+    //            using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+    //            {
+    //                databaseConn.Open();
+    //                SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Appointment_Details](AppointmentID, Details) VALUES (@0, @1)", databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
-                    insertQuerry.Parameters.AddWithValue("1", appointmentDTO.Description);
+    //                insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
+    //                insertQuerry.Parameters.AddWithValue("1", appointmentDTO.Description);
 
-                    insertQuerry.ExecuteNonQuery();
-                }
-            }
-            catch (SqlException)
-            {
-                //Display the error.
-                throw;
-            }
-        }
+    //                insertQuerry.ExecuteNonQuery();
+    //            }
+    //        }
+    //        catch (SqlException)
+    //        {
+    //            //Display the error.
+    //            throw;
+    //        }
+    //    }
 
-        /// <summary>
-        /// Get the description of an appointment, from the database.
-        /// </summary>
-        public string GetDescription(int appointmentID)
-        {
-            string description;
-            try
-            {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
-                {
-                    databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand(@"SELECT Details FROM [Appointment_Details] WHERE AppointmentID = @0", databaseConn);
+    //    /// <summary>
+    //    /// Get the description of an appointment, from the database.
+    //    /// </summary>
+    //    public string GetDescription(int appointmentID)
+    //    {
+    //        string description;
+    //        try
+    //        {
+    //            using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+    //            {
+    //                databaseConn.Open();
+    //                SqlCommand insertQuerry = new SqlCommand(@"SELECT Details FROM [Appointment_Details] WHERE AppointmentID = @0", databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", appointmentID);
+    //                insertQuerry.Parameters.AddWithValue("0", appointmentID);
 
-                    description = Convert.ToString(insertQuerry.ExecuteScalar());
-                }
-            }
-            catch (SqlException)
-            {
-                //Display the error.
-                throw;
-            }
-            return description;
-        }
-    }
+    //                description = Convert.ToString(insertQuerry.ExecuteScalar());
+    //            }
+    //        }
+    //        catch (SqlException)
+    //        {
+    //            //Display the error.
+    //            throw;
+    //        }
+    //        return description;
+    //    }
+    //}
 }

@@ -100,7 +100,7 @@ namespace BusinessLogicLayer.Logic
         {
             appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO);
 
-            if (appointmentDTO.Description != null)
+            if (appointmentDTO.DescriptionDTO.Description != null)
             {
                 _nAppointmentContext.AddDescription(appointmentDTO);
             }

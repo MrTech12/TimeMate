@@ -6,15 +6,15 @@ namespace DataAccessLayer.DTO
 {
     public class ChecklistDTO
     {
-        private int id;
+        private int taskID;
         private int appointmentID;
         private string taskName;
         private bool taskChecked;
 
-        public int ID
+        public int TaskID
         {
-            get { return this.id; }
-            set { this.id = value; }
+            get { return this.taskID; }
+            set { this.taskID = value; }
         }
 
         public int AppointmentID

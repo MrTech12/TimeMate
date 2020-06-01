@@ -40,15 +40,15 @@
             <td>@Model[i].EndDate</td>
             <td id="@Model[i].AgendaID">@Model[i].AgendaName</td>
             <td>
-                @if (Model[i].Description != null)
+                @if (Model[i].DescriptionDTO.Description != null)
                 {
-                    @Model[i].Description
+                    @Model[i].DescriptionDTO.Description
                 }
                 @if (Model[i].ChecklistDTOs != null)
                 {
                     @foreach (var item in Model[i].ChecklistDTOs)
                     {
-                        <label id="@item.ID">@item.TaskName </label>
+                        <label id="@item.TaskID">@item.TaskName </label>
                         <label>@item.TaskChecked</label>
                         <br />
                     }

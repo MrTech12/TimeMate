@@ -106,12 +106,12 @@ namespace DataAccessLayer.Contexts
 
                         if (dataReader["Details"] != DBNull.Value)
                         {
-                            appointmentModel.Description = dataReader["Details"].ToString();
+                            appointmentModel.DescriptionDTO.Description = dataReader["Details"].ToString();
                         }
 
                         if (dataReader["TaskID"] != DBNull.Value)
                         {
-                            checklistDTO.ID = Convert.ToInt32(dataReader["TaskID"]);
+                            checklistDTO.TaskID = Convert.ToInt32(dataReader["TaskID"]);
                             checklistDTO.AppointmentID = Convert.ToInt32(dataReader["AppointmentID"]);
                             checklistDTO.TaskName = dataReader["Task_name"].ToString();
                             checklistDTO.TaskChecked = Convert.ToBoolean(dataReader["Task_checked"]);
