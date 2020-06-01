@@ -69,10 +69,5 @@ namespace TimeMateTest.Stubs
         {
             throw new NotImplementedException();
         }
-
-        public void RenameAgenda(int agendaIndex, AccountDTO accountDTO)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

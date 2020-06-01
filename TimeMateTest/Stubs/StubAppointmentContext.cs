@@ -54,27 +54,5 @@ namespace TimeMateTest.Stubs
             }
             return appointmentDTO;
         }
-
-        public int GetAppointmentID(AppointmentDTO appointmentDTO)
-        {
-            int appointmentID = 0;
-            if (appointmentDTO.AppointmentName == "Shopping" && appointmentDTO.AgendaID == 36)
-            {
-                appointmentID = 8;
-            }
-            else if (appointmentDTO.AppointmentName == null && appointmentDTO.AgendaID == 0)
-            {
-                appointmentID = -1;
-            }
-            else if (appointmentDTO.AppointmentName == "Reorder cables" && appointmentDTO.AgendaID == 2)
-            {
-                appointmentID = 8;
-            }
-            else if (appointmentDTO.AppointmentName == "Create 3D render" && appointmentDTO.AgendaID == 2)
-            {
-                appointmentID = 48;
-            }
-            return appointmentID;
-        }
     }
 }

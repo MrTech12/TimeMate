@@ -108,14 +108,6 @@ namespace DataAccessLayer.Contexts
         }
 
         /// <summary>
-        /// Rename an agenda from the db.
-        /// </summary>
-        public void RenameAgenda(int AgendaIndexInput, AccountDTO accountDTO)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Get all the agenda details that the current account has.
         /// </summary>
         /// <returns></returns>

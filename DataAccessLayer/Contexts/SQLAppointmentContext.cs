@@ -42,35 +42,6 @@ namespace DataAccessLayer.Contexts
         }
 
         /// <summary>
-        /// Get the appointmentID from an appointemt, out of the database.
-        /// </summary>
-        public int GetAppointmentID(AppointmentDTO appointmentDTO)
-        {
-            int appointmentID = 0;
-            try
-            {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
-                {
-                    databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand(@"SELECT AppointmentID FROM [Appointment] WHERE AgendaID = @0 AND 
-                                                            (Name = @1 AND Starting = @2);", databaseConn);
-
-                    insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AgendaID);
-                    insertQuerry.Parameters.AddWithValue("1", appointmentDTO.AppointmentName);
-                    insertQuerry.Parameters.AddWithValue("2", appointmentDTO.StartDate);
-
-                    appointmentID = Convert.ToInt32(insertQuerry.ExecuteScalar());
-                }
-            }
-            catch (SqlException)
-            {
-                //Display the error.
-                throw;
-            }
-            return appointmentID;
-        }
-
-        /// <summary>
         /// Get all appointments of the current account, from the database.
         /// </summary>
         /// <returns></returns>

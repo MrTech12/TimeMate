@@ -46,12 +46,6 @@ namespace BusinessLogicLayer.Logic
             this._cAppointmentContext = cAppointmentContext;
         }
 
-        public int RetrieveAppointmentID(AppointmentDTO appointmentDTO)
-        {
-            int ID = _appointmentContext.GetAppointmentID(appointmentDTO);
-            return ID;
-        }
-
         /// <summary>
         /// Retrieve all appointments that belong to the current actor.
         /// </summary>
