@@ -26,31 +26,32 @@ namespace TimeMate.Controllers
             return View(viewModel);
         }
 
-        //[HttpPost]
-        //public IActionResult Index(string json)
-        //{
-        //    var newAppointment = JsonConvert.DeserializeObject<List<string>>(json);
+        [HttpPost]
+        public IActionResult Index(string json)
+        {
+            var newAppointment = JsonConvert.DeserializeObject<List<string>>(json);
 
-        //    AppointmentDTO appointmentDTO = new AppointmentDTO();
-        //    appointmentDTO.AppointmentName = newAppointment[0];
-        //    appointmentDTO.StartDate = Convert.ToDateTime(newAppointment[1]) + TimeSpan.Parse(newAppointment[2]);
-        //    appointmentDTO.EndDate = Convert.ToDateTime(newAppointment[3]) + TimeSpan.Parse(newAppointment[4]);
-        //    appointmentDTO.AgendaName = newAppointment[5];
-        //    appointmentDTO.AgendaID = Convert.ToInt32(newAppointment[6]);
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            appointmentDTO.AppointmentName = newAppointment[0];
+            appointmentDTO.StartDate = Convert.ToDateTime(newAppointment[1]) + TimeSpan.Parse(newAppointment[2]);
+            appointmentDTO.EndDate = Convert.ToDateTime(newAppointment[3]) + TimeSpan.Parse(newAppointment[4]);
+            appointmentDTO.AgendaName = newAppointment[5];
+            appointmentDTO.AgendaID = Convert.ToInt32(newAppointment[6]);
 
-        //    for (int i = 7; i < newAppointment.Count; i++)
-        //    {
-        //        if (newAppointment[i] != "")
-        //        {
-        //            appointmentDTO.ChecklistItemName.Add(newAppointment[i]);
-        //        }
-        //    }
+            for (int i = 7; i < newAppointment.Count; i++)
+            {
+                if (newAppointment[i] != "")
+                {
+                    ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = newAppointment[i] };
+                    appointmentDTO.ChecklistDTOs.Add(checklistDTO);
+                }
+            }
 
-        //    agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext(), new SQLChecklistAppointmentContext());
+            agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext(), new SQLChecklistAppointmentContext());
 
-        //    agenda.CreateChecklistAppointment(appointmentDTO);
+            agenda.CreateChecklistAppointment(appointmentDTO);
 
-        //    return Ok();
-        //}
+            return Ok();
+        }
     }
 }

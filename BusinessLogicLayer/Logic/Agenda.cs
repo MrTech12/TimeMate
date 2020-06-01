@@ -61,7 +61,7 @@ namespace BusinessLogicLayer.Logic
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
             var appointments = _appointmentContext.GetAllAppointments(accountDTO);
 
-            List<AppointmentDTO> sortedAppointments = appointments.GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
+            List<AppointmentDTO> sortedAppointments = appointments.OrderBy(x => x.StartDate).GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
 
             for (int i = 0; i < appointments.Count; i++)
             {
@@ -91,9 +91,6 @@ namespace BusinessLogicLayer.Logic
                     }
                 }
             }
-
-            sortedAppointments = sortedAppointments.OrderBy(x => x.StartDate).ToList();
-
             return sortedAppointments;
         }
 
