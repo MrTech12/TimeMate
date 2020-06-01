@@ -29,18 +29,27 @@ namespace TimeMateTest.Stubs
             if (accountDTO.AccountID == 12)
             {
                 AppointmentDTO appointment1 = new AppointmentDTO();
+                ChecklistDTO checklist1 = new ChecklistDTO() { TaskName = null };
+                appointment1.AppointmentID = 1;
                 appointment1.AppointmentName = "Walk the dog";
                 appointment1.StartDate = DateTime.Now.AddHours(3);
+                appointment1.ChecklistDTOs.Add(checklist1);
                 appointmentDTO.Add(appointment1);
 
                 AppointmentDTO appointment2 = new AppointmentDTO();
+                ChecklistDTO checklist2 = new ChecklistDTO() { TaskName = null };
+                appointment2.AppointmentID = 2;
                 appointment2.AppointmentName = "Do the dishes";
                 appointment2.StartDate = DateTime.Now.AddHours(2);
+                appointment2.ChecklistDTOs.Add(checklist2);
                 appointmentDTO.Add(appointment2);
 
                 AppointmentDTO appointment3 = new AppointmentDTO();
+                ChecklistDTO checklist3 = new ChecklistDTO() { TaskName = null };
+                appointment3.AppointmentID = 3;
                 appointment3.AppointmentName = "Sleep for 7 hours";
                 appointment3.StartDate = DateTime.Now.AddHours(7);
+                appointment3.ChecklistDTOs.Add(checklist3);
                 appointmentDTO.Add(appointment3);
             }
             return appointmentDTO;

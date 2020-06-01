@@ -22,14 +22,5 @@ namespace BusinessLogicLayer.Logic
         {
             throw new NotImplementedException();
         }
-
-        /// <summary>
-        /// Retrieve the description that belongs to the appointment.
-        /// </summary>
-        public string RetrieveDescription(int appointmentID)
-        {
-            string description = _nAppointmentContext.GetDescription(appointmentID);
-            return description;
-        }
     }
 }

@@ -15,20 +15,9 @@ namespace TimeMateTest.Stubs
             {
                 using (StreamWriter streamWriter = File.AppendText("C:\\tmp\\addAppointmentTest.txt"))
                 {
-                    streamWriter.WriteLine(appointmentDTO.Description);
+                    streamWriter.WriteLine(appointmentDTO.DescriptionDTO.Description);
                 }
             }
-        }
-
-        public string GetDescription(int appointmentID)
-        {
-            string description = null;
-
-            if (appointmentID == 12)
-            {
-                description = "This needs to happen.";
-            }
-            return description;
         }
     }
 }

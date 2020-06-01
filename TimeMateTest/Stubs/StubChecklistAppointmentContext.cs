@@ -15,7 +15,7 @@ namespace TimeMateTest.Stubs
             {
                 using (StreamWriter streamWriter = File.AppendText("C:\\tmp\\addAppointmentTest.txt"))
                 {
-                    streamWriter.WriteLine(appointmentDTO.ChecklistItemName[0]);
+                    streamWriter.WriteLine(appointmentDTO.ChecklistDTOs[0].TaskName);
                 }
             }
 
@@ -24,18 +24,6 @@ namespace TimeMateTest.Stubs
         public void CheckOffTask(AppointmentDTO appointmentDTO)
         {
             throw new NotImplementedException();
-        }
-
-        public AppointmentDTO GetTasks(int appointmentIndex)
-        {
-            AppointmentDTO appointmentDTO = new AppointmentDTO();
-            if (appointmentIndex == 6)
-            {
-                appointmentDTO.ChecklistItemName.Add("Water the plants.");
-                appointmentDTO.ChecklistItemName.Add("Mow the lawn");
-                appointmentDTO.ChecklistItemName.Add("Collect grapes");
-            }
-            return appointmentDTO;
         }
     }
 }

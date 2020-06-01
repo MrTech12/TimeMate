@@ -16,16 +16,6 @@ namespace BusinessLogicLayer.Logic
         }
 
         /// <summary>
-        /// Retrieve all tasks that belong to the appointment.
-        /// </summary>
-        public AppointmentDTO RetrieveTasks(int appointmentIndex)
-        {
-            AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO = _cAppointmentContext.GetTasks(appointmentIndex);
-            return appointmentDTO;
-        }
-
-        /// <summary>
         /// Rename an appointment.
         /// </summary>
         public override void RenameAppointment(AppointmentDTO appointmentDTO)

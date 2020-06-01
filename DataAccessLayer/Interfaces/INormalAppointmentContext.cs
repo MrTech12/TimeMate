@@ -8,7 +8,5 @@ namespace DataAccessLayer.Interfaces
     public interface INormalAppointmentContext
     {
         void AddDescription(AppointmentDTO appointmentDTO);
-
-        string GetDescription(int appointmentID);
     }
 }

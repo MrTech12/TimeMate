@@ -61,6 +61,8 @@ namespace BusinessLogicLayer.Logic
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
             var appointments = _appointmentContext.GetAllAppointments(accountDTO);
 
+            List<AppointmentDTO> sortedAppointments = appointments.GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
+
             for (int i = 0; i < appointments.Count; i++)
             {
                 ChecklistDTO checklist = new ChecklistDTO();
@@ -71,23 +73,25 @@ namespace BusinessLogicLayer.Logic
                 }
             }
 
-            List<AppointmentDTO> sortedAppointments = appointments.GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
-
-            for (int i = 0; i < sortedAppointments.Count; i++)
+            if (checklists.Capacity != 0)
             {
-                sortedAppointments[i].ChecklistDTOs.RemoveAt(0);
-            }
-
-            foreach (var item in sortedAppointments)
-            {
-                for (int i = 0; i < checklists.Count; i++)
+                for (int i = 0; i < sortedAppointments.Count; i++)
                 {
-                    if (item.AppointmentID == checklists[i].AppointmentID)
+                    sortedAppointments[i].ChecklistDTOs.RemoveAt(0);
+                }
+
+                foreach (var item in sortedAppointments)
+                {
+                    for (int i = 0; i < checklists.Count; i++)
                     {
-                        item.ChecklistDTOs.Add(checklists[i]);
+                        if (item.AppointmentID == checklists[i].AppointmentID)
+                        {
+                            item.ChecklistDTOs.Add(checklists[i]);
+                        }
                     }
                 }
             }
+
             sortedAppointments = sortedAppointments.OrderBy(x => x.StartDate).ToList();
 
             return sortedAppointments;
