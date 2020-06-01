@@ -30,6 +30,7 @@
         <th>Startdatum/tijd</th>
         <th>Einddatum/tijd</th>
         <th>Agendanaam</th>
+        <th>Extra informatie</th>
     </tr>
     @for (int i = 0; i < Model.Count; i++)
     {
@@ -38,6 +39,21 @@
             <td>@Model[i].StartDate</td>
             <td>@Model[i].EndDate</td>
             <td id="@Model[i].AgendaID">@Model[i].AgendaName</td>
+            <td>
+                @if (Model[i].Description != null)
+                {
+                    @Model[i].Description
+                }
+                @if (Model[i].ChecklistDTOs != null)
+                {
+                    @foreach (var item in Model[i].ChecklistDTOs)
+                    {
+                        <label id="@item.ID">@item.TaskName </label>
+                        <label>@item.TaskChecked</label>
+                        <br />
+                    }
+                }
+            </td>
         </tr>
     }
 </table>

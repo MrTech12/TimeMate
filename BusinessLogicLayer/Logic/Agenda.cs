@@ -58,11 +58,39 @@ namespace BusinessLogicLayer.Logic
         /// <returns></returns>
         public List<AppointmentDTO> RetrieveAppointments()
         {
-            List<AppointmentDTO> appointmentModel = new List<AppointmentDTO>();
-            appointmentModel = _appointmentContext.GetAllAppointments(accountDTO);
-            appointmentModel = appointmentModel.OrderBy(x => x.StartDate).ToList();
+            List<ChecklistDTO> checklists = new List<ChecklistDTO>();
+            var appointments = _appointmentContext.GetAllAppointments(accountDTO);
 
-            return appointmentModel;
+            for (int i = 0; i < appointments.Count; i++)
+            {
+                ChecklistDTO checklist = new ChecklistDTO();
+                if (appointments[i].ChecklistDTOs[0].TaskName != null)
+                {
+                    checklist = appointments[i].ChecklistDTOs[0];
+                    checklists.Add(checklist);
+                }
+            }
+
+            List<AppointmentDTO> sortedAppointments = appointments.GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
+
+            for (int i = 0; i < sortedAppointments.Count; i++)
+            {
+                sortedAppointments[i].ChecklistDTOs.RemoveAt(0);
+            }
+
+            foreach (var item in sortedAppointments)
+            {
+                for (int i = 0; i < checklists.Count; i++)
+                {
+                    if (item.AppointmentID == checklists[i].AppointmentID)
+                    {
+                        item.ChecklistDTOs.Add(checklists[i]);
+                    }
+                }
+            }
+            sortedAppointments = sortedAppointments.OrderBy(x => x.StartDate).ToList();
+
+            return sortedAppointments;
         }
 
         /// <summary>
