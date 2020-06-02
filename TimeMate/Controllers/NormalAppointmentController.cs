@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.Logic;
 using DataAccessLayer.Contexts;
 using DataAccessLayer.DTO;
+using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TimeMate.Models;
@@ -13,6 +14,19 @@ namespace TimeMate.Controllers
 {
     public class NormalAppointmentController : Controller
     {
+        private readonly IAccountContext _accountContext;
+        private readonly IAgendaContext _agendaContext;
+        private readonly IAppointmentContext _appointmentContext;
+        private readonly INormalAppointmentContext _normalAppointmentContext;
+
+        public NormalAppointmentController(IAccountContext accountContext, IAgendaContext agendaContext, IAppointmentContext appointmentContext, INormalAppointmentContext normalAppointmentContext)
+        {
+            _accountContext = accountContext;
+            _agendaContext = agendaContext;
+            _appointmentContext = appointmentContext;
+            _normalAppointmentContext = normalAppointmentContext;
+        }
+
         private AccountDTO accountDTO = new AccountDTO();
         private Account account;
         private Agenda agenda;
@@ -21,7 +35,7 @@ namespace TimeMate.Controllers
         public IActionResult Index()
         {
             NormalAppointmentViewModel viewModel = new NormalAppointmentViewModel();
-            account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+            account = new Account(accountDTO, _accountContext, _agendaContext);
             viewModel.AppointmentViewModel.AgendaDTO = account.RetrieveAgendas();
             return View(viewModel);
         }
@@ -49,7 +63,7 @@ namespace TimeMate.Controllers
                 appointmentDTO.DescriptionDTO.Description = null;
             }
 
-            agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext(), new SQLNormalAppointmentContext());
+            agenda = new Agenda(accountDTO, _agendaContext, _appointmentContext, _normalAppointmentContext);
 
             agenda.CreateNormalAppointment(appointmentDTO);
 

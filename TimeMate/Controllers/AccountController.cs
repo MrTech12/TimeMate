@@ -8,13 +8,23 @@ using DataAccessLayer.DTO;
 using BusinessLogicLayer.Logic;
 using DataAccessLayer.Contexts;
 using Microsoft.AspNetCore.Http;
+using DataAccessLayer.Interfaces;
 
 namespace TimeMate.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IAccountContext _accountContext;
+        private readonly IAgendaContext _agendaContext;
+
         private Account account;
         private AccountDTO accountDTO;
+
+        public AccountController(IAccountContext accountContext, IAgendaContext agendaContext)
+        {
+            _accountContext = accountContext;
+            _agendaContext = agendaContext;
+        }
 
         [HttpGet]
         public IActionResult Index()
@@ -39,7 +49,7 @@ namespace TimeMate.Controllers
                 accountDTO.MailAddress = viewModel.Mail;
                 accountDTO.Password = viewModel.Password;
 
-                account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+                account = new Account(accountDTO, _accountContext, _agendaContext);
                 string result = account.LoggingIn();
 
                 if (!result.All(char.IsDigit))
@@ -82,7 +92,7 @@ namespace TimeMate.Controllers
                 accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.job2HourlyWage));
                 accountDTO.JobDayType.Add(viewModel.job2DayType);
 
-                account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+                account = new Account(accountDTO, _accountContext, _agendaContext);
 
                 string result = account.NewAccountValidation();
 
@@ -109,7 +119,7 @@ namespace TimeMate.Controllers
             accountDTO = new AccountDTO();
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
-            account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+            account = new Account(accountDTO, _accountContext, _agendaContext);
             var viewModel = account.RetrieveAgendas();
             return View(viewModel);
         }

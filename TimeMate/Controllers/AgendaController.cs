@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.Logic;
 using DataAccessLayer.Contexts;
 using DataAccessLayer.DTO;
+using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -14,8 +15,17 @@ namespace TimeMate.Controllers
 {
     public class AgendaController : Controller
     {
+        private readonly IAgendaContext _agendaContext;
+        private readonly IAppointmentContext _appointmentContext;
+
         private AccountDTO accountDTO = new AccountDTO();
         private Agenda agenda;
+
+        public AgendaController(IAgendaContext agendaContext, IAppointmentContext appointmentContext)
+        {
+            _agendaContext = agendaContext;
+            _appointmentContext = appointmentContext;
+        }
 
         [HttpGet]
         public IActionResult Index()
@@ -25,7 +35,7 @@ namespace TimeMate.Controllers
                 var accountID = HttpContext.Session.GetInt32("accountID");
                 accountDTO.AccountID = Convert.ToInt32(accountID);
 
-                Agenda agendaLogic = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext());
+                Agenda agendaLogic = new Agenda(accountDTO, _agendaContext, _appointmentContext);
                 var appointments = agendaLogic.RetrieveAppointments();
 
                 return View(appointments);
@@ -49,7 +59,7 @@ namespace TimeMate.Controllers
             if (ModelState.IsValid)
             {
                 AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = viewModel.Name, AgendaColor = viewModel.Color, Notification = viewModel.NotificationType };
-                Account account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+                Account account = new Account(accountDTO, _agendaContext);
                 account.CreateAgenda(agendaDTO);
                 return RedirectToAction("Index", "Agenda");
             }
@@ -64,7 +74,7 @@ namespace TimeMate.Controllers
         {
             int agendaID = JsonConvert.DeserializeObject<int>(json);
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
-            Account account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+            Account account = new Account(accountDTO, _agendaContext);
 
             account.DeleteAgenda(agendaID);
 
