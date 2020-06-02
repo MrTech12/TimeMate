@@ -130,6 +130,7 @@ namespace DataAccessLayer.Contexts
                         AgendaDTO agendaDTO = new AgendaDTO();
                         agendaDTO.AgendaID = Convert.ToInt32(dataReader["AgendaID"]);
                         agendaDTO.AgendaName = dataReader["Name"].ToString();
+                        agendaDTO.AgendaColor = dataReader["Color"].ToString();
                         agendas.Add(agendaDTO);
                     }
                 }

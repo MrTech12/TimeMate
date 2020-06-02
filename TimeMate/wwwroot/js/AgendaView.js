@@ -10,9 +10,16 @@ $(document).ready(function() {
         console.info("From view: " + appointmentData);
     });
 
+    $(".changeAppointment").click(function () {
+        appointmentData.length = 0;
+        GetAppointmentInfo(this);
+        console.log(appointmentData);
+    });
+
     function GetAppointmentInfo(selectedRow) {
         $(selectedRow).closest('tr').find('td').each(function () {
             appointmentData.push($(this).text());
+            appointmentData.push($(this).attr('id'));
         });
     }
 
