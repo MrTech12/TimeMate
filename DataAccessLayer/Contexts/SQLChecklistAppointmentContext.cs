@@ -49,5 +49,37 @@ namespace DataAccessLayer.Contexts
         {
             throw new NotImplementedException();
         }
+
+        public List<ChecklistDTO> GetTasks(AppointmentDTO appointmentDTO)
+        {
+            List<ChecklistDTO> checklists = new List<ChecklistDTO>();
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                {
+                    databaseConn.Open();
+
+                    SqlCommand insertQuerry = new SqlCommand(@"SELECT TaskID, Task_name, Task_checked FROM [Task] WHERE AppointmentID = @0", databaseConn);
+
+                    insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
+
+                    SqlDataReader dataReader = insertQuerry.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        ChecklistDTO checklistDTO = new ChecklistDTO();
+                        checklistDTO.TaskID = Convert.ToInt32(dataReader["TaskID"]);
+                        checklistDTO.TaskName = dataReader["Task_name"].ToString();
+                        checklists.Add(checklistDTO);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                //Display the error.
+                throw;
+            }
+            return checklists;
+        }
     }
 }

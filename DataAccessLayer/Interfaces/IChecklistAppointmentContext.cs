@@ -9,6 +9,8 @@ namespace DataAccessLayer.Interfaces
     {
         void AddTask(AppointmentDTO appointmentDTO);
 
+        List<ChecklistDTO> GetTasks(AppointmentDTO appointmentDTO);
+
         void CheckOffTask(AppointmentDTO appointmentDTO);
     }
 }

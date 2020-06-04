@@ -18,10 +18,14 @@ namespace TimeMateTest.Stubs
                     streamWriter.WriteLine(appointmentDTO.ChecklistDTOs[0].TaskName);
                 }
             }
-
         }
 
         public void CheckOffTask(AppointmentDTO appointmentDTO)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ChecklistDTO> GetTasks(AppointmentDTO appointmentDTO)
         {
             throw new NotImplementedException();
         }

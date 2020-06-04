@@ -31,12 +31,12 @@
         <th>Einddatum/tijd</th>
         <th>Agendanaam</th>
         <th>Extra informatie</th>
-        <th>Bewerken</th>
+        <th>Aanpassen</th>
     </tr>
     @for (int i = 0; i < Model.Count; i++)
     {
         <tr>
-            <td class="appointmentName">@Model[i].AppointmentName</td>
+            <td id="@Model[i].AppointmentID" class="appointmentName">@Model[i].AppointmentName</td>
             <td>@Model[i].StartDate</td>
             <td>@Model[i].EndDate</td>
             <td id="@Model[i].AgendaID">@Model[i].AgendaName</td>
@@ -49,7 +49,7 @@
                 {
                     @foreach (var item in Model[i].ChecklistDTOs)
                     {
-                        <label id="@item.TaskID">@item.TaskName </label>
+                        <label class="@item.TaskID">@item.TaskName</label>
                         <label>@item.TaskChecked</label>
                         <br />
                     }
@@ -57,7 +57,7 @@
             </td>
             <td>
                 <button type="button" class="btn btn-danger changeAppointment" data-toggle="modal" data-target="#changeModal">
-                    afspraak bewerken
+                    Taken afvinken
                 </button>
             </td>
         </tr>
@@ -71,16 +71,15 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Veranderen van afspraakgegevens</h4>
+                <h4 class="modal-title">Taken afvinken</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                Taken van deze afspraak bewerken
-                <input type="text" />
-                <button type="button" class="btn btn-info" data-dismiss="modal">Naam wijzigen</button>
-                <button type="button" class="btn btn-info" data-dismiss="modal">Naam niet wijzigen</button>
+                Taken van deze afspraak aan/afvinken
+                <select id="tasks"></select>
+                <button type="button" class="btn btn-info" onclick="CheckOffTask" data-dismiss="modal">aan/afvinken</button>
             </div>
 
         </div>

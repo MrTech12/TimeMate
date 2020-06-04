@@ -17,14 +17,16 @@ namespace TimeMate.Controllers
     {
         private readonly IAgendaContext _agendaContext;
         private readonly IAppointmentContext _appointmentContext;
+        private readonly IChecklistAppointmentContext _checklistAppointmentContext;
 
         private AccountDTO accountDTO = new AccountDTO();
         private Agenda agenda;
 
-        public AgendaController(IAgendaContext agendaContext, IAppointmentContext appointmentContext)
+        public AgendaController(IAgendaContext agendaContext, IAppointmentContext appointmentContext, IChecklistAppointmentContext checklistAppointmentContext)
         {
             _agendaContext = agendaContext;
             _appointmentContext = appointmentContext;
+            _checklistAppointmentContext = checklistAppointmentContext;
         }
 
         [HttpGet]
@@ -79,6 +81,17 @@ namespace TimeMate.Controllers
             account.DeleteAgenda(agendaID);
 
             return Ok();
+        }
+
+        [HttpGet]
+        public IActionResult RetrieveTasks(string json)
+        {
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            appointmentDTO.AppointmentID = JsonConvert.DeserializeObject<int>(json);
+            ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, _checklistAppointmentContext);
+
+            List<string> tasks = checklistAppointment.RetrieveTasks(appointmentDTO);
+            return Json(tasks);
         }
     }
 }
