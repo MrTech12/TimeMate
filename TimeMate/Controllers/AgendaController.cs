@@ -89,9 +89,20 @@ namespace TimeMate.Controllers
             AppointmentDTO appointmentDTO = new AppointmentDTO();
             appointmentDTO.AppointmentID = JsonConvert.DeserializeObject<int>(json);
             ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, _checklistAppointmentContext);
+            var taskslist = checklistAppointment.RetrieveTasks(appointmentDTO);
 
-            List<string> tasks = checklistAppointment.RetrieveTasks(appointmentDTO);
-            return Json(tasks);
+            return Json(taskslist);
+        }
+
+        [HttpGet]
+        public IActionResult ChangeTaskStatus(string json)
+        {
+            ChecklistDTO checklist = new ChecklistDTO();
+            checklist.TaskID = JsonConvert.DeserializeObject<int>(json);
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, _checklistAppointmentContext);
+            checklistAppointment.ChangeTaskStatus(checklist.TaskID);
+            return Ok();
         }
     }
 }

@@ -42,14 +42,6 @@ namespace DataAccessLayer.Contexts
             }
         }
 
-        /// <summary>
-        /// Check off a task in the db.
-        /// </summary>
-        public void CheckOffTask(AppointmentDTO appointmentDTO)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<ChecklistDTO> GetTasks(AppointmentDTO appointmentDTO)
         {
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
@@ -59,7 +51,7 @@ namespace DataAccessLayer.Contexts
                 {
                     databaseConn.Open();
 
-                    SqlCommand insertQuerry = new SqlCommand(@"SELECT TaskID, Task_name, Task_checked FROM [Task] WHERE AppointmentID = @0", databaseConn);
+                    SqlCommand insertQuerry = new SqlCommand(@"SELECT TaskID, Task_name FROM [Task] WHERE AppointmentID = @0", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
 
@@ -80,6 +72,24 @@ namespace DataAccessLayer.Contexts
                 throw;
             }
             return checklists;
+        }
+
+        public bool GetTaskStatus(int taskID)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Check off a task in the db.
+        /// </summary>
+        public void CheckOffTask(int taskID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RevertCheckOffTask(int taskID)
+        {
+            throw new NotImplementedException();
         }
     }
 }

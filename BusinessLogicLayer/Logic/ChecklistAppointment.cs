@@ -27,6 +27,19 @@ namespace BusinessLogicLayer.Logic
             return tasks;
         }
 
+        public void ChangeTaskStatus(int taskID)
+        {
+            bool taskStatus = _cAppointmentContext.GetTaskStatus(taskID);
+            if (!taskStatus)
+            {
+                _cAppointmentContext.RevertCheckOffTask(taskID);
+            }
+            else
+            {
+                _cAppointmentContext.CheckOffTask(taskID);
+            }
+        }
+
         /// <summary>
         /// Rename an appointment.
         /// </summary>

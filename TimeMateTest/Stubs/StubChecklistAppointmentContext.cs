@@ -20,12 +20,22 @@ namespace TimeMateTest.Stubs
             }
         }
 
-        public void CheckOffTask(AppointmentDTO appointmentDTO)
+        public void CheckOffTask(int taskID)
         {
             throw new NotImplementedException();
         }
 
         public List<ChecklistDTO> GetTasks(AppointmentDTO appointmentDTO)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetTaskStatus(int taskID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RevertCheckOffTask(int taskID)
         {
             throw new NotImplementedException();
         }
