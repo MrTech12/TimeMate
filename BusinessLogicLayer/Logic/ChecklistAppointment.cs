@@ -32,11 +32,11 @@ namespace BusinessLogicLayer.Logic
             bool taskStatus = _cAppointmentContext.GetTaskStatus(taskID);
             if (!taskStatus)
             {
-                _cAppointmentContext.RevertCheckOffTask(taskID);
+                _cAppointmentContext.CheckOffTask(taskID);
             }
             else
             {
-                _cAppointmentContext.CheckOffTask(taskID);
+                _cAppointmentContext.RevertCheckOffTask(taskID);
             }
         }
 

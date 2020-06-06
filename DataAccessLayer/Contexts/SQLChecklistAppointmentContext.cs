@@ -51,11 +51,11 @@ namespace DataAccessLayer.Contexts
                 {
                     databaseConn.Open();
 
-                    SqlCommand insertQuerry = new SqlCommand(@"SELECT TaskID, Task_name FROM [Task] WHERE AppointmentID = @0", databaseConn);
+                    SqlCommand selectQuerry = new SqlCommand(@"SELECT TaskID, Task_name FROM [Task] WHERE AppointmentID = @0", databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
+                    selectQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
 
-                    SqlDataReader dataReader = insertQuerry.ExecuteReader();
+                    SqlDataReader dataReader = selectQuerry.ExecuteReader();
 
                     while (dataReader.Read())
                     {
@@ -76,7 +76,26 @@ namespace DataAccessLayer.Contexts
 
         public bool GetTaskStatus(int taskID)
         {
-            throw new NotImplementedException();
+            bool taskStatus = false;
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                {
+                    databaseConn.Open();
+
+                    SqlCommand selectQuerry = new SqlCommand(@"SELECT Task_checked FROM [Task] WHERE TaskID = @0", databaseConn);
+
+                    selectQuerry.Parameters.AddWithValue("0", taskID);
+
+                    taskStatus = Convert.ToBoolean(selectQuerry.ExecuteScalar());
+                }
+            }
+            catch (SqlException)
+            {
+                //Display the error.
+                throw;
+            }
+            return taskStatus;
         }
 
         /// <summary>
@@ -84,12 +103,48 @@ namespace DataAccessLayer.Contexts
         /// </summary>
         public void CheckOffTask(int taskID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                {
+                    databaseConn.Open();
+
+                    SqlCommand updateQuerry = new SqlCommand(@"UPDATE [Task] SET Task_checked=@0 WHERE TaskID = @1", databaseConn);
+
+                    updateQuerry.Parameters.AddWithValue("0", true);
+                    updateQuerry.Parameters.AddWithValue("1", taskID);
+
+                    updateQuerry.ExecuteScalar();
+                }
+            }
+            catch (SqlException)
+            {
+                //Display the error.
+                throw;
+            }
         }
 
         public void RevertCheckOffTask(int taskID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                {
+                    databaseConn.Open();
+
+                    SqlCommand updateQuerry = new SqlCommand(@"UPDATE [Task] SET Task_checked=@0 WHERE TaskID = @1", databaseConn);
+
+                    updateQuerry.Parameters.AddWithValue("0", false);
+                    updateQuerry.Parameters.AddWithValue("1", taskID);
+
+                    updateQuerry.ExecuteScalar();
+                }
+            }
+            catch (SqlException)
+            {
+                //Display the error.
+                throw;
+            }
         }
     }
 }
