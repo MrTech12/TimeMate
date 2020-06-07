@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Errorweergave";
+}
+
+<h3>
+    Een error is ontstaan tijdens het verwerken van uw verzoek.
+    Onze support team is op de hoogte gebracht en we zijn bezig met een fix.
+</h3>
+<h5>Neem contact op voor meer informatie: primedsoon12@gmail.com</h5>
+<hr />
+<h3>Hieronder zijn een aantal gegevens die u mee kan sturen met de mail. Zo kunnen we sneller een oplossing vinden.</h3>
+<div class="alert alert-danger">
+    <h5>Errorpad</h5>
+    <hr />
+    <p>@ViewBag.ExceptionPath</p>
+</div>
+
+<div class="alert alert-danger">
+    <h5>Errorbericht</h5>
+    <hr />
+    <p>@ViewBag.ExceptionMessage</p>
+</div>
