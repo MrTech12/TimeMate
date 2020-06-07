@@ -15,13 +15,11 @@ namespace TimeMate.Controllers
         {
             var statusCodeResult = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
 
-            switch (statusCode)
+            if (statusCode == 404)
             {
-                case 404:
-                    ViewBag.ErrorMessage = "Sorry, de pagina die u opvroeg kan niet gevonden worden.";
-                    ViewBag.Path = statusCodeResult.OriginalPath;
-                    ViewBag.QS = statusCodeResult.OriginalQueryString;
-                    break;
+                ViewBag.ErrorMessage = "Sorry, de pagina die u opvroeg kan niet gevonden worden.";
+                ViewBag.Path = statusCodeResult.OriginalPath;
+                ViewBag.QS = statusCodeResult.OriginalQueryString;
             }
             return View("NotFound");
         }
