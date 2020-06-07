@@ -41,10 +41,9 @@ namespace DataAccessLayer.Contexts
                     }
                 }
             }
-            catch (SqlException)
+            catch (SqlException exception)
             {
-                //Display the error.
-                throw;
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
             return databaseOutput;
         }
@@ -74,9 +73,9 @@ namespace DataAccessLayer.Contexts
                     }
                 }
             }
-            catch (SqlException)
+            catch (SqlException exception)
             {
-                throw;
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
             return databaseOutput;
         }
@@ -102,10 +101,9 @@ namespace DataAccessLayer.Contexts
                     accountID = Convert.ToInt32(insertQuerry.ExecuteScalar());
                 }
             }
-            catch (SqlException)
+            catch (SqlException exception)
             {
-                //Display the error.
-                throw;
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
             return accountID;
         }

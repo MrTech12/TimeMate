@@ -14,7 +14,7 @@ namespace BusinessLogicLayer.Logic
         {
             try
             {
-                MailMessage message = new MailMessage("sina1240@gmail.com", mailUser);
+                MailMessage message = new MailMessage("primedsoon12@gmail.com", mailUser);
                 message.Subject = "Registratie bij TimeMate";
                 message.IsBodyHtml = true;
                 message.Body = "Uw mailadres is gebruikt om een account te maken bij TimeMate.";
