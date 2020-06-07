@@ -25,11 +25,11 @@ namespace DataAccessLayer.Contexts
 
                     SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Task](AppointmentID, Task_name, Task_checked) VALUES (@0, @1, @2)", databaseConn);
 
-                    foreach (var item in appointmentDTO.ChecklistItemName)
+                    foreach (var item in appointmentDTO.ChecklistDTOs)
                     {
                         insertQuerry.Parameters.Clear();
                         insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
-                        insertQuerry.Parameters.AddWithValue("1", item);
+                        insertQuerry.Parameters.AddWithValue("1", item.TaskName);
                         insertQuerry.Parameters.AddWithValue("2", false);
                         insertQuerry.ExecuteNonQuery();
                     }
@@ -42,31 +42,27 @@ namespace DataAccessLayer.Contexts
             }
         }
 
-        /// <summary>
-        /// Get the task(s) of an appointment, from the database.
-        /// </summary>
-        public AppointmentDTO GetTasks(int appointmentIndex)
+        public List<ChecklistDTO> GetTasks(AppointmentDTO appointmentDTO)
         {
-            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            List<ChecklistDTO> checklists = new List<ChecklistDTO>();
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
 
-                    SqlCommand insertQuerry = new SqlCommand(@"SELECT Task_name, Task_checked FROM [Task] WHERE AppointmentID = @0", databaseConn);
+                    SqlCommand selectQuerry = new SqlCommand(@"SELECT TaskID, Task_name FROM [Task] WHERE AppointmentID = @0", databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", appointmentIndex);
+                    selectQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
 
-                    SqlDataReader dataReader = insertQuerry.ExecuteReader();
+                    SqlDataReader dataReader = selectQuerry.ExecuteReader();
 
                     while (dataReader.Read())
                     {
-                        AppointmentDTO appointmentModel = new AppointmentDTO();
-                        string taskName = dataReader["Task_name"].ToString();
-                        bool taskComplete = Convert.ToBoolean(dataReader["Task_checked"]);
-                        appointmentDTO.ChecklistItemName.Add(taskName);
-                        appointmentDTO.ChecklistItemChecked.Add(taskComplete);
+                        ChecklistDTO checklistDTO = new ChecklistDTO();
+                        checklistDTO.TaskID = Convert.ToInt32(dataReader["TaskID"]);
+                        checklistDTO.TaskName = dataReader["Task_name"].ToString();
+                        checklists.Add(checklistDTO);
                     }
                 }
             }
@@ -75,15 +71,80 @@ namespace DataAccessLayer.Contexts
                 //Display the error.
                 throw;
             }
-            return appointmentDTO;
+            return checklists;
+        }
+
+        public bool GetTaskStatus(int taskID)
+        {
+            bool taskStatus = false;
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                {
+                    databaseConn.Open();
+
+                    SqlCommand selectQuerry = new SqlCommand(@"SELECT Task_checked FROM [Task] WHERE TaskID = @0", databaseConn);
+
+                    selectQuerry.Parameters.AddWithValue("0", taskID);
+
+                    taskStatus = Convert.ToBoolean(selectQuerry.ExecuteScalar());
+                }
+            }
+            catch (SqlException)
+            {
+                //Display the error.
+                throw;
+            }
+            return taskStatus;
         }
 
         /// <summary>
         /// Check off a task in the db.
         /// </summary>
-        public void CheckOffTask(AppointmentDTO appointmentDTO)
+        public void CheckOffTask(int taskID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                {
+                    databaseConn.Open();
+
+                    SqlCommand updateQuerry = new SqlCommand(@"UPDATE [Task] SET Task_checked=@0 WHERE TaskID = @1", databaseConn);
+
+                    updateQuerry.Parameters.AddWithValue("0", true);
+                    updateQuerry.Parameters.AddWithValue("1", taskID);
+
+                    updateQuerry.ExecuteScalar();
+                }
+            }
+            catch (SqlException)
+            {
+                //Display the error.
+                throw;
+            }
+        }
+
+        public void RevertCheckOffTask(int taskID)
+        {
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                {
+                    databaseConn.Open();
+
+                    SqlCommand updateQuerry = new SqlCommand(@"UPDATE [Task] SET Task_checked=@0 WHERE TaskID = @1", databaseConn);
+
+                    updateQuerry.Parameters.AddWithValue("0", false);
+                    updateQuerry.Parameters.AddWithValue("1", taskID);
+
+                    updateQuerry.ExecuteScalar();
+                }
+            }
+            catch (SqlException)
+            {
+                //Display the error.
+                throw;
+            }
         }
     }
 }

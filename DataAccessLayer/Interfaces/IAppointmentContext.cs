@@ -9,8 +9,6 @@ namespace DataAccessLayer.Interfaces
     {
         int AddAppointment(AppointmentDTO appointmentDTO);
 
-        int GetAppointmentID(AppointmentDTO appointmentDTO);
-
         List<AppointmentDTO> GetAllAppointments(AccountDTO accountDTO);
     }
 }

@@ -15,14 +15,29 @@ namespace BusinessLogicLayer.Logic
             this._cAppointmentContext = checklistAppointmentContext;
         }
 
-        /// <summary>
-        /// Retrieve all tasks that belong to the appointment.
-        /// </summary>
-        public AppointmentDTO RetrieveTasks(int appointmentIndex)
+        public List<string> RetrieveTasks(AppointmentDTO appointmentDTO)
         {
-            AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO = _cAppointmentContext.GetTasks(appointmentIndex);
-            return appointmentDTO;
+            var checklists = _cAppointmentContext.GetTasks(appointmentDTO);
+            List<string> tasks = new List<string>();
+            for (int i = 0; i < checklists.Count; i++)
+            {
+                tasks.Add(Convert.ToString(checklists[i].TaskID));
+                tasks.Add(Convert.ToString(checklists[i].TaskName));
+            }
+            return tasks;
+        }
+
+        public void ChangeTaskStatus(int taskID)
+        {
+            bool taskStatus = _cAppointmentContext.GetTaskStatus(taskID);
+            if (!taskStatus)
+            {
+                _cAppointmentContext.CheckOffTask(taskID);
+            }
+            else
+            {
+                _cAppointmentContext.RevertCheckOffTask(taskID);
+            }
         }
 
         /// <summary>

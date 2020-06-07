@@ -11,8 +11,6 @@ namespace DataAccessLayer.Interfaces
 
         void AddPayDetails(AgendaDTO agendaDTO, AccountDTO accountDTO);
 
-        void RenameAgenda(int agendaIndex, AccountDTO accountDTO);
-
         void DeleteAgenda(int AgendaIndex, AccountDTO accountDTO);
 
         List<AgendaDTO> GetAllAgendas(AccountDTO accountDTO);

@@ -24,6 +24,12 @@ namespace BusinessLogicLayer.Logic
             this._agendaContext = agendaContext;
         }
 
+        public Account(AccountDTO accountDTO, IAgendaContext agendaContext)
+        {
+            this.accountDTO = accountDTO;
+            this._agendaContext = agendaContext;
+        }
+
         /// <summary>
         /// Checking the entered credentials to give an actor access to a specific account.
         /// </summary>

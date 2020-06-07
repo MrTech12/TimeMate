@@ -12,9 +12,7 @@ namespace DataAccessLayer.DTO
         private DateTime endDate;
         private int agendaID;
         private string agendaName;
-        private string description;
-        private List<string> checklistItemName = new List<string>();
-        private List<bool> checklistItemChecked = new List<bool>();
+        private DescriptionDTO descriptionDTO = new DescriptionDTO();
 
         public int AppointmentID
         {
@@ -47,21 +45,13 @@ namespace DataAccessLayer.DTO
             get { return this.agendaName; }
             set { this.agendaName = value; }
         }
-        public string Description
+
+        public DescriptionDTO DescriptionDTO
         {
-            get { return this.description; }
-            set { this.description = value; }
-        }
-        public List<string> ChecklistItemName
-        {
-            get { return this.checklistItemName; }
-            set { this.checklistItemName = value; }
+            get { return this.descriptionDTO; }
+            set { this.descriptionDTO = value; }
         }
 
-        public List<bool> ChecklistItemChecked
-        {
-            get { return this.checklistItemChecked; }
-            set { this.checklistItemChecked = value; }
-        }
+        public List<ChecklistDTO> ChecklistDTOs { get; set; } = new List<ChecklistDTO>();
     }
 }

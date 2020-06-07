@@ -25,7 +25,7 @@ namespace DataAccessLayer.Contexts
                     SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Appointment_Details](AppointmentID, Details) VALUES (@0, @1)", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
-                    insertQuerry.Parameters.AddWithValue("1", appointmentDTO.Description);
+                    insertQuerry.Parameters.AddWithValue("1", appointmentDTO.DescriptionDTO.Description);
 
                     insertQuerry.ExecuteNonQuery();
                 }
@@ -35,32 +35,6 @@ namespace DataAccessLayer.Contexts
                 //Display the error.
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Get the description of an appointment, from the database.
-        /// </summary>
-        public string GetDescription(int appointmentID)
-        {
-            string description;
-            try
-            {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
-                {
-                    databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand(@"SELECT Details FROM [Appointment_Details] WHERE AppointmentID = @0", databaseConn);
-
-                    insertQuerry.Parameters.AddWithValue("0", appointmentID);
-
-                    description = Convert.ToString(insertQuerry.ExecuteScalar());
-                }
-            }
-            catch (SqlException)
-            {
-                //Display the error.
-                throw;
-            }
-            return description;
         }
     }
 }

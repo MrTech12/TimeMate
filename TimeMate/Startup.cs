@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DataAccessLayer.Contexts;
 using DataAccessLayer.DTO;
+using DataAccessLayer.Interfaces;
 
 namespace TimeMate
 {
@@ -33,6 +34,13 @@ namespace TimeMate
             services.AddTransient<AgendaDTO>();
             services.AddTransient<AppointmentDTO>();
             services.AddTransient<JobDTO>();
+
+            services.AddTransient<IAccountContext, SQLAccountContext>();
+            services.AddTransient<IAgendaContext, SQLAgendaContext>();
+            services.AddTransient<IAppointmentContext, SQLAppointmentContext>();
+            services.AddTransient<IChecklistAppointmentContext, SQLChecklistAppointmentContext>();
+            services.AddTransient<IJobContext, SQLJobContext>();
+            services.AddTransient<INormalAppointmentContext, SQLNormalAppointmentContext>();
 
             services.AddSession(options =>
             {

@@ -46,23 +46,46 @@ namespace BusinessLogicLayer.Logic
             this._cAppointmentContext = cAppointmentContext;
         }
 
-        public int RetrieveAppointmentID(AppointmentDTO appointmentDTO)
-        {
-            int ID = _appointmentContext.GetAppointmentID(appointmentDTO);
-            return ID;
-        }
-
         /// <summary>
         /// Retrieve all appointments that belong to the current actor.
         /// </summary>
         /// <returns></returns>
         public List<AppointmentDTO> RetrieveAppointments()
         {
-            List<AppointmentDTO> appointmentModel = new List<AppointmentDTO>();
-            appointmentModel = _appointmentContext.GetAllAppointments(accountDTO);
-            appointmentModel = appointmentModel.OrderBy(x => x.StartDate).ToList();
+            List<ChecklistDTO> checklists = new List<ChecklistDTO>();
+            var appointments = _appointmentContext.GetAllAppointments(accountDTO);
 
-            return appointmentModel;
+            List<AppointmentDTO> sortedAppointments = appointments.OrderBy(x => x.StartDate).GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
+
+            for (int i = 0; i < appointments.Count; i++)
+            {
+                ChecklistDTO checklist = new ChecklistDTO();
+                if (appointments[i].ChecklistDTOs[0].TaskName != null)
+                {
+                    checklist = appointments[i].ChecklistDTOs[0];
+                    checklists.Add(checklist);
+                }
+            }
+
+            if (checklists.Capacity != 0)
+            {
+                for (int i = 0; i < sortedAppointments.Count; i++)
+                {
+                    sortedAppointments[i].ChecklistDTOs.RemoveAt(0);
+                }
+
+                foreach (var item in sortedAppointments)
+                {
+                    for (int i = 0; i < checklists.Count; i++)
+                    {
+                        if (item.AppointmentID == checklists[i].AppointmentID)
+                        {
+                            item.ChecklistDTOs.Add(checklists[i]);
+                        }
+                    }
+                }
+            }
+            return sortedAppointments;
         }
 
         /// <summary>
@@ -72,7 +95,7 @@ namespace BusinessLogicLayer.Logic
         {
             appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO);
 
-            if (appointmentDTO.Description != null)
+            if (appointmentDTO.DescriptionDTO.Description != null)
             {
                 _nAppointmentContext.AddDescription(appointmentDTO);
             }

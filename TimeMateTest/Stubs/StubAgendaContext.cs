@@ -14,7 +14,7 @@ namespace TimeMateTest.Stubs
         {
             int agendaID = 0;
 
-            using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addAgendaTest.txt"))
+            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addAgendaTest.txt"))
             {
                 streamWriter.WriteLine(agendaDTO.AgendaName);
                 streamWriter.WriteLine(agendaDTO.AgendaColor);
@@ -25,7 +25,7 @@ namespace TimeMateTest.Stubs
 
         public void AddPayDetails(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {
-            using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addWorkAgendaTest.txt"))
+            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addWorkAgendaTest.txt"))
             {
                 streamWriter.WriteLine(agendaDTO.AgendaName);
                 streamWriter.WriteLine(agendaDTO.AgendaColor);
@@ -37,7 +37,7 @@ namespace TimeMateTest.Stubs
         {
             if (AgendaID == 51 && accountDTO.AccountID == 12)
             {
-                File.WriteAllText("C:\\tmp\\removeAgendaTest.txt", String.Empty);
+                File.WriteAllText(@"C:\tmp\removeAgendaTest.txt", String.Empty);
             }
         }
 
@@ -66,11 +66,6 @@ namespace TimeMateTest.Stubs
         }
 
         public List<DateTime> GetWorkdayHours(int agendaIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RenameAgenda(int agendaIndex, AccountDTO accountDTO)
         {
             throw new NotImplementedException();
         }

@@ -42,35 +42,6 @@ namespace DataAccessLayer.Contexts
         }
 
         /// <summary>
-        /// Get the appointmentID from an appointemt, out of the database.
-        /// </summary>
-        public int GetAppointmentID(AppointmentDTO appointmentDTO)
-        {
-            int appointmentID = 0;
-            try
-            {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
-                {
-                    databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand(@"SELECT AppointmentID FROM [Appointment] WHERE AgendaID = @0 AND 
-                                                            (Name = @1 AND Starting = @2);", databaseConn);
-
-                    insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AgendaID);
-                    insertQuerry.Parameters.AddWithValue("1", appointmentDTO.AppointmentName);
-                    insertQuerry.Parameters.AddWithValue("2", appointmentDTO.StartDate);
-
-                    appointmentID = Convert.ToInt32(insertQuerry.ExecuteScalar());
-                }
-            }
-            catch (SqlException)
-            {
-                //Display the error.
-                throw;
-            }
-            return appointmentID;
-        }
-
-        /// <summary>
         /// Get all appointments of the current account, from the database.
         /// </summary>
         /// <returns></returns>
@@ -84,8 +55,10 @@ namespace DataAccessLayer.Contexts
                 {
                     databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand
-                        (@"SELECT Appointment.Name, Appointment.Starting, Appointment.Ending, Agenda.Name AS AgendaName, 
-                        Agenda.AgendaID AS AgendaID FROM [Appointment] INNER JOIN Agenda ON Appointment.AgendaID = Agenda.AgendaID 
+                        (@"SELECT app.*, Agenda.Name AS AgendaName, description.*, task.* FROM [Appointment] app
+                        LEFT JOIN Appointment_Details description ON app.AppointmentID = description.AppointmentID
+                        LEFT JOIN Task task ON app.AppointmentID = task.AppointmentID
+                        INNER JOIN Agenda ON app.AgendaID = Agenda.AgendaID
                         AND Agenda.AccountID = @0", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
@@ -94,11 +67,28 @@ namespace DataAccessLayer.Contexts
                     while (dataReader.Read())
                     {
                         AppointmentDTO appointmentModel = new AppointmentDTO();
+                        ChecklistDTO checklistDTO = new ChecklistDTO();
+                        appointmentModel.AppointmentID = Convert.ToInt32(dataReader["AppointmentID"]);
                         appointmentModel.AppointmentName = dataReader["Name"].ToString();
                         appointmentModel.StartDate = Convert.ToDateTime(dataReader["Starting"]);
                         appointmentModel.EndDate = Convert.ToDateTime(dataReader["Ending"]);
                         appointmentModel.AgendaName = dataReader["AgendaName"].ToString();
                         appointmentModel.AgendaID = Convert.ToInt32(dataReader["AgendaID"]);
+
+                        if (dataReader["Details"] != DBNull.Value)
+                        {
+                            appointmentModel.DescriptionDTO.Description = dataReader["Details"].ToString();
+                        }
+
+                        if (dataReader["TaskID"] != DBNull.Value)
+                        {
+                            checklistDTO.TaskID = Convert.ToInt32(dataReader["TaskID"]);
+                            checklistDTO.AppointmentID = Convert.ToInt32(dataReader["AppointmentID"]);
+                            checklistDTO.TaskName = dataReader["Task_name"].ToString();
+                            checklistDTO.TaskChecked = Convert.ToBoolean(dataReader["Task_checked"]);
+                        }
+
+                        appointmentModel.ChecklistDTOs.Add(checklistDTO);
                         AppointmentsFromAccount.Add(appointmentModel);
                     }
                 }

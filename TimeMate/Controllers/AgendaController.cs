@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.Logic;
 using DataAccessLayer.Contexts;
 using DataAccessLayer.DTO;
+using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -14,8 +15,19 @@ namespace TimeMate.Controllers
 {
     public class AgendaController : Controller
     {
+        private readonly IAgendaContext _agendaContext;
+        private readonly IAppointmentContext _appointmentContext;
+        private readonly IChecklistAppointmentContext _checklistAppointmentContext;
+
         private AccountDTO accountDTO = new AccountDTO();
         private Agenda agenda;
+
+        public AgendaController(IAgendaContext agendaContext, IAppointmentContext appointmentContext, IChecklistAppointmentContext checklistAppointmentContext)
+        {
+            _agendaContext = agendaContext;
+            _appointmentContext = appointmentContext;
+            _checklistAppointmentContext = checklistAppointmentContext;
+        }
 
         [HttpGet]
         public IActionResult Index()
@@ -24,12 +36,11 @@ namespace TimeMate.Controllers
             {
                 var accountID = HttpContext.Session.GetInt32("accountID");
                 accountDTO.AccountID = Convert.ToInt32(accountID);
-                Agenda agendaLogic = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext());
-                List<AppointmentDTO> appointmentModelForView = new List<AppointmentDTO>();
 
-                appointmentModelForView = agendaLogic.RetrieveAppointments();
+                Agenda agendaLogic = new Agenda(accountDTO, _agendaContext, _appointmentContext);
+                var appointments = agendaLogic.RetrieveAppointments();
 
-                return View(appointmentModelForView);
+                return View(appointments);
             }
             else
             {
@@ -50,8 +61,8 @@ namespace TimeMate.Controllers
             if (ModelState.IsValid)
             {
                 AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = viewModel.Name, AgendaColor = viewModel.Color, Notification = viewModel.NotificationType };
-                Account accountLogic = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
-                accountLogic.CreateAgenda(agendaDTO);
+                Account account = new Account(accountDTO, _agendaContext);
+                account.CreateAgenda(agendaDTO);
                 return RedirectToAction("Index", "Agenda");
             }
             else
@@ -65,7 +76,7 @@ namespace TimeMate.Controllers
         {
             int agendaID = JsonConvert.DeserializeObject<int>(json);
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
-            Account account = new Account(accountDTO, new SQLAccountContext(), new SQLAgendaContext());
+            Account account = new Account(accountDTO, _agendaContext);
 
             account.DeleteAgenda(agendaID);
 
@@ -73,48 +84,25 @@ namespace TimeMate.Controllers
         }
 
         [HttpGet]
-        public IActionResult RetrieveAppointmentDetails(string json)
+        public IActionResult RetrieveTasks(string json)
         {
-            var selectedAppointment = JsonConvert.DeserializeObject<List<string>>(json);
             AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO.AppointmentName = selectedAppointment[0];
-            appointmentDTO.StartDate = Convert.ToDateTime(selectedAppointment[2]);
-            appointmentDTO.EndDate = Convert.ToDateTime(selectedAppointment[4]);
-            appointmentDTO.AgendaName = selectedAppointment[6];
-            appointmentDTO.AgendaID = Convert.ToInt32(selectedAppointment[7]);
+            appointmentDTO.AppointmentID = JsonConvert.DeserializeObject<int>(json);
+            ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, _checklistAppointmentContext);
+            var taskslist = checklistAppointment.RetrieveTasks(appointmentDTO);
 
-            agenda = new Agenda(accountDTO, new SQLAgendaContext(), new SQLAppointmentContext());
-            NormalAppointment normalAppointment = new NormalAppointment(appointmentDTO, new SQLNormalAppointmentContext());
+            return Json(taskslist);
+        }
 
-            appointmentDTO.AppointmentID = agenda.RetrieveAppointmentID(appointmentDTO);
-            string description = normalAppointment.RetrieveDescription(appointmentDTO.AppointmentID);
-
-            if (description == "")
-            {
-                ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, new SQLChecklistAppointmentContext());
-                appointmentDTO = checklistAppointment.RetrieveTasks(appointmentDTO.AppointmentID);
-
-                if (appointmentDTO.ChecklistItemName != null)
-                {
-                    List<string> tasks = new List<string>();
-                    for (int i = 0; i < appointmentDTO.ChecklistItemName.Count; i++)
-                    {
-                        tasks.Add(appointmentDTO.ChecklistItemName[i]);
-                        tasks.Add(Convert.ToString(appointmentDTO.ChecklistItemChecked[i]));
-                    }
-
-                    return Json(tasks);
-                }
-                else
-                {
-                    return Json(null);
-                }
-            }
-            else if (description != "")
-            {
-                return Json(description);
-            }
-            return View();
+        [HttpGet]
+        public IActionResult ChangeTaskStatus(string json)
+        {
+            ChecklistDTO checklist = new ChecklistDTO();
+            checklist.TaskID = JsonConvert.DeserializeObject<int>(json);
+            AppointmentDTO appointmentDTO = new AppointmentDTO();
+            ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, _checklistAppointmentContext);
+            checklistAppointment.ChangeTaskStatus(checklist.TaskID);
+            return Ok();
         }
     }
 }
