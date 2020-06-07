@@ -77,9 +77,10 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                Taken van deze afspraak aan/afvinken
-                <select id="tasks"></select>
-                <button type="button" id="checkOffTask" class="btn btn-info" data-dismiss="modal">aan/afvinken</button>
+                <div id="modal-task-info" class="d-none">Taken van deze afspraak aan/afvinken</div>
+                <div id="modal-no-tasks" class="d-none">Er zijn geen taken voor deze afspraak gevonden.</div>
+                <select id="tasks" class="d-none"></select>
+                <button type="button" id="checkOffTask" class="btn btn-info d-none" data-dismiss="modal">aan/afvinken</button>
             </div>
 
         </div>

@@ -7,7 +7,7 @@ let taskName = [];
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 
-    $(".appointmentName").click(function () { //Main Entry
+    $(".appointmentName").click(function () {
         appointmentData.length = 0;
         GetAppointmentInfo(this);
         CreatePopover();
@@ -18,6 +18,20 @@ $(document).ready(function() {
         appointmentData.length = 0;
         GetAppointmentInfo(this);
         DisplayTasks();
+    });
+
+    $("#checkOffTask").click(function () {
+        CheckOffTask();
+    });
+
+    $(".close").click(function () {
+        HideModalElements();
+    });
+
+    $(window).keydown(function (event) {
+        if (event.keyCode == 27) {
+            HideModalElements();
+        }
     });
 
     function GetAppointmentInfo(selectedRow) {
@@ -87,28 +101,33 @@ $(document).ready(function() {
             console.info("Ajax executed");
 
             if (taskName[0] == undefined) {
-                //Add text for when there are no tasks.
+                $("#modal-no-tasks").removeClass("d-none");
             }
 
-            var selectElement = document.getElementById("tasks");
-            $("#tasks").empty();
-            for (var i = 0; i < taskName.length; i++) {
-                var option = taskName[i];
-                var el = document.createElement("option");
-                el.textContent = option;
-                el.value = option;
-                el.id = taskID[i];
-                selectElement.appendChild(el);
-            }
+            else {
+                $("#modal-task-info").removeClass("d-none");
+                $("#tasks").removeClass("d-none");
+                $("#checkOffTask").removeClass("d-none");
 
+                var selectElement = document.getElementById("tasks");
+                $("#tasks").empty();
+                for (var i = 0; i < taskName.length; i++) {
+                    var option = taskName[i];
+                    var el = document.createElement("option");
+                    el.textContent = option;
+                    el.value = option;
+                    el.id = taskID[i];
+                    selectElement.appendChild(el);
+                }
+            }
         });
     };
 
-    $("#checkOffTask").click(function () {
+    function CheckOffTask() {
         var selectInput = document.getElementById("tasks");
         var taskID = (selectInput.options[selectInput.selectedIndex].id);
 
-        return $.ajax({
+        $.ajax({
             type: "get",
             async: "no",
             url: "/Agenda/ChangeTaskStatus",
@@ -123,7 +142,14 @@ $(document).ready(function() {
                 onerror(console.info(ts));
             }
         });
-    });
+    };
+
+    function HideModalElements() {
+        $("#modal-task-info").addClass("d-none");
+        $("#modal-no-tasks").addClass("d-none");
+        $("#tasks").addClass("d-none");
+        $("#checkOffTask").addClass("d-none");
+    };
 });
 
 
