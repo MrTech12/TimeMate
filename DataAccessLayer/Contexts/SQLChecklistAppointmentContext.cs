@@ -35,10 +35,9 @@ namespace DataAccessLayer.Contexts
                     }
                 }
             }
-            catch (SqlException)
+            catch (SqlException exception)
             {
-                //Display the error.
-                throw;
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
         }
 
@@ -66,10 +65,9 @@ namespace DataAccessLayer.Contexts
                     }
                 }
             }
-            catch (SqlException)
+            catch (SqlException exception)
             {
-                //Display the error.
-                throw;
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
             return checklists;
         }
@@ -90,10 +88,9 @@ namespace DataAccessLayer.Contexts
                     taskStatus = Convert.ToBoolean(selectQuerry.ExecuteScalar());
                 }
             }
-            catch (SqlException)
+            catch (SqlException exception)
             {
-                //Display the error.
-                throw;
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
             return taskStatus;
         }
@@ -117,10 +114,9 @@ namespace DataAccessLayer.Contexts
                     updateQuerry.ExecuteScalar();
                 }
             }
-            catch (SqlException)
+            catch (SqlException exception)
             {
-                //Display the error.
-                throw;
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
         }
 
@@ -140,10 +136,9 @@ namespace DataAccessLayer.Contexts
                     updateQuerry.ExecuteScalar();
                 }
             }
-            catch (SqlException)
+            catch (SqlException exception)
             {
-                //Display the error.
-                throw;
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
         }
     }

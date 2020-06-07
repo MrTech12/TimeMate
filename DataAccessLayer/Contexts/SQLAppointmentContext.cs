@@ -33,10 +33,9 @@ namespace DataAccessLayer.Contexts
                     appointmentID = Convert.ToInt32(insertQuerry.ExecuteScalar());
                 }
             }
-            catch (SqlException)
+            catch (SqlException exception)
             {
-                //Display the error.
-                throw;
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
             return appointmentID;
         }
@@ -93,9 +92,9 @@ namespace DataAccessLayer.Contexts
                     }
                 }
             }
-            catch (SqlException)
+            catch (SqlException exception)
             {
-                throw;
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
             return AppointmentsFromAccount;
         }

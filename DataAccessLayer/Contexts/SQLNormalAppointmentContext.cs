@@ -30,10 +30,9 @@ namespace DataAccessLayer.Contexts
                     insertQuerry.ExecuteNonQuery();
                 }
             }
-            catch (SqlException)
+            catch (SqlException exception)
             {
-                //Display the error.
-                throw;
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
         }
     }
