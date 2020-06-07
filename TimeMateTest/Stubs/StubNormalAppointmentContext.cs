@@ -13,7 +13,7 @@ namespace TimeMateTest.Stubs
         {
             if (appointmentDTO.AppointmentName == "Reorder cables")
             {
-                using (StreamWriter streamWriter = File.AppendText("C:\\tmp\\addAppointmentTest.txt"))
+                using (StreamWriter streamWriter = File.AppendText(@"C:\tmp\addAppointmentTest.txt"))
                 {
                     streamWriter.WriteLine(appointmentDTO.DescriptionDTO.Description);
                 }

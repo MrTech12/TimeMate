@@ -47,8 +47,8 @@ namespace TimeMateTest.BLL
             };
 
             agenda.CreateNormalAppointment(appointmentDTO);
-            string[] file = File.ReadAllLines("C:\\tmp\\addAppointmentTest.txt");
-            File.Delete("C:\\tmp\\addAppointmentTest.txt");
+            string[] file = File.ReadAllLines(@"C:\tmp\addAppointmentTest.txt");
+            File.Delete(@"C:\tmp\addAppointmentTest.txt");
 
             Assert.Contains("Reorder cables", file[0]);
             Assert.Contains("This is <b> a </b> test.", file[4]);
@@ -69,8 +69,8 @@ namespace TimeMateTest.BLL
             appointmentDTO.ChecklistDTOs.Add(checklistDTO);
 
             agenda.CreateChecklistAppointment(appointmentDTO);
-            string[] file = File.ReadAllLines("C:\\tmp\\addAppointmentTest.txt");
-            File.Delete("C:\\tmp\\addAppointmentTest.txt");
+            string[] file = File.ReadAllLines(@"C:\tmp\addAppointmentTest.txt");
+            File.Delete(@"C:\tmp\addAppointmentTest.txt");
 
             Assert.Contains("Create 3D render", file[0]);
             Assert.Contains("Get inspiration", file[4]);

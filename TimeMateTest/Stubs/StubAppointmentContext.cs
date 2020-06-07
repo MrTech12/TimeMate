@@ -12,7 +12,7 @@ namespace TimeMateTest.Stubs
         {
             int appointmentID = 0;
 
-            using (StreamWriter streamWriter = new StreamWriter("C:\\tmp\\addAppointmentTest.txt"))
+            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addAppointmentTest.txt"))
             {
                 streamWriter.WriteLine(appointmentDTO.AppointmentName);
                 streamWriter.WriteLine(appointmentDTO.StartDate);

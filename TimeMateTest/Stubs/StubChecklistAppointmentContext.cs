@@ -13,31 +13,61 @@ namespace TimeMateTest.Stubs
         {
             if (appointmentDTO.AppointmentID == 60)
             {
-                using (StreamWriter streamWriter = File.AppendText("C:\\tmp\\addAppointmentTest.txt"))
+                using (StreamWriter streamWriter = File.AppendText(@"C:\tmp\addAppointmentTest.txt"))
                 {
                     streamWriter.WriteLine(appointmentDTO.ChecklistDTOs[0].TaskName);
                 }
             }
         }
 
-        public void CheckOffTask(int taskID)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<ChecklistDTO> GetTasks(AppointmentDTO appointmentDTO)
         {
-            throw new NotImplementedException();
+            List<ChecklistDTO> checklists = new List<ChecklistDTO>();
+
+            if (appointmentDTO.AppointmentID == 14)
+            {
+                ChecklistDTO checklist1 = new ChecklistDTO();
+                checklist1.AppointmentID = 14;
+                checklist1.TaskID = 1;
+                checklist1.TaskName = "Dit";
+                checklists.Add(checklist1);
+
+                ChecklistDTO checklist2 = new ChecklistDTO();
+                checklist2.AppointmentID = 14;
+                checklist2.TaskID = 2;
+                checklist2.TaskName = "Dat";
+                checklists.Add(checklist2);
+
+                ChecklistDTO checklist3 = new ChecklistDTO();
+                checklist3.AppointmentID = 14;
+                checklist3.TaskID = 3;
+                checklist3.TaskName = "Zo";
+                checklists.Add(checklist3);
+
+            }
+            return checklists;
         }
 
         public bool GetTaskStatus(int taskID)
         {
-            throw new NotImplementedException();
+            bool taskstatus = false;
+            string[] file = File.ReadAllLines(@"C:\tmp\getTaskStatusTest.txt");
+            taskstatus = Convert.ToBoolean(file[2]);
+            return taskstatus;
+        }
+
+        public void CheckOffTask(int taskID)
+        {
+            string[] file = File.ReadAllLines(@"C:\tmp\getTaskStatusTest.txt");
+            file[2] = "True";
+            File.WriteAllLines(@"C:\tmp\getTaskStatusTest.txt", file);
         }
 
         public void RevertCheckOffTask(int taskID)
         {
-            throw new NotImplementedException();
+            string[] file = File.ReadAllLines(@"C:\tmp\getTaskStatusTest.txt");
+            file[2] = "False";
+            File.WriteAllLines(@"C:\tmp\getTaskStatusTest.txt", file);
         }
     }
 }
