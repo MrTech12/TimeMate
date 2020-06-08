@@ -9,31 +9,31 @@ $(document).ready(function () {
 
 function ShowJobInputBoxes() {
     if (jobAmount == 0) {
-        if ($("#job1").hasClass("d-none") != true) {
+        if (!$("#job1").hasClass("d-none")) {
             $("#job1").addClass("d-none");
         }
-        else if ($("#job1").hasClass("d-none") == true && $("#job2").hasClass("d-none") != true) {
+        else if ($("#job1").hasClass("d-none") && !$("#job2").hasClass("d-none")) {
             $("#job2").addClass("d-none");;
         }
-        else if ($("#job1").hasClass("d-none") != true && $("#job2").hasClass("d-none") != true) {
+        else if (!$("#job1").hasClass("d-none") && !$("#job2").hasClass("d-none")) {
             $("#job1").addClass("d-none");
             $("#job2").addClass("d-none");
         }
     }
     else if (jobAmount == 1) {
-        if ($("#job2").hasClass("d-none") != true) {
+        if (!$("#job2").hasClass("d-none")) {
             $("#job2").addClass("d-none");
         }
-        else if ($("#job1").toggleClass("d-none") == true) {
+        else if ($("#job1").hasClass("d-none")) {
             $("#job1").removeClass("d-none");
         }
     }
     else if (jobAmount == 2) {
-        if ($("#job1").toggleClass("d-none") == true && $("#job2").toggleClass("d-none") == true) {
+        if (!$("#job1").hasClass("d-none") && $("#job2").hasClass("d-none")) {
             $("#job1").removeClass("d-none");
             $("#job2").removeClass("d-none");
         }
-        else if ($("#job1").toggleClass("d-none") != true && $("#job2").hasClass("d-none") == true) {
+        else if (!$("#job1").hasClass("d-none") && $("#job2").hasClass("d-none")) {
             $("#job2").removeClass("d-none");
         }
     }

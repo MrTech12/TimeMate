@@ -139,6 +139,7 @@ $(document).ready(function() {
                 window.location.href = "/Agenda/Index";
             },
             error: function (ts) {
+                alert('Een error is ontstaan. Probeer het laten opnieuw a.u.b.');
                 onerror(console.info(ts));
             }
         });
