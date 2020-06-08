@@ -22,7 +22,12 @@ namespace TimeMateTest.Stubs
 
         public string GetDescription(int appointmentID)
         {
-            throw new NotImplementedException();
+            string description = null;
+            if (appointmentID == 24)
+            {
+                description = "Dit is een beschrijving";
+            }
+            return description;
         }
     }
 }
