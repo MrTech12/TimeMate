@@ -1,54 +1,14 @@
-﻿var index = 0;
-var appointmentInfo = [];
+﻿var appointmentInfo = [];
 var jsonData = 0;
 
 $(document).ready(function () {
-    $("#bolding-text").click(function () {
-
-        highlight = window.getSelection();
-        
-        if (index === 0) {
-            MakeTextBold();
-            index++;
-        }
-        else if (index === 1) {
-            MakeTextNormal();
-            index--;
-        }
-    });
     $("#add-appointment").click(function () {
         GetEnteredInformation();
         jsonData = JSON.stringify(appointmentInfo);
         console.info(jsonData);
         SendDeletionRequest();
     });
-
 });
-
-function MakeTextBold() {
-    if (highlight.rangeCount) {
-        var e = document.createElement('span');
-        e.classList.add("bolding");
-        e.innerHTML = highlight.toString();
-
-        var range = highlight.getRangeAt(0);
-        range.deleteContents(); 
-        range.insertNode(e);
-    }
-};
-
-function MakeTextNormal() {
-    if (highlight.rangeCount) {
-        var e = document.createElement('span');
-        e.classList.add("normal-text");
-        e.innerHTML = highlight.toString();
-
-        var range = highlight.getRangeAt(0);
-        range.deleteContents();
-        range.insertNode(e);
-    }
-};
-
 
 function GetEnteredInformation() {
     appointmentInfo = [];
@@ -61,14 +21,17 @@ function GetEnteredInformation() {
     var selectInput = document.getElementById("AppointmentViewModel_AgendaDTO_0__AgendaName");
     appointmentInfo.push(selectInput.options[selectInput.selectedIndex].value);
     appointmentInfo.push(selectInput.options[selectInput.selectedIndex].id);
-    appointmentInfo.push(document.getElementById('descriptionBox').innerHTML);
+
+    for (var i = 0; i < 4; i++) {
+        appointmentInfo.push($("#Task_" + i + "_").val());
+    }
 }
 
 function SendDeletionRequest() {
     $.ajax({
         type: "POST",
         async: "no",
-        url: "NormalAppointment/index",
+        url: "ChecklistAppointment/Index",
         contenttype: "application/json; charset=utf-8",
         data: { json: jsonData },
         datatype: "text",
