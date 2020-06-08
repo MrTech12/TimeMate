@@ -6,7 +6,7 @@ $(document).ready(function () {
         GetEnteredInformation();
         jsonData = JSON.stringify(appointmentInfo);
         console.info(jsonData);
-        SendDeletionRequest();
+        SendAddRequest();
     });
 });
 
@@ -27,7 +27,7 @@ function GetEnteredInformation() {
     }
 }
 
-function SendDeletionRequest() {
+function SendAddRequest() {
     $.ajax({
         type: "POST",
         async: "no",

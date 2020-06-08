@@ -7,20 +7,20 @@ let taskName = [];
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 
-    $(".appointmentName").click(function () {
+    $(".appointment-name").click(function () {
         appointmentData.length = 0;
         GetAppointmentInfo(this);
         CreatePopover();
         console.info("From view: " + appointmentData);
     });
 
-    $(".changeAppointment").click(function () {
+    $(".task-modal").click(function () {
         appointmentData.length = 0;
         GetAppointmentInfo(this);
         DisplayTasks();
     });
 
-    $("#checkOffTask").click(function () {
+    $("#checkoff-task").click(function () {
         CheckOffTask();
     });
 
@@ -42,7 +42,7 @@ $(document).ready(function() {
     }
 
     function CreatePopover() {
-        $(".appointmentName").popover({
+        $(".appointment-name").popover({
             title: GetPopoverTitle, content: GetPopoverContent, html: true,
         });
     };
@@ -107,7 +107,7 @@ $(document).ready(function() {
             else {
                 $("#modal-task-info").removeClass("d-none");
                 $("#tasks").removeClass("d-none");
-                $("#checkOffTask").removeClass("d-none");
+                $("#checkoff-task").removeClass("d-none");
 
                 var selectElement = document.getElementById("tasks");
                 $("#tasks").empty();
@@ -148,7 +148,7 @@ $(document).ready(function() {
         $("#modal-task-info").addClass("d-none");
         $("#modal-no-tasks").addClass("d-none");
         $("#tasks").addClass("d-none");
-        $("#checkOffTask").addClass("d-none");
+        $("#checkoff-task").addClass("d-none");
     };
 });
 

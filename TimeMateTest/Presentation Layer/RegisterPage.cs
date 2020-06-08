@@ -13,8 +13,8 @@ namespace TimeMateTest.Presentation_Layer
         private IWebElement FirstNameElement => _driver.FindElement(By.Id("FirstName"));
         private IWebElement MailElement => _driver.FindElement(By.Id("Mail"));
         private IWebElement PasswordElement => _driver.FindElement(By.Id("Password"));
-        private IWebElement RegisterElement => _driver.FindElement(By.Id("registerButton"));
-        private IWebElement GoToLoginElement => _driver.FindElement(By.Id("goLoginButton"));
+        private IWebElement RegisterElement => _driver.FindElement(By.Id("register-button"));
+        private IWebElement GoToLoginElement => _driver.FindElement(By.Id("go-login-button"));
 
         public string Title => _driver.Title;
         public string Source => _driver.PageSource;

@@ -1,27 +1,26 @@
 ﻿var agendaName;
 var agendaID;
 var selectInput;
-var newAgendaName;
 
 $(document).ready(function () {
-    $("#deleteAgenda").click(function () {
-        GetSelectedInformation();
-        $("#agendaName").text(agendaName);
+    $("#delete-agenda").click(function () {
+        GetSelectedOptionInformation();
+        $("#agenda-name").text(agendaName);
         console.log("Name: " + agendaName + "; Id: " + agendaID);
     });
 
-    $("#confirmDeletion").click(function () {
-        SendDeletionRequest();
+    $("#confirm-deletion").click(function () {
+        SendDeleteRequest();
     });
 });
 
-function GetSelectedInformation() {
-    selectInput = document.getElementById("agendaList");
+function GetSelectedOptionInformation() {
+    selectInput = document.getElementById("agenda-select");
     agendaName = selectInput.options[selectInput.selectedIndex].value;
     agendaID = selectInput.options[selectInput.selectedIndex].id;
 };
 
-function SendDeletionRequest() {
+function SendDeleteRequest() {
     $.ajax({
         type: "POST",
         url: "/Agenda/DeleteAgenda",
