@@ -10,12 +10,21 @@ namespace BusinessLogicLayer.Logic
 {
     public class Account
     {
-        private IAccountContext _accountContext;
-        private IAgendaContext _agendaContext;
+        private readonly IAccountContext _accountContext;
+        private readonly IAgendaContext _agendaContext;
+        private readonly ISenderContext _senderContext;
         private AccountDTO accountDTO;
 
         private string returnMessage;
         private string databaseOutput;
+
+        public Account(AccountDTO accountDTO, IAccountContext accountContext, IAgendaContext agendaContext, ISenderContext senderContext)
+        {
+            this.accountDTO = accountDTO;
+            this._accountContext = accountContext;
+            this._agendaContext = agendaContext;
+            this._senderContext = senderContext;
+        }
 
         public Account(AccountDTO accountDTO, IAccountContext accountContext, IAgendaContext agendaContext)
         {
@@ -91,8 +100,7 @@ namespace BusinessLogicLayer.Logic
                 else
                 {
                     CreateAccount();
-                    Mail mail = new Mail();
-                    mail.SendMail(accountDTO.MailAddress);
+                    _senderContext.SendAccountCreationMessage(accountDTO.MailAddress);
                     returnMessage = Convert.ToString(accountDTO.AccountID);
                 }
             }

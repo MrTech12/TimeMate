@@ -16,14 +16,16 @@ namespace TimeMate.Controllers
     {
         private readonly IAccountContext _accountContext;
         private readonly IAgendaContext _agendaContext;
+        private readonly ISenderContext _senderContext;
 
         private Account account;
         private AccountDTO accountDTO;
 
-        public AccountController(IAccountContext accountContext, IAgendaContext agendaContext)
+        public AccountController(IAccountContext accountContext, IAgendaContext agendaContext, ISenderContext senderContext)
         {
             _accountContext = accountContext;
             _agendaContext = agendaContext;
+            _senderContext = senderContext;
         }
 
         [HttpGet]
@@ -92,7 +94,7 @@ namespace TimeMate.Controllers
                 accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.job2HourlyWage));
                 accountDTO.JobDayType.Add(viewModel.job2DayType);
 
-                account = new Account(accountDTO, _accountContext, _agendaContext);
+                account = new Account(accountDTO, _accountContext, _agendaContext, _senderContext);
 
                 string result = account.NewAccountValidation();
 

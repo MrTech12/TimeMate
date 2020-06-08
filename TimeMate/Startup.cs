@@ -41,6 +41,7 @@ namespace TimeMate
             services.AddTransient<IChecklistAppointmentContext, SQLChecklistAppointmentContext>();
             services.AddTransient<IJobContext, SQLJobContext>();
             services.AddTransient<INormalAppointmentContext, SQLNormalAppointmentContext>();
+            services.AddTransient<ISenderContext, MailSenderContext>();
 
             services.AddSession(options =>
             {

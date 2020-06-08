@@ -107,7 +107,7 @@ namespace TimeMateTest.BLL
             accountDTO.MailAddress = "sina1240@gmail.com";
             accountDTO.Password = "QWEwieiwi231@#";
 
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext(), new StubSenderContext());
 
             output = account.NewAccountValidation();
 
@@ -126,7 +126,7 @@ namespace TimeMateTest.BLL
             accountDTO.JobHourlyWage.Add(1.20);
             accountDTO.JobDayType.Add("Doordeweeks");
 
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext(), new StubSenderContext());
 
             output = account.NewAccountValidation();
 

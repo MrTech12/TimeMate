@@ -1,20 +1,18 @@
-﻿using System;
+﻿using DataAccessLayer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
 
-namespace BusinessLogicLayer.Logic
+namespace DataAccessLayer.Contexts
 {
-    class Mail
+    public class MailSenderContext : ISenderContext
     {
-        /// <summary>
-        /// Send a mail to the mailaddress of the newly created acount.
-        /// </summary>
-        public void SendMail(string mailUser)
+        public void SendAccountCreationMessage(string mail)
         {
             try
             {
-                MailMessage message = new MailMessage("primedsoon12@gmail.com", mailUser);
+                MailMessage message = new MailMessage("primedsoon12@gmail.com", mail);
                 message.Subject = "Registratie bij TimeMate";
                 message.IsBodyHtml = true;
                 message.Body = "Uw mailadres is gebruikt om een account te maken bij TimeMate.";
@@ -29,9 +27,9 @@ namespace BusinessLogicLayer.Logic
 
                 smtp.Send(message);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                throw;
+                throw new Exception("Er is op dit moment een probleem met het versturen van de account creatie mail.", exception);
             }
         }
     }
