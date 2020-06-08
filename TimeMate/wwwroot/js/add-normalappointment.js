@@ -61,7 +61,7 @@ function GetEnteredInformation() {
     var selectInput = document.getElementById("AppointmentViewModel_AgendaDTO_0__AgendaName");
     appointmentInfo.push(selectInput.options[selectInput.selectedIndex].value);
     appointmentInfo.push(selectInput.options[selectInput.selectedIndex].id);
-    appointmentInfo.push(document.getElementById('descriptionBox').innerHTML);
+    appointmentInfo.push(document.getElementById('description-box').innerHTML);
 }
 
 function SendAddRequest() {
