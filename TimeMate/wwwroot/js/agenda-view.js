@@ -1,7 +1,9 @@
 ﻿var appointmentData = [];
 
-let taskID = [];
-let taskName = [];
+var taskID = [];
+var taskName = [];
+
+var descriptionData = null;
 
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
@@ -13,10 +15,10 @@ $(document).ready(function() {
         console.info("From view: " + appointmentData);
     });
 
-    $(".task-modal").click(function () {
+    $(".extra-modal").click(function () {
         appointmentData.length = 0;
         GetAppointmentInfo(this);
-        DisplayTasks();
+        DisplayExtra();
     });
 
     $("#checkoff-task").click(function () {
@@ -39,7 +41,7 @@ function GetAppointmentInfo(selectedRow) {
         appointmentData.push($(this).text());
         appointmentData.push($(this).attr('id'));
     });
-}
+};
 
 function CreatePopover() {
     $(".appointment-name").popover({
@@ -54,26 +56,23 @@ function GetPopoverTitle() {
 function GetPopoverContent() {
     var popoverContent = "Starttijd: " + appointmentData[2] + "<br>" + "Eindtijd: " + appointmentData[4]
         + "<br>" + "Agendanaam: " + appointmentData[6] + "<br>";
-
-    if (appointmentData[8] != "") {
-        popoverContent += "Details: " + "<br>" + appointmentData[8];
-    }
     return popoverContent;
 };
 
-function GetTasks() {
+function GetAppointmentExtra() {
     return $.ajax({
         type: "get",
         async: "no",
-        url: "/Agenda/RetrieveTasks",
+        url: "/Agenda/RetrieveAppointmentExtra",
         contenttype: "application/json; charset=utf-8",
         data: { json: appointmentData[1]},
         datatype: "text",
         traditional: true,
         success: function (data) {
+            taskID = [];
+            taskName = [];
+            descriptionData = "";
             if (Array.isArray(data)) {
-                taskID = [];
-                taskName = [];
                 for (var i = 0; i < data.length; i++) {
 
                     if (i % 2 === 0) {
@@ -83,9 +82,12 @@ function GetTasks() {
                         taskName.push(data[i]);
                     }
                 }
-                if (data.length == 0) {
-                    console.log("Got no tasks.");
-                }
+            }
+            if (data == "") {
+                descriptionData = "Er is geen beschrijving en taken voor deze afspraak gevonden.";
+            }
+            else {
+                descriptionData = "Beschrijving: <br>" + data;
             }
         },
         error: function (ts) {
@@ -95,21 +97,18 @@ function GetTasks() {
     });
 };
 
-function DisplayTasks() {
-    $.when(GetTasks()).done(function () {
+function DisplayExtra() {
+    $.when(GetAppointmentExtra()).done(function () {
         console.info(taskID);
         console.info(taskName);
         console.info("Ajax executed");
 
         if (taskName[0] == undefined) {
-            $("#modal-no-tasks").removeClass("d-none");
+            $("#modal-task-description").empty();
+            $("#modal-task-description").html(descriptionData);
+            $("#modal-task-description").removeClass("d-none");
         }
-
         else {
-            $("#modal-task-info").removeClass("d-none");
-            $("#tasks").removeClass("d-none");
-            $("#checkoff-task").removeClass("d-none");
-
             var selectElement = document.getElementById("tasks");
             $("#tasks").empty();
             for (var i = 0; i < taskName.length; i++) {
@@ -120,6 +119,10 @@ function DisplayTasks() {
                 el.id = taskID[i];
                 selectElement.appendChild(el);
             }
+
+            $("#modal-task-info").removeClass("d-none");
+            $("#tasks").removeClass("d-none");
+            $("#checkoff-task").removeClass("d-none");
         }
     });
 };
@@ -148,7 +151,7 @@ function CheckOffTask() {
 
 function HideModalElements() {
     $("#modal-task-info").addClass("d-none");
-    $("#modal-no-tasks").addClass("d-none");
+    $("#modal-task-description").addClass("d-none");
     $("#tasks").addClass("d-none");
     $("#checkoff-task").addClass("d-none");
 };

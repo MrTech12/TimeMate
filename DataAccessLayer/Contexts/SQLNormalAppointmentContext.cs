@@ -35,5 +35,27 @@ namespace DataAccessLayer.Contexts
                 throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
         }
+
+        public string GetDescription(int appointmentID)
+        {
+            string description;
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                {
+                    databaseConn.Open();
+                    SqlCommand selectQuerry = new SqlCommand("SELECT Details FROM [Appointment_Details] WHERE AppointmentID = @0", databaseConn);
+
+                    selectQuerry.Parameters.AddWithValue("0", appointmentID);
+
+                    description = Convert.ToString(selectQuerry.ExecuteScalar());
+                }
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+            }
+            return description;
+        }
     }
 }

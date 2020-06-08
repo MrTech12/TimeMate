@@ -15,6 +15,11 @@ namespace BusinessLogicLayer.Logic
             this._nAppointmentContext = normalAppointmentContext;
         }
 
+        public string RetrieveDescription(AppointmentDTO appointmentDTO)
+        {
+            return _nAppointmentContext.GetDescription(appointmentDTO.AppointmentID);
+        }
+
         /// <summary>
         /// Rename an appointment.
         /// </summary>

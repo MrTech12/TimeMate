@@ -17,15 +17,17 @@ namespace TimeMate.Controllers
     {
         private readonly IAgendaContext _agendaContext;
         private readonly IAppointmentContext _appointmentContext;
+        private readonly INormalAppointmentContext _normalAppointmentContext;
         private readonly IChecklistAppointmentContext _checklistAppointmentContext;
 
         private AccountDTO accountDTO = new AccountDTO();
         private Agenda agenda;
 
-        public AgendaController(IAgendaContext agendaContext, IAppointmentContext appointmentContext, IChecklistAppointmentContext checklistAppointmentContext)
+        public AgendaController(IAgendaContext agendaContext, IAppointmentContext appointmentContext, INormalAppointmentContext normalAppointmentContext, IChecklistAppointmentContext checklistAppointmentContext)
         {
             _agendaContext = agendaContext;
             _appointmentContext = appointmentContext;
+            _normalAppointmentContext = normalAppointmentContext;
             _checklistAppointmentContext = checklistAppointmentContext;
         }
 
@@ -84,17 +86,6 @@ namespace TimeMate.Controllers
         }
 
         [HttpGet]
-        public IActionResult RetrieveTasks(string json)
-        {
-            AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO.AppointmentID = JsonConvert.DeserializeObject<int>(json);
-            ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, _checklistAppointmentContext);
-            var taskslist = checklistAppointment.RetrieveTasks(appointmentDTO);
-
-            return Json(taskslist);
-        }
-
-        [HttpGet]
         public IActionResult ChangeTaskStatus(string json)
         {
             ChecklistDTO checklist = new ChecklistDTO();
@@ -103,6 +94,28 @@ namespace TimeMate.Controllers
             ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, _checklistAppointmentContext);
             checklistAppointment.ChangeTaskStatus(checklist.TaskID);
             return Ok();
+        }
+
+        [HttpGet]
+        public IActionResult RetrieveAppointmentExtra(string json)
+        {
+            var appointmentID = JsonConvert.DeserializeObject<int>(json);
+
+            AppointmentDTO appointmentDTO = new AppointmentDTO() {AppointmentID = appointmentID };
+            NormalAppointment normalAppointment = new NormalAppointment(appointmentDTO, _normalAppointmentContext);
+            ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, _checklistAppointmentContext);
+
+            string description = normalAppointment.RetrieveDescription(appointmentDTO);
+
+            if (description == "")
+            {
+                var tasks = checklistAppointment.RetrieveTasks(appointmentDTO);
+                return Json(tasks);
+            }
+            else
+            {
+                return Json(description);
+            }
         }
     }
 }
