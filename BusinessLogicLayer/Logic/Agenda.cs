@@ -41,8 +41,6 @@ namespace BusinessLogicLayer.Logic
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
             var appointments = _appointmentContainer.GetAllAppointments(accountDTO);
 
-            List<AppointmentDTO> sortedAppointments = appointments.OrderBy(x => x.StartDate).GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
-
             for (int i = 0; i < appointments.Count; i++)
             {
                 ChecklistDTO checklist = new ChecklistDTO();
@@ -52,6 +50,8 @@ namespace BusinessLogicLayer.Logic
                     checklists.Add(checklist);
                 }
             }
+
+            List<AppointmentDTO> sortedAppointments = appointments.OrderBy(x => x.StartDate).GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
 
             if (checklists.Capacity != 0)
             {
@@ -74,22 +74,16 @@ namespace BusinessLogicLayer.Logic
             return sortedAppointments;
         }
 
-        /// <summary>
-        /// Create appointment with description.
-        /// </summary>
         public void CreateNormalAppointment(AppointmentDTO appointmentDTO)
         {
             appointmentDTO.AppointmentID = _appointmentContainer.AddAppointment(appointmentDTO);
 
-            if (appointmentDTO.DescriptionDTO.Description != null)
+            if (appointmentDTO.DescriptionDTO.Description != "")
             {
                 _normalAppointmentContainer.AddDescription(appointmentDTO);
             }
         }
 
-        /// <summary>
-        /// Create appointment with checklist.
-        /// </summary>
         public void CreateChecklistAppointment(AppointmentDTO appointmentDTO)
         {
             appointmentDTO.AppointmentID = _appointmentContainer.AddAppointment(appointmentDTO);
