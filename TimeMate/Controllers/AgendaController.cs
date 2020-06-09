@@ -21,6 +21,7 @@ namespace TimeMate.Controllers
 
         private AccountDTO accountDTO = new AccountDTO();
         private Agenda agenda;
+        private Account account;
 
         public AgendaController(IAgendaContainer agendaContext, IAppointmentContainer appointmentContext, INormalAppointmentContainer normalAppointmentContext, IChecklistAppointmentContainer checklistAppointmentContext)
         {
@@ -35,12 +36,10 @@ namespace TimeMate.Controllers
         {
             if (HttpContext.Session.GetInt32("accountID") != null)
             {
-                var accountID = HttpContext.Session.GetInt32("accountID");
-                accountDTO.AccountID = Convert.ToInt32(accountID);
+                accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
-                Agenda agendaLogic = new Agenda(accountDTO, _agendaContext, _appointmentContext);
-                var appointments = agendaLogic.RetrieveAppointments();
-
+                agenda = new Agenda(accountDTO, _agendaContext, _appointmentContext);
+                List<AppointmentDTO> appointments = agenda.RetrieveAppointments();
                 return View(appointments);
             }
             else
@@ -66,7 +65,7 @@ namespace TimeMate.Controllers
                 agendaDTO.AgendaColor = viewModel.AgendaColor;
                 agendaDTO.NotificationType = viewModel.NotificationType;
 
-                Account account = new Account(accountDTO, _agendaContext);
+                account = new Account(accountDTO, _agendaContext);
                 account.CreateAgenda(agendaDTO);
                 return RedirectToAction("Index", "Agenda");
             }
@@ -80,11 +79,9 @@ namespace TimeMate.Controllers
         public IActionResult DeleteAgenda(string json)
         {
             int agendaID = JsonConvert.DeserializeObject<int>(json);
-            accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
-            Account account = new Account(accountDTO, _agendaContext);
-
+            
+            account = new Account(accountDTO, _agendaContext);
             account.DeleteAgenda(agendaID);
-
             return Ok();
         }
 
@@ -93,6 +90,7 @@ namespace TimeMate.Controllers
         {
             ChecklistDTO checklist = new ChecklistDTO();
             checklist.TaskID = JsonConvert.DeserializeObject<int>(json);
+
             AppointmentDTO appointmentDTO = new AppointmentDTO();
             ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, _checklistAppointmentContext);
             checklistAppointment.ChangeTaskStatus(checklist.TaskID);
@@ -102,7 +100,7 @@ namespace TimeMate.Controllers
         [HttpGet]
         public IActionResult RetrieveAppointmentExtra(string json)
         {
-            var appointmentID = JsonConvert.DeserializeObject<int>(json);
+            int appointmentID = JsonConvert.DeserializeObject<int>(json);
 
             AppointmentDTO appointmentDTO = new AppointmentDTO() {AppointmentID = appointmentID };
             NormalAppointment normalAppointment = new NormalAppointment(appointmentDTO, _normalAppointmentContext);

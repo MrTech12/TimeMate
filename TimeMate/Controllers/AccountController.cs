@@ -121,7 +121,7 @@ namespace TimeMate.Controllers
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
             account = new Account(accountDTO, _accountContext, _agendaContext);
-            var viewModel = account.RetrieveAgendas();
+            List<AgendaDTO> viewModel = account.RetrieveAgendas();
             return View(viewModel);
         }
 
