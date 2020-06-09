@@ -124,7 +124,7 @@ namespace BusinessLogicLayer.Logic
 
         public void CreateAgenda(AgendaDTO agendaDTO)
         {
-            _agendaContainer.AddAgenda(agendaDTO, accountDTO.AccountID);
+            _agendaContainer.AddAgenda(accountDTO.AccountID, agendaDTO);
         }
 
         public void CreateWorkAgenda()
@@ -134,7 +134,7 @@ namespace BusinessLogicLayer.Logic
             agendaDTO.AgendaColor = "#FF0000";
             agendaDTO.NotificationType = "Nee";
 
-            agendaDTO.AgendaID = _agendaContainer.AddAgenda(agendaDTO, accountDTO.AccountID);
+            agendaDTO.AgendaID = _agendaContainer.AddAgenda(accountDTO.AccountID, agendaDTO);
             _agendaContainer.AddPayDetails(agendaDTO.AgendaID, accountDTO);
         }
 
@@ -145,7 +145,7 @@ namespace BusinessLogicLayer.Logic
 
         public void DeleteAgenda(int agendaID)
         {
-            _agendaContainer.DeleteAgenda(agendaID, accountDTO.AccountID);
+            _agendaContainer.DeleteAgenda(accountDTO.AccountID,agendaID);
         }
     }
 }

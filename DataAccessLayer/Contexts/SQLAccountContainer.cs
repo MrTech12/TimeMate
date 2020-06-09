@@ -13,23 +13,22 @@ namespace DataAccessLayer.Contexts
 {
     public class SQLAccountContainer : IAccountContainer
     {
-        private SQLDatabaseContainer SQLDatabaseContext = new SQLDatabaseContainer();
-        private string databaseOutput;
+        private SQLDatabaseContainer SQLDatabaseContainer = new SQLDatabaseContainer();
 
-        /// <summary>
-        /// Get the account ID from the database.
-        /// </summary>
         public string GetUserID(string mail)
         {
+            string databaseOutput;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    databaseConn.Open();
-                    SqlCommand selectQuerry = new SqlCommand(@"SELECT AccountID FROM [Account] WHERE Mail = @0", databaseConn);
+                    string query = @"SELECT AccountID FROM [Account] WHERE Mail = @0";
 
-                    selectQuerry.Parameters.AddWithValue("0", mail);
-                    var resultedAccountID = selectQuerry.ExecuteScalar();
+                    databaseConn.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+
+                    selectQuery.Parameters.AddWithValue("0", mail);
+                    var resultedAccountID = selectQuery.ExecuteScalar();
 
                     if (resultedAccountID == null)
                     {
@@ -48,20 +47,20 @@ namespace DataAccessLayer.Contexts
             return databaseOutput;
         }
 
-        /// <summary>
-        /// Get the password hash from the database.
-        /// </summary>
         public string SearchForPasswordHash(string mail)
         {
+            string databaseOutput;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    databaseConn.Open();
-                    SqlCommand selectQuerry = new SqlCommand(@"SELECT Password FROM [Account] WHERE Mail = @0", databaseConn);
+                    string query = @"SELECT Password FROM [Account] WHERE Mail = @0";
 
-                    selectQuerry.Parameters.AddWithValue("0", mail);
-                    var resultedPasswordHash = selectQuerry.ExecuteScalar();
+                    databaseConn.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+                    
+                    selectQuery.Parameters.AddWithValue("0", mail);
+                    var resultedPasswordHash = selectQuery.ExecuteScalar();
 
                     if (resultedPasswordHash == null)
                     {
@@ -80,25 +79,22 @@ namespace DataAccessLayer.Contexts
             return databaseOutput;
         }
 
-        /// <summary>
-        /// Insert an account into the database.
-        /// </summary>
         public int CreateAccount(AccountDTO accountDTO)
         {
             int accountID;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
+                    string query = @"INSERT INTO [Account](First_name, Mail, Password) Values (@0,@1,@2); SELECT SCOPE_IDENTITY();";
+
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Account](First_name, Mail, Password) 
-                                                            Values (@0,@1,@2); SELECT SCOPE_IDENTITY();", databaseConn);
+                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", accountDTO.FirstName);
-                    insertQuerry.Parameters.AddWithValue("1", accountDTO.Mail);
-                    insertQuerry.Parameters.AddWithValue("2", accountDTO.Password);
-
-                    accountID = Convert.ToInt32(insertQuerry.ExecuteScalar());
+                    insertQuery.Parameters.AddWithValue("0", accountDTO.FirstName);
+                    insertQuery.Parameters.AddWithValue("1", accountDTO.Mail);
+                    insertQuery.Parameters.AddWithValue("2", accountDTO.Password);
+                    accountID = Convert.ToInt32(insertQuery.ExecuteScalar());
                 }
             }
             catch (SqlException exception)

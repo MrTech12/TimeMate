@@ -9,29 +9,25 @@ namespace DataAccessLayer.Contexts
 {
     public class SQLAgendaContainer : IAgendaContainer
     {
-        private SQLDatabaseContainer SQLDatabaseContext = new SQLDatabaseContainer();
+        private SQLDatabaseContainer SQLDatabaseContainer = new SQLDatabaseContainer();
 
-        /// <summary>
-        /// Add an agenda into the database.
-        /// </summary>
-        /// <returns></returns>
-        public int AddAgenda(AgendaDTO agendaDTO, int accountID)
+        public int AddAgenda(int accountID, AgendaDTO agendaDTO)
         {
-            int agendaID = 0;
+            int agendaID;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
+                    string query = @"INSERT INTO [Agenda](AccountID, Name, Color, Notification_type) VALUES (@0,@1,@2,@3); SELECT SCOPE_IDENTITY();";
+                    
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Agenda](AccountID, Name, Color, Notification_type) 
-                                                            VALUES (@0,@1,@2,@3); SELECT SCOPE_IDENTITY();", databaseConn);
+                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", accountID);
-                    insertQuerry.Parameters.AddWithValue("1", agendaDTO.AgendaName);
-                    insertQuerry.Parameters.AddWithValue("2", agendaDTO.AgendaColor);
-                    insertQuerry.Parameters.AddWithValue("3", agendaDTO.NotificationType);
-
-                    agendaID = Convert.ToInt32(insertQuerry.ExecuteScalar());
+                    insertQuery.Parameters.AddWithValue("0", accountID);
+                    insertQuery.Parameters.AddWithValue("1", agendaDTO.AgendaName);
+                    insertQuery.Parameters.AddWithValue("2", agendaDTO.AgendaColor);
+                    insertQuery.Parameters.AddWithValue("3", agendaDTO.NotificationType);
+                    agendaID = Convert.ToInt32(insertQuery.ExecuteScalar());
                 }
             }
             catch (SqlException exception)
@@ -41,35 +37,33 @@ namespace DataAccessLayer.Contexts
             return agendaID;
         }
 
-        /// <summary>
-        /// Add the pay details into the agenda.
-        /// </summary>
-        /// <returns></returns>
         public void AddPayDetails(int agendaID, AccountDTO accountDTO)
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
+                    string query = @"INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week) Values (@0,@1,@2)";
+
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week) 
-                                                                    Values (@0,@1,@2)", databaseConn);
+                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
+
                     for (int i = 0; i < accountDTO.JobHourlyWage.Count; i++)
                     {
-                        insertQuerry.Parameters.Clear();
-                        insertQuerry.Parameters.AddWithValue("0", agendaID);
+                        insertQuery.Parameters.Clear();
+                        insertQuery.Parameters.AddWithValue("0", agendaID);
 
                         if (accountDTO.JobDayType[i] == "Doordeweeks" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            insertQuerry.Parameters.AddWithValue("1", accountDTO.JobHourlyWage[i]);
-                            insertQuerry.Parameters.AddWithValue("2", "0.00");
+                            insertQuery.Parameters.AddWithValue("1", accountDTO.JobHourlyWage[i]);
+                            insertQuery.Parameters.AddWithValue("2", "0.00");
                         }
                         else if (accountDTO.JobDayType[i] == "Weekend" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            insertQuerry.Parameters.AddWithValue("1", "0.00");
-                            insertQuerry.Parameters.AddWithValue("2", accountDTO.JobHourlyWage[i]);
+                            insertQuery.Parameters.AddWithValue("1", "0.00");
+                            insertQuery.Parameters.AddWithValue("2", accountDTO.JobHourlyWage[i]);
                         }
-                        insertQuerry.ExecuteNonQuery();
+                        insertQuery.ExecuteNonQuery();
                     }
                 }
             }
@@ -79,22 +73,20 @@ namespace DataAccessLayer.Contexts
             }
         }
 
-        /// <summary>
-        /// Delete an agenda from the db.
-        /// </summary>
-        public void DeleteAgenda(int agendaID, int accountID)
+        public void DeleteAgenda(int accountID, int agendaID)
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
+                    string query = @"DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1";
+
                     databaseConn.Open();
-                    SqlCommand deleteQuerry = new SqlCommand(@"DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1", databaseConn);
+                    SqlCommand deleteQuery = new SqlCommand(query, databaseConn);
 
-                    deleteQuerry.Parameters.AddWithValue("0", agendaID);
-                    deleteQuerry.Parameters.AddWithValue("1", accountID);
-
-                    deleteQuerry.ExecuteNonQuery();
+                    deleteQuery.Parameters.AddWithValue("0", agendaID);
+                    deleteQuery.Parameters.AddWithValue("1", accountID);
+                    deleteQuery.ExecuteNonQuery();
                 }
             }
             catch (SqlException exception)
@@ -103,23 +95,20 @@ namespace DataAccessLayer.Contexts
             }
         }
 
-        /// <summary>
-        /// Get all the agenda details that the current account has.
-        /// </summary>
-        /// <returns></returns>
         public List<AgendaDTO> GetAllAgendas(int accountID)
         {
             List<AgendaDTO> agendas = new List<AgendaDTO>();
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
+                    string query = @"SELECT a.* FROM [Agenda] a WHERE AccountID = @0";
+
                     databaseConn.Open();
-                    SqlCommand insertQuerry = new SqlCommand(@"SELECT a.* FROM [Agenda] a WHERE AccountID = @0", databaseConn);
+                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", accountID);
-
-                    SqlDataReader dataReader = insertQuerry.ExecuteReader();
+                    insertQuery.Parameters.AddWithValue("0", accountID);
+                    SqlDataReader dataReader = insertQuery.ExecuteReader();
 
                     while (dataReader.Read())
                     {
@@ -138,17 +127,11 @@ namespace DataAccessLayer.Contexts
             return agendas;
         }
 
-        /// <summary>
-        /// Get the work hours for business days from the "Bijbaan" agenda.
-        /// </summary>
         public List<DateTime> GetWorkdayHours(int agendaIndex)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Get the work hours for the weekend from the "Bijbaan" agenda.
-        /// </summary>
         public List<DateTime> GetWeekendHours(int agendaIndex)
         {
             throw new NotImplementedException();

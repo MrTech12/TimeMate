@@ -10,28 +10,26 @@ namespace DataAccessLayer.Contexts
 {
     public class SQLChecklistAppointmentContainer : IChecklistAppointmentContainer
     {
-        private SQLDatabaseContainer SQLDatabaseContext = new SQLDatabaseContainer();
+        private SQLDatabaseContainer SQLDatabaseContainer = new SQLDatabaseContainer();
 
-        /// <summary>
-        /// Add task(s) of an appointment to the database.
-        /// </summary>
         public void AddTask(AppointmentDTO appointmentDTO)
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    databaseConn.Open();
+                    string query = @"INSERT INTO [Task](AppointmentID, Task_name, Task_checked) VALUES (@0, @1, @2)";
 
-                    SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Task](AppointmentID, Task_name, Task_checked) VALUES (@0, @1, @2)", databaseConn);
+                    databaseConn.Open();
+                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
 
                     foreach (var item in appointmentDTO.ChecklistDTOs)
                     {
-                        insertQuerry.Parameters.Clear();
-                        insertQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
-                        insertQuerry.Parameters.AddWithValue("1", item.TaskName);
-                        insertQuerry.Parameters.AddWithValue("2", false);
-                        insertQuerry.ExecuteNonQuery();
+                        insertQuery.Parameters.Clear();
+                        insertQuery.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
+                        insertQuery.Parameters.AddWithValue("1", item.TaskName);
+                        insertQuery.Parameters.AddWithValue("2", false);
+                        insertQuery.ExecuteNonQuery();
                     }
                 }
             }
@@ -46,15 +44,15 @@ namespace DataAccessLayer.Contexts
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
+                    string query = @"SELECT TaskID, Task_name FROM [Task] WHERE AppointmentID = @0";
+
                     databaseConn.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
 
-                    SqlCommand selectQuerry = new SqlCommand(@"SELECT TaskID, Task_name FROM [Task] WHERE AppointmentID = @0", databaseConn);
-
-                    selectQuerry.Parameters.AddWithValue("0", appointmentID);
-
-                    SqlDataReader dataReader = selectQuerry.ExecuteReader();
+                    selectQuery.Parameters.AddWithValue("0", appointmentID);
+                    SqlDataReader dataReader = selectQuery.ExecuteReader();
 
                     while (dataReader.Read())
                     {
@@ -74,18 +72,18 @@ namespace DataAccessLayer.Contexts
 
         public bool GetTaskStatus(int taskID)
         {
-            bool taskStatus = false;
+            bool taskStatus;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
+                    string query = @"SELECT Task_checked FROM [Task] WHERE TaskID = @0";
+
                     databaseConn.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
 
-                    SqlCommand selectQuerry = new SqlCommand(@"SELECT Task_checked FROM [Task] WHERE TaskID = @0", databaseConn);
-
-                    selectQuerry.Parameters.AddWithValue("0", taskID);
-
-                    taskStatus = Convert.ToBoolean(selectQuerry.ExecuteScalar());
+                    selectQuery.Parameters.AddWithValue("0", taskID);
+                    taskStatus = Convert.ToBoolean(selectQuery.ExecuteScalar());
                 }
             }
             catch (SqlException exception)
@@ -95,23 +93,20 @@ namespace DataAccessLayer.Contexts
             return taskStatus;
         }
 
-        /// <summary>
-        /// Check off a task in the db.
-        /// </summary>
         public void CheckOffTask(int taskID)
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
+                    string query = @"UPDATE [Task] SET Task_checked=@0 WHERE TaskID = @1";
+
                     databaseConn.Open();
+                    SqlCommand updateQuery = new SqlCommand(query, databaseConn);
 
-                    SqlCommand updateQuerry = new SqlCommand(@"UPDATE [Task] SET Task_checked=@0 WHERE TaskID = @1", databaseConn);
-
-                    updateQuerry.Parameters.AddWithValue("0", true);
-                    updateQuerry.Parameters.AddWithValue("1", taskID);
-
-                    updateQuerry.ExecuteScalar();
+                    updateQuery.Parameters.AddWithValue("0", true);
+                    updateQuery.Parameters.AddWithValue("1", taskID);
+                    updateQuery.ExecuteScalar();
                 }
             }
             catch (SqlException exception)
@@ -124,16 +119,16 @@ namespace DataAccessLayer.Contexts
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
+                    string querry = @"UPDATE [Task] SET Task_checked=@0 WHERE TaskID = @1";
+
                     databaseConn.Open();
+                    SqlCommand updateQuery = new SqlCommand(querry, databaseConn);
 
-                    SqlCommand updateQuerry = new SqlCommand(@"UPDATE [Task] SET Task_checked=@0 WHERE TaskID = @1", databaseConn);
-
-                    updateQuerry.Parameters.AddWithValue("0", false);
-                    updateQuerry.Parameters.AddWithValue("1", taskID);
-
-                    updateQuerry.ExecuteScalar();
+                    updateQuery.Parameters.AddWithValue("0", false);
+                    updateQuery.Parameters.AddWithValue("1", taskID);
+                    updateQuery.ExecuteScalar();
                 }
             }
             catch (SqlException exception)

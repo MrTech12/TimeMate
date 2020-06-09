@@ -39,7 +39,7 @@ namespace BusinessLogicLayer.Logic
         public List<AppointmentDTO> RetrieveAppointments()
         {
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
-            var appointments = _appointmentContainer.GetAllAppointments(accountDTO);
+            var appointments = _appointmentContainer.GetAppointments(accountDTO.AccountID);
 
             for (int i = 0; i < appointments.Count; i++)
             {
