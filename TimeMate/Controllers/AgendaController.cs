@@ -34,7 +34,7 @@ namespace TimeMate.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("accountID") != null)
+            if (HttpContext.Session.GetInt32("accountID").HasValue)
             {
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
@@ -88,12 +88,10 @@ namespace TimeMate.Controllers
         [HttpGet]
         public IActionResult ChangeTaskStatus(string json)
         {
-            ChecklistDTO checklist = new ChecklistDTO();
-            checklist.TaskID = JsonConvert.DeserializeObject<int>(json);
+            int taskID = JsonConvert.DeserializeObject<int>(json);
 
-            AppointmentDTO appointmentDTO = new AppointmentDTO();
-            ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, _checklistAppointmentContext);
-            checklistAppointment.ChangeTaskStatus(checklist.TaskID);
+            ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentContext);
+            checklistAppointment.ChangeTaskStatus(taskID);
             return Ok();
         }
 
@@ -103,14 +101,14 @@ namespace TimeMate.Controllers
             int appointmentID = JsonConvert.DeserializeObject<int>(json);
 
             AppointmentDTO appointmentDTO = new AppointmentDTO() {AppointmentID = appointmentID };
-            NormalAppointment normalAppointment = new NormalAppointment(appointmentDTO, _normalAppointmentContext);
-            ChecklistAppointment checklistAppointment = new ChecklistAppointment(appointmentDTO, _checklistAppointmentContext);
+            NormalAppointment normalAppointment = new NormalAppointment(_normalAppointmentContext);
+            ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentContext);
 
-            string description = normalAppointment.RetrieveDescription(appointmentDTO);
+            string description = normalAppointment.RetrieveDescription(appointmentID);
 
             if (description == "")
             {
-                var tasks = checklistAppointment.RetrieveTasks(appointmentDTO);
+                var tasks = checklistAppointment.RetrieveTasks(appointmentID);
                 return Json(tasks);
             }
             else

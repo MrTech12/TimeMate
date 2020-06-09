@@ -6,26 +6,18 @@ using System.Text;
 
 namespace BusinessLogicLayer.Logic
 {
-    public class NormalAppointment : Appointment
+    public class NormalAppointment
     {
-        private INormalAppointmentContainer _nAppointmentContext;
+        private INormalAppointmentContainer _normalAppointmentContext;
 
-        public NormalAppointment(AppointmentDTO appointmentDTO, INormalAppointmentContainer normalAppointmentContext) : base(appointmentDTO)
+        public NormalAppointment(INormalAppointmentContainer normalAppointmentContext)
         {
-            this._nAppointmentContext = normalAppointmentContext;
+            this._normalAppointmentContext = normalAppointmentContext;
         }
 
-        public string RetrieveDescription(AppointmentDTO appointmentDTO)
+        public string RetrieveDescription(int appointmentID)
         {
-            return _nAppointmentContext.GetDescription(appointmentDTO.AppointmentID);
-        }
-
-        /// <summary>
-        /// Rename an appointment.
-        /// </summary>
-        public override void RenameAppointment(AppointmentDTO appointmentDTO)
-        {
-            throw new NotImplementedException();
+            return _normalAppointmentContext.GetDescription(appointmentID);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace TimeMate.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("accountID") != null)
+            if (HttpContext.Session.GetInt32("accountID").HasValue)
             {
                 return RedirectToAction("Index", "Agenda");
             }

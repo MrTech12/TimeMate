@@ -13,7 +13,7 @@ namespace DataAccessLayer.Interfaces
 
         void RevertCheckOffTask(int taskID);
 
-        List<ChecklistDTO> GetTasks(AppointmentDTO appointmentDTO);
+        List<ChecklistDTO> GetTasks(int appointmentID);
 
         void CheckOffTask(int taskID);
     }

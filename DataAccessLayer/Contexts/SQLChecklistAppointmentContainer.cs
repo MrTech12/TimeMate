@@ -41,7 +41,7 @@ namespace DataAccessLayer.Contexts
             }
         }
 
-        public List<ChecklistDTO> GetTasks(AppointmentDTO appointmentDTO)
+        public List<ChecklistDTO> GetTasks(int appointmentID)
         {
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
             try
@@ -52,7 +52,7 @@ namespace DataAccessLayer.Contexts
 
                     SqlCommand selectQuerry = new SqlCommand(@"SELECT TaskID, Task_name FROM [Task] WHERE AppointmentID = @0", databaseConn);
 
-                    selectQuerry.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
+                    selectQuerry.Parameters.AddWithValue("0", appointmentID);
 
                     SqlDataReader dataReader = selectQuerry.ExecuteReader();
 

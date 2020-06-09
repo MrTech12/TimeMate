@@ -6,18 +6,18 @@ using System.Text;
 
 namespace BusinessLogicLayer.Logic
 {
-    public class ChecklistAppointment : Appointment
+    public class ChecklistAppointment
     {
-        private IChecklistAppointmentContainer _cAppointmentContext;
+        private IChecklistAppointmentContainer _checklistAppointmentContext;
 
-        public ChecklistAppointment(AppointmentDTO appointmentDTO, IChecklistAppointmentContainer checklistAppointmentContext) : base(appointmentDTO)
+        public ChecklistAppointment(IChecklistAppointmentContainer checklistAppointmentContext)
         {
-            this._cAppointmentContext = checklistAppointmentContext;
+            this._checklistAppointmentContext = checklistAppointmentContext;
         }
 
-        public List<string> RetrieveTasks(AppointmentDTO appointmentDTO)
+        public List<string> RetrieveTasks(int appointmentID)
         {
-            var checklists = _cAppointmentContext.GetTasks(appointmentDTO);
+            var checklists = _checklistAppointmentContext.GetTasks(appointmentID);
             List<string> tasks = new List<string>();
             for (int i = 0; i < checklists.Count; i++)
             {
@@ -29,23 +29,15 @@ namespace BusinessLogicLayer.Logic
 
         public void ChangeTaskStatus(int taskID)
         {
-            bool taskStatus = _cAppointmentContext.GetTaskStatus(taskID);
+            bool taskStatus = _checklistAppointmentContext.GetTaskStatus(taskID);
             if (!taskStatus)
             {
-                _cAppointmentContext.CheckOffTask(taskID);
+                _checklistAppointmentContext.CheckOffTask(taskID);
             }
             else
             {
-                _cAppointmentContext.RevertCheckOffTask(taskID);
+                _checklistAppointmentContext.RevertCheckOffTask(taskID);
             }
-        }
-
-        /// <summary>
-        /// Rename an appointment.
-        /// </summary>
-        public override void RenameAppointment(AppointmentDTO appointmentDTO)
-        {
-            throw new NotImplementedException();
         }
     }
 }
