@@ -15,7 +15,7 @@ namespace DataAccessLayer.Contexts
         /// Add an agenda into the database.
         /// </summary>
         /// <returns></returns>
-        public int AddAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
+        public int AddAgenda(AgendaDTO agendaDTO, int accountID)
         {
             int agendaID = 0;
             try
@@ -26,7 +26,7 @@ namespace DataAccessLayer.Contexts
                     SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Agenda](AccountID, Name, Color, Notification_type) 
                                                             VALUES (@0,@1,@2,@3); SELECT SCOPE_IDENTITY();", databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
+                    insertQuerry.Parameters.AddWithValue("0", accountID);
                     insertQuerry.Parameters.AddWithValue("1", agendaDTO.AgendaName);
                     insertQuerry.Parameters.AddWithValue("2", agendaDTO.AgendaColor);
                     insertQuerry.Parameters.AddWithValue("3", agendaDTO.NotificationType);
@@ -45,7 +45,7 @@ namespace DataAccessLayer.Contexts
         /// Add the pay details into the agenda.
         /// </summary>
         /// <returns></returns>
-        public void AddPayDetails(AgendaDTO newAgendaDTO, AccountDTO accountDTO)
+        public void AddPayDetails(int agendaID, AccountDTO accountDTO)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace DataAccessLayer.Contexts
                     for (int i = 0; i < accountDTO.JobHourlyWage.Count; i++)
                     {
                         insertQuerry.Parameters.Clear();
-                        insertQuerry.Parameters.AddWithValue("0", newAgendaDTO.AgendaID);
+                        insertQuerry.Parameters.AddWithValue("0", agendaID);
 
                         if (accountDTO.JobDayType[i] == "Doordeweeks" && accountDTO.JobHourlyWage[i] != 0)
                         {
@@ -82,7 +82,7 @@ namespace DataAccessLayer.Contexts
         /// <summary>
         /// Delete an agenda from the db.
         /// </summary>
-        public void DeleteAgenda(int AgendaID, AccountDTO accountDTO)
+        public void DeleteAgenda(int agendaID, int accountID)
         {
             try
             {
@@ -91,8 +91,8 @@ namespace DataAccessLayer.Contexts
                     databaseConn.Open();
                     SqlCommand deleteQuerry = new SqlCommand(@"DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1", databaseConn);
 
-                    deleteQuerry.Parameters.AddWithValue("0", AgendaID);
-                    deleteQuerry.Parameters.AddWithValue("1", accountDTO.AccountID);
+                    deleteQuerry.Parameters.AddWithValue("0", agendaID);
+                    deleteQuerry.Parameters.AddWithValue("1", accountID);
 
                     deleteQuerry.ExecuteNonQuery();
                 }
@@ -107,7 +107,7 @@ namespace DataAccessLayer.Contexts
         /// Get all the agenda details that the current account has.
         /// </summary>
         /// <returns></returns>
-        public List<AgendaDTO> GetAllAgendas(AccountDTO accountDTO)
+        public List<AgendaDTO> GetAllAgendas(int accountID)
         {
             List<AgendaDTO> agendas = new List<AgendaDTO>();
             try
@@ -117,7 +117,7 @@ namespace DataAccessLayer.Contexts
                     databaseConn.Open();
                     SqlCommand insertQuerry = new SqlCommand(@"SELECT a.* FROM [Agenda] a WHERE AccountID = @0", databaseConn);
 
-                    insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
+                    insertQuerry.Parameters.AddWithValue("0", accountID);
 
                     SqlDataReader dataReader = insertQuerry.ExecuteReader();
 

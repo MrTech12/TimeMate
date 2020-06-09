@@ -7,13 +7,13 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IAgendaContainer
     {
-        int AddAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO);
+        int AddAgenda(AgendaDTO agendaDTO, int accountID);
 
-        void AddPayDetails(AgendaDTO agendaDTO, AccountDTO accountDTO);
+        void AddPayDetails(int agendaID, AccountDTO accountDTO);
 
-        void DeleteAgenda(int AgendaIndex, AccountDTO accountDTO);
+        void DeleteAgenda(int agendaID, int accountID);
 
-        List<AgendaDTO> GetAllAgendas(AccountDTO accountDTO);
+        List<AgendaDTO> GetAllAgendas(int accountID);
 
         List<DateTime> GetWorkdayHours(int agendaIndex);
 
