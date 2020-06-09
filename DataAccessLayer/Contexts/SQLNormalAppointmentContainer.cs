@@ -7,9 +7,9 @@ using System.Text;
 
 namespace DataAccessLayer.Contexts
 {
-    public class SQLNormalAppointmentContext : INormalAppointmentContext
+    public class SQLNormalAppointmentContainer : INormalAppointmentContainer
     {
-        private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
+        private SQLDatabaseContainer SQLDatabaseContext = new SQLDatabaseContainer();
 
         /// <summary>
         /// Add a description of an appointment to the database.

@@ -7,9 +7,9 @@ using System.Text;
 
 namespace DataAccessLayer.Contexts
 {
-    public class SQLAgendaContext : IAgendaContext
+    public class SQLAgendaContainer : IAgendaContainer
     {
-        private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
+        private SQLDatabaseContainer SQLDatabaseContext = new SQLDatabaseContainer();
 
         /// <summary>
         /// Add an agenda into the database.

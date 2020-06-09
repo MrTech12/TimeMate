@@ -14,14 +14,14 @@ namespace TimeMate.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IAccountContext _accountContext;
-        private readonly IAgendaContext _agendaContext;
-        private readonly ISenderContext _senderContext;
+        private readonly IAccountContainer _accountContext;
+        private readonly IAgendaContainer _agendaContext;
+        private readonly ISenderContainer _senderContext;
 
         private Account account;
         private AccountDTO accountDTO;
 
-        public AccountController(IAccountContext accountContext, IAgendaContext agendaContext, ISenderContext senderContext)
+        public AccountController(IAccountContainer accountContext, IAgendaContainer agendaContext, ISenderContainer senderContext)
         {
             _accountContext = accountContext;
             _agendaContext = agendaContext;

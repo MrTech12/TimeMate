@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccessLayer.Interfaces
 {
-    public interface IChecklistAppointmentContext
+    public interface IChecklistAppointmentContainer
     {
         void AddTask(AppointmentDTO appointmentDTO);
 

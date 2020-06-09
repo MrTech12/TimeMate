@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccessLayer.Interfaces
 {
-    public interface IAgendaContext
+    public interface IAgendaContainer
     {
         int AddAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO);
 

@@ -14,16 +14,16 @@ namespace TimeMate.Controllers
 {
     public class ChecklistAppointmentController : Controller
     {
-        private readonly IAccountContext _accountContext;
-        private readonly IAgendaContext _agendaContext;
-        private readonly IAppointmentContext _appointmentContext;
-        private readonly IChecklistAppointmentContext _checklistAppointmentContext;
+        private readonly IAccountContainer _accountContext;
+        private readonly IAgendaContainer _agendaContext;
+        private readonly IAppointmentContainer _appointmentContext;
+        private readonly IChecklistAppointmentContainer _checklistAppointmentContext;
 
         private AccountDTO accountDTO = new AccountDTO();
         private Account account;
         private Agenda agenda;
 
-        public ChecklistAppointmentController(IAccountContext accountContext, IAgendaContext agendaContext, IAppointmentContext appointmentContext, IChecklistAppointmentContext checklistAppointmentContext)
+        public ChecklistAppointmentController(IAccountContainer accountContext, IAgendaContainer agendaContext, IAppointmentContainer appointmentContext, IChecklistAppointmentContainer checklistAppointmentContext)
         {
             _accountContext = accountContext;
             _agendaContext = agendaContext;

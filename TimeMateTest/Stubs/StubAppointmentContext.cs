@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 namespace TimeMateTest.Stubs
 {
-    class StubAppointmentContext : IAppointmentContext
+    class StubAppointmentContext : IAppointmentContainer
     {
         public int AddAppointment(AppointmentDTO appointmentDTO)
         {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccessLayer.Interfaces
 {
-    public interface IJobContext
+    public interface IJobContainer
     {
         double GetWorkdayPay(AccountDTO accountDTO, JobDTO jobDTO);
 

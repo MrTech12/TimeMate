@@ -10,15 +10,15 @@ namespace BusinessLogicLayer.Logic
 {
     public class Account
     {
-        private readonly IAccountContext _accountContext;
-        private readonly IAgendaContext _agendaContext;
-        private readonly ISenderContext _senderContext;
+        private readonly IAccountContainer _accountContext;
+        private readonly IAgendaContainer _agendaContext;
+        private readonly ISenderContainer _senderContext;
         private AccountDTO accountDTO;
 
         private string returnMessage;
         private string databaseOutput;
 
-        public Account(AccountDTO accountDTO, IAccountContext accountContext, IAgendaContext agendaContext, ISenderContext senderContext)
+        public Account(AccountDTO accountDTO, IAccountContainer accountContext, IAgendaContainer agendaContext, ISenderContainer senderContext)
         {
             this.accountDTO = accountDTO;
             this._accountContext = accountContext;
@@ -26,14 +26,14 @@ namespace BusinessLogicLayer.Logic
             this._senderContext = senderContext;
         }
 
-        public Account(AccountDTO accountDTO, IAccountContext accountContext, IAgendaContext agendaContext)
+        public Account(AccountDTO accountDTO, IAccountContainer accountContext, IAgendaContainer agendaContext)
         {
             this.accountDTO = accountDTO;
             this._accountContext = accountContext;
             this._agendaContext = agendaContext;
         }
 
-        public Account(AccountDTO accountDTO, IAgendaContext agendaContext)
+        public Account(AccountDTO accountDTO, IAgendaContainer agendaContext)
         {
             this.accountDTO = accountDTO;
             this._agendaContext = agendaContext;

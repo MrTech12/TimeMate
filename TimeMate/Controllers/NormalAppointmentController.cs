@@ -14,12 +14,12 @@ namespace TimeMate.Controllers
 {
     public class NormalAppointmentController : Controller
     {
-        private readonly IAccountContext _accountContext;
-        private readonly IAgendaContext _agendaContext;
-        private readonly IAppointmentContext _appointmentContext;
-        private readonly INormalAppointmentContext _normalAppointmentContext;
+        private readonly IAccountContainer _accountContext;
+        private readonly IAgendaContainer _agendaContext;
+        private readonly IAppointmentContainer _appointmentContext;
+        private readonly INormalAppointmentContainer _normalAppointmentContext;
 
-        public NormalAppointmentController(IAccountContext accountContext, IAgendaContext agendaContext, IAppointmentContext appointmentContext, INormalAppointmentContext normalAppointmentContext)
+        public NormalAppointmentController(IAccountContainer accountContext, IAgendaContainer agendaContext, IAppointmentContainer appointmentContext, INormalAppointmentContainer normalAppointmentContext)
         {
             _accountContext = accountContext;
             _agendaContext = agendaContext;

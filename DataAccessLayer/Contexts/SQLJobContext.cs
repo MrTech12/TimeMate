@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccessLayer.Contexts
 {
-    public class SQLJobContext : IJobContext
+    public class SQLJobContext : IJobContainer
     {
         /// <summary>
         /// Get the pay for business days from the database.

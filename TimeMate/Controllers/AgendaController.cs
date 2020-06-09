@@ -15,15 +15,15 @@ namespace TimeMate.Controllers
 {
     public class AgendaController : Controller
     {
-        private readonly IAgendaContext _agendaContext;
-        private readonly IAppointmentContext _appointmentContext;
-        private readonly INormalAppointmentContext _normalAppointmentContext;
-        private readonly IChecklistAppointmentContext _checklistAppointmentContext;
+        private readonly IAgendaContainer _agendaContext;
+        private readonly IAppointmentContainer _appointmentContext;
+        private readonly INormalAppointmentContainer _normalAppointmentContext;
+        private readonly IChecklistAppointmentContainer _checklistAppointmentContext;
 
         private AccountDTO accountDTO = new AccountDTO();
         private Agenda agenda;
 
-        public AgendaController(IAgendaContext agendaContext, IAppointmentContext appointmentContext, INormalAppointmentContext normalAppointmentContext, IChecklistAppointmentContext checklistAppointmentContext)
+        public AgendaController(IAgendaContainer agendaContext, IAppointmentContainer appointmentContext, INormalAppointmentContainer normalAppointmentContext, IChecklistAppointmentContainer checklistAppointmentContext)
         {
             _agendaContext = agendaContext;
             _appointmentContext = appointmentContext;

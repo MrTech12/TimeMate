@@ -35,13 +35,13 @@ namespace TimeMate
             services.AddTransient<AppointmentDTO>();
             services.AddTransient<JobDTO>();
 
-            services.AddTransient<IAccountContext, SQLAccountContext>();
-            services.AddTransient<IAgendaContext, SQLAgendaContext>();
-            services.AddTransient<IAppointmentContext, SQLAppointmentContext>();
-            services.AddTransient<IChecklistAppointmentContext, SQLChecklistAppointmentContext>();
-            services.AddTransient<IJobContext, SQLJobContext>();
-            services.AddTransient<INormalAppointmentContext, SQLNormalAppointmentContext>();
-            services.AddTransient<ISenderContext, MailSenderContext>();
+            services.AddTransient<IAccountContainer, SQLAccountContainer>();
+            services.AddTransient<IAgendaContainer, SQLAgendaContainer>();
+            services.AddTransient<IAppointmentContainer, SQLAppointmentContainer>();
+            services.AddTransient<IChecklistAppointmentContainer, SQLChecklistAppointmentContainer>();
+            services.AddTransient<IJobContainer, SQLJobContext>();
+            services.AddTransient<INormalAppointmentContainer, SQLNormalAppointmentContainer>();
+            services.AddTransient<ISenderContainer, MailSenderContainer>();
 
             services.AddSession(options =>
             {

@@ -8,7 +8,7 @@ using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs
 {
-    class StubAgendaContext : IAgendaContext
+    class StubAgendaContext : IAgendaContainer
     {
         public int AddAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
         {

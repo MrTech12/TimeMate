@@ -11,9 +11,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer.Contexts
 {
-    public class SQLAccountContext : IAccountContext
+    public class SQLAccountContainer : IAccountContainer
     {
-        private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
+        private SQLDatabaseContainer SQLDatabaseContext = new SQLDatabaseContainer();
         private string databaseOutput;
 
         /// <summary>

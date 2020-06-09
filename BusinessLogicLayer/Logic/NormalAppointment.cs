@@ -8,9 +8,9 @@ namespace BusinessLogicLayer.Logic
 {
     public class NormalAppointment : Appointment
     {
-        private INormalAppointmentContext _nAppointmentContext;
+        private INormalAppointmentContainer _nAppointmentContext;
 
-        public NormalAppointment(AppointmentDTO appointmentDTO, INormalAppointmentContext normalAppointmentContext) : base(appointmentDTO)
+        public NormalAppointment(AppointmentDTO appointmentDTO, INormalAppointmentContainer normalAppointmentContext) : base(appointmentDTO)
         {
             this._nAppointmentContext = normalAppointmentContext;
         }

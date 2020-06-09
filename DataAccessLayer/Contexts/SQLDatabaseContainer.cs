@@ -8,7 +8,7 @@ using System.IO;
 
 namespace DataAccessLayer.Contexts
 {
-    public class SQLDatabaseContext
+    public class SQLDatabaseContainer
     {
         /// <summary>
         /// Get the connectionstring for the database, that resides in the json file.

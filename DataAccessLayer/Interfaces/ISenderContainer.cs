@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAccessLayer.Interfaces
 {
-    public interface ISenderContext
+    public interface ISenderContainer
     {
         void SendAccountCreationMessage(string mail);
     }

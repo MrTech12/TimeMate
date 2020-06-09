@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TimeMateTest.Stubs
 {
-    public class StubSenderContext : ISenderContext
+    public class StubSenderContext : ISenderContainer
     {
         public void SendAccountCreationMessage(string mail)
         {

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccessLayer.Contexts
 {
-    public class MailSenderContext : ISenderContext
+    public class MailSenderContainer : ISenderContainer
     {
         public void SendAccountCreationMessage(string mail)
         {

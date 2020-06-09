@@ -8,9 +8,9 @@ using System.Text;
 
 namespace DataAccessLayer.Contexts
 {
-    public class SQLChecklistAppointmentContext : IChecklistAppointmentContext
+    public class SQLChecklistAppointmentContainer : IChecklistAppointmentContainer
     {
-        private SQLDatabaseContext SQLDatabaseContext = new SQLDatabaseContext();
+        private SQLDatabaseContainer SQLDatabaseContext = new SQLDatabaseContainer();
 
         /// <summary>
         /// Add task(s) of an appointment to the database.

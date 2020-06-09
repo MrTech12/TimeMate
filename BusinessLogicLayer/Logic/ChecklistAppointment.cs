@@ -8,9 +8,9 @@ namespace BusinessLogicLayer.Logic
 {
     public class ChecklistAppointment : Appointment
     {
-        private IChecklistAppointmentContext _cAppointmentContext;
+        private IChecklistAppointmentContainer _cAppointmentContext;
 
-        public ChecklistAppointment(AppointmentDTO appointmentDTO, IChecklistAppointmentContext checklistAppointmentContext) : base(appointmentDTO)
+        public ChecklistAppointment(AppointmentDTO appointmentDTO, IChecklistAppointmentContainer checklistAppointmentContext) : base(appointmentDTO)
         {
             this._cAppointmentContext = checklistAppointmentContext;
         }

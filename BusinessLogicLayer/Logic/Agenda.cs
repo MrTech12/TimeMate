@@ -12,25 +12,25 @@ namespace BusinessLogicLayer.Logic
     {
         private AccountDTO accountDTO = new AccountDTO();
 
-        private IAgendaContext _agendaContext;
-        private IAppointmentContext _appointmentContext;
-        private INormalAppointmentContext _nAppointmentContext;
-        private IChecklistAppointmentContext _cAppointmentContext;
+        private IAgendaContainer _agendaContext;
+        private IAppointmentContainer _appointmentContext;
+        private INormalAppointmentContainer _nAppointmentContext;
+        private IChecklistAppointmentContainer _cAppointmentContext;
 
-        public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext)
+        public Agenda(AccountDTO accountDTO, IAgendaContainer agendaContext)
         {
             this._agendaContext = agendaContext;
             this.accountDTO = accountDTO;
         }
 
-        public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext, IAppointmentContext appointmentContext)
+        public Agenda(AccountDTO accountDTO, IAgendaContainer agendaContext, IAppointmentContainer appointmentContext)
         {
             this.accountDTO = accountDTO;
             this._agendaContext = agendaContext;
             this._appointmentContext = appointmentContext;
         }
 
-        public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext, IAppointmentContext appointmentContext , INormalAppointmentContext nAppointmentContext)
+        public Agenda(AccountDTO accountDTO, IAgendaContainer agendaContext, IAppointmentContainer appointmentContext , INormalAppointmentContainer nAppointmentContext)
         {
             this.accountDTO = accountDTO;
             this._agendaContext = agendaContext;
@@ -38,7 +38,7 @@ namespace BusinessLogicLayer.Logic
             this._nAppointmentContext = nAppointmentContext;
         }
 
-        public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext, IAppointmentContext appointmentContext, IChecklistAppointmentContext cAppointmentContext)
+        public Agenda(AccountDTO accountDTO, IAgendaContainer agendaContext, IAppointmentContainer appointmentContext, IChecklistAppointmentContainer cAppointmentContext)
         {
             this.accountDTO = accountDTO;
             this._agendaContext = agendaContext;
