@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Logic;
-using DataAccessLayer.Contexts;
 using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -62,7 +61,11 @@ namespace TimeMate.Controllers
         {
             if (ModelState.IsValid)
             {
-                AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = viewModel.Name, AgendaColor = viewModel.Color, Notification = viewModel.NotificationType };
+                AgendaDTO agendaDTO = new AgendaDTO();
+                agendaDTO.AgendaName = viewModel.AgendaName;
+                agendaDTO.AgendaColor = viewModel.AgendaColor;
+                agendaDTO.NotificationType = viewModel.NotificationType;
+
                 Account account = new Account(accountDTO, _agendaContext);
                 account.CreateAgenda(agendaDTO);
                 return RedirectToAction("Index", "Agenda");

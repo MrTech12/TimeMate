@@ -1,9 +1,9 @@
 ﻿@model TimeMate.Models.AppointmentViewModel
 
 <div class="form-group">
-    <label asp-for="Name" class="control-label"></label>
-    <input asp-for="Name" class="form-control" name="appointment-name"/>
-    <span asp-validation-for="Name" class="text-danger"></span>
+    <label asp-for="AppointmentName" class="control-label"></label>
+    <input asp-for="AppointmentName" class="form-control" name="appointment-name-input"/>
+    <span asp-validation-for="AppointmentName" class="text-danger"></span>
 </div>
 <div class="row">
     <div class="col form-group">
@@ -34,11 +34,11 @@
     <select asp-for="@Model.AgendaDTO[0].AgendaName">
         @foreach (var item in Model.AgendaDTO)
         {
-        <option id="@item.AgendaID" value="@item.AgendaID">
+        <option id="@item.AgendaID">
 
-            @foreach (var qwerty in item.AgendaName)
+            @foreach (var agendaName in item.AgendaName)
             {
-                @qwerty
+                @agendaName
             }
         </option>
 

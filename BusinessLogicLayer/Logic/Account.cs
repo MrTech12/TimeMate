@@ -141,7 +141,7 @@ namespace BusinessLogicLayer.Logic
             AgendaDTO newAgendaDTO = new AgendaDTO();
             newAgendaDTO.AgendaName = "Bijbaan";
             newAgendaDTO.AgendaColor = "#FF0000";
-            newAgendaDTO.Notification = "Nee";
+            newAgendaDTO.NotificationType = "Nee";
 
             newAgendaDTO.AgendaID = _agendaContext.AddAgenda(newAgendaDTO, accountDTO);
 

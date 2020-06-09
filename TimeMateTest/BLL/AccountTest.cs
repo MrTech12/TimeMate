@@ -199,7 +199,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { AccountID = 12 };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
             Agenda agenda = new Agenda(accountDTO, new StubAgendaContext());
-            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000", Notification = "Nee" };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000", NotificationType = "Nee" };
             
             account.CreateAgenda(agendaDTO);
             string[] file = File.ReadAllLines(@"C:\tmp\addAgendaTest.txt");
@@ -215,7 +215,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { AccountID = 12 };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
             Agenda agenda = new Agenda(accountDTO, new StubAgendaContext());
-            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560", Notification = "Nee" };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560", NotificationType = "Nee" };
 
             account.CreateAgenda(agendaDTO);
             string[] file = File.ReadAllLines(@"C:\tmp\addAgendaTest.txt");
@@ -257,7 +257,7 @@ namespace TimeMateTest.BLL
         public void RemoveAgenda()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", Notification = "Nee"};
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", NotificationType = "Nee"};
             Account account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\removeAgendaTest.txt"))
@@ -265,7 +265,7 @@ namespace TimeMateTest.BLL
                 streamWriter.WriteLine(agendaDTO.AgendaID);
                 streamWriter.WriteLine(agendaDTO.AgendaName);
                 streamWriter.WriteLine(agendaDTO.AgendaColor);
-                streamWriter.WriteLine(agendaDTO.Notification);
+                streamWriter.WriteLine(agendaDTO.NotificationType);
             }
 
             account.DeleteAgenda(agendaDTO.AgendaID);

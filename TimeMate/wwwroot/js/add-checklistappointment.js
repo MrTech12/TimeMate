@@ -19,7 +19,7 @@ function CheckEmptyAppointmentName() {
 
     form.validate({
         rules: {
-            "appointment-name": {
+            "appointment-name-input": {
                 required: true,
             }
         }
@@ -30,7 +30,7 @@ function CheckEmptyAppointmentName() {
 
 function GetEnteredInformation() {
     appointmentInfo = [];
-    appointmentInfo.push($("#AppointmentViewModel_Name").val());
+    appointmentInfo.push($("#AppointmentViewModel_AppointmentName").val());
     appointmentInfo.push($("#AppointmentViewModel_StartDate").val());
     appointmentInfo.push($("#AppointmentViewModel_StartTime").val());
     appointmentInfo.push($("#AppointmentViewModel_EndDate").val());

@@ -11,7 +11,7 @@ namespace TimeMate.Models
     {
         [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Voor een afspraaknaam in.")]
-        public string Name { get; set; }
+        public string AppointmentName { get; set; }
 
         [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Kies een startdatum.")]

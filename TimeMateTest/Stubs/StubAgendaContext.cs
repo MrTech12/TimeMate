@@ -18,7 +18,7 @@ namespace TimeMateTest.Stubs
             {
                 streamWriter.WriteLine(agendaDTO.AgendaName);
                 streamWriter.WriteLine(agendaDTO.AgendaColor);
-                streamWriter.WriteLine(agendaDTO.Notification);
+                streamWriter.WriteLine(agendaDTO.NotificationType);
             }          
             return agendaID;
         }
@@ -29,7 +29,7 @@ namespace TimeMateTest.Stubs
             {
                 streamWriter.WriteLine(agendaDTO.AgendaName);
                 streamWriter.WriteLine(agendaDTO.AgendaColor);
-                streamWriter.WriteLine(agendaDTO.Notification);
+                streamWriter.WriteLine(agendaDTO.NotificationType);
             }
         }
 

@@ -29,7 +29,7 @@ namespace DataAccessLayer.Contexts
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.AccountID);
                     insertQuerry.Parameters.AddWithValue("1", agendaDTO.AgendaName);
                     insertQuerry.Parameters.AddWithValue("2", agendaDTO.AgendaColor);
-                    insertQuerry.Parameters.AddWithValue("3", agendaDTO.Notification);
+                    insertQuerry.Parameters.AddWithValue("3", agendaDTO.NotificationType);
 
                     agendaID = Convert.ToInt32(insertQuerry.ExecuteScalar());
                 }
