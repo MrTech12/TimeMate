@@ -53,8 +53,8 @@ namespace TimeMate.Controllers
         [HttpGet]
         public IActionResult AddAgenda()
         {
-            AgendaViewModel agendaViewModel = new AgendaViewModel();
-            return View(agendaViewModel);
+            AgendaViewModel viewModel = new AgendaViewModel();
+            return View(viewModel);
         }
 
         [HttpPost]

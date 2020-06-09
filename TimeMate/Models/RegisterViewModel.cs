@@ -33,17 +33,17 @@ namespace TimeMate.Models
         [Display(Name = "Voer de uurloon van bijbaan 1 in.")]
         [DisplayFormat(DataFormatString = "{0:0,0}")]
         [RegularExpression(@"\d{1,}(?:\,?\d)*%?", ErrorMessage = "Gebruik een nummer met een komma.")]
-        public string job1HourlyWage { get; set; }
+        public string Job1HourlyWage { get; set; }
 
         [Display(Name = "Is de bijbaan doordeweeks of in het weekend?")]
-        public string job1DayType { get; set; }
+        public string Job1DayType { get; set; }
 
         [Display(Name = "Voer de uurloon van bijbaan 2 in.")]
         [DisplayFormat(DataFormatString = "{0:0,0}")]
         [RegularExpression(@"\d{1,}(?:\,?\d)*%?", ErrorMessage = "Gebruik een nummer met een komma.")]
-        public string job2HourlyWage { get; set; }
+        public string Job2HourlyWage { get; set; }
 
         [Display(Name = "Is de bijbaan doordeweeks of in het weekend?")]
-        public string job2DayType { get; set; }
+        public string Job2DayType { get; set; }
     }
 }

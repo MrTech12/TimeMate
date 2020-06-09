@@ -8,7 +8,7 @@ namespace DataAccessLayer.DTO
     {
         private int accountID;
         private string firstName;
-        private string mailAddress;
+        private string mail;
         private string password;
         private int jobCount;
         private List<double> jobHourlyWage = new List<double>();
@@ -18,7 +18,7 @@ namespace DataAccessLayer.DTO
 
         public string FirstName { get { return this.firstName; } set { this.firstName = value; } }
 
-        public string MailAddress { get { return this.mailAddress; } set { this.mailAddress = value; } }
+        public string Mail { get { return this.mail; } set { this.mail = value; } }
 
         public string Password { get { return this.password; } set { this.password = value; } }
 

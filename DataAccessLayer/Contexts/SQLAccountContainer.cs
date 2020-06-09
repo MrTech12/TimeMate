@@ -95,7 +95,7 @@ namespace DataAccessLayer.Contexts
                                                             Values (@0,@1,@2); SELECT SCOPE_IDENTITY();", databaseConn);
 
                     insertQuerry.Parameters.AddWithValue("0", accountDTO.FirstName);
-                    insertQuerry.Parameters.AddWithValue("1", accountDTO.MailAddress);
+                    insertQuerry.Parameters.AddWithValue("1", accountDTO.Mail);
                     insertQuerry.Parameters.AddWithValue("2", accountDTO.Password);
 
                     accountID = Convert.ToInt32(insertQuerry.ExecuteScalar());

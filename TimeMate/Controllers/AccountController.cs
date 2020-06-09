@@ -37,8 +37,8 @@ namespace TimeMate.Controllers
             }
             else
             {
-                LogInViewModel loginViewModel = new LogInViewModel();
-                return View(loginViewModel);
+                LogInViewModel viewModel = new LogInViewModel();
+                return View(viewModel);
             }
         }
 
@@ -48,7 +48,7 @@ namespace TimeMate.Controllers
             if (ModelState.IsValid)
             {
                 accountDTO = new AccountDTO();
-                accountDTO.MailAddress = viewModel.Mail;
+                accountDTO.Mail = viewModel.Mail;
                 accountDTO.Password = viewModel.Password;
 
                 account = new Account(accountDTO, _accountContext, _agendaContext);
@@ -85,14 +85,14 @@ namespace TimeMate.Controllers
             {
                 accountDTO = new AccountDTO();
                 accountDTO.FirstName = viewModel.FirstName;
-                accountDTO.MailAddress = viewModel.Mail;
+                accountDTO.Mail = viewModel.Mail;
                 accountDTO.Password = viewModel.Password;
                 accountDTO.JobCount = viewModel.JobAmount;
 
-                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.job1HourlyWage));
-                accountDTO.JobDayType.Add(viewModel.job1DayType);
-                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.job2HourlyWage));
-                accountDTO.JobDayType.Add(viewModel.job2DayType);
+                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job1HourlyWage));
+                accountDTO.JobDayType.Add(viewModel.Job1DayType);
+                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job2HourlyWage));
+                accountDTO.JobDayType.Add(viewModel.Job2DayType);
 
                 account = new Account(accountDTO, _accountContext, _agendaContext, _senderContext);
 

@@ -21,7 +21,7 @@ namespace TimeMateTest.Stubs
         public int CreateAccount(AccountDTO AccountDTO)
         {
             int accountID = 0;
-            if (AccountDTO.MailAddress == "sina1240@gmail.com")
+            if (AccountDTO.Mail == "sina1240@gmail.com")
             {
                 accountID = 6;
             }

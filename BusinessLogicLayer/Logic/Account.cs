@@ -44,7 +44,7 @@ namespace BusinessLogicLayer.Logic
         /// </summary>
         public string LoggingIn()
         {
-            databaseOutput = _accountContext.SearchForPasswordHash(accountDTO.MailAddress);
+            databaseOutput = _accountContext.SearchForPasswordHash(accountDTO.Mail);
             if (databaseOutput != null)
             {
                 bool passwordValid = BCrypt.Net.BCrypt.Verify(accountDTO.Password, databaseOutput);
@@ -54,7 +54,7 @@ namespace BusinessLogicLayer.Logic
                 }
                 else
                 {
-                    returnMessage = _accountContext.GetUserID(accountDTO.MailAddress);
+                    returnMessage = _accountContext.GetUserID(accountDTO.Mail);
                 }
             }
             else
@@ -74,7 +74,7 @@ namespace BusinessLogicLayer.Logic
             string specialCharacterValidate = @"[~`!@#$%^&*()+=|\\{}':;.,<>/?[\]""_-]";
             string nameValidate = @"^[a-zA-Z]+$";
 
-            if (Regex.IsMatch(accountDTO.MailAddress, mailValidate) == false)
+            if (Regex.IsMatch(accountDTO.Mail, mailValidate) == false)
             {
                 returnMessage = "Het emailadres is niet geldig.";
             }
@@ -92,7 +92,7 @@ namespace BusinessLogicLayer.Logic
             }
             else if (returnMessage == null)
             {
-                databaseOutput = _accountContext.GetUserID(accountDTO.MailAddress);
+                databaseOutput = _accountContext.GetUserID(accountDTO.Mail);
                 if (databaseOutput != null)
                 {
                     returnMessage = "Er bestaat al een account met dit mailadres.";
@@ -100,7 +100,7 @@ namespace BusinessLogicLayer.Logic
                 else
                 {
                     CreateAccount();
-                    _senderContext.SendAccountCreationMessage(accountDTO.MailAddress);
+                    _senderContext.SendAccountCreationMessage(accountDTO.Mail);
                     returnMessage = Convert.ToString(accountDTO.AccountID);
                 }
             }

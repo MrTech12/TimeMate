@@ -18,7 +18,7 @@ namespace TimeMateTest.BLL
         public void LoggingInTest()
         {
             string output;
-            accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "qoe2ieiwiir" };
+            accountDTO = new AccountDTO() { Mail = "bert@gmail.com", Password = "qoe2ieiwiir" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.LoggingIn();
@@ -30,7 +30,7 @@ namespace TimeMateTest.BLL
         public void EmptyLoginTest()
         {
             string output;
-            accountDTO = new AccountDTO() { MailAddress = "", Password = "" };
+            accountDTO = new AccountDTO() { Mail = "", Password = "" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.LoggingIn();
@@ -42,7 +42,7 @@ namespace TimeMateTest.BLL
         public void WrongMailaddressTest()
         {
             string output;
-            accountDTO = new AccountDTO() { MailAddress = "test@gmail.com", Password = "test123"};
+            accountDTO = new AccountDTO() { Mail = "test@gmail.com", Password = "test123"};
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.LoggingIn();
@@ -54,7 +54,7 @@ namespace TimeMateTest.BLL
         public void EmptyMailTest()
         {
             string output;
-            accountDTO = new AccountDTO() { MailAddress = "", Password = "test123" };
+            accountDTO = new AccountDTO() { Mail = "", Password = "test123" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.LoggingIn();
@@ -66,7 +66,7 @@ namespace TimeMateTest.BLL
         public void IncompleteMailTest()
         {
             string output;
-            accountDTO = new AccountDTO() { MailAddress = "test@gmail.", Password = "test123" };
+            accountDTO = new AccountDTO() { Mail = "test@gmail.", Password = "test123" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.LoggingIn();
@@ -78,7 +78,7 @@ namespace TimeMateTest.BLL
         public void WrongPasswordTeset()
         {
             string output;
-            accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "cmck323kc" };
+            accountDTO = new AccountDTO() { Mail = "bert@gmail.com", Password = "cmck323kc" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.LoggingIn();
@@ -90,7 +90,7 @@ namespace TimeMateTest.BLL
         public void EmptyPasswordTest()
         {
             string output;
-            accountDTO = new AccountDTO() { MailAddress = "bert@gmail.com", Password = "" };
+            accountDTO = new AccountDTO() { Mail = "bert@gmail.com", Password = "" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.LoggingIn();
@@ -104,7 +104,7 @@ namespace TimeMateTest.BLL
             string output;
             accountDTO = new AccountDTO();
             accountDTO.FirstName = "Hans";
-            accountDTO.MailAddress = "sina1240@gmail.com";
+            accountDTO.Mail = "sina1240@gmail.com";
             accountDTO.Password = "QWEwieiwi231@#";
 
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext(), new StubSenderContext());
@@ -120,7 +120,7 @@ namespace TimeMateTest.BLL
             string output;
             accountDTO = new AccountDTO();
             accountDTO.FirstName = "Hans";
-            accountDTO.MailAddress = "sina1240@gmail.com";
+            accountDTO.Mail = "sina1240@gmail.com";
             accountDTO.Password = "QWEwieiwi231@#";
             accountDTO.JobCount = 1;
             accountDTO.JobHourlyWage.Add(1.20);
@@ -137,7 +137,7 @@ namespace TimeMateTest.BLL
         public void CreateAccountLowerCasePasswordTest()
         {
             string output;
-            accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwieiwi231@#" };
+            accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwieiwi231@#" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.NewAccountValidation();
@@ -149,7 +149,7 @@ namespace TimeMateTest.BLL
         public void CreateAccountNoSpecialCharactersInPasswordTest()
         {
             string output;
-            accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwiEEWwi231WE" };
+            accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwiEEWwi231WE" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.NewAccountValidation();
@@ -161,7 +161,7 @@ namespace TimeMateTest.BLL
         public void CreateAccountNoNumbersInPasswordTest()
         {
             string output;
-            accountDTO = new AccountDTO() { FirstName = "Hans", MailAddress = "hans@bing.com", Password = "qwieiwieWE@#" };
+            accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwieiwieWE@#" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.NewAccountValidation();
@@ -173,7 +173,7 @@ namespace TimeMateTest.BLL
         public void CreateAccounExistingMailTest()
         {
             string output;
-            accountDTO = new AccountDTO() { FirstName = "Bert", MailAddress = "bert@gmail.com", Password = "qwieEW12iwieWE@#" };
+            accountDTO = new AccountDTO() { FirstName = "Bert", Mail = "bert@gmail.com", Password = "qwieEW12iwieWE@#" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.NewAccountValidation();
@@ -185,7 +185,7 @@ namespace TimeMateTest.BLL
         public void CreateAccountIncorrectMailTest()
         {
             string output;
-            accountDTO = new AccountDTO() { FirstName = "Bert", MailAddress = "bert@gmail.", Password = "qwieEW12iwieWE@#" };
+            accountDTO = new AccountDTO() { FirstName = "Bert", Mail = "bert@gmail.", Password = "qwieEW12iwieWE@#" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.NewAccountValidation();
