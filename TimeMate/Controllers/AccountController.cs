@@ -13,18 +13,18 @@ namespace TimeMate.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IAccountContainer _accountContext;
-        private readonly IAgendaContainer _agendaContext;
-        private readonly ISenderContainer _senderContext;
+        private readonly IAccountContainer _accountContainer;
+        private readonly IAgendaContainer _agendaContainer;
+        private readonly ISenderContainer _senderContainer;
 
         private Account account;
         private AccountDTO accountDTO;
 
-        public AccountController(IAccountContainer accountContext, IAgendaContainer agendaContext, ISenderContainer senderContext)
+        public AccountController(IAccountContainer accountContainer, IAgendaContainer agendaContainer, ISenderContainer senderContainer)
         {
-            _accountContext = accountContext;
-            _agendaContext = agendaContext;
-            _senderContext = senderContext;
+            _accountContainer = accountContainer;
+            _agendaContainer = agendaContainer;
+            _senderContainer = senderContainer;
         }
 
         [HttpGet]
@@ -50,7 +50,7 @@ namespace TimeMate.Controllers
                 accountDTO.Mail = viewModel.Mail;
                 accountDTO.Password = viewModel.Password;
 
-                account = new Account(accountDTO, _accountContext);
+                account = new Account(accountDTO, _accountContainer);
                 string result = account.LoggingIn();
 
                 if (!result.All(char.IsDigit))
@@ -100,7 +100,7 @@ namespace TimeMate.Controllers
                     accountDTO.JobDayType.Add(viewModel.Job2DayType);
                 }
 
-                account = new Account(accountDTO, _accountContext, _agendaContext, _senderContext);
+                account = new Account(accountDTO, _accountContainer, _agendaContainer, _senderContainer);
 
                 string result = account.NewAccountValidation();
 
@@ -127,7 +127,7 @@ namespace TimeMate.Controllers
             accountDTO = new AccountDTO();
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
-            account = new Account(accountDTO, _agendaContext);
+            account = new Account(accountDTO, _agendaContainer);
             List<AgendaDTO> viewModel = account.RetrieveAgendas();
             return View(viewModel);
         }

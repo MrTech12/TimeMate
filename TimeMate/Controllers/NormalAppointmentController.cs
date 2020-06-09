@@ -13,26 +13,26 @@ namespace TimeMate.Controllers
 {
     public class NormalAppointmentController : Controller
     {
-        private readonly IAgendaContainer _agendaContext;
-        private readonly IAppointmentContainer _appointmentContext;
-        private readonly INormalAppointmentContainer _normalAppointmentContext;
+        private readonly IAgendaContainer _agendaContainer;
+        private readonly IAppointmentContainer _appointmentContainer;
+        private readonly INormalAppointmentContainer _normalAppointmentContainer;
 
         private AccountDTO accountDTO = new AccountDTO();
         private Account account;
         private Agenda agenda;
 
-        public NormalAppointmentController(IAgendaContainer agendaContext, IAppointmentContainer appointmentContext, INormalAppointmentContainer normalAppointmentContext)
+        public NormalAppointmentController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, INormalAppointmentContainer normalAppointmentContainer)
         {
-            _agendaContext = agendaContext;
-            _appointmentContext = appointmentContext;
-            _normalAppointmentContext = normalAppointmentContext;
+            _agendaContainer = agendaContainer;
+            _appointmentContainer = appointmentContainer;
+            _normalAppointmentContainer = normalAppointmentContainer;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
             NormalAppointmentViewModel viewModel = new NormalAppointmentViewModel();
-            account = new Account(accountDTO, _agendaContext);
+            account = new Account(accountDTO, _agendaContainer);
             viewModel.AppointmentViewModel.AgendaDTO = account.RetrieveAgendas();
             return View(viewModel);
         }
@@ -60,7 +60,7 @@ namespace TimeMate.Controllers
                 appointmentDTO.DescriptionDTO.Description = null;
             }
 
-            agenda = new Agenda(accountDTO, _appointmentContext, _normalAppointmentContext);
+            agenda = new Agenda(accountDTO, _appointmentContainer, _normalAppointmentContainer);
             agenda.CreateNormalAppointment(appointmentDTO);
             return Ok();
         }

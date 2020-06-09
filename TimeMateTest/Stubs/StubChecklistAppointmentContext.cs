@@ -20,11 +20,11 @@ namespace TimeMateTest.Stubs
             }
         }
 
-        public List<ChecklistDTO> GetTasks(AppointmentDTO appointmentDTO)
+        public List<ChecklistDTO> GetTasks(int appointmentID)
         {
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
 
-            if (appointmentDTO.AppointmentID == 14)
+            if (appointmentID == 14)
             {
                 ChecklistDTO checklist1 = new ChecklistDTO();
                 checklist1.AppointmentID = 14;

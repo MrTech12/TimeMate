@@ -10,47 +10,44 @@ namespace BusinessLogicLayer.Logic
 {
     public class Account
     {
-        private readonly IAccountContainer _accountContext;
-        private readonly IAgendaContainer _agendaContext;
-        private readonly ISenderContainer _senderContext;
+        private readonly IAccountContainer _accountContainer;
+        private readonly IAgendaContainer _agendaContainer;
+        private readonly ISenderContainer _senderContainer;
 
         private AccountDTO accountDTO;
         private string returnMessage;
         private string databaseOutput;
 
-        public Account(AccountDTO accountDTO, IAccountContainer accountContext, IAgendaContainer agendaContext, ISenderContainer senderContext)
+        public Account(AccountDTO accountDTO, IAccountContainer accountContainer, IAgendaContainer agendaContainer, ISenderContainer senderContainer)
         {
             this.accountDTO = accountDTO;
-            this._accountContext = accountContext;
-            this._agendaContext = agendaContext;
-            this._senderContext = senderContext;
+            this._accountContainer = accountContainer;
+            this._agendaContainer = agendaContainer;
+            this._senderContainer = senderContainer;
         }
 
-        public Account(AccountDTO accountDTO, IAccountContainer accountContext, IAgendaContainer agendaContext)
+        public Account(AccountDTO accountDTO, IAccountContainer accountContainer, IAgendaContainer agendaContainer)
         {
             this.accountDTO = accountDTO;
-            this._accountContext = accountContext;
-            this._agendaContext = agendaContext;
+            this._accountContainer = accountContainer;
+            this._agendaContainer = agendaContainer;
         }
 
-        public Account(AccountDTO accountDTO, IAgendaContainer agendaContext)
+        public Account(AccountDTO accountDTO, IAgendaContainer agendaContainer)
         {
             this.accountDTO = accountDTO;
-            this._agendaContext = agendaContext;
+            this._agendaContainer = agendaContainer;
         }
 
         public Account(AccountDTO accountDTO, IAccountContainer accountContainer)
         {
             this.accountDTO = accountDTO;
-            this._accountContext = accountContainer;
+            this._accountContainer = accountContainer;
         }
 
-        /// <summary>
-        /// Checking the entered credentials to give an actor access to a specific account.
-        /// </summary>
         public string LoggingIn()
         {
-            databaseOutput = _accountContext.SearchForPasswordHash(accountDTO.Mail);
+            databaseOutput = _accountContainer.SearchForPasswordHash(accountDTO.Mail);
             if (databaseOutput != null)
             {
                 bool passwordValid = BCrypt.Net.BCrypt.Verify(accountDTO.Password, databaseOutput);
@@ -60,7 +57,7 @@ namespace BusinessLogicLayer.Logic
                 }
                 else
                 {
-                    returnMessage = _accountContext.GetUserID(accountDTO.Mail);
+                    returnMessage = _accountContainer.GetUserID(accountDTO.Mail);
                 }
             }
             else
@@ -71,9 +68,6 @@ namespace BusinessLogicLayer.Logic
             return returnMessage;
         }
 
-        /// <summary>
-        /// Checking the input for creating a new account.
-        /// </summary>
         public string NewAccountValidation()
         {
             string mailValidate = "^([0-9a-zA-Z-_]([-\\.\\w]*[0-9a-zA-Z-_])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$";
@@ -98,7 +92,7 @@ namespace BusinessLogicLayer.Logic
             }
             else if (returnMessage == null)
             {
-                databaseOutput = _accountContext.GetUserID(accountDTO.Mail);
+                databaseOutput = _accountContainer.GetUserID(accountDTO.Mail);
                 if (databaseOutput != null)
                 {
                     returnMessage = "Er bestaat al een account met dit mailadres.";
@@ -106,42 +100,33 @@ namespace BusinessLogicLayer.Logic
                 else
                 {
                     CreateAccount();
-                    _senderContext.SendAccountCreationMessage(accountDTO.Mail);
+                    _senderContainer.SendAccountCreationMessage(accountDTO.Mail);
                     returnMessage = Convert.ToString(accountDTO.AccountID);
                 }
             }
             return returnMessage;
         }
 
-        /// <summary>
-        /// Create a new account for the actor, with their entered input.
-        /// </summary>
         public void CreateAccount()
         {
             accountDTO.Password = BCrypt.Net.BCrypt.HashPassword(accountDTO.Password, 10);
 
             if (accountDTO.JobCount == 0)
             {
-                accountDTO.AccountID = _accountContext.CreateAccount(accountDTO);
+                accountDTO.AccountID = _accountContainer.CreateAccount(accountDTO);
             }
             else if (accountDTO.JobCount > 0)
             {
-                accountDTO.AccountID = _accountContext.CreateAccount(accountDTO);
+                accountDTO.AccountID = _accountContainer.CreateAccount(accountDTO);
                 CreateWorkAgenda();
             }
         }
 
-        /// <summary>
-        /// Create an agenda for the actor.
-        /// </summary>
         public void CreateAgenda(AgendaDTO agendaDTO)
         {
-            _agendaContext.AddAgenda(agendaDTO, accountDTO);
+            _agendaContainer.AddAgenda(agendaDTO, accountDTO);
         }
 
-        /// <summary>
-        /// Create a work agenda for the actor.
-        /// </summary>
         public void CreateWorkAgenda()
         {
             AgendaDTO newAgendaDTO = new AgendaDTO();
@@ -149,28 +134,18 @@ namespace BusinessLogicLayer.Logic
             newAgendaDTO.AgendaColor = "#FF0000";
             newAgendaDTO.NotificationType = "Nee";
 
-            newAgendaDTO.AgendaID = _agendaContext.AddAgenda(newAgendaDTO, accountDTO);
-
-            _agendaContext.AddPayDetails(newAgendaDTO,accountDTO);
+            newAgendaDTO.AgendaID = _agendaContainer.AddAgenda(newAgendaDTO, accountDTO);
+            _agendaContainer.AddPayDetails(newAgendaDTO,accountDTO);
         }
 
-        /// <summary>
-        /// Get the info of all the agenda's that belong to the current active actor.
-        /// </summary>
-        /// <returns></returns>
         public List<AgendaDTO> RetrieveAgendas()
         {
-            List<AgendaDTO> agendasFromUser = new List<AgendaDTO>();
-            agendasFromUser = _agendaContext.GetAllAgendas(accountDTO);
-            return agendasFromUser;
+            return _agendaContainer.GetAllAgendas(accountDTO);
         }
 
-        /// <summary>
-        /// Delete an agenda from the account of the current active actor.
-        /// </summary>
         public void DeleteAgenda(int agendaID)
         {
-            _agendaContext.DeleteAgenda(agendaID, accountDTO);
+            _agendaContainer.DeleteAgenda(agendaID, accountDTO);
         }
     }
 }

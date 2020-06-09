@@ -13,26 +13,26 @@ namespace TimeMate.Controllers
 {
     public class ChecklistAppointmentController : Controller
     {
-        private readonly IAgendaContainer _agendaContext;
-        private readonly IAppointmentContainer _appointmentContext;
-        private readonly IChecklistAppointmentContainer _checklistAppointmentContext;
+        private readonly IAgendaContainer _agendaContainer;
+        private readonly IAppointmentContainer _appointmentContainer;
+        private readonly IChecklistAppointmentContainer _checklistAppointmentContainer;
 
         private AccountDTO accountDTO = new AccountDTO();
         private Account account;
         private Agenda agenda;
 
-        public ChecklistAppointmentController(IAgendaContainer agendaContext, IAppointmentContainer appointmentContext, IChecklistAppointmentContainer checklistAppointmentContext)
+        public ChecklistAppointmentController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer)
         {
-            _agendaContext = agendaContext;
-            _appointmentContext = appointmentContext;
-            _checklistAppointmentContext = checklistAppointmentContext;
+            _agendaContainer = agendaContainer;
+            _appointmentContainer = appointmentContainer;
+            _checklistAppointmentContainer = checklistAppointmentContainer;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
             ChecklistAppointmentViewModel viewModel = new ChecklistAppointmentViewModel();
-            account = new Account(accountDTO, _agendaContext);
+            account = new Account(accountDTO, _agendaContainer);
             viewModel.AppointmentViewModel.AgendaDTO = account.RetrieveAgendas();
             return View(viewModel);
         }
@@ -58,7 +58,7 @@ namespace TimeMate.Controllers
                 }
             }
 
-            agenda = new Agenda(accountDTO, _appointmentContext, _checklistAppointmentContext);
+            agenda = new Agenda(accountDTO, _appointmentContainer, _checklistAppointmentContainer);
             agenda.CreateChecklistAppointment(appointmentDTO);
             return Ok();
         }

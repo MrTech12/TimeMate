@@ -14,21 +14,21 @@ namespace TimeMate.Controllers
 {
     public class AgendaController : Controller
     {
-        private readonly IAgendaContainer _agendaContext;
-        private readonly IAppointmentContainer _appointmentContext;
-        private readonly INormalAppointmentContainer _normalAppointmentContext;
-        private readonly IChecklistAppointmentContainer _checklistAppointmentContext;
+        private readonly IAgendaContainer _agendaContainer;
+        private readonly IAppointmentContainer _appointmentContainer;
+        private readonly INormalAppointmentContainer _normalAppointmentContainer;
+        private readonly IChecklistAppointmentContainer _checklistAppointmentContainer;
 
         private AccountDTO accountDTO = new AccountDTO();
         private Agenda agenda;
         private Account account;
 
-        public AgendaController(IAgendaContainer agendaContext, IAppointmentContainer appointmentContext, INormalAppointmentContainer normalAppointmentContext, IChecklistAppointmentContainer checklistAppointmentContext)
+        public AgendaController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, INormalAppointmentContainer normalAppointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer)
         {
-            _agendaContext = agendaContext;
-            _appointmentContext = appointmentContext;
-            _normalAppointmentContext = normalAppointmentContext;
-            _checklistAppointmentContext = checklistAppointmentContext;
+            _agendaContainer = agendaContainer;
+            _appointmentContainer = appointmentContainer;
+            _normalAppointmentContainer = normalAppointmentContainer;
+            _checklistAppointmentContainer = checklistAppointmentContainer;
         }
 
         [HttpGet]
@@ -38,7 +38,7 @@ namespace TimeMate.Controllers
             {
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
-                agenda = new Agenda(accountDTO, _appointmentContext);
+                agenda = new Agenda(accountDTO, _appointmentContainer);
                 List<AppointmentDTO> appointments = agenda.RetrieveAppointments();
                 return View(appointments);
             }
@@ -65,7 +65,7 @@ namespace TimeMate.Controllers
                 agendaDTO.AgendaColor = viewModel.AgendaColor;
                 agendaDTO.NotificationType = viewModel.NotificationType;
 
-                account = new Account(accountDTO, _agendaContext);
+                account = new Account(accountDTO, _agendaContainer);
                 account.CreateAgenda(agendaDTO);
                 return RedirectToAction("Index", "Agenda");
             }
@@ -80,7 +80,7 @@ namespace TimeMate.Controllers
         {
             int agendaID = JsonConvert.DeserializeObject<int>(json);
             
-            account = new Account(accountDTO, _agendaContext);
+            account = new Account(accountDTO, _agendaContainer);
             account.DeleteAgenda(agendaID);
             return Ok();
         }
@@ -90,7 +90,7 @@ namespace TimeMate.Controllers
         {
             int taskID = JsonConvert.DeserializeObject<int>(json);
 
-            ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentContext);
+            ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentContainer);
             checklistAppointment.ChangeTaskStatus(taskID);
             return Ok();
         }
@@ -100,13 +100,13 @@ namespace TimeMate.Controllers
         {
             int appointmentID = JsonConvert.DeserializeObject<int>(json);
 
-            NormalAppointment normalAppointment = new NormalAppointment(_normalAppointmentContext);
+            NormalAppointment normalAppointment = new NormalAppointment(_normalAppointmentContainer);
 
             string description = normalAppointment.RetrieveDescription(appointmentID);
 
             if (description == "")
             {
-                ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentContext);
+                ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentContainer);
                 var tasks = checklistAppointment.RetrieveTasks(appointmentID);
                 return Json(tasks);
             }
