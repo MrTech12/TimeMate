@@ -38,7 +38,7 @@ namespace TimeMate.Controllers
             {
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
-                agenda = new Agenda(accountDTO, _agendaContext, _appointmentContext);
+                agenda = new Agenda(accountDTO, _appointmentContext);
                 List<AppointmentDTO> appointments = agenda.RetrieveAppointments();
                 return View(appointments);
             }
@@ -100,14 +100,13 @@ namespace TimeMate.Controllers
         {
             int appointmentID = JsonConvert.DeserializeObject<int>(json);
 
-            AppointmentDTO appointmentDTO = new AppointmentDTO() {AppointmentID = appointmentID };
             NormalAppointment normalAppointment = new NormalAppointment(_normalAppointmentContext);
-            ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentContext);
 
             string description = normalAppointment.RetrieveDescription(appointmentID);
 
             if (description == "")
             {
+                ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentContext);
                 var tasks = checklistAppointment.RetrieveTasks(appointmentID);
                 return Json(tasks);
             }

@@ -10,38 +10,34 @@ namespace BusinessLogicLayer.Logic
 {
     public class Agenda
     {
-        private AccountDTO accountDTO = new AccountDTO();
-
-        private IAgendaContainer _agendaContext;
         private IAppointmentContainer _appointmentContext;
         private INormalAppointmentContainer _nAppointmentContext;
         private IChecklistAppointmentContainer _cAppointmentContext;
 
-        public Agenda(AccountDTO accountDTO, IAgendaContainer agendaContext)
+        private AccountDTO accountDTO = new AccountDTO();
+
+        public Agenda(AccountDTO accountDTO, IAppointmentContainer appointmentContainer)
         {
-            this._agendaContext = agendaContext;
             this.accountDTO = accountDTO;
+            this._appointmentContext = appointmentContainer;
         }
 
         public Agenda(AccountDTO accountDTO, IAgendaContainer agendaContext, IAppointmentContainer appointmentContext)
         {
             this.accountDTO = accountDTO;
-            this._agendaContext = agendaContext;
             this._appointmentContext = appointmentContext;
         }
 
-        public Agenda(AccountDTO accountDTO, IAgendaContainer agendaContext, IAppointmentContainer appointmentContext , INormalAppointmentContainer nAppointmentContext)
+        public Agenda(AccountDTO accountDTO, IAppointmentContainer appointmentContext , INormalAppointmentContainer nAppointmentContext)
         {
             this.accountDTO = accountDTO;
-            this._agendaContext = agendaContext;
             this._appointmentContext = appointmentContext;
             this._nAppointmentContext = nAppointmentContext;
         }
 
-        public Agenda(AccountDTO accountDTO, IAgendaContainer agendaContext, IAppointmentContainer appointmentContext, IChecklistAppointmentContainer cAppointmentContext)
+        public Agenda(AccountDTO accountDTO, IAppointmentContainer appointmentContext, IChecklistAppointmentContainer cAppointmentContext)
         {
             this.accountDTO = accountDTO;
-            this._agendaContext = agendaContext;
             this._appointmentContext = appointmentContext;
             this._cAppointmentContext = cAppointmentContext;
         }

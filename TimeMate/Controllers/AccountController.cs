@@ -50,7 +50,7 @@ namespace TimeMate.Controllers
                 accountDTO.Mail = viewModel.Mail;
                 accountDTO.Password = viewModel.Password;
 
-                account = new Account(accountDTO, _accountContext, _agendaContext);
+                account = new Account(accountDTO, _accountContext);
                 string result = account.LoggingIn();
 
                 if (!result.All(char.IsDigit))
@@ -88,10 +88,17 @@ namespace TimeMate.Controllers
                 accountDTO.Password = viewModel.Password;
                 accountDTO.JobCount = viewModel.JobAmount;
 
-                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job1HourlyWage));
-                accountDTO.JobDayType.Add(viewModel.Job1DayType);
-                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job2HourlyWage));
-                accountDTO.JobDayType.Add(viewModel.Job2DayType);
+                if (viewModel.Job1HourlyWage != "0.00")
+                {
+                    accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job1HourlyWage));
+                    accountDTO.JobDayType.Add(viewModel.Job1DayType);
+
+                }
+                else if (viewModel.Job2HourlyWage != "0.00")
+                {
+                    accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job2HourlyWage));
+                    accountDTO.JobDayType.Add(viewModel.Job2DayType);
+                }
 
                 account = new Account(accountDTO, _accountContext, _agendaContext, _senderContext);
 
@@ -120,7 +127,7 @@ namespace TimeMate.Controllers
             accountDTO = new AccountDTO();
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
-            account = new Account(accountDTO, _accountContext, _agendaContext);
+            account = new Account(accountDTO, _agendaContext);
             List<AgendaDTO> viewModel = account.RetrieveAgendas();
             return View(viewModel);
         }

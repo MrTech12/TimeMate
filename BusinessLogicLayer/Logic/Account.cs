@@ -13,8 +13,8 @@ namespace BusinessLogicLayer.Logic
         private readonly IAccountContainer _accountContext;
         private readonly IAgendaContainer _agendaContext;
         private readonly ISenderContainer _senderContext;
-        private AccountDTO accountDTO;
 
+        private AccountDTO accountDTO;
         private string returnMessage;
         private string databaseOutput;
 
@@ -37,6 +37,12 @@ namespace BusinessLogicLayer.Logic
         {
             this.accountDTO = accountDTO;
             this._agendaContext = agendaContext;
+        }
+
+        public Account(AccountDTO accountDTO, IAccountContainer accountContainer)
+        {
+            this.accountDTO = accountDTO;
+            this._accountContext = accountContainer;
         }
 
         /// <summary>
@@ -72,7 +78,7 @@ namespace BusinessLogicLayer.Logic
         {
             string mailValidate = "^([0-9a-zA-Z-_]([-\\.\\w]*[0-9a-zA-Z-_])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$";
             string specialCharacterValidate = @"[~`!@#$%^&*()+=|\\{}':;.,<>/?[\]""_-]";
-            string nameValidate = @"^[a-zA-Z]+$";
+            //string nameValidate = @"^[a-zA-Z]+$";
 
             if (Regex.IsMatch(accountDTO.Mail, mailValidate) == false)
             {
