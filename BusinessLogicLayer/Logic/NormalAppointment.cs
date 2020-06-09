@@ -8,16 +8,16 @@ namespace BusinessLogicLayer.Logic
 {
     public class NormalAppointment
     {
-        private INormalAppointmentContainer _normalAppointmentContext;
+        private INormalAppointmentContainer _normalAppointmentContainer;
 
-        public NormalAppointment(INormalAppointmentContainer normalAppointmentContext)
+        public NormalAppointment(INormalAppointmentContainer normalAppointmentContainer)
         {
-            this._normalAppointmentContext = normalAppointmentContext;
+            this._normalAppointmentContainer = normalAppointmentContainer;
         }
 
         public string RetrieveDescription(int appointmentID)
         {
-            return _normalAppointmentContext.GetDescription(appointmentID);
+            return _normalAppointmentContainer.GetDescription(appointmentID);
         }
     }
 }

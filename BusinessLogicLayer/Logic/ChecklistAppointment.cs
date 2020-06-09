@@ -8,16 +8,16 @@ namespace BusinessLogicLayer.Logic
 {
     public class ChecklistAppointment
     {
-        private IChecklistAppointmentContainer _checklistAppointmentContext;
+        private IChecklistAppointmentContainer _checklistAppointmentContainer;
 
-        public ChecklistAppointment(IChecklistAppointmentContainer checklistAppointmentContext)
+        public ChecklistAppointment(IChecklistAppointmentContainer checklistAppointmentContainer)
         {
-            this._checklistAppointmentContext = checklistAppointmentContext;
+            this._checklistAppointmentContainer = checklistAppointmentContainer;
         }
 
         public List<string> RetrieveTasks(int appointmentID)
         {
-            var checklists = _checklistAppointmentContext.GetTasks(appointmentID);
+            var checklists = _checklistAppointmentContainer.GetTasks(appointmentID);
             List<string> tasks = new List<string>();
             for (int i = 0; i < checklists.Count; i++)
             {
@@ -29,14 +29,14 @@ namespace BusinessLogicLayer.Logic
 
         public void ChangeTaskStatus(int taskID)
         {
-            bool taskStatus = _checklistAppointmentContext.GetTaskStatus(taskID);
+            bool taskStatus = _checklistAppointmentContainer.GetTaskStatus(taskID);
             if (!taskStatus)
             {
-                _checklistAppointmentContext.CheckOffTask(taskID);
+                _checklistAppointmentContainer.CheckOffTask(taskID);
             }
             else
             {
-                _checklistAppointmentContext.RevertCheckOffTask(taskID);
+                _checklistAppointmentContainer.RevertCheckOffTask(taskID);
             }
         }
     }
