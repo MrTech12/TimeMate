@@ -23,10 +23,10 @@ namespace TimeMateTest.Stubs
             return appointmentID;
         }
 
-        public List<AppointmentDTO> GetAllAppointments(AccountDTO accountDTO)
+        public List<AppointmentDTO> GetAppointments(int accountID)
         {
             List<AppointmentDTO> appointmentDTO = new List<AppointmentDTO>();
-            if (accountDTO.AccountID == 12)
+            if (accountID == 12)
             {
                 AppointmentDTO appointment1 = new AppointmentDTO();
                 ChecklistDTO checklist1 = new ChecklistDTO() { TaskName = null };

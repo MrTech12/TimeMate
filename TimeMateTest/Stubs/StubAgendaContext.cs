@@ -10,7 +10,7 @@ namespace TimeMateTest.Stubs
 {
     class StubAgendaContext : IAgendaContainer
     {
-        public int AddAgenda(AgendaDTO agendaDTO, AccountDTO accountDTO)
+        public int AddAgenda(int accountID, AgendaDTO agendaDTO)
         {
             int agendaID = 0;
 
@@ -23,28 +23,27 @@ namespace TimeMateTest.Stubs
             return agendaID;
         }
 
-        public void AddPayDetails(AgendaDTO agendaDTO, AccountDTO accountDTO)
+        public void AddPayDetails(int agendaID, AccountDTO accountDTO)
         {
-            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addWorkAgendaTest.txt"))
+            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addWorkPayDetails.txt"))
             {
-                streamWriter.WriteLine(agendaDTO.AgendaName);
-                streamWriter.WriteLine(agendaDTO.AgendaColor);
-                streamWriter.WriteLine(agendaDTO.NotificationType);
+                streamWriter.WriteLine(accountDTO.JobHourlyWage[0]);
+                streamWriter.WriteLine(accountDTO.JobDayType[0]);
             }
         }
 
-        public void DeleteAgenda(int AgendaID, AccountDTO accountDTO)
+        public void DeleteAgenda(int accountID, int agendaID)
         {
-            if (AgendaID == 51 && accountDTO.AccountID == 12)
+            if (agendaID == 51 && accountID == 12)
             {
                 File.WriteAllText(@"C:\tmp\removeAgendaTest.txt", String.Empty);
             }
         }
 
-        public List<AgendaDTO> GetAllAgendas(AccountDTO accountDTO)
+        public List<AgendaDTO> GetAllAgendas(int accountID)
         {
             List<AgendaDTO> agendaNames = new List<AgendaDTO>();
-            if (accountDTO.AccountID == 12)
+            if (accountID == 12)
             {
                 AgendaDTO agenda1 = new AgendaDTO();
                 agenda1.AgendaID = 0;
