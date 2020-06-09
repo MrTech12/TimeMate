@@ -52,27 +52,24 @@ namespace DataAccessLayer.Contexts
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContext.GetConnection()))
                 {
                     databaseConn.Open();
-
+                    SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week) 
+                                                                    Values (@0,@1,@2)", databaseConn);
                     for (int i = 0; i < accountDTO.JobHourlyWage.Count; i++)
                     {
+                        insertQuerry.Parameters.Clear();
+                        insertQuerry.Parameters.AddWithValue("0", newAgendaDTO.AgendaID);
+
                         if (accountDTO.JobDayType[i] == "Doordeweeks" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week) 
-                                                                    Values (@0,@1,@2)", databaseConn);
-                            insertQuerry.Parameters.AddWithValue("0", newAgendaDTO.AgendaID);
                             insertQuerry.Parameters.AddWithValue("1", accountDTO.JobHourlyWage[i]);
                             insertQuerry.Parameters.AddWithValue("2", "0.00");
-                            insertQuerry.ExecuteNonQuery();
                         }
                         else if (accountDTO.JobDayType[i] == "Weekend" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            SqlCommand insertQuerry = new SqlCommand(@"INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week) 
-                                                                    Values (@0,@1,@2)", databaseConn);
-                            insertQuerry.Parameters.AddWithValue("0", newAgendaDTO.AgendaID);
                             insertQuerry.Parameters.AddWithValue("1", "0.00");
                             insertQuerry.Parameters.AddWithValue("2", accountDTO.JobHourlyWage[i]);
-                            insertQuerry.ExecuteNonQuery();
                         }
+                        insertQuerry.ExecuteNonQuery();
                     }
                 }
             }
