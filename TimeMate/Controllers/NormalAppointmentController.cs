@@ -14,6 +14,10 @@ namespace TimeMate.Controllers
 {
     public class NormalAppointmentController : Controller
     {
+        private AccountDTO accountDTO = new AccountDTO();
+        private Account account;
+        private Agenda agenda;
+
         private readonly IAccountContainer _accountContext;
         private readonly IAgendaContainer _agendaContext;
         private readonly IAppointmentContainer _appointmentContext;
@@ -27,10 +31,6 @@ namespace TimeMate.Controllers
             _normalAppointmentContext = normalAppointmentContext;
         }
 
-        private AccountDTO accountDTO = new AccountDTO();
-        private Account account;
-        private Agenda agenda;
-
         [HttpGet]
         public IActionResult Index()
         {
@@ -43,20 +43,20 @@ namespace TimeMate.Controllers
         [HttpPost]
         public IActionResult Index(string json)
         {
-            var newAppointment = JsonConvert.DeserializeObject<List<string>>(json);
+            var appointment = JsonConvert.DeserializeObject<List<string>>(json);
 
             AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO.AppointmentName = newAppointment[0];
-            appointmentDTO.StartDate = Convert.ToDateTime(newAppointment[1]) + TimeSpan.Parse(newAppointment[2]);
-            appointmentDTO.EndDate = Convert.ToDateTime(newAppointment[3]) + TimeSpan.Parse(newAppointment[4]);
-            appointmentDTO.AgendaName = newAppointment[5];
-            appointmentDTO.AgendaID = Convert.ToInt32(newAppointment[6]);
+            appointmentDTO.AppointmentName = appointment[0];
+            appointmentDTO.StartDate = Convert.ToDateTime(appointment[1]) + TimeSpan.Parse(appointment[2]);
+            appointmentDTO.EndDate = Convert.ToDateTime(appointment[3]) + TimeSpan.Parse(appointment[4]);
+            appointmentDTO.AgendaName = appointment[5];
+            appointmentDTO.AgendaID = Convert.ToInt32(appointment[6]);
 
-            if (newAppointment[7] != null)
+            if (appointment[7] != null)
             {
-                string newDescription = newAppointment[7].Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
+                string description = appointment[7].Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
                     .Replace("<span class=\"normal-text\">", "</b>");
-                appointmentDTO.DescriptionDTO.Description = newDescription;
+                appointmentDTO.DescriptionDTO.Description = description;
             }
             else
             {
@@ -64,9 +64,7 @@ namespace TimeMate.Controllers
             }
 
             agenda = new Agenda(accountDTO, _agendaContext, _appointmentContext, _normalAppointmentContext);
-
             agenda.CreateNormalAppointment(appointmentDTO);
-
             return Ok();
         }
     }

@@ -17,6 +17,10 @@ $(document).ready(function () {
         }
     });
     $("#add-appointment").click(function () {
+        if (!CheckEmptyAppointmentName()) {
+            alert("U heeft de afspraaknaam niet ingevuld. Dit is verplicht.");
+            return false;
+        }
         GetEnteredInformation();
         jsonData = JSON.stringify(appointmentInfo);
         console.info(jsonData);
@@ -47,6 +51,20 @@ function MakeTextNormal() {
         range.deleteContents();
         range.insertNode(e);
     }
+};
+
+function CheckEmptyAppointmentName() {
+    var form = $("#appointment-form");
+
+    form.validate({
+        rules: {
+            "appointment-name": {
+                required: true,
+            }
+        }
+    });
+
+    return form.valid();
 };
 
 

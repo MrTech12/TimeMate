@@ -5,6 +5,7 @@
 }
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery-validate.js"></script>
 <script src="~/js/add-normalappointment.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/addnormalappointment.css" />
 
@@ -13,7 +14,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Index">
+        <form asp-action="Index" id="appointment-form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <partial name="_AddAppointment" for="@Model.AppointmentViewModel" />

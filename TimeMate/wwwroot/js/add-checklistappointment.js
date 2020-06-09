@@ -3,12 +3,30 @@ var jsonData = 0;
 
 $(document).ready(function () {
     $("#add-appointment").click(function () {
+        if (!CheckEmptyAppointmentName()) {
+            alert("U heeft de afspraaknaam niet ingevuld. Dit is verplicht.");
+            return false;
+        }
         GetEnteredInformation();
         jsonData = JSON.stringify(appointmentInfo);
         console.info(jsonData);
         SendAddRequest();
     });
 });
+
+function CheckEmptyAppointmentName() {
+    var form = $("#appointment-form");
+
+    form.validate({
+        rules: {
+            "appointment-name": {
+                required: true,
+            }
+        }
+    });
+
+    return form.valid();
+};
 
 function GetEnteredInformation() {
     appointmentInfo = [];
