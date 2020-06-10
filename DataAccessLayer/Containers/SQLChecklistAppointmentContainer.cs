@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
-namespace DataAccessLayer.Contexts
+namespace DataAccessLayer.Containers
 {
     public class SQLChecklistAppointmentContainer : IChecklistAppointmentContainer
     {

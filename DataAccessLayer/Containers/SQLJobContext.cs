@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccessLayer.Contexts
+namespace DataAccessLayer.Containers
 {
     public class SQLJobContext : IJobContainer
     {

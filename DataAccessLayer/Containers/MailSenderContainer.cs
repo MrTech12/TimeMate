@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
 
-namespace DataAccessLayer.Contexts
+namespace DataAccessLayer.Containers
 {
     public class MailSenderContainer : ISenderContainer
     {

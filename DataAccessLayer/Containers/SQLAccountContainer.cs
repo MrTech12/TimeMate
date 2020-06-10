@@ -8,7 +8,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace DataAccessLayer.Contexts
+namespace DataAccessLayer.Containers
 {
     public class SQLAccountContainer : IAccountContainer
     {
