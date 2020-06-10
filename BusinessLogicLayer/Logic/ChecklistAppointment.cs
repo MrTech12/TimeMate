@@ -32,11 +32,11 @@ namespace BusinessLogicLayer.Logic
             bool taskStatus = _checklistAppointmentContainer.GetTaskStatus(taskID);
             if (!taskStatus)
             {
-                _checklistAppointmentContainer.CheckOffTask(taskID);
+                _checklistAppointmentContainer.CheckOffTask(taskID, true);
             }
             else
             {
-                _checklistAppointmentContainer.RevertCheckOffTask(taskID);
+                _checklistAppointmentContainer.CheckOffTask(taskID, false);
             }
         }
     }

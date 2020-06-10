@@ -11,10 +11,8 @@ namespace DataAccessLayer.Interfaces
 
         bool GetTaskStatus(int taskID);
 
-        void RevertCheckOffTask(int taskID);
-
         List<ChecklistDTO> GetTasks(int appointmentID);
 
-        void CheckOffTask(int taskID);
+        void CheckOffTask(int taskID, bool status);
     }
 }

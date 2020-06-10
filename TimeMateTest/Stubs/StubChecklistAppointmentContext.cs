@@ -56,17 +56,17 @@ namespace TimeMateTest.Stubs
             return taskstatus;
         }
 
-        public void CheckOffTask(int taskID)
+        public void CheckOffTask(int taskID, bool status)
         {
             string[] file = File.ReadAllLines(@"C:\tmp\getTaskStatusTest.txt");
-            file[2] = "True";
-            File.WriteAllLines(@"C:\tmp\getTaskStatusTest.txt", file);
-        }
-
-        public void RevertCheckOffTask(int taskID)
-        {
-            string[] file = File.ReadAllLines(@"C:\tmp\getTaskStatusTest.txt");
-            file[2] = "False";
+            if (status == true)
+            {
+                file[2] = "True";
+            }
+            else
+            {
+                file[2] = "False";
+            }
             File.WriteAllLines(@"C:\tmp\getTaskStatusTest.txt", file);
         }
     }

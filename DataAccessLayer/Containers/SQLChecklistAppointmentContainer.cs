@@ -93,7 +93,7 @@ namespace DataAccessLayer.Containers
             return taskStatus;
         }
 
-        public void CheckOffTask(int taskID)
+        public void CheckOffTask(int taskID, bool status)
         {
             try
             {
@@ -104,29 +104,7 @@ namespace DataAccessLayer.Containers
                     databaseConn.Open();
                     SqlCommand updateQuery = new SqlCommand(query, databaseConn);
 
-                    updateQuery.Parameters.AddWithValue("0", true);
-                    updateQuery.Parameters.AddWithValue("1", taskID);
-                    updateQuery.ExecuteScalar();
-                }
-            }
-            catch (SqlException exception)
-            {
-                throw new Exception("Er is op dit moment een probleem met de database.", exception);
-            }
-        }
-
-        public void RevertCheckOffTask(int taskID)
-        {
-            try
-            {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
-                {
-                    string querry = @"UPDATE [Appointment_Task] SET TaskChecked=@0 WHERE TaskID = @1";
-
-                    databaseConn.Open();
-                    SqlCommand updateQuery = new SqlCommand(querry, databaseConn);
-
-                    updateQuery.Parameters.AddWithValue("0", false);
+                    updateQuery.Parameters.AddWithValue("0", status);
                     updateQuery.Parameters.AddWithValue("1", taskID);
                     updateQuery.ExecuteScalar();
                 }
