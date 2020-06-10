@@ -16,8 +16,8 @@ $(document).ready(function () {
 
 function GetSelectedOptionInformation() {
     selectInput = document.getElementById("agenda-select");
-    agendaName = selectInput.options[selectInput.selectedIndex].value;
-    agendaID = selectInput.options[selectInput.selectedIndex].id;
+    agendaName = $("#agenda-select :selected").val();
+    agendaID = $("#agenda-select :selected").attr("id");
 };
 
 function SendDeleteRequest() {

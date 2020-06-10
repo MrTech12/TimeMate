@@ -76,9 +76,8 @@ function GetEnteredInformation() {
     appointmentInfo.push($("#AppointmentViewModel_EndDate").val());
     appointmentInfo.push($("#AppointmentViewModel_EndTime").val());
 
-    var selectInput = document.getElementById("AppointmentViewModel_AgendaDTO_0__AgendaName");
-    appointmentInfo.push(selectInput.options[selectInput.selectedIndex].value);
-    appointmentInfo.push(selectInput.options[selectInput.selectedIndex].id);
+    appointmentInfo.push($("#AppointmentViewModel_AgendaDTO_0__AgendaName :selected").val());
+    appointmentInfo.push($("#AppointmentViewModel_AgendaDTO_0__AgendaName :selected").attr("id"));
     appointmentInfo.push(document.getElementById('description-box').innerHTML);
 }
 
