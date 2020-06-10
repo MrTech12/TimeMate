@@ -8,11 +8,11 @@ namespace BusinessLogicLayer.Logic
 {
     public class Job
     {
-        private IJobContext _jobContext;
+        private IJobContainer _jobContext;
         private AccountDTO accountDTO;
         private string messageToUser;
 
-        public Job(AccountDTO accountDTO, IJobContext jobContext)
+        public Job(AccountDTO accountDTO, IJobContainer jobContext)
         {
             this.accountDTO = accountDTO;
             this._jobContext = jobContext;

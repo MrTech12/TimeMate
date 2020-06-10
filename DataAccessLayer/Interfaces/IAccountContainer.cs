@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccessLayer.Interfaces
 {
-    public interface IAccountContext
+    public interface IAccountContainer
     {
         string GetUserID(string mail);
 

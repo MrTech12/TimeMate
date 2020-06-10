@@ -9,17 +9,15 @@ namespace TimeMateTest.BLL
 {
     public class ChecklistAppointmentTest
     {
-        private AppointmentDTO appointmentDTO = new AppointmentDTO();
-        private AccountDTO accountDTO;
         private ChecklistAppointment checklistAppointment;
 
         [Fact]
         public void GetTasksTest()
         {
-            appointmentDTO.AppointmentID = 14;
-            checklistAppointment = new ChecklistAppointment(appointmentDTO, new StubChecklistAppointmentContext());
+            int appointmentID = 14;
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
 
-            var output = checklistAppointment.RetrieveTasks(appointmentDTO);
+            var output = checklistAppointment.RetrieveTasks(appointmentID);
 
             Assert.Equal("Dit", output[1]);
             Assert.Equal("Dat", output[3]);
@@ -28,9 +26,20 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
+        public void GetNoTasksTest()
+        {
+            int appointmentID = 0;
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
+
+            var output = checklistAppointment.RetrieveTasks(appointmentID);
+
+            Assert.True(output.Count == 0);
+        }
+
+        [Fact]
         public void ChangeTaskStatusToDoneTest()
         {
-            checklistAppointment = new ChecklistAppointment(appointmentDTO, new StubChecklistAppointmentContext());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
             ChecklistDTO checklistDTO = new ChecklistDTO();
             checklistDTO.TaskID = 62;
             checklistDTO.TaskName = "Get cake";
@@ -52,7 +61,7 @@ namespace TimeMateTest.BLL
         [Fact]
         public void ChangeTaskStatusToNotDoneTest()
         {
-            checklistAppointment = new ChecklistAppointment(appointmentDTO, new StubChecklistAppointmentContext());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
             ChecklistDTO checklistDTO = new ChecklistDTO();
             checklistDTO.TaskID = 74;
             checklistDTO.TaskName = "Buy new monitor";

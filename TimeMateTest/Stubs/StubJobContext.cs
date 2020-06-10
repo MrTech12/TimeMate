@@ -6,7 +6,7 @@ using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs
 {
-    class StubJobContext : IJobContext
+    class StubJobContext : IJobContainer
     {
         public double GetWeekendPay(AccountDTO accountDTO, JobDTO jobDTO)
         {

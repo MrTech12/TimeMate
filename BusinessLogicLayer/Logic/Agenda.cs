@@ -10,64 +10,48 @@ namespace BusinessLogicLayer.Logic
 {
     public class Agenda
     {
+        private IAppointmentContainer _appointmentContainer;
+        private INormalAppointmentContainer _normalAppointmentContainer;
+        private IChecklistAppointmentContainer _checklistAppointmentContainer;
+
         private AccountDTO accountDTO = new AccountDTO();
 
-        private IAgendaContext _agendaContext;
-        private IAppointmentContext _appointmentContext;
-        private INormalAppointmentContext _nAppointmentContext;
-        private IChecklistAppointmentContext _cAppointmentContext;
-
-        public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext)
-        {
-            this._agendaContext = agendaContext;
-            this.accountDTO = accountDTO;
-        }
-
-        public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext, IAppointmentContext appointmentContext)
+        public Agenda(AccountDTO accountDTO, IAppointmentContainer appointmentContainer)
         {
             this.accountDTO = accountDTO;
-            this._agendaContext = agendaContext;
-            this._appointmentContext = appointmentContext;
+            this._appointmentContainer = appointmentContainer;
         }
 
-        public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext, IAppointmentContext appointmentContext , INormalAppointmentContext nAppointmentContext)
+        public Agenda(IAppointmentContainer appointmentContainer , INormalAppointmentContainer normalAppointmentContainer)
         {
-            this.accountDTO = accountDTO;
-            this._agendaContext = agendaContext;
-            this._appointmentContext = appointmentContext;
-            this._nAppointmentContext = nAppointmentContext;
+            this._appointmentContainer = appointmentContainer;
+            this._normalAppointmentContainer = normalAppointmentContainer;
         }
 
-        public Agenda(AccountDTO accountDTO, IAgendaContext agendaContext, IAppointmentContext appointmentContext, IChecklistAppointmentContext cAppointmentContext)
+        public Agenda(IAppointmentContainer appointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer)
         {
-            this.accountDTO = accountDTO;
-            this._agendaContext = agendaContext;
-            this._appointmentContext = appointmentContext;
-            this._cAppointmentContext = cAppointmentContext;
+            this._appointmentContainer = appointmentContainer;
+            this._checklistAppointmentContainer = checklistAppointmentContainer;
         }
 
-        /// <summary>
-        /// Retrieve all appointments that belong to the current actor.
-        /// </summary>
-        /// <returns></returns>
         public List<AppointmentDTO> RetrieveAppointments()
         {
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
-            var appointments = _appointmentContext.GetAllAppointments(accountDTO);
-
-            List<AppointmentDTO> sortedAppointments = appointments.OrderBy(x => x.StartDate).GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
+            var appointments = _appointmentContainer.GetAppointments(accountDTO.AccountID);
 
             for (int i = 0; i < appointments.Count; i++)
             {
                 ChecklistDTO checklist = new ChecklistDTO();
-                if (appointments[i].ChecklistDTOs[0].TaskName != null)
+                if (appointments[i].ChecklistDTOs.Count != 0)
                 {
                     checklist = appointments[i].ChecklistDTOs[0];
                     checklists.Add(checklist);
                 }
             }
 
-            if (checklists.Capacity != 0)
+            List<AppointmentDTO> sortedAppointments = appointments.OrderBy(x => x.StartDate).GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
+
+            if (checklists.Count != 0)
             {
                 for (int i = 0; i < sortedAppointments.Count; i++)
                 {
@@ -88,27 +72,24 @@ namespace BusinessLogicLayer.Logic
             return sortedAppointments;
         }
 
-        /// <summary>
-        /// Create appointment with description.
-        /// </summary>
         public void CreateNormalAppointment(AppointmentDTO appointmentDTO)
         {
-            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO);
+            appointmentDTO.AppointmentID = _appointmentContainer.AddAppointment(appointmentDTO);
 
             if (appointmentDTO.DescriptionDTO.Description != null)
             {
-                _nAppointmentContext.AddDescription(appointmentDTO);
+                _normalAppointmentContainer.AddDescription(appointmentDTO);
             }
         }
 
-        /// <summary>
-        /// Create appointment with checklist.
-        /// </summary>
         public void CreateChecklistAppointment(AppointmentDTO appointmentDTO)
         {
-            appointmentDTO.AppointmentID = _appointmentContext.AddAppointment(appointmentDTO);
+            appointmentDTO.AppointmentID = _appointmentContainer.AddAppointment(appointmentDTO);
 
-            _cAppointmentContext.AddTask(appointmentDTO);
+            if (appointmentDTO.ChecklistDTOs.Count != 0)
+            {
+                _checklistAppointmentContainer.AddTask(appointmentDTO);
+            }
         }
     }
 }

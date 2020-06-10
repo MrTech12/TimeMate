@@ -7,7 +7,7 @@ using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs
 {
-    class StubChecklistAppointmentContext : IChecklistAppointmentContext
+    class StubChecklistAppointmentContext : IChecklistAppointmentContainer
     {
         public void AddTask(AppointmentDTO appointmentDTO)
         {
@@ -20,11 +20,11 @@ namespace TimeMateTest.Stubs
             }
         }
 
-        public List<ChecklistDTO> GetTasks(AppointmentDTO appointmentDTO)
+        public List<ChecklistDTO> GetTasks(int appointmentID)
         {
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
 
-            if (appointmentDTO.AppointmentID == 14)
+            if (appointmentID == 14)
             {
                 ChecklistDTO checklist1 = new ChecklistDTO();
                 checklist1.AppointmentID = 14;
@@ -56,17 +56,17 @@ namespace TimeMateTest.Stubs
             return taskstatus;
         }
 
-        public void CheckOffTask(int taskID)
+        public void CheckOffTask(int taskID, bool status)
         {
             string[] file = File.ReadAllLines(@"C:\tmp\getTaskStatusTest.txt");
-            file[2] = "True";
-            File.WriteAllLines(@"C:\tmp\getTaskStatusTest.txt", file);
-        }
-
-        public void RevertCheckOffTask(int taskID)
-        {
-            string[] file = File.ReadAllLines(@"C:\tmp\getTaskStatusTest.txt");
-            file[2] = "False";
+            if (status == true)
+            {
+                file[2] = "True";
+            }
+            else
+            {
+                file[2] = "False";
+            }
             File.WriteAllLines(@"C:\tmp\getTaskStatusTest.txt", file);
         }
     }

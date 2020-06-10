@@ -5,16 +5,14 @@ using System.Text;
 
 namespace DataAccessLayer.Interfaces
 {
-    public interface IChecklistAppointmentContext
+    public interface IChecklistAppointmentContainer
     {
         void AddTask(AppointmentDTO appointmentDTO);
 
         bool GetTaskStatus(int taskID);
 
-        void RevertCheckOffTask(int taskID);
+        List<ChecklistDTO> GetTasks(int appointmentID);
 
-        List<ChecklistDTO> GetTasks(AppointmentDTO appointmentDTO);
-
-        void CheckOffTask(int taskID);
+        void CheckOffTask(int taskID, bool status);
     }
 }

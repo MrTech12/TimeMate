@@ -6,37 +6,46 @@ using Microsoft.AspNetCore.Mvc;
 using TimeMate.Models;
 using DataAccessLayer.DTO;
 using BusinessLogicLayer.Logic;
-using DataAccessLayer.Contexts;
 using Microsoft.AspNetCore.Http;
 using DataAccessLayer.Interfaces;
+using TimeMate.Services;
 
 namespace TimeMate.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IAccountContext _accountContext;
-        private readonly IAgendaContext _agendaContext;
+        private readonly IAccountContainer _accountContainer;
+        private readonly IAgendaContainer _agendaContainer;
+        private readonly ISenderContainer _senderContainer;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         private Account account;
         private AccountDTO accountDTO;
+        private SessionService sessionService;
+        bool sessionHasValue;
 
-        public AccountController(IAccountContext accountContext, IAgendaContext agendaContext)
+        public AccountController(IAccountContainer accountContainer, IAgendaContainer agendaContainer, ISenderContainer senderContainer, IHttpContextAccessor httpContextAccessor)
         {
-            _accountContext = accountContext;
-            _agendaContext = agendaContext;
+            _accountContainer = accountContainer;
+            _agendaContainer = agendaContainer;
+            _senderContainer = senderContainer;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("accountID") != null)
+            sessionService = new SessionService(_httpContextAccessor);
+            sessionHasValue = sessionService.CheckSessionValue();
+
+            if (sessionHasValue)
             {
                 return RedirectToAction("Index", "Agenda");
             }
             else
             {
-                LogInViewModel loginViewModel = new LogInViewModel();
-                return View(loginViewModel);
+                LogInViewModel viewModel = new LogInViewModel();
+                return View(viewModel);
             }
         }
 
@@ -46,15 +55,15 @@ namespace TimeMate.Controllers
             if (ModelState.IsValid)
             {
                 accountDTO = new AccountDTO();
-                accountDTO.MailAddress = viewModel.Mail;
+                accountDTO.Mail = viewModel.Mail;
                 accountDTO.Password = viewModel.Password;
 
-                account = new Account(accountDTO, _accountContext, _agendaContext);
+                account = new Account(accountDTO, _accountContainer);
                 string result = account.LoggingIn();
 
-                if (!result.All(char.IsDigit))
+                if (result == null)
                 {
-                    ModelState.AddModelError("", result);
+                    ModelState.AddModelError("", "Verkeerd mailadres en/of wachtwoord.");
                     return View(viewModel);
                 }
                 else
@@ -72,8 +81,18 @@ namespace TimeMate.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            RegisterViewModel registerViewModel = new RegisterViewModel();
-            return View(registerViewModel);
+            sessionService = new SessionService(_httpContextAccessor);
+            sessionHasValue = sessionService.CheckSessionValue();
+
+            if (sessionHasValue)
+            {
+                return RedirectToAction("Index", "Agenda");
+            }
+            else
+            {
+                RegisterViewModel registerViewModel = new RegisterViewModel();
+                return View(registerViewModel);
+            }
         }
 
         [HttpPost]
@@ -83,16 +102,23 @@ namespace TimeMate.Controllers
             {
                 accountDTO = new AccountDTO();
                 accountDTO.FirstName = viewModel.FirstName;
-                accountDTO.MailAddress = viewModel.Mail;
+                accountDTO.Mail = viewModel.Mail;
                 accountDTO.Password = viewModel.Password;
                 accountDTO.JobCount = viewModel.JobAmount;
 
-                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.job1HourlyWage));
-                accountDTO.JobDayType.Add(viewModel.job1DayType);
-                accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.job2HourlyWage));
-                accountDTO.JobDayType.Add(viewModel.job2DayType);
+                if (viewModel.Job1HourlyWage != "0.00")
+                {
+                    accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job1HourlyWage));
+                    accountDTO.JobDayType.Add(viewModel.Job1DayType);
 
-                account = new Account(accountDTO, _accountContext, _agendaContext);
+                }
+                else if (viewModel.Job2HourlyWage != "0.00")
+                {
+                    accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job2HourlyWage));
+                    accountDTO.JobDayType.Add(viewModel.Job2DayType);
+                }
+
+                account = new Account(accountDTO, _accountContainer, _agendaContainer, _senderContainer);
 
                 string result = account.NewAccountValidation();
 
@@ -116,12 +142,22 @@ namespace TimeMate.Controllers
         [HttpGet]
         public IActionResult AccountSettings()
         {
-            accountDTO = new AccountDTO();
-            accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
+            sessionService = new SessionService(_httpContextAccessor);
+            sessionHasValue = sessionService.CheckSessionValue();
 
-            account = new Account(accountDTO, _accountContext, _agendaContext);
-            var viewModel = account.RetrieveAgendas();
-            return View(viewModel);
+            if (sessionHasValue)
+            {
+                accountDTO = new AccountDTO();
+                accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
+
+                account = new Account(accountDTO, _agendaContainer);
+                List<AgendaDTO> viewModel = account.RetrieveAgendas();
+                return View(viewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Account");
+            }
         }
 
         public IActionResult Logout()

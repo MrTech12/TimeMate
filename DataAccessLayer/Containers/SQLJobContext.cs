@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccessLayer.Contexts
+namespace DataAccessLayer.Containers
 {
-    public class SQLJobContext : IJobContext
+    public class SQLJobContext : IJobContainer
     {
         /// <summary>
         /// Get the pay for business days from the database.

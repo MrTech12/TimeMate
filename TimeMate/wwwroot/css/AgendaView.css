@@ -11,10 +11,6 @@ th {
     text-align: left;
 }
 
-td.appointmentName {
+td.appointment-name {
     color: #1563F5;
-}
-
-img#taskImage {
-    width: 25px;
 }

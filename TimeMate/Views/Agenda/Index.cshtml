@@ -5,8 +5,8 @@
 }
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/js/AgendaView.js"></script>
-<link rel="stylesheet" type="text/css" href="~/css/AgendaView.css" />
+<script src="~/js/agenda-view.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/agendaview.css" />
 
 <div class="row">
     <div class="col">
@@ -30,57 +30,53 @@
         <th>Startdatum/tijd</th>
         <th>Einddatum/tijd</th>
         <th>Agendanaam</th>
-        <th>Extra informatie</th>
-        <th>Aanpassen</th>
+        <th>Taken</th>
+        <th>Extra</th>
     </tr>
     @for (int i = 0; i < Model.Count; i++)
     {
-        <tr>
-            <td id="@Model[i].AppointmentID" class="appointmentName">@Model[i].AppointmentName</td>
-            <td>@Model[i].StartDate</td>
-            <td>@Model[i].EndDate</td>
-            <td id="@Model[i].AgendaID">@Model[i].AgendaName</td>
-            <td>
-                @if (Model[i].DescriptionDTO.Description != null)
+    <tr>
+        <td id="@Model[i].AppointmentID" class="appointment-name">@Model[i].AppointmentName</td>
+        <td>@Model[i].StartDate</td>
+        <td>@Model[i].EndDate</td>
+        <td id="@Model[i].AgendaID">@Model[i].AgendaName</td>
+        <td>
+            @if (Model[i].ChecklistDTOs != null)
+            {
+                @foreach (var item in Model[i].ChecklistDTOs)
                 {
-                    @Model[i].DescriptionDTO.Description
+                    <label class="@item.TaskID">@item.TaskName</label>
+                    <label>@item.TaskChecked</label>
+                    <br />
                 }
-                @if (Model[i].ChecklistDTOs != null)
-                {
-                    @foreach (var item in Model[i].ChecklistDTOs)
-                    {
-                        <label class="@item.TaskID">@item.TaskName</label>
-                        <label>@item.TaskChecked</label>
-                        <br />
-                    }
-                }
-            </td>
-            <td>
-                <button type="button" class="btn btn-danger changeAppointment" data-toggle="modal" data-target="#changeModal">
-                    Taken afvinken
-                </button>
-            </td>
-        </tr>
+            }
+        </td>
+        <td>
+            <button type="button" class="btn btn-danger extra-modal" data-toggle="modal" data-target="#extra-modal">
+                Extra weergeven
+            </button>
+        </td>
+    </tr>
     }
 </table>
 
 <!-- Modal for Changing details -->
-<div class="modal" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal" id="extra-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Taken afvinken</h4>
+                <h4 class="modal-title">Afspraakextra weergeven</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
                 <div id="modal-task-info" class="d-none">Taken van deze afspraak aan/afvinken</div>
-                <div id="modal-no-tasks" class="d-none">Er zijn geen taken voor deze afspraak gevonden.</div>
+                <div id="modal-task-description" class="d-none"></div>
                 <select id="tasks" class="d-none"></select>
-                <button type="button" id="checkOffTask" class="btn btn-info d-none" data-dismiss="modal">aan/afvinken</button>
+                <button type="button" id="checkoff-task" class="btn btn-info d-none" data-dismiss="modal">aan/afvinken</button>
             </div>
 
         </div>

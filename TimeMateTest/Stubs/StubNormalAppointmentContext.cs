@@ -7,7 +7,7 @@ using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs
 {
-    class StubNormalAppointmentContext : INormalAppointmentContext
+    class StubNormalAppointmentContext : INormalAppointmentContainer
     {
         public void AddDescription(AppointmentDTO appointmentDTO)
         {
@@ -18,6 +18,16 @@ namespace TimeMateTest.Stubs
                     streamWriter.WriteLine(appointmentDTO.DescriptionDTO.Description);
                 }
             }
+        }
+
+        public string GetDescription(int appointmentID)
+        {
+            string description = null;
+            if (appointmentID == 24)
+            {
+                description = "Dit is een beschrijving";
+            }
+            return description;
         }
     }
 }

@@ -6,7 +6,7 @@ using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs
 {
-    class StubAccountContext : IAccountContext
+    class StubAccountContext : IAccountContainer
     {
         public string GetUserID(string mail)
         {
@@ -21,7 +21,7 @@ namespace TimeMateTest.Stubs
         public int CreateAccount(AccountDTO AccountDTO)
         {
             int accountID = 0;
-            if (AccountDTO.MailAddress == "sina1240@gmail.com")
+            if (AccountDTO.Mail == "sina1240@gmail.com")
             {
                 accountID = 6;
             }

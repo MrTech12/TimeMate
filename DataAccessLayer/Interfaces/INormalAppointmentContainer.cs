@@ -5,8 +5,10 @@ using System.Text;
 
 namespace DataAccessLayer.Interfaces
 {
-    public interface INormalAppointmentContext
+    public interface INormalAppointmentContainer
     {
         void AddDescription(AppointmentDTO appointmentDTO);
+
+        string GetDescription(int appointmentID);
     }
 }

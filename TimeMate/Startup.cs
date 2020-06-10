@@ -10,9 +10,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DataAccessLayer.Contexts;
+using DataAccessLayer.Containers;
 using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace TimeMate
 {
@@ -35,12 +36,14 @@ namespace TimeMate
             services.AddTransient<AppointmentDTO>();
             services.AddTransient<JobDTO>();
 
-            services.AddTransient<IAccountContext, SQLAccountContext>();
-            services.AddTransient<IAgendaContext, SQLAgendaContext>();
-            services.AddTransient<IAppointmentContext, SQLAppointmentContext>();
-            services.AddTransient<IChecklistAppointmentContext, SQLChecklistAppointmentContext>();
-            services.AddTransient<IJobContext, SQLJobContext>();
-            services.AddTransient<INormalAppointmentContext, SQLNormalAppointmentContext>();
+            services.AddTransient<IAccountContainer, SQLAccountContainer>();
+            services.AddTransient<IAgendaContainer, SQLAgendaContainer>();
+            services.AddTransient<IAppointmentContainer, SQLAppointmentContainer>();
+            services.AddTransient<IChecklistAppointmentContainer, SQLChecklistAppointmentContainer>();
+            services.AddTransient<IJobContainer, SQLJobContext>();
+            services.AddTransient<INormalAppointmentContainer, SQLNormalAppointmentContainer>();
+            services.AddTransient<ISenderContainer, MailSenderContainer>();
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSession(options =>
             {

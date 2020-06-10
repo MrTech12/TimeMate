@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.DTO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +12,7 @@ namespace TimeMate.Models
     {
         [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Voor een afspraaknaam in.")]
-        public string Name { get; set; }
+        public string AppointmentName { get; set; }
 
         [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Kies een startdatum.")]
@@ -35,6 +36,6 @@ namespace TimeMate.Models
 
         [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Kies een agenda uit.")]
-        public List<AgendaDTO> AgendaDTO { get; set; }
+        public int AgendaID { get; set; }
     }
 }

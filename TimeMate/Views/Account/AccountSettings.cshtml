@@ -5,20 +5,20 @@
 }
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/js/AccountSettings.js"></script>
+<script src="~/js/account-settings.js"></script>
 
 <h1>Accountinstellingen</h1>
 
 <div class="row">
     <div class="form-group">
-        <select id="agendaList">
+        <select id="agenda-select">
             @foreach (var item in Model)
             {
                 <option id="@item.AgendaID">
 
-                    @foreach (var qwerty in item.AgendaName)
+                    @foreach (var agendaName in item.AgendaName)
                     {
-                        @qwerty
+                        @agendaName
                     }
                 </option>
 
@@ -27,14 +27,14 @@
     </div>
 
     <div>
-        <button type="button" id="deleteAgenda" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+        <button type="button" id="delete-agenda" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal">
             agenda verwijderen
         </button>
     </div>
 </div>
 
     <!-- Modal for deleting -->
-<div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
 
@@ -46,12 +46,12 @@
 
             <!-- Modal body -->
             <div class="modal-body">
-                Weet je zeker dat je de agenda <label id="agendaName"></label> wilt verwijderen?
+                Weet je zeker dat je de agenda <label id="agenda-name"></label> wilt verwijderen?
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" id="confirmDeletion" class="btn btn-danger" data-dismiss="modal">Ja</button>
+                <button type="button" id="confirm-deletion" class="btn btn-danger" data-dismiss="modal">Ja</button>
                 <button type="button" class="btn btn-info" data-dismiss="modal">Nee</button>
             </div>
         </div>

@@ -1,14 +1,14 @@
 ﻿@model TimeMate.Models.AppointmentViewModel
 
 <div class="form-group">
-    <label asp-for="Name" class="control-label"></label>
-    <input asp-for="Name" class="form-control" />
-    <span asp-validation-for="Name" class="text-danger"></span>
+    <label asp-for="AppointmentName" class="control-label"></label>
+    <input asp-for="AppointmentName" class="form-control"/>
+    <span asp-validation-for="AppointmentName" class="text-danger"></span>
 </div>
 <div class="row">
     <div class="col form-group">
         <label asp-for="StartDate" class="control-label"></label>
-        <input type="date" asp-for="StartDate" class="form-control" />
+        <input type="date" asp-for="StartDate" class="form-control" min="2020-05-01" value="2020-05-01" />
         <span asp-validation-for="StartDate" class="text-danger"></span>
     </div>
     <div class="col form-group">
@@ -20,29 +20,16 @@
 <div class="row">
     <div class="col form-group">
         <label asp-for="EndDate" class="control-label"></label>
-        <input type="date" asp-for="EndDate" class="form-control" />
+        <input type="date" asp-for="EndDate" class="form-control" min="2020-05-01" value="2020-05-01" />
         <span asp-validation-for="EndDate" class="text-danger"></span>
     </div>
     <div class="col form-group">
         <label asp-for="EndTime" class="control-label"></label>
-        <input type="time" asp-for="EndTime" class="form-control" />
+        <input type="time" asp-for="EndTime" class="form-control"/>
         <span asp-validation-for="EndTime" class="text-danger"></span>
     </div>
 </div>
 <div class="form-group">
-    <label asp-for="@Model.AgendaDTO[0].AgendaName" class="control-label"></label>
-    <select asp-for="@Model.AgendaDTO[0].AgendaName">
-        @foreach (var item in Model.AgendaDTO)
-        {
-        <option id="@item.AgendaID">
-
-            @foreach (var qwerty in item.AgendaName)
-            {
-                @qwerty
-            }
-        </option>
-
-        }
-    </select>
+    <label asp-for="AgendaID" class="control-label"></label>
+    <select asp-for="AgendaID" asp-items="@(new SelectList(ViewBag.agendaList,"AgendaID","AgendaName"))"></select>
 </div>
-<br />

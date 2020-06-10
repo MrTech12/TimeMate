@@ -6,46 +6,41 @@ using System.Text;
 
 namespace BusinessLogicLayer.Logic
 {
-    public class ChecklistAppointment : Appointment
+    public class ChecklistAppointment
     {
-        private IChecklistAppointmentContext _cAppointmentContext;
+        private IChecklistAppointmentContainer _checklistAppointmentContainer;
 
-        public ChecklistAppointment(AppointmentDTO appointmentDTO, IChecklistAppointmentContext checklistAppointmentContext) : base(appointmentDTO)
+        public ChecklistAppointment(IChecklistAppointmentContainer checklistAppointmentContainer)
         {
-            this._cAppointmentContext = checklistAppointmentContext;
+            this._checklistAppointmentContainer = checklistAppointmentContainer;
         }
 
-        public List<string> RetrieveTasks(AppointmentDTO appointmentDTO)
+        public List<string> RetrieveTasks(int appointmentID)
         {
-            var checklists = _cAppointmentContext.GetTasks(appointmentDTO);
+            var checklists = _checklistAppointmentContainer.GetTasks(appointmentID);
             List<string> tasks = new List<string>();
-            for (int i = 0; i < checklists.Count; i++)
+            if (checklists.Count != 0)
             {
-                tasks.Add(Convert.ToString(checklists[i].TaskID));
-                tasks.Add(Convert.ToString(checklists[i].TaskName));
+                for (int i = 0; i < checklists.Count; i++)
+                {
+                    tasks.Add(Convert.ToString(checklists[i].TaskID));
+                    tasks.Add(Convert.ToString(checklists[i].TaskName));
+                }
             }
             return tasks;
         }
 
         public void ChangeTaskStatus(int taskID)
         {
-            bool taskStatus = _cAppointmentContext.GetTaskStatus(taskID);
+            bool taskStatus = _checklistAppointmentContainer.GetTaskStatus(taskID);
             if (!taskStatus)
             {
-                _cAppointmentContext.CheckOffTask(taskID);
+                _checklistAppointmentContainer.CheckOffTask(taskID, true);
             }
             else
             {
-                _cAppointmentContext.RevertCheckOffTask(taskID);
+                _checklistAppointmentContainer.CheckOffTask(taskID, false);
             }
-        }
-
-        /// <summary>
-        /// Rename an appointment.
-        /// </summary>
-        public override void RenameAppointment(AppointmentDTO appointmentDTO)
-        {
-            throw new NotImplementedException();
         }
     }
 }

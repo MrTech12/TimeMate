@@ -1,29 +1,28 @@
 ﻿var agendaName;
 var agendaID;
 var selectInput;
-var newAgendaName;
 
 $(document).ready(function () {
-    $("#deleteAgenda").click(function () {
-        GetSelectedInformation();
-        $("#agendaName").text(agendaName);
+    $("#delete-agenda").click(function () {
+        GetSelectedOptionInformation();
+        $("#agenda-name").text(agendaName);
         console.log("Name: " + agendaName + "; Id: " + agendaID);
     });
 
-    $("#confirmDeletion").click(function () {
-        SendDeletionRequest();
+    $("#confirm-deletion").click(function () {
+        SendDeleteRequest();
     });
 });
 
-function GetSelectedInformation() {
-    selectInput = document.getElementById("agendaList");
-    agendaName = selectInput.options[selectInput.selectedIndex].value;
-    agendaID = selectInput.options[selectInput.selectedIndex].id;
+function GetSelectedOptionInformation() {
+    selectInput = document.getElementById("agenda-select");
+    agendaName = $("#agenda-select :selected").val();
+    agendaID = $("#agenda-select :selected").attr("id");
 };
 
-function SendDeletionRequest() {
+function SendDeleteRequest() {
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "/Agenda/DeleteAgenda",
         contenttype: "application/json; charset=utf-8",
         data: { json: agendaID },
@@ -33,6 +32,7 @@ function SendDeletionRequest() {
             selectInput.remove(selectInput.selectedIndex);
         },
         error: function (ts) {
+            alert('Een error is ontstaan. Probeer het laten opnieuw a.u.b.');
             onerror(console.info(ts));
         }
     });

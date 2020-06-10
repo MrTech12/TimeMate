@@ -8,7 +8,28 @@ namespace TimeMateTest.BLL
 {
     public class NormalAppointmentTest
     {
-        private AccountDTO accountDTO;
         private NormalAppointment normalAppointment;
+
+        [Fact]
+        public void GetDescriptionTest()
+        {
+            int appointmentID = 24;
+            normalAppointment = new NormalAppointment(new StubNormalAppointmentContext());
+
+            var output = normalAppointment.RetrieveDescription(appointmentID);
+
+            Assert.Equal("Dit is een beschrijving", output);
+        }
+
+        [Fact]
+        public void GetNoDescriptionTest()
+        {
+            int appointmentID = 0;
+            normalAppointment = new NormalAppointment(new StubNormalAppointmentContext());
+
+            var output = normalAppointment.RetrieveDescription(appointmentID);
+
+            Assert.Null(output);
+        }
     }
 }

@@ -5,10 +5,10 @@ using System.Text;
 
 namespace DataAccessLayer.Interfaces
 {
-    public interface IAppointmentContext
+    public interface IAppointmentContainer
     {
         int AddAppointment(AppointmentDTO appointmentDTO);
 
-        List<AppointmentDTO> GetAllAppointments(AccountDTO accountDTO);
+        List<AppointmentDTO> GetAppointments(int accountID);
     }
 }

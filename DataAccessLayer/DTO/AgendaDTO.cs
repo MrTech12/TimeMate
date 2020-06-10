@@ -9,7 +9,7 @@ namespace DataAccessLayer.DTO
         private int agendaID;
         private string agendaName;
         private string agendaColor;
-        private string notification;
+        private string notificationType;
 
         public int AgendaID { get { return this.agendaID; } set { this.agendaID = value; } }
 
@@ -17,6 +17,6 @@ namespace DataAccessLayer.DTO
 
         public string AgendaColor { get { return this.agendaColor; } set { this.agendaColor = value; } }
 
-        public string Notification { get { return this.notification; } set { this.notification = value; } }
+        public string NotificationType { get { return this.notificationType; } set { this.notificationType = value; } }
     }
 }

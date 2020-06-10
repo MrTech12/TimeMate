@@ -6,15 +6,14 @@ using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
-namespace DataAccessLayer.Contexts
+namespace DataAccessLayer.Containers
 {
-    public class SQLDatabaseContext
+    public class SQLDatabaseContainer
     {
         /// <summary>
         /// Get the connectionstring for the database, that resides in the json file.
         /// </summary>
-        /// <returns></returns>
-        public string GetConnection()
+        public string GetConnectionString()
         {
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json",optional:true,reloadOnChange: true);
             return builder.Build().GetSection("ConnectionStrings").GetSection("FontysMS").Value;
