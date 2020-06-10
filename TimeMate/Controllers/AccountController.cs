@@ -8,6 +8,7 @@ using DataAccessLayer.DTO;
 using BusinessLogicLayer.Logic;
 using Microsoft.AspNetCore.Http;
 using DataAccessLayer.Interfaces;
+using TimeMate.Services;
 
 namespace TimeMate.Controllers
 {
@@ -16,21 +17,28 @@ namespace TimeMate.Controllers
         private readonly IAccountContainer _accountContainer;
         private readonly IAgendaContainer _agendaContainer;
         private readonly ISenderContainer _senderContainer;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         private Account account;
         private AccountDTO accountDTO;
+        private SessionService sessionService;
+        bool sessionHasValue;
 
-        public AccountController(IAccountContainer accountContainer, IAgendaContainer agendaContainer, ISenderContainer senderContainer)
+        public AccountController(IAccountContainer accountContainer, IAgendaContainer agendaContainer, ISenderContainer senderContainer, IHttpContextAccessor httpContextAccessor)
         {
             _accountContainer = accountContainer;
             _agendaContainer = agendaContainer;
             _senderContainer = senderContainer;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("accountID").HasValue)
+            sessionService = new SessionService(_httpContextAccessor);
+            sessionHasValue = sessionService.CheckSessionValue();
+
+            if (sessionHasValue)
             {
                 return RedirectToAction("Index", "Agenda");
             }
@@ -73,8 +81,18 @@ namespace TimeMate.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            RegisterViewModel registerViewModel = new RegisterViewModel();
-            return View(registerViewModel);
+            sessionService = new SessionService(_httpContextAccessor);
+            sessionHasValue = sessionService.CheckSessionValue();
+
+            if (sessionHasValue)
+            {
+                return RedirectToAction("Index", "Agenda");
+            }
+            else
+            {
+                RegisterViewModel registerViewModel = new RegisterViewModel();
+                return View(registerViewModel);
+            }
         }
 
         [HttpPost]
@@ -124,12 +142,22 @@ namespace TimeMate.Controllers
         [HttpGet]
         public IActionResult AccountSettings()
         {
-            accountDTO = new AccountDTO();
-            accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
+            sessionService = new SessionService(_httpContextAccessor);
+            sessionHasValue = sessionService.CheckSessionValue();
 
-            account = new Account(accountDTO, _agendaContainer);
-            List<AgendaDTO> viewModel = account.RetrieveAgendas();
-            return View(viewModel);
+            if (sessionHasValue)
+            {
+                accountDTO = new AccountDTO();
+                accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
+
+                account = new Account(accountDTO, _agendaContainer);
+                List<AgendaDTO> viewModel = account.RetrieveAgendas();
+                return View(viewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Account");
+            }
         }
 
         public IActionResult Logout()

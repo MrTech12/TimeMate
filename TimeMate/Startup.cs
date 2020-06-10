@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using DataAccessLayer.Containers;
 using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace TimeMate
 {
@@ -42,6 +43,7 @@ namespace TimeMate
             services.AddTransient<IJobContainer, SQLJobContext>();
             services.AddTransient<INormalAppointmentContainer, SQLNormalAppointmentContainer>();
             services.AddTransient<ISenderContainer, MailSenderContainer>();
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSession(options =>
             {

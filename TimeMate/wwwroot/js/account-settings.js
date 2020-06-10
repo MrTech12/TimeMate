@@ -22,7 +22,7 @@ function GetSelectedOptionInformation() {
 
 function SendDeleteRequest() {
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "/Agenda/DeleteAgenda",
         contenttype: "application/json; charset=utf-8",
         data: { json: agendaID },

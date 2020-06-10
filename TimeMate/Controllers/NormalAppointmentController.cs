@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using BusinessLogicLayer.Logic;
 using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TimeMate.Models;
+using TimeMate.Services;
 
 namespace TimeMate.Controllers
 {
@@ -16,25 +18,39 @@ namespace TimeMate.Controllers
         private readonly IAgendaContainer _agendaContainer;
         private readonly IAppointmentContainer _appointmentContainer;
         private readonly INormalAppointmentContainer _normalAppointmentContainer;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         private AccountDTO accountDTO = new AccountDTO();
         private Account account;
         private Agenda agenda;
+        private SessionService sessionService;
+        bool sessionHasValue;
 
-        public NormalAppointmentController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, INormalAppointmentContainer normalAppointmentContainer)
+        public NormalAppointmentController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, INormalAppointmentContainer normalAppointmentContainer, IHttpContextAccessor httpContextAccessor)
         {
             _agendaContainer = agendaContainer;
             _appointmentContainer = appointmentContainer;
             _normalAppointmentContainer = normalAppointmentContainer;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            NormalAppointmentViewModel viewModel = new NormalAppointmentViewModel();
-            account = new Account(accountDTO, _agendaContainer);
-            viewModel.AppointmentViewModel.AgendaDTO = account.RetrieveAgendas();
-            return View(viewModel);
+            sessionService = new SessionService(_httpContextAccessor);
+            sessionHasValue = sessionService.CheckSessionValue();
+
+            if (sessionHasValue)
+            {
+                NormalAppointmentViewModel viewModel = new NormalAppointmentViewModel();
+                account = new Account(accountDTO, _agendaContainer);
+                viewModel.AppointmentViewModel.AgendaDTO = account.RetrieveAgendas();
+                return View(viewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Account");
+            }
         }
 
         [HttpPost]

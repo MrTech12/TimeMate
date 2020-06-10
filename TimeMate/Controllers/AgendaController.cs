@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TimeMate.Models;
+using TimeMate.Services;
 
 namespace TimeMate.Controllers
 {
@@ -18,23 +19,30 @@ namespace TimeMate.Controllers
         private readonly IAppointmentContainer _appointmentContainer;
         private readonly INormalAppointmentContainer _normalAppointmentContainer;
         private readonly IChecklistAppointmentContainer _checklistAppointmentContainer;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         private AccountDTO accountDTO = new AccountDTO();
         private Agenda agenda;
         private Account account;
+        private SessionService sessionService;
+        bool sessionHasValue;
 
-        public AgendaController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, INormalAppointmentContainer normalAppointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer)
+        public AgendaController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, INormalAppointmentContainer normalAppointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer, IHttpContextAccessor httpContextAccessor)
         {
             _agendaContainer = agendaContainer;
             _appointmentContainer = appointmentContainer;
             _normalAppointmentContainer = normalAppointmentContainer;
             _checklistAppointmentContainer = checklistAppointmentContainer;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            if (HttpContext.Session.GetInt32("accountID").HasValue)
+            sessionService = new SessionService(_httpContextAccessor);
+            sessionHasValue = sessionService.CheckSessionValue();
+
+            if (sessionHasValue)
             {
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
@@ -51,8 +59,18 @@ namespace TimeMate.Controllers
         [HttpGet]
         public IActionResult AddAgenda()
         {
-            AgendaViewModel viewModel = new AgendaViewModel();
-            return View(viewModel);
+            sessionService = new SessionService(_httpContextAccessor);
+            sessionHasValue = sessionService.CheckSessionValue();
+
+            if (sessionHasValue)
+            {
+                AgendaViewModel viewModel = new AgendaViewModel();
+                return View(viewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Account");
+            }
         }
 
         [HttpPost]
@@ -75,7 +93,7 @@ namespace TimeMate.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult DeleteAgenda(string json)
         {
             int agendaID = JsonConvert.DeserializeObject<int>(json);
