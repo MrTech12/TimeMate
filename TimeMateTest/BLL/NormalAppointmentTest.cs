@@ -20,5 +20,16 @@ namespace TimeMateTest.BLL
 
             Assert.Equal("Dit is een beschrijving", output);
         }
+
+        [Fact]
+        public void GetNoDescriptionTest()
+        {
+            int appointmentID = 0;
+            normalAppointment = new NormalAppointment(new StubNormalAppointmentContext());
+
+            var output = normalAppointment.RetrieveDescription(appointmentID);
+
+            Assert.Null(output);
+        }
     }
 }

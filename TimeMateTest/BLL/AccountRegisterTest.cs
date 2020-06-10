@@ -49,7 +49,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountLowerCasePasswordTest()
+        public void CreateAccountLowercasePasswordTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwieiwi231@#" };
@@ -61,7 +61,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountNoSpecialCharactersInPasswordTest()
+        public void CreateAccountNoSpecialCharactersPasswordTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwiEEWwi231WE" };
@@ -73,7 +73,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountNoNumbersInPasswordTest()
+        public void CreateAccountNoNumbersPasswordTest()
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwieiwieWE@#" };

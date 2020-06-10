@@ -26,6 +26,17 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
+        public void GetNoTasksTest()
+        {
+            int appointmentID = 0;
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
+
+            var output = checklistAppointment.RetrieveTasks(appointmentID);
+
+            Assert.True(output.Count == 0);
+        }
+
+        [Fact]
         public void ChangeTaskStatusToDoneTest()
         {
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());

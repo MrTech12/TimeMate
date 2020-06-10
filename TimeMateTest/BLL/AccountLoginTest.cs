@@ -26,7 +26,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void EmptyLoginTest()
+        public void EmptyCredentailsTest()
         {
             string output;
             accountDTO = new AccountDTO() { Mail = "", Password = "" };
@@ -34,11 +34,11 @@ namespace TimeMateTest.BLL
 
             output = account.LoggingIn();
 
-            Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
+            Assert.Null(output);
         }
 
         [Fact]
-        public void WrongMailaddressTest()
+        public void WrongMailTest()
         {
             string output;
             accountDTO = new AccountDTO() { Mail = "test@gmail.com", Password = "test123"};
@@ -46,11 +46,11 @@ namespace TimeMateTest.BLL
 
             output = account.LoggingIn();
 
-            Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
+            Assert.Null(output);
         }
 
         [Fact]
-        public void EmptyMailTest()
+        public void NoMailTest()
         {
             string output;
             accountDTO = new AccountDTO() { Mail = "", Password = "test123" };
@@ -58,7 +58,7 @@ namespace TimeMateTest.BLL
 
             output = account.LoggingIn();
 
-            Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
+            Assert.Null(output);
         }
 
         [Fact]
@@ -70,7 +70,7 @@ namespace TimeMateTest.BLL
 
             output = account.LoggingIn();
 
-            Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
+            Assert.Null(output);
         }
 
         [Fact]
@@ -82,11 +82,11 @@ namespace TimeMateTest.BLL
 
             output = account.LoggingIn();
 
-            Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
+            Assert.Null(output);
         }
 
         [Fact]
-        public void EmptyPasswordTest()
+        public void NoPasswordTest()
         {
             string output;
             accountDTO = new AccountDTO() { Mail = "bert@gmail.com", Password = "" };
@@ -94,7 +94,7 @@ namespace TimeMateTest.BLL
 
             output = account.LoggingIn();
 
-            Assert.Equal("Verkeerd mailadres en/of wachtwoord.", output);
+            Assert.Null(output);
         }
     }
 }

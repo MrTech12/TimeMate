@@ -53,7 +53,7 @@ namespace BusinessLogicLayer.Logic
                 bool passwordValid = BCrypt.Net.BCrypt.Verify(accountDTO.Password, databaseOutput);
                 if (!passwordValid)
                 {
-                    returnMessage = "Verkeerd mailadres en/of wachtwoord.";
+                    returnMessage = null;
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace BusinessLogicLayer.Logic
             }
             else
             {
-                returnMessage = "Verkeerd mailadres en/of wachtwoord.";
+                returnMessage = null;
             }
 
             return returnMessage;
@@ -72,7 +72,6 @@ namespace BusinessLogicLayer.Logic
         {
             string mailValidate = "^([0-9a-zA-Z-_]([-\\.\\w]*[0-9a-zA-Z-_])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$";
             string specialCharacterValidate = @"[~`!@#$%^&*()+=|\\{}':;.,<>/?[\]""_-]";
-            //string nameValidate = @"^[a-zA-Z]+$";
 
             if (Regex.IsMatch(accountDTO.Mail, mailValidate) == false)
             {

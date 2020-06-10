@@ -1,6 +1,4 @@
 ﻿var index = 0;
-var appointmentInfo = [];
-var jsonData = 0;
 
 $(document).ready(function () {
     $("#bolding-text").click(function () {

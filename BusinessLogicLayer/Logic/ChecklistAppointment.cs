@@ -19,10 +19,13 @@ namespace BusinessLogicLayer.Logic
         {
             var checklists = _checklistAppointmentContainer.GetTasks(appointmentID);
             List<string> tasks = new List<string>();
-            for (int i = 0; i < checklists.Count; i++)
+            if (checklists.Count != 0)
             {
-                tasks.Add(Convert.ToString(checklists[i].TaskID));
-                tasks.Add(Convert.ToString(checklists[i].TaskName));
+                for (int i = 0; i < checklists.Count; i++)
+                {
+                    tasks.Add(Convert.ToString(checklists[i].TaskID));
+                    tasks.Add(Convert.ToString(checklists[i].TaskName));
+                }
             }
             return tasks;
         }

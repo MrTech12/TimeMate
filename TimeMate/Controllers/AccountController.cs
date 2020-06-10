@@ -61,9 +61,9 @@ namespace TimeMate.Controllers
                 account = new Account(accountDTO, _accountContainer);
                 string result = account.LoggingIn();
 
-                if (!result.All(char.IsDigit))
+                if (result == null)
                 {
-                    ModelState.AddModelError("", result);
+                    ModelState.AddModelError("", "Verkeerd mailadres en/of wachtwoord.");
                     return View(viewModel);
                 }
                 else

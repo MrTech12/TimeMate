@@ -42,7 +42,7 @@ namespace BusinessLogicLayer.Logic
             for (int i = 0; i < appointments.Count; i++)
             {
                 ChecklistDTO checklist = new ChecklistDTO();
-                if (appointments[i].ChecklistDTOs[0].TaskName != null)
+                if (appointments[i].ChecklistDTOs.Count != 0)
                 {
                     checklist = appointments[i].ChecklistDTOs[0];
                     checklists.Add(checklist);
@@ -51,7 +51,7 @@ namespace BusinessLogicLayer.Logic
 
             List<AppointmentDTO> sortedAppointments = appointments.OrderBy(x => x.StartDate).GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
 
-            if (checklists.Capacity != 0)
+            if (checklists.Count != 0)
             {
                 for (int i = 0; i < sortedAppointments.Count; i++)
                 {
