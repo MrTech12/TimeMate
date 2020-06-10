@@ -34,7 +34,7 @@ namespace TimeMateTest.BLL
         public void CreateNormalAppointmentTest()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            agenda = new Agenda(accountDTO, new StubAppointmentContext(), new StubNormalAppointmentContext());
+            agenda = new Agenda(new StubAppointmentContext(), new StubNormalAppointmentContext());
             DescriptionDTO descriptionDTO = new DescriptionDTO() { Description = "This is <b> a </b> test." };
 
             appointmentDTO = new AppointmentDTO()
@@ -58,7 +58,7 @@ namespace TimeMateTest.BLL
         public void CreateChecklistAppointmentTest()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            agenda = new Agenda(accountDTO, new StubAppointmentContext(), new StubChecklistAppointmentContext());
+            agenda = new Agenda(new StubAppointmentContext(), new StubChecklistAppointmentContext());
             ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = "Get inspiration" };
 
             appointmentDTO = new AppointmentDTO();

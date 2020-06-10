@@ -22,16 +22,14 @@ namespace BusinessLogicLayer.Logic
             this._appointmentContainer = appointmentContainer;
         }
 
-        public Agenda(AccountDTO accountDTO, IAppointmentContainer appointmentContainer , INormalAppointmentContainer normalAppointmentContainer)
+        public Agenda(IAppointmentContainer appointmentContainer , INormalAppointmentContainer normalAppointmentContainer)
         {
-            this.accountDTO = accountDTO;
             this._appointmentContainer = appointmentContainer;
             this._normalAppointmentContainer = normalAppointmentContainer;
         }
 
-        public Agenda(AccountDTO accountDTO, IAppointmentContainer appointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer)
+        public Agenda(IAppointmentContainer appointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer)
         {
-            this.accountDTO = accountDTO;
             this._appointmentContainer = appointmentContainer;
             this._checklistAppointmentContainer = checklistAppointmentContainer;
         }
@@ -78,7 +76,7 @@ namespace BusinessLogicLayer.Logic
         {
             appointmentDTO.AppointmentID = _appointmentContainer.AddAppointment(appointmentDTO);
 
-            if (appointmentDTO.DescriptionDTO.Description != "")
+            if (appointmentDTO.DescriptionDTO.Description != null)
             {
                 _normalAppointmentContainer.AddDescription(appointmentDTO);
             }
@@ -88,7 +86,10 @@ namespace BusinessLogicLayer.Logic
         {
             appointmentDTO.AppointmentID = _appointmentContainer.AddAppointment(appointmentDTO);
 
-            _checklistAppointmentContainer.AddTask(appointmentDTO);
+            if (appointmentDTO.ChecklistDTOs.Count != 0)
+            {
+                _checklistAppointmentContainer.AddTask(appointmentDTO);
+            }
         }
     }
 }

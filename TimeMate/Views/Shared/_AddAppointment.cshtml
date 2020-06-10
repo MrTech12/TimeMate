@@ -2,7 +2,7 @@
 
 <div class="form-group">
     <label asp-for="AppointmentName" class="control-label"></label>
-    <input asp-for="AppointmentName" class="form-control" name="appointment-name-input"/>
+    <input asp-for="AppointmentName" class="form-control"/>
     <span asp-validation-for="AppointmentName" class="text-danger"></span>
 </div>
 <div class="row">
@@ -30,19 +30,6 @@
     </div>
 </div>
 <div class="form-group">
-    <label asp-for="@Model.AgendaDTO[0].AgendaName" class="control-label">Kies een agenda uit.</label>
-    <select asp-for="@Model.AgendaDTO[0].AgendaName">
-        @foreach (var item in Model.AgendaDTO)
-        {
-        <option id="@item.AgendaID">
-
-            @foreach (var agendaName in item.AgendaName)
-            {
-                @agendaName
-            }
-        </option>
-
-        }
-    </select>
+    <label asp-for="AgendaID" class="control-label"></label>
+    <select asp-for="AgendaID" asp-items="@(new SelectList(ViewBag.agendaList,"AgendaID","AgendaName"))"></select>
 </div>
-<br />

@@ -7,7 +7,6 @@ using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using TimeMate.Models;
 using TimeMate.Services;
 
@@ -44,7 +43,7 @@ namespace TimeMate.Controllers
             {
                 NormalAppointmentViewModel viewModel = new NormalAppointmentViewModel();
                 account = new Account(accountDTO, _agendaContainer);
-                viewModel.AppointmentViewModel.AgendaDTO = account.RetrieveAgendas();
+                ViewBag.agendaList = account.RetrieveAgendas();
                 return View(viewModel);
             }
             else
@@ -54,20 +53,17 @@ namespace TimeMate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(string json)
+        public IActionResult Index(NormalAppointmentViewModel viewModel)
         {
-            var appointment = JsonConvert.DeserializeObject<List<string>>(json);
-
             AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO.AppointmentName = appointment[0];
-            appointmentDTO.StartDate = Convert.ToDateTime(appointment[1]) + TimeSpan.Parse(appointment[2]);
-            appointmentDTO.EndDate = Convert.ToDateTime(appointment[3]) + TimeSpan.Parse(appointment[4]);
-            appointmentDTO.AgendaName = appointment[5];
-            appointmentDTO.AgendaID = Convert.ToInt32(appointment[6]);
+            appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.AppointmentName;
+            appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
+            appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
+            appointmentDTO.AgendaID = viewModel.AppointmentViewModel.AgendaID;
 
-            if (appointment[7] != null)
+            if (viewModel.Description != null)
             {
-                string description = appointment[7].Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
+                string description = viewModel.Description.Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
                     .Replace("<span class=\"normal-text\">", "</b>").Replace("<script>", "");
                 appointmentDTO.DescriptionDTO.Description = description;
             }
@@ -76,9 +72,9 @@ namespace TimeMate.Controllers
                 appointmentDTO.DescriptionDTO.Description = null;
             }
 
-            agenda = new Agenda(accountDTO, _appointmentContainer, _normalAppointmentContainer);
+            agenda = new Agenda(_appointmentContainer, _normalAppointmentContainer);
             agenda.CreateNormalAppointment(appointmentDTO);
-            return Ok();
+            return RedirectToAction("Index", "Agenda");
         }
     }
 }

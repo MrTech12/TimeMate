@@ -7,6 +7,7 @@ using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using TimeMate.Models;
 using TimeMate.Services;
@@ -44,7 +45,7 @@ namespace TimeMate.Controllers
             {
                 ChecklistAppointmentViewModel viewModel = new ChecklistAppointmentViewModel();
                 account = new Account(accountDTO, _agendaContainer);
-                viewModel.AppointmentViewModel.AgendaDTO = account.RetrieveAgendas();
+                ViewBag.agendaList = account.RetrieveAgendas();
                 return View(viewModel);
             }
             else
@@ -54,29 +55,26 @@ namespace TimeMate.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(string json)
+        public IActionResult Index(ChecklistAppointmentViewModel viewModel)
         {
-            var appointment = JsonConvert.DeserializeObject<List<string>>(json);
-
             AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO.AppointmentName = appointment[0];
-            appointmentDTO.StartDate = Convert.ToDateTime(appointment[1]) + TimeSpan.Parse(appointment[2]);
-            appointmentDTO.EndDate = Convert.ToDateTime(appointment[3]) + TimeSpan.Parse(appointment[4]);
-            appointmentDTO.AgendaName = appointment[5];
-            appointmentDTO.AgendaID = Convert.ToInt32(appointment[6]);
+            appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.AppointmentName;
+            appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
+            appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
+            appointmentDTO.AgendaID = viewModel.AppointmentViewModel.AgendaID;
 
-            for (int i = 7; i < appointment.Count; i++)
+            foreach (var item in viewModel.Task)
             {
-                if (appointment[i] != "")
+                if (item != null)
                 {
-                    ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = appointment[i] };
+                    ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = item };
                     appointmentDTO.ChecklistDTOs.Add(checklistDTO);
                 }
             }
 
-            agenda = new Agenda(accountDTO, _appointmentContainer, _checklistAppointmentContainer);
+            agenda = new Agenda(_appointmentContainer, _checklistAppointmentContainer);
             agenda.CreateChecklistAppointment(appointmentDTO);
-            return Ok();
+            return RedirectToAction("Index","Agenda");
         }
     }
 }
