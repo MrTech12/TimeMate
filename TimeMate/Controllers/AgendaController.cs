@@ -83,6 +83,7 @@ namespace TimeMate.Controllers
                 agendaDTO.AgendaColor = viewModel.AgendaColor;
                 agendaDTO.NotificationType = viewModel.NotificationType;
 
+                accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
                 account = new Account(accountDTO, _agendaContainer);
                 account.CreateAgenda(agendaDTO);
                 return RedirectToAction("Index", "Agenda");
@@ -97,7 +98,8 @@ namespace TimeMate.Controllers
         public IActionResult DeleteAgenda(string json)
         {
             int agendaID = JsonConvert.DeserializeObject<int>(json);
-            
+
+            accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
             account = new Account(accountDTO, _agendaContainer);
             account.DeleteAgenda(agendaID);
             return Ok();

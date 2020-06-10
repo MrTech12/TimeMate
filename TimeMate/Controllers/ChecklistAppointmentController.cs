@@ -7,8 +7,6 @@ using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
 using TimeMate.Models;
 using TimeMate.Services;
 
@@ -44,6 +42,8 @@ namespace TimeMate.Controllers
             if (sessionHasValue)
             {
                 ChecklistAppointmentViewModel viewModel = new ChecklistAppointmentViewModel();
+                accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
+
                 account = new Account(accountDTO, _agendaContainer);
                 ViewBag.agendaList = account.RetrieveAgendas();
                 return View(viewModel);

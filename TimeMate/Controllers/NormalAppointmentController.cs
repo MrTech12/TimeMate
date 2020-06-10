@@ -42,6 +42,8 @@ namespace TimeMate.Controllers
             if (sessionHasValue)
             {
                 NormalAppointmentViewModel viewModel = new NormalAppointmentViewModel();
+                accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
+
                 account = new Account(accountDTO, _agendaContainer);
                 ViewBag.agendaList = account.RetrieveAgendas();
                 return View(viewModel);
