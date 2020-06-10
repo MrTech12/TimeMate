@@ -7,7 +7,6 @@ using System.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer.Contexts
 {
@@ -86,7 +85,7 @@ namespace DataAccessLayer.Contexts
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    string query = @"INSERT INTO [Account](First_name, Mail, Password) Values (@0,@1,@2); SELECT SCOPE_IDENTITY();";
+                    string query = @"INSERT INTO [Account](FirstName, Mail, Password) Values (@0,@1,@2); SELECT SCOPE_IDENTITY();";
 
                     databaseConn.Open();
                     SqlCommand insertQuery = new SqlCommand(query, databaseConn);

@@ -45,8 +45,8 @@ namespace DataAccessLayer.Contexts
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT app.*, Agenda.Name AS AgendaName, description.*, task.* FROM [Appointment] app
-                        LEFT JOIN Appointment_Details description ON app.AppointmentID = description.AppointmentID
-                        LEFT JOIN Task task ON app.AppointmentID = task.AppointmentID
+                        LEFT JOIN Appointment_Description description ON app.AppointmentID = description.AppointmentID
+                        LEFT JOIN Appointment_Task task ON app.AppointmentID = task.AppointmentID
                         INNER JOIN Agenda ON app.AgendaID = Agenda.AgendaID
                         AND Agenda.AccountID = @0";
 
@@ -67,16 +67,16 @@ namespace DataAccessLayer.Contexts
                         appointmentModel.AgendaName = dataReader["AgendaName"].ToString();
                         appointmentModel.AgendaID = Convert.ToInt32(dataReader["AgendaID"]);
 
-                        if (dataReader["Details"] != DBNull.Value)
+                        if (dataReader["Description"] != DBNull.Value)
                         {
-                            appointmentModel.DescriptionDTO.Description = dataReader["Details"].ToString();
+                            appointmentModel.DescriptionDTO.Description = dataReader["Description"].ToString();
                         }
                         else if (dataReader["TaskID"] != DBNull.Value)
                         {
                             checklistDTO.TaskID = Convert.ToInt32(dataReader["TaskID"]);
                             checklistDTO.AppointmentID = Convert.ToInt32(dataReader["AppointmentID"]);
-                            checklistDTO.TaskName = dataReader["Task_name"].ToString();
-                            checklistDTO.TaskChecked = Convert.ToBoolean(dataReader["Task_checked"]);
+                            checklistDTO.TaskName = dataReader["TaskName"].ToString();
+                            checklistDTO.TaskChecked = Convert.ToBoolean(dataReader["TaskChecked"]);
                         }
                         appointmentModel.ChecklistDTOs.Add(checklistDTO);
                         appointments.Add(appointmentModel);

@@ -17,7 +17,7 @@ namespace DataAccessLayer.Contexts
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    string query = @"INSERT INTO [Appointment_Details](AppointmentID, Details) VALUES (@0, @1)";
+                    string query = @"INSERT INTO [Appointment_Description](AppointmentID, Description) VALUES (@0, @1)";
 
                     databaseConn.Open();
                     SqlCommand insertQuery = new SqlCommand(query, databaseConn);
@@ -40,7 +40,7 @@ namespace DataAccessLayer.Contexts
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    string query = @"SELECT Details FROM [Appointment_Details] WHERE AppointmentID = @0";
+                    string query = @"SELECT Description FROM [Appointment_Description] WHERE AppointmentID = @0";
 
                     databaseConn.Open();
                     SqlCommand selectQuery = new SqlCommand(query, databaseConn);

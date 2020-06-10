@@ -18,7 +18,7 @@ namespace DataAccessLayer.Contexts
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    string query = @"INSERT INTO [Agenda](AccountID, Name, Color, Notification_type) VALUES (@0,@1,@2,@3); SELECT SCOPE_IDENTITY();";
+                    string query = @"INSERT INTO [Agenda](AccountID, Name, Color, NotificationType) VALUES (@0,@1,@2,@3); SELECT SCOPE_IDENTITY();";
                     
                     databaseConn.Open();
                     SqlCommand insertQuery = new SqlCommand(query, databaseConn);
@@ -43,7 +43,7 @@ namespace DataAccessLayer.Contexts
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    string query = @"INSERT INTO [Job](AgendaID, Hourly_wage_buss, Hourly_wage_week) Values (@0,@1,@2)";
+                    string query = @"INSERT INTO [Job](AgendaID, HourlyWageBuss, HourlyWageWeek) Values (@0,@1,@2)";
 
                     databaseConn.Open();
                     SqlCommand insertQuery = new SqlCommand(query, databaseConn);

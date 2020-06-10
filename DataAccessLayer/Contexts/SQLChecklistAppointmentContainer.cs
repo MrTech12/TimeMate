@@ -18,7 +18,7 @@ namespace DataAccessLayer.Contexts
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    string query = @"INSERT INTO [Task](AppointmentID, Task_name, Task_checked) VALUES (@0, @1, @2)";
+                    string query = @"INSERT INTO [Appointment_Task](AppointmentID, TaskName, TaskChecked) VALUES (@0, @1, @2)";
 
                     databaseConn.Open();
                     SqlCommand insertQuery = new SqlCommand(query, databaseConn);
@@ -46,7 +46,7 @@ namespace DataAccessLayer.Contexts
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    string query = @"SELECT TaskID, Task_name FROM [Task] WHERE AppointmentID = @0";
+                    string query = @"SELECT TaskID, TaskName FROM [Appointment_Task] WHERE AppointmentID = @0";
 
                     databaseConn.Open();
                     SqlCommand selectQuery = new SqlCommand(query, databaseConn);
@@ -58,7 +58,7 @@ namespace DataAccessLayer.Contexts
                     {
                         ChecklistDTO checklistDTO = new ChecklistDTO();
                         checklistDTO.TaskID = Convert.ToInt32(dataReader["TaskID"]);
-                        checklistDTO.TaskName = dataReader["Task_name"].ToString();
+                        checklistDTO.TaskName = dataReader["TaskName"].ToString();
                         checklists.Add(checklistDTO);
                     }
                 }
@@ -77,7 +77,7 @@ namespace DataAccessLayer.Contexts
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    string query = @"SELECT Task_checked FROM [Task] WHERE TaskID = @0";
+                    string query = @"SELECT TaskChecked FROM [Appointment_Task] WHERE TaskID = @0";
 
                     databaseConn.Open();
                     SqlCommand selectQuery = new SqlCommand(query, databaseConn);
@@ -99,7 +99,7 @@ namespace DataAccessLayer.Contexts
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    string query = @"UPDATE [Task] SET Task_checked=@0 WHERE TaskID = @1";
+                    string query = @"UPDATE [Appointment_Task] SET TaskChecked=@0 WHERE TaskID = @1";
 
                     databaseConn.Open();
                     SqlCommand updateQuery = new SqlCommand(query, databaseConn);
@@ -121,7 +121,7 @@ namespace DataAccessLayer.Contexts
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
-                    string querry = @"UPDATE [Task] SET Task_checked=@0 WHERE TaskID = @1";
+                    string querry = @"UPDATE [Appointment_Task] SET TaskChecked=@0 WHERE TaskID = @1";
 
                     databaseConn.Open();
                     SqlCommand updateQuery = new SqlCommand(querry, databaseConn);
