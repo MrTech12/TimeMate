@@ -16,67 +16,67 @@ namespace TimeMateTest.BLL
         [Fact]
         public void LoggingInTest()
         {
-            string output;
+            string[] output;
             accountDTO = new AccountDTO() { Mail = "bert@gmail.com", Password = "qoe2ieiwiir" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.LoggingIn();
 
-            Assert.Equal("0", output);
+            Assert.Equal("0", output[0]);
         }
 
         [Fact]
         public void EmptyCredentailsTest()
         {
-            string output;
+            string[] output;
             accountDTO = new AccountDTO() { Mail = "", Password = "" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.LoggingIn();
 
-            Assert.Null(output);
+            Assert.Null(output[0]);
         }
 
         [Fact]
         public void WrongMailTest()
         {
-            string output;
+            string[] output;
             accountDTO = new AccountDTO() { Mail = "test@gmail.com", Password = "test123"};
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.LoggingIn();
 
-            Assert.Null(output);
+            Assert.Null(output[0]);
         }
 
         [Fact]
         public void NoMailTest()
         {
-            string output;
+            string[] output;
             accountDTO = new AccountDTO() { Mail = "", Password = "test123" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.LoggingIn();
 
-            Assert.Null(output);
+            Assert.Null(output[0]);
         }
 
         [Fact]
         public void IncompleteMailTest()
         {
-            string output;
+            string[] output;
             accountDTO = new AccountDTO() { Mail = "test@gmail.", Password = "test123" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
             output = account.LoggingIn();
 
-            Assert.Null(output);
+            Assert.Null(output[0]);
         }
 
         [Fact]
         public void WrongPasswordTeset()
         {
-            string output;
+            string[] output;
             accountDTO = new AccountDTO() { Mail = "bert@gmail.com", Password = "cmck323kc" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 
@@ -88,7 +88,7 @@ namespace TimeMateTest.BLL
         [Fact]
         public void NoPasswordTest()
         {
-            string output;
+            string[] output;
             accountDTO = new AccountDTO() { Mail = "bert@gmail.com", Password = "" };
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
 

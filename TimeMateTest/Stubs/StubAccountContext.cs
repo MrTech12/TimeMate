@@ -18,6 +18,11 @@ namespace TimeMateTest.Stubs
             return accountID;
         }
 
+        public string GetFirstName(string mail)
+        {
+            return "test";
+        }
+
         public int CreateAccount(AccountDTO AccountDTO)
         {
             int accountID = 0;

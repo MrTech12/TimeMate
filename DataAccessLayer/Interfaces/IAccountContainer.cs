@@ -9,6 +9,8 @@ namespace DataAccessLayer.Interfaces
     {
         string GetUserID(string mail);
 
+        string GetFirstName(string mail);
+
         string SearchForPasswordHash(string mail);
 
         int CreateAccount(AccountDTO AccountDTO);

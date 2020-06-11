@@ -15,7 +15,7 @@ namespace BusinessLogicLayer.Logic
         private readonly ISenderContainer _senderContainer;
 
         private AccountDTO accountDTO;
-        private string returnMessage;
+        private string[] returnMessage = new string[2];
         private string databaseOutput;
 
         public Account(AccountDTO accountDTO, IAccountContainer accountContainer, IAgendaContainer agendaContainer, ISenderContainer senderContainer)
@@ -45,7 +45,7 @@ namespace BusinessLogicLayer.Logic
             this._accountContainer = accountContainer;
         }
 
-        public string LoggingIn()
+        public string[] LoggingIn()
         {
             databaseOutput = _accountContainer.SearchForPasswordHash(accountDTO.Mail);
             if (databaseOutput != null)
@@ -57,50 +57,52 @@ namespace BusinessLogicLayer.Logic
                 }
                 else
                 {
-                    returnMessage = _accountContainer.GetUserID(accountDTO.Mail);
+                    returnMessage[0] = _accountContainer.GetUserID(accountDTO.Mail);
+                    returnMessage[1] = _accountContainer.GetFirstName(accountDTO.Mail);
                 }
             }
             else
             {
-                returnMessage = null;
+                returnMessage[0] = null;
             }
 
             return returnMessage;
         }
 
-        public string NewAccountValidation()
+        public string[] NewAccountValidation()
         {
             string mailValidate = "^([0-9a-zA-Z-_]([-\\.\\w]*[0-9a-zA-Z-_])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$";
             string specialCharacterValidate = @"[~`!@#$%^&*()+=|\\{}':;.,<>/?[\]""_-]";
 
             if (Regex.IsMatch(accountDTO.Mail, mailValidate) == false)
             {
-                returnMessage = "Het emailadres is niet geldig.";
+                returnMessage[0] = "Het emailadres is niet geldig.";
             }
             else if (accountDTO.Password.Any(char.IsUpper) == false)
             {
-                returnMessage = "Het wachtwoord moet een hoofdletter bevatten.";
+                returnMessage[0] = "Het wachtwoord moet een hoofdletter bevatten.";
             }
             else if (Regex.IsMatch(accountDTO.Password, specialCharacterValidate) == false)
             {
-                returnMessage = "Het wachtwoord moet een speciale karakter bevatten.";
+                returnMessage[0] = "Het wachtwoord moet een speciale karakter bevatten.";
             }
             else if (accountDTO.Password.Any(char.IsDigit) == false)
             {
-                returnMessage = "Het wachtwoord moet een cijfer bevatten.";
+                returnMessage[0] = "Het wachtwoord moet een cijfer bevatten.";
             }
-            else if (returnMessage == null)
+            else if (returnMessage[0] == null)
             {
                 databaseOutput = _accountContainer.GetUserID(accountDTO.Mail);
                 if (databaseOutput != null)
                 {
-                    returnMessage = "Er bestaat al een account met dit mailadres.";
+                    returnMessage[0] = "Er bestaat al een account met dit mailadres.";
                 }
                 else
                 {
                     CreateAccount();
                     _senderContainer.SendAccountCreationMessage(accountDTO.Mail);
-                    returnMessage = Convert.ToString(accountDTO.AccountID);
+                    returnMessage[0] = Convert.ToString(accountDTO.AccountID);
+                    returnMessage[1] = _accountContainer.GetFirstName(accountDTO.Mail);
                 }
             }
             return returnMessage;
