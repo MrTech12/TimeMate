@@ -17,8 +17,8 @@
 <br />
 <div class="row">
     <div class="col">
-        <input type="button" value="Normale afspraak toevoegen" onclick="location.href='@Url.Action("Index", "NormalAppointment")'" class="btn btn-success" />
-        <input type="button" value="Afspraak met takenlijst toevoegen" onclick="location.href='@Url.Action("Index", "ChecklistAppointment")'" class="btn btn-success" />
+        <input type="button" value="Normale afspraak toevoegen" onclick="location.href='@Url.Action("Index", "NormalAppointment")'" class="btn btn-primary" />
+        <input type="button" value="Afspraak met takenlijst toevoegen" onclick="location.href='@Url.Action("Index", "ChecklistAppointment")'" class="btn btn-primary" />
         <input type="button" value="Agenda toevoegen" onclick="location.href='@Url.Action("AddAgenda", "Agenda")'" class="btn btn-success" />
     </div>
 </div>
@@ -62,20 +62,17 @@
         }
     </table>
 
-    <!-- Modal for Changing details -->
     <div class="modal" id="extra-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
-                <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">Afspraakextra weergeven</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <!-- Modal body -->
                 <div class="modal-body">
-                    <div id="modal-task-info" class="d-none">Taken van deze afspraak aan/afvinken</div>
+                    <div id="modal-task-info" class="d-none">Taken van deze afspraak aan/afvinken.</div>
                     <div id="modal-task-description" class="d-none"></div>
                     <select id="tasks" class="d-none"></select>
                     <button type="button" id="checkoff-task" class="btn btn-info d-none" data-dismiss="modal">aan/afvinken</button>

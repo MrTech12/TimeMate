@@ -10,46 +10,42 @@
 <h1>Accountinstellingen</h1>
 
 <div class="row">
-    <div class="form-group">
-        <select id="agenda-select">
-            @foreach (var item in Model)
-            {
-                <option id="@item.AgendaID">
+    <div class="col-md-3">
+        <div class="form-group">
+            <select id="agenda-select">
+                @foreach (var item in Model)
+                {
+                    <option id="@item.AgendaID">
 
-                    @foreach (var agendaName in item.AgendaName)
-                    {
-                        @agendaName
-                    }
-                </option>
+                        @foreach (var agendaName in item.AgendaName)
+                        {
+                            @agendaName
+                        }
+                    </option>
 
-            }
-        </select>
+                }
+            </select>
+        </div>
     </div>
-
-    <div>
-        <button type="button" id="delete-agenda" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal">
-            agenda verwijderen
-        </button>
+    <div class="col-md-9">
+        <input type="button" id="delete-agenda" class="btn btn-danger" value="agenda verwijderen" data-toggle="modal" data-target="#delete-modal" />
+        <input type="button" class="btn btn-outline-primary" value="Negeren" onclick="location.href='@Url.Action("Index", "Agenda")'" />
     </div>
 </div>
 
-    <!-- Modal for deleting -->
 <div class="modal" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
 
-            <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Verwijderen van agenda</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
-            <!-- Modal body -->
             <div class="modal-body">
                 Weet je zeker dat je de agenda <label id="agenda-name"></label> wilt verwijderen?
             </div>
 
-            <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" id="confirm-deletion" class="btn btn-danger" data-dismiss="modal">Ja</button>
                 <button type="button" class="btn btn-info" data-dismiss="modal">Nee</button>
