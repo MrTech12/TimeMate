@@ -11,30 +11,35 @@
 <h1>Nieuwe afspraak toevoegen</h1>
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Index" id="appointment-form">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form asp-action="Index" id="appointment-form">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-6">
 
             <partial name="_AddAppointment" for="@Model.AppointmentViewModel" />
 
             <br />
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input type="button" id="bolding-text" class="btn btn-info" value="Maak tekst dikgedrukt/niet dikgedrukt" />
-                <input type="button" id="save-description" class="btn btn-secondary" value="Tekst opslaan" />
-
+                <div class="btn-group">
+                    <input type="button" id="bolding-text" class="btn btn-info" value="Maak tekst dikgedrukt/niet dikgedrukt" />
+                    <input type="button" id="save-description" class="btn btn-secondary" value="Tekst opslaan" />
+                </div>
+                
                 <div class="description" id="description-box" contenteditable="true"></div>
                 <input type="text" id="description-controller" asp-for="Description" hidden="hidden" />
 
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-md-6 float-right">
             <div class="form-group">
                 <input type="submit" value="Afspraak toevoegen" class="btn btn-primary" />
+                <input type="button" class="btn btn-outline-primary" value="Negeren" onclick="location.href='@Url.Action("Index", "Agenda")'" />
             </div>
-        </form>
+        </div>
     </div>
-</div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

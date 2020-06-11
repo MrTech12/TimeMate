@@ -59,16 +59,17 @@ namespace TimeMate.Controllers
                 accountDTO.Password = viewModel.Password;
 
                 account = new Account(accountDTO, _accountContainer);
-                string result = account.LoggingIn();
+                string[] result = account.LoggingIn();
 
-                if (result == null)
+                if (result == null || result[0] == null)
                 {
                     ModelState.AddModelError("", "Verkeerd mailadres en/of wachtwoord.");
                     return View(viewModel);
                 }
                 else
                 {
-                    HttpContext.Session.SetInt32("accountID", Convert.ToInt32(result));
+                    HttpContext.Session.SetInt32("accountID", Convert.ToInt32(result[0]));
+                    HttpContext.Session.SetString("firstName", (result[1]));
                     return RedirectToAction("Index", "Agenda");
                 }
             }
@@ -120,16 +121,17 @@ namespace TimeMate.Controllers
 
                 account = new Account(accountDTO, _accountContainer, _agendaContainer, _senderContainer);
 
-                string result = account.NewAccountValidation();
+                string[] result = account.NewAccountValidation();
 
-                if (!result.All(char.IsDigit))
+                if (result == null || result[0] == null)
                 {
-                    ModelState.AddModelError("", result);
+                    ModelState.AddModelError("", result[1]);
                     return View(viewModel);
                 }
                 else
                 {
-                    HttpContext.Session.SetInt32("accountID", Convert.ToInt32(result));
+                    HttpContext.Session.SetInt32("accountID", Convert.ToInt32(result[0]));
+                    HttpContext.Session.SetString("firstName", (result[1]));
                     return RedirectToAction("Index", "Agenda");
                 }
             }
@@ -162,7 +164,7 @@ namespace TimeMate.Controllers
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("accountID");
+            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Account");
         }
     }

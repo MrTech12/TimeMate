@@ -46,9 +46,41 @@ namespace DataAccessLayer.Containers
             return databaseOutput;
         }
 
+        public string GetFirstName(string mail)
+        {
+            string firstName;
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                {
+                    string query = @"SELECT FirstName FROM [Account] WHERE Mail = @0";
+
+                    databaseConn.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+
+                    selectQuery.Parameters.AddWithValue("0", mail);
+                    var resultedUserName = selectQuery.ExecuteScalar();
+
+                    if (resultedUserName == null)
+                    {
+                        firstName = null;
+                    }
+                    else
+                    {
+                        firstName = resultedUserName.ToString();
+                    }
+                }
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+            }
+            return firstName;
+        }
+
         public string SearchForPasswordHash(string mail)
         {
-            string databaseOutput;
+            string passwordHash;
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
@@ -63,11 +95,11 @@ namespace DataAccessLayer.Containers
 
                     if (resultedPasswordHash == null)
                     {
-                        databaseOutput = null;
+                        passwordHash = null;
                     }
                     else
                     {
-                        databaseOutput = resultedPasswordHash.ToString();
+                        passwordHash = resultedPasswordHash.ToString();
                     }
                 }
             }
@@ -75,7 +107,7 @@ namespace DataAccessLayer.Containers
             {
                 throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
-            return databaseOutput;
+            return passwordHash;
         }
 
         public int CreateAccount(AccountDTO accountDTO)

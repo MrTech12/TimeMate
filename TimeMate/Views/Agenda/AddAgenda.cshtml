@@ -7,10 +7,10 @@
 <h1>Agenda toevoegen</h1>
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddAgenda">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form asp-action="AddAgenda">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="AgendaName" class="control-label"></label>
                 <input asp-for="AgendaName" class="form-control" />
@@ -30,13 +30,15 @@
                 </select>
                 <span asp-validation-for="NotificationType" class="text-danger"></span>
             </div>
-
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <input type="submit" value="Maak agenda" class="btn btn-primary" />
+                <input type="button" class="btn btn-outline-primary" value="Negeren" onclick="location.href='@Url.Action("Index", "Agenda")'" />
             </div>
-        </form>
+        </div>
     </div>
-</div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
