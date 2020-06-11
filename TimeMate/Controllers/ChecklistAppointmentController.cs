@@ -46,7 +46,15 @@ namespace TimeMate.Controllers
 
                 account = new Account(accountDTO, _agendaContainer);
                 ViewBag.agendaList = account.RetrieveAgendas();
-                return View(viewModel);
+
+                if (ViewBag.agendaList.Count == 0)
+                {
+                    return RedirectToAction("AddAgenda", "Agenda");
+                }
+                else
+                {
+                    return View(viewModel);
+                }
             }
             else
             {
@@ -57,24 +65,31 @@ namespace TimeMate.Controllers
         [HttpPost]
         public IActionResult Index(ChecklistAppointmentViewModel viewModel)
         {
-            AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.AppointmentName;
-            appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
-            appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
-            appointmentDTO.AgendaID = viewModel.AppointmentViewModel.AgendaID;
-
-            foreach (var item in viewModel.Task)
+            if (ModelState.IsValid)
             {
-                if (item != null)
-                {
-                    ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = item };
-                    appointmentDTO.ChecklistDTOs.Add(checklistDTO);
-                }
-            }
+                AppointmentDTO appointmentDTO = new AppointmentDTO();
+                appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.AppointmentName;
+                appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
+                appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
+                appointmentDTO.AgendaID = viewModel.AppointmentViewModel.AgendaID;
 
-            agenda = new Agenda(_appointmentContainer, _checklistAppointmentContainer);
-            agenda.CreateChecklistAppointment(appointmentDTO);
-            return RedirectToAction("Index","Agenda");
+                foreach (var item in viewModel.Task)
+                {
+                    if (item != null)
+                    {
+                        ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = item };
+                        appointmentDTO.ChecklistDTOs.Add(checklistDTO);
+                    }
+                }
+
+                agenda = new Agenda(_appointmentContainer, _checklistAppointmentContainer);
+                agenda.CreateChecklistAppointment(appointmentDTO);
+                return RedirectToAction("Index", "Agenda");
+            }
+            else
+            {
+                return View(viewModel);
+            }
         }
     }
 }

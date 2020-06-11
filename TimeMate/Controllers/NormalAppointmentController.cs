@@ -46,7 +46,15 @@ namespace TimeMate.Controllers
 
                 account = new Account(accountDTO, _agendaContainer);
                 ViewBag.agendaList = account.RetrieveAgendas();
-                return View(viewModel);
+
+                if (ViewBag.agendaList.Count == 0)
+                {
+                    return RedirectToAction("AddAgenda", "Agenda");
+                }
+                else
+                {
+                    return View(viewModel);
+                }
             }
             else
             {
@@ -57,26 +65,33 @@ namespace TimeMate.Controllers
         [HttpPost]
         public IActionResult Index(NormalAppointmentViewModel viewModel)
         {
-            AppointmentDTO appointmentDTO = new AppointmentDTO();
-            appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.AppointmentName;
-            appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
-            appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
-            appointmentDTO.AgendaID = viewModel.AppointmentViewModel.AgendaID;
-
-            if (viewModel.Description != null)
+            if (ModelState.IsValid)
             {
-                string description = viewModel.Description.Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
-                    .Replace("<span class=\"normal-text\">", "</b>").Replace("<script>", "");
-                appointmentDTO.DescriptionDTO.Description = description;
+                AppointmentDTO appointmentDTO = new AppointmentDTO();
+                appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.AppointmentName;
+                appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
+                appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
+                appointmentDTO.AgendaID = viewModel.AppointmentViewModel.AgendaID;
+
+                if (viewModel.Description != null)
+                {
+                    string description = viewModel.Description.Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
+                        .Replace("<span class=\"normal-text\">", "</b>").Replace("<script>", "");
+                    appointmentDTO.DescriptionDTO.Description = description;
+                }
+                else
+                {
+                    appointmentDTO.DescriptionDTO.Description = null;
+                }
+
+                agenda = new Agenda(_appointmentContainer, _normalAppointmentContainer);
+                agenda.CreateNormalAppointment(appointmentDTO);
+                return RedirectToAction("Index", "Agenda");
             }
             else
             {
-                appointmentDTO.DescriptionDTO.Description = null;
-            }
-
-            agenda = new Agenda(_appointmentContainer, _normalAppointmentContainer);
-            agenda.CreateNormalAppointment(appointmentDTO);
-            return RedirectToAction("Index", "Agenda");
+                return View(viewModel);
+            }  
         }
     }
 }
