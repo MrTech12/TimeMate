@@ -35,10 +35,10 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link nav-link text-dark" href="@Url.Action("AccountSettings", "Account")">Accountinstellingen</a>
+                                <a class="nav-link nav-link text-dark">Welkom @Context.Session.GetString("firstName")</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-link text-dark">Welkom @Context.Session.GetString("firstName")</a>
+                                <a class="nav-link nav-link text-dark" href="@Url.Action("AccountSettings", "Account")">Accountinstellingen</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link nav-link text-dark" href="@Url.Action("Logout", "Account")">Uitloggen</a>

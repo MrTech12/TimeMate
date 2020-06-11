@@ -61,7 +61,7 @@ namespace TimeMate.Controllers
                 account = new Account(accountDTO, _accountContainer);
                 string[] result = account.LoggingIn();
 
-                if (result.Length == 1)
+                if (result == null || result[0] == null)
                 {
                     ModelState.AddModelError("", "Verkeerd mailadres en/of wachtwoord.");
                     return View(viewModel);
@@ -123,7 +123,7 @@ namespace TimeMate.Controllers
 
                 string[] result = account.NewAccountValidation();
 
-                if (result.Length == 1)
+                if (result == null || result[0] == null)
                 {
                     ModelState.AddModelError("", result[1]);
                     return View(viewModel);

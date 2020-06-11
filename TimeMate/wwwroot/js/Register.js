@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
     $("#job-amount").change(function () {
-        jobAmount = document.getElementById("job-amount").value;
+        jobAmount = $("#job-amount").val();
         ShowJobInputBoxes();
     });
 });
