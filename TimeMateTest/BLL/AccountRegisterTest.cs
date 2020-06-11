@@ -2,6 +2,7 @@
 using DataAccessLayer.DTO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using TimeMateTest.Stubs;
 using Xunit;
@@ -16,7 +17,7 @@ namespace TimeMateTest.BLL
         [Fact]
         public void CreateAccountNoJobTest()
         {
-            string[] output;
+            string[] file;
             accountDTO = new AccountDTO();
             accountDTO.FirstName = "Hans";
             accountDTO.Mail = "sina1240@gmail.com";
@@ -24,18 +25,23 @@ namespace TimeMateTest.BLL
 
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext(), new StubSenderContext());
 
-            output = account.NewAccountValidation();
+            account.CreateAccount();
 
-            Assert.Equal("6", output[0]);
+            file = File.ReadAllLines(@"C:\tmp\CreateAccountTest.txt");
+            File.Delete(@"C:\tmp\CreateAccountTest.txt");
+
+            Assert.Equal("6", file[0]);
+            Assert.Equal("Hans", file[1]);
+            Assert.Equal("sina1240@gmail.com", file[2]);
         }
 
         [Fact]
         public void CreateAccountJobTest()
         {
-            string[] output;
+            string[] file;
             accountDTO = new AccountDTO();
             accountDTO.FirstName = "Hans";
-            accountDTO.Mail = "sina1240@gmail.com";
+            accountDTO.Mail = "sina1242@gmail.com";
             accountDTO.Password = "QWEwieiwi231@#";
             accountDTO.JobCount = 1;
             accountDTO.JobHourlyWage.Add(1.20);
@@ -43,9 +49,15 @@ namespace TimeMateTest.BLL
 
             account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext(), new StubSenderContext());
 
-            output = account.NewAccountValidation();
+            account.CreateAccount();
 
-            Assert.Equal("6", output[0]);
+            file = File.ReadAllLines(@"C:\tmp\CreateAccountTest.txt");
+            File.Delete(@"C:\tmp\CreateAccountTest.txt");
+
+            Assert.Equal("14", file[0]);
+            Assert.Equal("Hans", file[1]);
+            Assert.Equal("sina1242@gmail.com", file[2]);
+            Assert.Equal("1,2", file[4]);
         }
 
         [Fact]

@@ -15,8 +15,6 @@ namespace BusinessLogicLayer.Logic
         private readonly ISenderContainer _senderContainer;
 
         private AccountDTO accountDTO;
-        private string[] returnMessage = new string[2];
-        private string databaseOutput;
 
         public Account(AccountDTO accountDTO, IAccountContainer accountContainer, IAgendaContainer agendaContainer, ISenderContainer senderContainer)
         {
@@ -47,7 +45,9 @@ namespace BusinessLogicLayer.Logic
 
         public string[] LoggingIn()
         {
-            databaseOutput = _accountContainer.SearchForPasswordHash(accountDTO.Mail);
+            string[] returnMessage = new string[2];
+
+            string databaseOutput = _accountContainer.SearchForPasswordHash(accountDTO.Mail);
             if (databaseOutput != null)
             {
                 bool passwordValid = BCrypt.Net.BCrypt.Verify(accountDTO.Password, databaseOutput);
@@ -71,6 +71,7 @@ namespace BusinessLogicLayer.Logic
 
         public string[] NewAccountValidation()
         {
+            string[] returnMessage = new string[2];
             string mailValidate = "^([0-9a-zA-Z-_]([-\\.\\w]*[0-9a-zA-Z-_])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$";
             string specialCharacterValidate = @"[~`!@#$%^&*()+=|\\{}':;.,<>/?[\]""_-]";
 
@@ -92,7 +93,7 @@ namespace BusinessLogicLayer.Logic
             }
             else if (returnMessage[0] == null)
             {
-                databaseOutput = _accountContainer.GetUserID(accountDTO.Mail);
+                string databaseOutput = _accountContainer.GetUserID(accountDTO.Mail);
                 if (databaseOutput != null)
                 {
                     returnMessage[0] = "Er bestaat al een account met dit mailadres.";

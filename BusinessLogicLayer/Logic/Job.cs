@@ -10,7 +10,6 @@ namespace BusinessLogicLayer.Logic
     {
         private IJobContainer _jobContext;
         private AccountDTO accountDTO;
-        private string messageToUser;
 
         public Job(AccountDTO accountDTO, IJobContainer jobContext)
         {
