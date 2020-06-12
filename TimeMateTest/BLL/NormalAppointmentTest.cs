@@ -14,7 +14,7 @@ namespace TimeMateTest.BLL
         public void GetDescriptionTest()
         {
             int appointmentID = 24;
-            normalAppointment = new NormalAppointment(new StubNormalAppointmentContext());
+            normalAppointment = new NormalAppointment(new StubNormalAppointmentContainer());
 
             var output = normalAppointment.RetrieveDescription(appointmentID);
 
@@ -25,7 +25,7 @@ namespace TimeMateTest.BLL
         public void GetNoDescriptionTest()
         {
             int appointmentID = 0;
-            normalAppointment = new NormalAppointment(new StubNormalAppointmentContext());
+            normalAppointment = new NormalAppointment(new StubNormalAppointmentContainer());
 
             var output = normalAppointment.RetrieveDescription(appointmentID);
 

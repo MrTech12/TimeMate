@@ -23,7 +23,7 @@ namespace TimeMateTest.BLL
             accountDTO.Mail = "sina1240@gmail.com";
             accountDTO.Password = "QWEwieiwi231@#";
 
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext(), new StubSenderContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer(), new StubJobContainer(), new StubSenderContainer());
 
             account.CreateAccount();
 
@@ -47,7 +47,7 @@ namespace TimeMateTest.BLL
             accountDTO.JobHourlyWage.Add(1.20);
             accountDTO.JobDayType.Add("Doordeweeks");
 
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext(), new StubSenderContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer(), new StubJobContainer(), new StubSenderContainer());
 
             account.CreateAccount();
 
@@ -65,7 +65,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwieiwi231@#" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.NewAccountValidation();
 
@@ -77,7 +77,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwiEEWwi231WE" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.NewAccountValidation();
 
@@ -89,7 +89,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwieiwieWE@#" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.NewAccountValidation();
 
@@ -101,7 +101,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Bert", Mail = "bert@gmail.com", Password = "qwieEW12iwieWE@#" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.NewAccountValidation();
 
@@ -113,7 +113,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Bert", Mail = "bert@gmail.", Password = "qwieEW12iwieWE@#" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.NewAccountValidation();
 

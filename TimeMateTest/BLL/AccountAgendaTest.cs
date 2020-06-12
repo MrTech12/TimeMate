@@ -18,7 +18,7 @@ namespace TimeMateTest.BLL
         public void CreateAgendaTest()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            account = new Account(accountDTO, new StubAgendaContext());
+            account = new Account(accountDTO, new StubAgendaContainer());
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000", NotificationType = "Nee" };
 
             account.CreateAgenda(agendaDTO);
@@ -33,7 +33,7 @@ namespace TimeMateTest.BLL
         public void CreateAgendaTest2()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            account = new Account(accountDTO, new StubAgendaContext());
+            account = new Account(accountDTO, new StubAgendaContainer());
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560", NotificationType = "Nee" };
 
             account.CreateAgenda(agendaDTO);
@@ -50,7 +50,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { AccountID = 12 };
             accountDTO.JobHourlyWage.Add(12.23);
             accountDTO.JobDayType.Add("Doordeweeks");
-            account = new Account(accountDTO, new StubAgendaContext());
+            account = new Account(accountDTO, new StubAgendaContainer(), new StubJobContainer());
 
             account.CreateWorkAgenda();
             string[] fileAgenda = File.ReadAllLines(@"C:\tmp\addAgendaTest.txt");
@@ -70,7 +70,7 @@ namespace TimeMateTest.BLL
         {
             List<AgendaDTO> output = new List<AgendaDTO>();
             accountDTO = new AccountDTO() { AccountID = 12 };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.RetrieveAgendas();
 
@@ -83,7 +83,7 @@ namespace TimeMateTest.BLL
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", NotificationType = "Nee" };
-            Account account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            Account account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\removeAgendaTest.txt"))
             {

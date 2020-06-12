@@ -7,7 +7,7 @@ using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs
 {
-    class StubAccountContext : IAccountContainer
+    class StubAccountContainer : IAccountContainer
     {
         public string GetUserID(string mail)
         {

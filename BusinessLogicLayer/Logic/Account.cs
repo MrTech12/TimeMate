@@ -13,14 +13,16 @@ namespace BusinessLogicLayer.Logic
         private readonly IAccountContainer _accountContainer;
         private readonly IAgendaContainer _agendaContainer;
         private readonly ISenderContainer _senderContainer;
+        private readonly IJobContainer _jobContainer;
 
         private AccountDTO accountDTO;
 
-        public Account(AccountDTO accountDTO, IAccountContainer accountContainer, IAgendaContainer agendaContainer, ISenderContainer senderContainer)
+        public Account(AccountDTO accountDTO, IAccountContainer accountContainer, IAgendaContainer agendaContainer, IJobContainer jobContainer, ISenderContainer senderContainer)
         {
             this.accountDTO = accountDTO;
             this._accountContainer = accountContainer;
             this._agendaContainer = agendaContainer;
+            this._jobContainer = jobContainer;
             this._senderContainer = senderContainer;
         }
 
@@ -35,6 +37,13 @@ namespace BusinessLogicLayer.Logic
         {
             this.accountDTO = accountDTO;
             this._agendaContainer = agendaContainer;
+        }
+
+        public Account(AccountDTO accountDTO, IAgendaContainer agendaContainer, IJobContainer jobContainer)
+        {
+            this.accountDTO = accountDTO;
+            this._agendaContainer = agendaContainer;
+            this._jobContainer = jobContainer;
         }
 
         public Account(AccountDTO accountDTO, IAccountContainer accountContainer)
@@ -137,7 +146,7 @@ namespace BusinessLogicLayer.Logic
             agendaDTO.NotificationType = "Nee";
 
             agendaDTO.AgendaID = _agendaContainer.AddAgenda(accountDTO.AccountID, agendaDTO);
-            _agendaContainer.AddPayDetails(agendaDTO.AgendaID, accountDTO);
+            _jobContainer.AddPayDetails(accountDTO);
         }
 
         public List<AgendaDTO> RetrieveAgendas()

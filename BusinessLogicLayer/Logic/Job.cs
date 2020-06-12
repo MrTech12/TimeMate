@@ -17,18 +17,13 @@ namespace BusinessLogicLayer.Logic
             this._jobContext = jobContext;
         }
 
-        /// <summary>
-        /// Retrieve the work hours that are logged into the database for business days.
-        /// </summary>
-        public double RetrieveWeeklyWorkHours()
+        public List<double> RetrievePayRate(int accountID)
         {
-            return 0.0;
+            List<double> payRate = new List<double>();
+            return payRate;
         }
 
-        /// <summary>
-        /// Retrieve the work hours that are logged into the database for the weekend.
-        /// </summary>
-        public double RetrieveWeeklyPay()
+        public double CalculateWeeklyPay(List<double> payRate)
         {
             return 0.0;
         }

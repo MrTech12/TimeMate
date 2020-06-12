@@ -18,7 +18,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { Mail = "bert@gmail.com", Password = "qoe2ieiwiir" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.LoggingIn();
 
@@ -30,7 +30,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { Mail = "", Password = "" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.LoggingIn();
 
@@ -42,7 +42,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { Mail = "test@gmail.com", Password = "test123"};
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.LoggingIn();
 
@@ -54,7 +54,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { Mail = "", Password = "test123" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.LoggingIn();
 
@@ -66,7 +66,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { Mail = "test@gmail.", Password = "test123" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.LoggingIn();
 
@@ -78,7 +78,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { Mail = "bert@gmail.com", Password = "cmck323kc" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.LoggingIn();
 
@@ -90,7 +90,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { Mail = "bert@gmail.com", Password = "" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.LoggingIn();
 

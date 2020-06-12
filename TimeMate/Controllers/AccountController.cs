@@ -16,6 +16,7 @@ namespace TimeMate.Controllers
     {
         private readonly IAccountContainer _accountContainer;
         private readonly IAgendaContainer _agendaContainer;
+        private readonly IJobContainer _jobContainer;
         private readonly ISenderContainer _senderContainer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -24,10 +25,11 @@ namespace TimeMate.Controllers
         private SessionService sessionService;
         bool sessionHasValue;
 
-        public AccountController(IAccountContainer accountContainer, IAgendaContainer agendaContainer, ISenderContainer senderContainer, IHttpContextAccessor httpContextAccessor)
+        public AccountController(IAccountContainer accountContainer, IAgendaContainer agendaContainer, IJobContainer jobContainer, ISenderContainer senderContainer, IHttpContextAccessor httpContextAccessor)
         {
             _accountContainer = accountContainer;
             _agendaContainer = agendaContainer;
+            _jobContainer = jobContainer;
             _senderContainer = senderContainer;
             _httpContextAccessor = httpContextAccessor;
         }
@@ -119,7 +121,7 @@ namespace TimeMate.Controllers
                     accountDTO.JobDayType.Add(viewModel.Job2DayType);
                 }
 
-                account = new Account(accountDTO, _accountContainer, _agendaContainer, _senderContainer);
+                account = new Account(accountDTO, _accountContainer, _agendaContainer, _jobContainer, _senderContainer);
 
                 string[] result = account.NewAccountValidation();
 

@@ -8,7 +8,7 @@ using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs
 {
-    class StubAgendaContext : IAgendaContainer
+    class StubAgendaContainer : IAgendaContainer
     {
         public int AddAgenda(int accountID, AgendaDTO agendaDTO)
         {
@@ -21,15 +21,6 @@ namespace TimeMateTest.Stubs
                 streamWriter.WriteLine(agendaDTO.NotificationType);
             }          
             return agendaID;
-        }
-
-        public void AddPayDetails(int agendaID, AccountDTO accountDTO)
-        {
-            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addWorkPayDetails.txt"))
-            {
-                streamWriter.WriteLine(accountDTO.JobHourlyWage[0]);
-                streamWriter.WriteLine(accountDTO.JobDayType[0]);
-            }
         }
 
         public void DeleteAgenda(int accountID, int agendaID)

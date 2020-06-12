@@ -15,7 +15,7 @@ namespace TimeMateTest.BLL
         public void GetTasksTest()
         {
             int appointmentID = 14;
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
 
             var output = checklistAppointment.RetrieveTasks(appointmentID);
 
@@ -29,7 +29,7 @@ namespace TimeMateTest.BLL
         public void GetNoTasksTest()
         {
             int appointmentID = 0;
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
 
             var output = checklistAppointment.RetrieveTasks(appointmentID);
 
@@ -39,7 +39,7 @@ namespace TimeMateTest.BLL
         [Fact]
         public void ChangeTaskStatusToDoneTest()
         {
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
             ChecklistDTO checklistDTO = new ChecklistDTO();
             checklistDTO.TaskID = 62;
             checklistDTO.TaskName = "Get cake";
@@ -61,7 +61,7 @@ namespace TimeMateTest.BLL
         [Fact]
         public void ChangeTaskStatusToNotDoneTest()
         {
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
             ChecklistDTO checklistDTO = new ChecklistDTO();
             checklistDTO.TaskID = 74;
             checklistDTO.TaskName = "Buy new monitor";
