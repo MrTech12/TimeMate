@@ -58,10 +58,11 @@ namespace BusinessLogicLayer.Logic
             weekDates.Add(monday);
             weekDates.Add(monday.AddDays(4));
 
-            jobDTO = _appointmentContainer.GetHoursForWorkdayJob(agendaID, weekDates);
+            jobDTO = _appointmentContainer.GetJobHours(agendaID, weekDates);
 
             double workdayHours = CalculateWorkedHours();
-            return workdayHours.ToString("N2");
+            string test = workdayHours.ToString("N2");
+            return test;
         }
 
         public string RetrieveWeekendHours(int accountID)
@@ -73,10 +74,11 @@ namespace BusinessLogicLayer.Logic
             weekendDates.Add(monday.AddDays(5));
             weekendDates.Add(monday.AddDays(6));
 
-            jobDTO = _appointmentContainer.GetHoursForWeekendJob(accountID, weekendDates);
+            jobDTO = _appointmentContainer.GetJobHours(accountID, weekendDates);
 
             double workdayHours = CalculateWorkedHours();
-            return workdayHours.ToString("N2");
+            string test = workdayHours.ToString("N2");
+            return test;
         }
 
         public double CalculateWorkedHours()

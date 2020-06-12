@@ -90,7 +90,7 @@ namespace DataAccessLayer.Containers
             return appointments;
         }
 
-        public JobDTO GetHoursForWorkdayJob(int agendaID, List<DateTime> weekDates)
+        public JobDTO GetJobHours(int agendaID, List<DateTime> dates)
         {
             JobDTO jobDTO = new JobDTO();
             try
@@ -104,41 +104,8 @@ namespace DataAccessLayer.Containers
                     SqlCommand selectQuery = new SqlCommand(query, databaseConn);
 
                     selectQuery.Parameters.AddWithValue("0", agendaID);
-                    selectQuery.Parameters.AddWithValue("1", weekDates[0]);
-                    selectQuery.Parameters.AddWithValue("2", weekDates[1]);
-                    SqlDataReader dataReader = selectQuery.ExecuteReader();
-
-                    while (dataReader.Read())
-                    {
-                        jobDTO.StartDate.Add(Convert.ToDateTime(dataReader["Starting"]));
-                        jobDTO.EndDate.Add(Convert.ToDateTime(dataReader["Ending"]));
-                    }
-                }
-            }
-            catch (SqlException exception)
-            {
-                throw new Exception("Er is op dit moment een probleem met de database.", exception);
-            }
-            return jobDTO;
-        }
-
-        public JobDTO GetHoursForWeekendJob(int agendaID, List<DateTime> weekendDates)
-        {
-            JobDTO jobDTO = new JobDTO();
-            try
-            {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
-                {
-                    string query = @"SELECT Starting, Ending FROM [Appointment] WHERE AgendaID = @0 AND Name = @1 
-                                    AND Starting >= @2 AND Ending <= @3";
-
-                    databaseConn.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
-
-                    selectQuery.Parameters.AddWithValue("0", agendaID);
-                    selectQuery.Parameters.AddWithValue("1", "Bijbaan");
-                    selectQuery.Parameters.AddWithValue("2", weekendDates[0]);
-                    selectQuery.Parameters.AddWithValue("3", weekendDates[1]);
+                    selectQuery.Parameters.AddWithValue("1", dates[0]);
+                    selectQuery.Parameters.AddWithValue("2", dates[1]);
                     SqlDataReader dataReader = selectQuery.ExecuteReader();
 
                     while (dataReader.Read())

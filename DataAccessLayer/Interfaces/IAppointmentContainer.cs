@@ -11,8 +11,6 @@ namespace DataAccessLayer.Interfaces
 
         List<AppointmentDTO> GetAppointments(int accountID);
 
-        JobDTO GetHoursForWorkdayJob(int agendaID, List<DateTime> weekDates);
-
-        JobDTO GetHoursForWeekendJob(int agendaID, List<DateTime> weekendDates);
+        JobDTO GetJobHours(int agendaID, List<DateTime> dates);
     }
 }
