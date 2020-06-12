@@ -58,7 +58,7 @@ namespace TimeMate.Controllers
                 if (jobDTO.WeeklyPay != 0)
                 {
                     ViewBag.pay = jobDTO.WeeklyPay.ToString("N2");
-                    ViewBag.hours = jobDTO.WeeklyHours;
+                    ViewBag.hours = jobDTO.WeeklyHours.ToString("N1");
                 }
 
                 return View(appointments);

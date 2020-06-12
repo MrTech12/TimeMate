@@ -30,11 +30,11 @@ namespace DataAccessLayer.Containers
                         if (accountDTO.JobDayType[i] == "Doordeweeks" && accountDTO.JobHourlyWage[i] != 0)
                         {
                             insertQuery.Parameters.AddWithValue("1", accountDTO.JobHourlyWage[i]);
-                            insertQuery.Parameters.AddWithValue("2", 0.0);
+                            insertQuery.Parameters.AddWithValue("2", DBNull.Value);
                         }
                         else if (accountDTO.JobDayType[i] == "Weekend" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            insertQuery.Parameters.AddWithValue("1", 0.0);
+                            insertQuery.Parameters.AddWithValue("1", DBNull.Value);
                             insertQuery.Parameters.AddWithValue("2", accountDTO.JobHourlyWage[i]);
                         }
                         insertQuery.ExecuteNonQuery();
@@ -49,7 +49,7 @@ namespace DataAccessLayer.Containers
 
         public double GetWorkdayPayWage(int accountID)
         {
-            double wage;
+            double wage = 0;
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
@@ -60,7 +60,15 @@ namespace DataAccessLayer.Containers
                     SqlCommand selectQuery = new SqlCommand(query, databaseConn);
 
                     selectQuery.Parameters.AddWithValue("0", accountID);
-                    wage = Convert.ToDouble(selectQuery.ExecuteScalar());
+                    SqlDataReader dataReader = selectQuery.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        if (dataReader["HourlyWageBuss"] != DBNull.Value)
+                        {
+                            wage = Convert.ToDouble(dataReader["HourlyWageBuss"]);
+                        }
+                    }
                 }
             }
             catch (SqlException exception)
@@ -72,7 +80,7 @@ namespace DataAccessLayer.Containers
 
         public double GetWeekendPayWage(int accountID)
         {
-            double wage;
+            double wage = 0;
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
@@ -83,7 +91,15 @@ namespace DataAccessLayer.Containers
                     SqlCommand selectQuery = new SqlCommand(query, databaseConn);
 
                     selectQuery.Parameters.AddWithValue("0", accountID);
-                    wage = Convert.ToDouble(selectQuery.ExecuteScalar());
+                    SqlDataReader dataReader = selectQuery.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        if (dataReader["HourlyWageWeek"] != DBNull.Value)
+                        {
+                            wage = Convert.ToDouble(dataReader["HourlyWageWeek"]);
+                        }
+                    }
                 }
             }
             catch (SqlException exception)

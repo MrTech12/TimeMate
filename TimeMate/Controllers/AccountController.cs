@@ -115,7 +115,7 @@ namespace TimeMate.Controllers
                     accountDTO.JobDayType.Add(viewModel.Job1DayType);
 
                 }
-                else if (viewModel.Job2HourlyWage != "0.00")
+                if (viewModel.Job2HourlyWage != "0.00")
                 {
                     accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job2HourlyWage));
                     accountDTO.JobDayType.Add(viewModel.Job2DayType);

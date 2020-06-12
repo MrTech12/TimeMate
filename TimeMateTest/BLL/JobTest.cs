@@ -20,7 +20,7 @@ namespace TimeMateTest.BLL
             jobDTO = job.RetrieveJobDetails(-5);
 
             Assert.Equal(0, jobDTO.WeeklyPay);
-            Assert.Null(jobDTO.WeeklyHours);
+            Assert.Equal(0,jobDTO.WeeklyHours);
         }
 
         [Fact]
@@ -31,8 +31,8 @@ namespace TimeMateTest.BLL
 
             jobDTO = job.RetrieveJobDetails(15);
 
-            Assert.Equal(44, jobDTO.WeeklyPay);
-            Assert.Equal("3,52", jobDTO.WeeklyHours);
+            Assert.Equal(43.958333333333336, jobDTO.WeeklyPay);
+            Assert.Equal(3.5166666666666666, jobDTO.WeeklyHours);
         }
 
         [Fact]
@@ -43,58 +43,58 @@ namespace TimeMateTest.BLL
 
             jobDTO = job.RetrieveJobDetails(25);
 
-            Assert.Equal(206.856, jobDTO.WeeklyPay);
-            Assert.Equal("13,52", jobDTO.WeeklyHours);
+            Assert.Equal(206.805, jobDTO.WeeklyPay);
+            Assert.Equal(13.516666666666666, jobDTO.WeeklyHours);
         }
 
         [Fact]
         public void TwoWorkHoursForWorkdays()
         {
-            string output;
+            double output;
             job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
 
             output = job.RetrieveWorkdayHours(6);
 
-            Assert.Equal("12,00", output);
+            Assert.Equal(12.00, output);
         }
 
         [Fact]
         public void ZeroWorkHoursForWorkdays()
         {
-            string output;
+            double output;
             job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
 
             output = job.RetrieveWorkdayHours(7);
 
-            Assert.Equal("0,00", output);
+            Assert.Equal(0.00, output);
         }
 
         [Fact]
         public void TwoWorkHoursForWeekend()
         {
-            string output;
+            double output;
             job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
 
             output = job.RetrieveWeekendHours(8);
 
-            Assert.Equal("16,33", output);
+            Assert.Equal(16.333333333333336, output);
         }
 
         [Fact]
         public void ZeroWorkHoursForWeekend()
         {
-            string output;
+            double output;
             job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
 
             output = job.RetrieveWeekendHours(9);
 
-            Assert.Equal("0,00", output);
+            Assert.Equal(0.00, output);
         }
 
         [Fact]
         public void FourAndHalfWorkedHours()
         {
-            string output;
+            double output;
             job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
             JobDTO jobDTO = new JobDTO();
             jobDTO.StartDate.Add(DateTime.Parse("2020-06-01 14:00:00"));
@@ -102,19 +102,19 @@ namespace TimeMateTest.BLL
 
             output = job.CalculateWorkedHours(jobDTO);
 
-            Assert.Equal("4,33", output);
+            Assert.Equal(4.333333333333333, output);
         }
 
         [Fact]
         public void ZeroWorkedHours()
         {
-            string output;
+            double output;
             job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
             JobDTO jobDTO = new JobDTO();
 
             output = job.CalculateWorkedHours(jobDTO);
 
-            Assert.Equal("0,00", output);
+            Assert.Equal(0.00, output);
         }
 
         [Fact]
