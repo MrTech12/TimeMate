@@ -90,7 +90,7 @@ namespace DataAccessLayer.Containers
             return appointments;
         }
 
-        public JobDTO GetJobHours(int agendaID, List<DateTime> dates)
+        public JobDTO GetWorkHours(int agendaID, List<DateTime> dates)
         {
             JobDTO jobDTO = new JobDTO();
             try

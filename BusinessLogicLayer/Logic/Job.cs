@@ -58,7 +58,7 @@ namespace BusinessLogicLayer.Logic
             weekDates.Add(monday);
             weekDates.Add(monday.AddDays(4));
 
-            jobDTO = _appointmentContainer.GetJobHours(agendaID, weekDates);
+            jobDTO = _appointmentContainer.GetWorkHours(agendaID, weekDates);
 
             double workdayHours = CalculateWorkedHours();
             string test = workdayHours.ToString("N2");
@@ -74,7 +74,7 @@ namespace BusinessLogicLayer.Logic
             weekendDates.Add(monday.AddDays(5));
             weekendDates.Add(monday.AddDays(6));
 
-            jobDTO = _appointmentContainer.GetJobHours(accountID, weekendDates);
+            jobDTO = _appointmentContainer.GetWorkHours(accountID, weekendDates);
 
             double workdayHours = CalculateWorkedHours();
             string test = workdayHours.ToString("N2");

@@ -82,7 +82,7 @@ namespace TimeMateTest.Stubs
             return appointmentDTO;
         }
 
-        public JobDTO GetJobHours(int agendaID, List<DateTime> weekDates)
+        public JobDTO GetWorkHours(int agendaID, List<DateTime> weekDates)
         {
             throw new NotImplementedException();
         }

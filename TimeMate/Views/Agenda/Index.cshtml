@@ -16,15 +16,20 @@
 
 <br />
 
-<div>
-
-</div>
-
 <div class="row">
-    <div class="col">
+    <div class="col-md-8">
         <input type="button" value="Normale afspraak toevoegen" onclick="location.href='@Url.Action("Index", "NormalAppointment")'" class="btn btn-primary" />
         <input type="button" value="Afspraak met takenlijst toevoegen" onclick="location.href='@Url.Action("Index", "ChecklistAppointment")'" class="btn btn-primary" />
         <input type="button" value="Agenda toevoegen" onclick="location.href='@Url.Action("AddAgenda", "Agenda")'" class="btn btn-success" />
+    </div>
+    <div class="col-md-4 pt-2">
+        @if (ViewBag.pay != null)
+        {
+            <div>
+                Werkuren deze week: @ViewBag.hours
+                Weekloon: €@ViewBag.pay
+            </div>
+        }
     </div>
 </div>
 
