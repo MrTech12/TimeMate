@@ -30,11 +30,11 @@ namespace DataAccessLayer.Containers
                         if (accountDTO.JobDayType[i] == "Doordeweeks" && accountDTO.JobHourlyWage[i] != 0)
                         {
                             insertQuery.Parameters.AddWithValue("1", accountDTO.JobHourlyWage[i]);
-                            insertQuery.Parameters.AddWithValue("2", DBNull.Value);
+                            insertQuery.Parameters.AddWithValue("2", 0.0);
                         }
                         else if (accountDTO.JobDayType[i] == "Weekend" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            insertQuery.Parameters.AddWithValue("1", DBNull.Value);
+                            insertQuery.Parameters.AddWithValue("1", 0.0);
                             insertQuery.Parameters.AddWithValue("2", accountDTO.JobHourlyWage[i]);
                         }
                         insertQuery.ExecuteNonQuery();
@@ -47,20 +47,50 @@ namespace DataAccessLayer.Containers
             }
         }
 
-        /// <summary>
-        /// Get the pay for business days from the database.
-        /// </summary>
-        public double GetWorkdayPay(AccountDTO accountDTO, JobDTO jobDTO)
+        public double GetWorkdayPayRate(int accountID)
         {
-            throw new NotImplementedException();
+            double payWage;
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                {
+                    string query = @"SELECT HourlyWageBuss FROM [Job] WHERE AccountID = @0";
+
+                    databaseConn.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+
+                    selectQuery.Parameters.AddWithValue("0", accountID);
+                    payWage = Convert.ToDouble(selectQuery.ExecuteScalar());
+                }
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+            }
+            return payWage;
         }
 
-        /// <summary>
-        /// Get the pay for the weekend from the database.
-        /// </summary>
-        public double GetWeekendPay(AccountDTO accountDTO, JobDTO jobDTO)
+        public double GetWeekendPayRate(int accountID)
         {
-            throw new NotImplementedException();
+            double payWage;
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                {
+                    string query = @"SELECT HourlyWageWeek FROM [Job] WHERE AccountID = @0";
+
+                    databaseConn.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+
+                    selectQuery.Parameters.AddWithValue("0", accountID);
+                    payWage = Convert.ToDouble(selectQuery.ExecuteScalar());
+                }
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+            }
+            return payWage;
         }
     }
 }

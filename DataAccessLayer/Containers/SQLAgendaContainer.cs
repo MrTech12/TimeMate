@@ -91,14 +91,37 @@ namespace DataAccessLayer.Containers
             return agendas;
         }
 
-        public List<DateTime> GetWorkdayHours(int agendaIndex)
+        public string GetAgendaID(string agendaName, int accountID)
         {
-            throw new NotImplementedException();
-        }
+            string agendaID;
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                {
+                    string query = @"SELECT AgendaID FROM [Agenda] WHERE Name = @0 AND AccountID = @1";
 
-        public List<DateTime> GetWeekendHours(int agendaIndex)
-        {
-            throw new NotImplementedException();
+                    databaseConn.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+
+                    selectQuery.Parameters.AddWithValue("0", agendaName);
+                    selectQuery.Parameters.AddWithValue("1", accountID);
+                    var resultedAgendaID = selectQuery.ExecuteScalar();
+
+                    if (resultedAgendaID == null)
+                    {
+                        agendaID = null;
+                    }
+                    else
+                    {
+                        agendaID = resultedAgendaID.ToString();
+                    }
+                }
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+            }
+            return agendaID;
         }
     }
 }

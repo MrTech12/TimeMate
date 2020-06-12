@@ -51,10 +51,10 @@ namespace DataAccessLayer.Containers
                         AND Agenda.AccountID = @0";
 
                     databaseConn.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
+                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
 
-                    insertQuery.Parameters.AddWithValue("0", accountID);
-                    SqlDataReader dataReader = insertQuery.ExecuteReader();
+                    selectQuery.Parameters.AddWithValue("0", accountID);
+                    SqlDataReader dataReader = selectQuery.ExecuteReader();
 
                     while (dataReader.Read())
                     {
@@ -88,6 +88,71 @@ namespace DataAccessLayer.Containers
                 throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
             return appointments;
+        }
+
+        public JobDTO GetHoursForWorkdayJob(int agendaID, List<DateTime> weekDates)
+        {
+            JobDTO jobDTO = new JobDTO();
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                {
+                    string query = @"SELECT Starting, Ending FROM [Appointment] WHERE AgendaID = @0 
+                                    AND Starting >= @1 AND Ending <= @2";
+
+                    databaseConn.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+
+                    selectQuery.Parameters.AddWithValue("0", agendaID);
+                    selectQuery.Parameters.AddWithValue("1", weekDates[0]);
+                    selectQuery.Parameters.AddWithValue("2", weekDates[1]);
+                    SqlDataReader dataReader = selectQuery.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        jobDTO.StartDate.Add(Convert.ToDateTime(dataReader["Starting"]));
+                        jobDTO.EndDate.Add(Convert.ToDateTime(dataReader["Ending"]));
+                    }
+                }
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+            }
+            return jobDTO;
+        }
+
+        public JobDTO GetHoursForWeekendJob(int agendaID, List<DateTime> weekendDates)
+        {
+            JobDTO jobDTO = new JobDTO();
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                {
+                    string query = @"SELECT Starting, Ending FROM [Appointment] WHERE AgendaID = @0 AND Name = @1 
+                                    AND Starting >= @2 AND Ending <= @3";
+
+                    databaseConn.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+
+                    selectQuery.Parameters.AddWithValue("0", agendaID);
+                    selectQuery.Parameters.AddWithValue("1", "Bijbaan");
+                    selectQuery.Parameters.AddWithValue("2", weekendDates[0]);
+                    selectQuery.Parameters.AddWithValue("3", weekendDates[1]);
+                    SqlDataReader dataReader = selectQuery.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        jobDTO.StartDate.Add(Convert.ToDateTime(dataReader["Starting"]));
+                        jobDTO.EndDate.Add(Convert.ToDateTime(dataReader["Ending"]));
+                    }
+                }
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+            }
+            return jobDTO;
         }
     }
 }

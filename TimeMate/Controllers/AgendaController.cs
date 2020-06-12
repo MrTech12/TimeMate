@@ -19,20 +19,23 @@ namespace TimeMate.Controllers
         private readonly IAppointmentContainer _appointmentContainer;
         private readonly INormalAppointmentContainer _normalAppointmentContainer;
         private readonly IChecklistAppointmentContainer _checklistAppointmentContainer;
+        private readonly IJobContainer _jobContainer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         private AccountDTO accountDTO = new AccountDTO();
         private Agenda agenda;
         private Account account;
+        private Job job;
         private SessionService sessionService;
         bool sessionHasValue;
 
-        public AgendaController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, INormalAppointmentContainer normalAppointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer, IHttpContextAccessor httpContextAccessor)
+        public AgendaController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, INormalAppointmentContainer normalAppointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer, IJobContainer jobContainer, IHttpContextAccessor httpContextAccessor)
         {
             _agendaContainer = agendaContainer;
             _appointmentContainer = appointmentContainer;
             _normalAppointmentContainer = normalAppointmentContainer;
             _checklistAppointmentContainer = checklistAppointmentContainer;
+            _jobContainer = jobContainer;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -48,6 +51,16 @@ namespace TimeMate.Controllers
 
                 agenda = new Agenda(accountDTO, _appointmentContainer);
                 List<AppointmentDTO> appointments = agenda.RetrieveAppointments();
+
+                job = new Job(_jobContainer, _agendaContainer, _appointmentContainer);
+                JobDTO jobDTO = job.CalculateWeeklyPay(accountDTO.AccountID);
+
+                if (jobDTO.WeeklyPay != 0)
+                {
+                    ViewBag.pay = jobDTO.WeeklyPay.ToString("N2");
+                    ViewBag.hours = jobDTO.WeeklyHours;
+                }
+
                 return View(appointments);
             }
             else

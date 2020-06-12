@@ -18,12 +18,12 @@ namespace TimeMateTest.Stubs
             }
         }
 
-        public double GetWeekendPay(AccountDTO accountDTO, JobDTO jobDTO)
+        public double GetWeekendPayRate(int accountID)
         {
             throw new NotImplementedException();
         }
 
-        public double GetWorkdayPay(AccountDTO accountDTO, JobDTO jobDTO)
+        public double GetWorkdayPayRate(int accountID)
         {
             throw new NotImplementedException();
         }
