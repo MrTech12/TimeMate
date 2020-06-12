@@ -9,9 +9,9 @@ namespace DataAccessLayer.Interfaces
     {
         void AddTask(AppointmentDTO appointmentDTO);
 
-        bool GetTaskStatus(int taskID);
-
         List<ChecklistDTO> GetTasks(int appointmentID);
+
+        bool GetTaskStatus(int taskID);
 
         void CheckOffTask(int taskID, bool status);
     }

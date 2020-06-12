@@ -24,6 +24,20 @@ namespace TimeMateTest.Stubs
             return "test";
         }
 
+        public string SearchForPasswordHash(string mail)
+        {
+            string returnMessage = null;
+            if (mail == "test@gmail.com")
+            {
+                returnMessage = null;
+            }
+            else if (mail == "bert@gmail.com")
+            {
+                returnMessage = "$2b$10$s.mU04TYPOSCHn.BOh3iIehsM5sGUyvoAGoXgOojrTxtEF/5aptLS";
+            }
+            return returnMessage;
+        }
+
         public int CreateAccount(AccountDTO accountDTO)
         {
             int accountID = 0;
@@ -52,20 +66,6 @@ namespace TimeMateTest.Stubs
                 accountID = 14;
             }
             return accountID;
-        }
-
-        public string SearchForPasswordHash(string mail)
-        {
-            string returnMessage = null;
-            if (mail == "test@gmail.com")
-            {
-                returnMessage = null;
-            }
-            else if (mail == "bert@gmail.com")
-            {
-                returnMessage = "$2b$10$s.mU04TYPOSCHn.BOh3iIehsM5sGUyvoAGoXgOojrTxtEF/5aptLS";
-            }
-            return returnMessage;
         }
     }
 }
