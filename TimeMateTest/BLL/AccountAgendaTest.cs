@@ -15,7 +15,7 @@ namespace TimeMateTest.BLL
         private AccountDTO accountDTO;
 
         [Fact]
-        public void CreateAgendaTest()
+        public void CreateAgenda1()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             account = new Account(accountDTO, new StubAgendaContainer());
@@ -30,7 +30,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAgendaTest2()
+        public void CreateAgenda2()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             account = new Account(accountDTO, new StubAgendaContainer());
@@ -45,7 +45,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateWorkAgendaTest()
+        public void CreateWorkAgenda1()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             accountDTO.JobHourlyWage.Add(12.23);
@@ -63,10 +63,37 @@ namespace TimeMateTest.BLL
             Assert.Contains("#FF0000", fileAgenda[1]);
             Assert.Contains("12,23", filePay[0]);
             Assert.Contains("Doordeweeks", filePay[1]);
+            Assert.True(filePay.Length == 2);
         }
 
         [Fact]
-        public void GetAgendaNamesTest()
+        public void CreateWorkAgenda2()
+        {
+            accountDTO = new AccountDTO() { AccountID = 56 };
+            accountDTO.JobHourlyWage.Add(12.23);
+            accountDTO.JobDayType.Add("Doordeweeks");
+            accountDTO.JobHourlyWage.Add(10);
+            accountDTO.JobDayType.Add("Weekend");
+            account = new Account(accountDTO, new StubAgendaContainer(), new StubJobContainer());
+
+            account.CreateWorkAgenda();
+            string[] fileAgenda = File.ReadAllLines(@"C:\tmp\addAgendaTest.txt");
+            string[] filePay = File.ReadAllLines(@"C:\tmp\addWorkPayDetails.txt");
+
+            File.Delete(@"C:\tmp\addAgendaTest.txt");
+            File.Delete(@"C:\tmp\addWorkPayDetails.txt");
+
+            Assert.Contains("Bijbaan", fileAgenda[0]);
+            Assert.Contains("#FF0000", fileAgenda[1]);
+            Assert.Contains("12,23", filePay[0]);
+            Assert.Contains("Doordeweeks", filePay[1]);
+            Assert.Contains("10", filePay[2]);
+            Assert.Contains("Weekend", filePay[3]);
+            Assert.True(filePay.Length == 4);
+        }
+
+        [Fact]
+        public void GetAgendaNames()
         {
             List<AgendaDTO> output = new List<AgendaDTO>();
             accountDTO = new AccountDTO() { AccountID = 12 };
@@ -76,6 +103,18 @@ namespace TimeMateTest.BLL
 
             Assert.Contains("Work", output[0].AgendaName);
             Assert.True(output.Count == 2);
+        }
+
+        [Fact]
+        public void GetZeroAgendaNames()
+        {
+            List<AgendaDTO> output = new List<AgendaDTO>();
+            accountDTO = new AccountDTO() { AccountID = 128 };
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
+
+            output = account.RetrieveAgendas();
+
+            Assert.True(output.Count == 0);
         }
 
         [Fact]
@@ -100,6 +139,30 @@ namespace TimeMateTest.BLL
 
             Assert.Equal("System.String[]", file.ToString());
 
+        }
+
+        [Fact]
+        public void RemoveNoAgenda()
+        {
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", NotificationType = "Nee" };
+            Account account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
+
+            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\removeAgendaTest.txt"))
+            {
+                streamWriter.WriteLine(agendaDTO.AgendaID);
+                streamWriter.WriteLine(agendaDTO.AgendaName);
+                streamWriter.WriteLine(agendaDTO.AgendaColor);
+                streamWriter.WriteLine(agendaDTO.NotificationType);
+            }
+
+            account.DeleteAgenda(-5);
+
+            string[] file = File.ReadAllLines(@"C:\tmp\removeAgendaTest.txt");
+            File.Delete(@"C:\tmp\removeAgendaTest.txt");
+
+            Assert.Equal("51", file[0]);
+            Assert.Equal("qwerty", file[1]);
         }
     }
 }

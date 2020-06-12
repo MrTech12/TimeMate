@@ -12,7 +12,7 @@ namespace TimeMateTest.BLL
         private ChecklistAppointment checklistAppointment;
 
         [Fact]
-        public void GetTasksTest()
+        public void GetTasks()
         {
             int appointmentID = 14;
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
@@ -26,7 +26,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void GetNoTasksTest()
+        public void GetNoTasks()
         {
             int appointmentID = 0;
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
@@ -37,7 +37,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void ChangeTaskStatusToDoneTest()
+        public void ChangeTaskStatusToDone()
         {
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
             ChecklistDTO checklistDTO = new ChecklistDTO();
@@ -59,7 +59,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void ChangeTaskStatusToNotDoneTest()
+        public void ChangeTaskStatusToNotDone()
         {
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
             ChecklistDTO checklistDTO = new ChecklistDTO();

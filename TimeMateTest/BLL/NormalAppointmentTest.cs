@@ -11,7 +11,7 @@ namespace TimeMateTest.BLL
         private NormalAppointment normalAppointment;
 
         [Fact]
-        public void GetDescriptionTest()
+        public void GetDescription()
         {
             int appointmentID = 24;
             normalAppointment = new NormalAppointment(new StubNormalAppointmentContainer());
@@ -22,7 +22,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void GetNoDescriptionTest()
+        public void GetNoDescription()
         {
             int appointmentID = 0;
             normalAppointment = new NormalAppointment(new StubNormalAppointmentContainer());

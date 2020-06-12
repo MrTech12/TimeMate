@@ -15,7 +15,7 @@ namespace TimeMateTest.BLL
         private AccountDTO accountDTO;
 
         [Fact]
-        public void CreateAccountNoJobTest()
+        public void CreateAccountNoJob()
         {
             string[] file;
             accountDTO = new AccountDTO();
@@ -36,7 +36,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountJobTest()
+        public void CreateAccountJob()
         {
             string[] file;
             accountDTO = new AccountDTO();
@@ -61,7 +61,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountLowercasePasswordTest()
+        public void CreateAccountLowercasePassword()
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwieiwi231@#" };
@@ -73,7 +73,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountNoSpecialCharactersPasswordTest()
+        public void CreateAccountNoSpecialCharactersPassword()
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwiEEWwi231WE" };
@@ -85,7 +85,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountNoNumbersPasswordTest()
+        public void CreateAccountNoNumbersPassword()
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwieiwieWE@#" };
@@ -97,7 +97,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccounExistingMailTest()
+        public void CreateAccounExistingMail()
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Bert", Mail = "bert@gmail.com", Password = "qwieEW12iwieWE@#" };
@@ -109,7 +109,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountIncorrectMailTest()
+        public void CreateAccountIncorrectMail()
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Bert", Mail = "bert@gmail.", Password = "qwieEW12iwieWE@#" };

@@ -13,8 +13,11 @@ namespace TimeMateTest.Stubs
         {
             using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addWorkPayDetails.txt"))
             {
-                streamWriter.WriteLine(accountDTO.JobHourlyWage[0]);
-                streamWriter.WriteLine(accountDTO.JobDayType[0]);
+                for (int i = 0; i < accountDTO.JobHourlyWage.Count; i++)
+                {
+                    streamWriter.WriteLine(accountDTO.JobHourlyWage[i]);
+                    streamWriter.WriteLine(accountDTO.JobDayType[i]);
+                }
             }
         }
 
