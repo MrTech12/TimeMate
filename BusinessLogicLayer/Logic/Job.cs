@@ -20,11 +20,11 @@ namespace BusinessLogicLayer.Logic
             this._appointmentContainer = appointmentContainer;
         }
 
-        public JobDTO CalculateJobDetails(int accountID)
+        public JobDTO RetrieveJobDetails(int accountID)
         {
             JobDTO jobDetails = new JobDTO();
-            double workdayWage = _jobContainer.GetWorkdayPayRate(accountID);
-            double weekendWage = _jobContainer.GetWeekendPayRate(accountID);
+            double workdayWage = _jobContainer.GetWorkdayPayWage(accountID);
+            double weekendWage = _jobContainer.GetWeekendPayWage(accountID);
 
             if (workdayWage != 0 && weekendWage == 0)
             {
@@ -41,29 +41,30 @@ namespace BusinessLogicLayer.Logic
             else if (workdayWage != 0 && weekendWage != 0)
             {
                 int agendaID = Convert.ToInt32(_agendaContainer.GetAgendaID("Bijbaan", accountID));
-                double workdays = RetrieveWorkdayHours(agendaID);
-                double weekend = RetrieveWeekendHours(agendaID);
+                string workdays = RetrieveWorkdayHours(agendaID);
+                string weekend = RetrieveWeekendHours(agendaID);
                 jobDetails.WeeklyHours = workdays + weekend;
-                jobDetails.WeeklyPay = Convert.ToDouble(jobDetails.WeeklyHours) * weekendWage;
+                jobDetails.WeeklyPay += Convert.ToDouble(workdays) * workdayWage;
+                jobDetails.WeeklyPay += Convert.ToDouble(weekend) * weekendWage;
             }
             return jobDetails;
         }
 
-        public double RetrieveWorkdayHours(int agendaID)
+        public string RetrieveWorkdayHours(int agendaID)
         {
             jobDTO = new JobDTO();
 
             DateTime monday = GetFirstDayOfWeek(DateTime.Now);
-            List<DateTime> weekDates = new List<DateTime>();
-            weekDates.Add(monday);
-            weekDates.Add(monday.AddDays(4));
+            List<DateTime> workdayDates = new List<DateTime>();
+            workdayDates.Add(monday);
+            workdayDates.Add(monday.AddDays(4));
 
-            jobDTO = _appointmentContainer.GetWorkHours(agendaID, weekDates);
+            jobDTO = _appointmentContainer.GetWorkHours(agendaID, workdayDates);
 
-            return CalculateWorkedHours();
+            return CalculateWorkedHours(jobDTO);
         }
 
-        public double RetrieveWeekendHours(int accountID)
+        public string RetrieveWeekendHours(int accountID)
         {
             jobDTO = new JobDTO();
 
@@ -74,25 +75,29 @@ namespace BusinessLogicLayer.Logic
 
             jobDTO = _appointmentContainer.GetWorkHours(accountID, weekendDates);
 
-            return CalculateWorkedHours();
+            return CalculateWorkedHours(jobDTO);
         }
 
-        public double CalculateWorkedHours()
+        public string CalculateWorkedHours(JobDTO jobDTO)
         {
             double workedHours = 0;
+            string roundedWorkedHours = null;
             for (int i = 0; i < jobDTO.StartDate.Count; i++)
             {
                 workedHours += (jobDTO.EndDate[i] - jobDTO.StartDate[i]).TotalHours;
             }
-            return workedHours;
+            roundedWorkedHours = workedHours.ToString("N2");
+            return roundedWorkedHours;
         }
 
-        public static DateTime GetFirstDayOfWeek(DateTime date)
+        public DateTime GetFirstDayOfWeek(DateTime date)
         {
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
             var diff = date.DayOfWeek - culture.DateTimeFormat.FirstDayOfWeek;
             if (diff < 0)
+            {
                 diff += 7;
+            }
             return date.AddDays(-diff).Date;
         }
     }

@@ -33,7 +33,20 @@ namespace TimeMateTest.Stubs
 
         public string GetAgendaID(string agendaName, int accountID)
         {
-            throw new NotImplementedException();
+            string agendaID = null;
+            if (accountID == 15 & agendaName == "Bijbaan")
+            {
+                agendaID = "1";
+            }
+            else if (accountID == 25 && agendaName == "Bijbaan")
+            {
+                agendaID = "2";
+            }
+            else if (accountID == 30 && agendaName == "Bijbaan")
+            {
+                agendaID = "3";
+            }
+            return agendaID;
         }
 
         public List<AgendaDTO> GetAllAgendas(int accountID)
@@ -51,7 +64,6 @@ namespace TimeMateTest.Stubs
                 agenda2.AgendaName = "Personal";
                 agendaNames.Add(agenda2);
             }
-
             return agendaNames;
         }
     }

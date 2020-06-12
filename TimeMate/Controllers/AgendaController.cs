@@ -53,12 +53,12 @@ namespace TimeMate.Controllers
                 List<AppointmentDTO> appointments = agenda.RetrieveAppointments();
 
                 job = new Job(_jobContainer, _agendaContainer, _appointmentContainer);
-                JobDTO jobDTO = job.CalculateJobDetails(accountDTO.AccountID);
+                JobDTO jobDTO = job.RetrieveJobDetails(accountDTO.AccountID);
 
                 if (jobDTO.WeeklyPay != 0)
                 {
                     ViewBag.pay = jobDTO.WeeklyPay.ToString("N2");
-                    ViewBag.hours = jobDTO.WeeklyHours.ToString("N1");
+                    ViewBag.hours = jobDTO.WeeklyHours;
                 }
 
                 return View(appointments);

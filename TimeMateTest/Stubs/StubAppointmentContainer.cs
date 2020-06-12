@@ -84,7 +84,43 @@ namespace TimeMateTest.Stubs
 
         public JobDTO GetWorkHours(int agendaID, List<DateTime> weekDates)
         {
-            throw new NotImplementedException();
+            JobDTO jobDTO = new JobDTO();
+            if (agendaID == 1)
+            {
+                jobDTO.StartDate.Add(DateTime.Parse("2020-05-04 14:00:00"));
+                jobDTO.EndDate.Add(DateTime.Parse("2020-05-04 16:00:00"));
+                jobDTO.StartDate.Add(DateTime.Parse("2020-05-05 16:03:00"));
+                jobDTO.EndDate.Add(DateTime.Parse("2020-05-05 17:34:00"));
+            }
+            else if (agendaID == 2)
+            {
+                jobDTO.StartDate.Add(DateTime.Parse("2020-05-09 14:00:00"));
+                jobDTO.EndDate.Add(DateTime.Parse("2020-05-09 21:00:00"));
+                jobDTO.StartDate.Add(DateTime.Parse("2020-05-10 09:03:00"));
+                jobDTO.EndDate.Add(DateTime.Parse("2020-05-10 15:34:00"));
+            }
+            else if (agendaID == 3)
+            {
+                jobDTO.StartDate.Add(DateTime.Parse("2020-05-11 14:00:00"));
+                jobDTO.EndDate.Add(DateTime.Parse("2020-05-11 21:00:00"));
+                jobDTO.StartDate.Add(DateTime.Parse("2020-05-16 23:03:00"));
+                jobDTO.EndDate.Add(DateTime.Parse("2020-05-17 02:04:00"));
+            }
+            else if (agendaID == 6)
+            {
+                jobDTO.StartDate.Add(DateTime.Parse("2020-05-04 14:00:00"));
+                jobDTO.EndDate.Add(DateTime.Parse("2020-05-04 20:00:00"));
+                jobDTO.StartDate.Add(DateTime.Parse("2020-05-05 08:00:00"));
+                jobDTO.EndDate.Add(DateTime.Parse("2020-05-05 14:00:00"));
+            }
+            else if (agendaID == 8)
+            {
+                jobDTO.StartDate.Add(DateTime.Parse("2020-05-04 10:00:00"));
+                jobDTO.EndDate.Add(DateTime.Parse("2020-05-04 18:20:00"));
+                jobDTO.StartDate.Add(DateTime.Parse("2020-05-05 08:00:00"));
+                jobDTO.EndDate.Add(DateTime.Parse("2020-05-05 16:00:00"));
+            }
+            return jobDTO;
         }
     }
 }

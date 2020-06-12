@@ -47,7 +47,7 @@ namespace DataAccessLayer.Containers
             }
         }
 
-        public double GetWorkdayPayRate(int accountID)
+        public double GetWorkdayPayWage(int accountID)
         {
             double wage;
             try
@@ -70,7 +70,7 @@ namespace DataAccessLayer.Containers
             return wage;
         }
 
-        public double GetWeekendPayRate(int accountID)
+        public double GetWeekendPayWage(int accountID)
         {
             double wage;
             try

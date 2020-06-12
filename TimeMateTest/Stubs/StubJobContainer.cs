@@ -18,14 +18,32 @@ namespace TimeMateTest.Stubs
             }
         }
 
-        public double GetWeekendPayRate(int accountID)
+        public double GetWorkdayPayWage(int accountID)
         {
-            throw new NotImplementedException();
+            double payWage = 0;
+            if (accountID == 15)
+            {
+                payWage = 12.50;
+            }
+            else if (accountID == 30)
+            {
+                payWage = 10;
+            }
+            return payWage;
         }
 
-        public double GetWorkdayPayRate(int accountID)
+        public double GetWeekendPayWage(int accountID)
         {
-            throw new NotImplementedException();
+            double payWage = 0;
+            if (accountID == 25)
+            {
+                payWage = 15.30;
+            }
+            else if (accountID == 30)
+            {
+                payWage = 10;
+            }
+            return payWage;
         }
     }
 }

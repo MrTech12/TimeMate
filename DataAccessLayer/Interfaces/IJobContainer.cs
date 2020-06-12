@@ -9,8 +9,8 @@ namespace DataAccessLayer.Interfaces
     {
         void AddPayDetails(AccountDTO accountDTO);
 
-        double GetWorkdayPayRate(int accountID);
+        double GetWorkdayPayWage(int accountID);
 
-        double GetWeekendPayRate(int accountID);
+        double GetWeekendPayWage(int accountID);
     }
 }
