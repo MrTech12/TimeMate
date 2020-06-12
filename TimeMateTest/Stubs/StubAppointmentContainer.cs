@@ -81,5 +81,15 @@ namespace TimeMateTest.Stubs
             }
             return appointmentDTO;
         }
+
+        public JobDTO GetHoursForWeekendJob(int agendaID, List<DateTime> weekendDates)
+        {
+            throw new NotImplementedException();
+        }
+
+        public JobDTO GetHoursForWorkdayJob(int agendaID, List<DateTime> weekDates)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

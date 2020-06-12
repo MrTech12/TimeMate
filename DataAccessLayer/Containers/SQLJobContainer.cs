@@ -49,7 +49,7 @@ namespace DataAccessLayer.Containers
 
         public double GetWorkdayPayRate(int accountID)
         {
-            double payWage;
+            double wage;
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
@@ -60,19 +60,19 @@ namespace DataAccessLayer.Containers
                     SqlCommand selectQuery = new SqlCommand(query, databaseConn);
 
                     selectQuery.Parameters.AddWithValue("0", accountID);
-                    payWage = Convert.ToDouble(selectQuery.ExecuteScalar());
+                    wage = Convert.ToDouble(selectQuery.ExecuteScalar());
                 }
             }
             catch (SqlException exception)
             {
                 throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
-            return payWage;
+            return wage;
         }
 
         public double GetWeekendPayRate(int accountID)
         {
-            double payWage;
+            double wage;
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
@@ -83,14 +83,14 @@ namespace DataAccessLayer.Containers
                     SqlCommand selectQuery = new SqlCommand(query, databaseConn);
 
                     selectQuery.Parameters.AddWithValue("0", accountID);
-                    payWage = Convert.ToDouble(selectQuery.ExecuteScalar());
+                    wage = Convert.ToDouble(selectQuery.ExecuteScalar());
                 }
             }
             catch (SqlException exception)
             {
                 throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
-            return payWage;
+            return wage;
         }
     }
 }

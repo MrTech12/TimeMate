@@ -23,30 +23,28 @@ namespace BusinessLogicLayer.Logic
         public JobDTO CalculateWeeklyPay(int accountID)
         {
             JobDTO jobDetails = new JobDTO();
-            double weekendPayWage = 0;
-            double workdayPayWage = 0;
+            double workdayWage = _jobContainer.GetWorkdayPayRate(accountID);
+            double weekendWage = _jobContainer.GetWeekendPayRate(accountID);
 
-            workdayPayWage = _jobContainer.GetWorkdayPayRate(accountID);
-            weekendPayWage = _jobContainer.GetWeekendPayRate(accountID);
-
-            if (workdayPayWage != 0 && weekendPayWage == 0)
+            if (workdayWage != 0 && weekendWage == 0)
             {
                 int agendaID = Convert.ToInt32(_agendaContainer.GetAgendaID("Bijbaan", accountID));
                 jobDetails.WeeklyHours = RetrieveWorkdayHours(agendaID);
-                jobDetails.WeeklyPay = Convert.ToDouble(jobDetails.WeeklyHours) * workdayPayWage;
+                jobDetails.WeeklyPay = Convert.ToDouble(jobDetails.WeeklyHours) * workdayWage;
             }
-            else if (workdayPayWage == 0 && weekendPayWage != 0)
+            else if (workdayWage == 0 && weekendWage != 0)
             {
                 int agendaID = Convert.ToInt32(_agendaContainer.GetAgendaID("Bijbaan", accountID));
                 jobDetails.WeeklyHours = RetrieveWeekendHours(agendaID);
-                jobDetails.WeeklyPay = Convert.ToDouble(jobDetails.WeeklyHours) * weekendPayWage;
+                jobDetails.WeeklyPay = Convert.ToDouble(jobDetails.WeeklyHours) * weekendWage;
             }
-            else if (workdayPayWage != 0 && weekendPayWage != 0)
+            else if (workdayWage != 0 && weekendWage != 0)
             {
-                string workdays = RetrieveWorkdayHours(accountID);
-                string weekend = RetrieveWeekendHours(accountID);
+                int agendaID = Convert.ToInt32(_agendaContainer.GetAgendaID("Bijbaan", accountID));
+                string workdays = RetrieveWorkdayHours(agendaID);
+                string weekend = RetrieveWeekendHours(agendaID);
                 jobDetails.WeeklyHours = workdays + weekend;
-                jobDetails.WeeklyPay = Convert.ToDouble(jobDetails.WeeklyHours) * weekendPayWage;
+                jobDetails.WeeklyPay = Convert.ToDouble(jobDetails.WeeklyHours) * weekendWage;
             }
             return jobDetails;
         }
@@ -56,21 +54,14 @@ namespace BusinessLogicLayer.Logic
             jobDTO = new JobDTO();
 
             DateTime monday = GetFirstDayOfWeek(DateTime.Now);
-            DateTime friday = monday.AddDays(4);
-
             List<DateTime> weekDates = new List<DateTime>();
             weekDates.Add(monday);
-            weekDates.Add(friday);
+            weekDates.Add(monday.AddDays(4));
 
             jobDTO = _appointmentContainer.GetHoursForWorkdayJob(agendaID, weekDates);
 
-            double workdayHours = 0;
-            for (int i = 0; i < jobDTO.StartDate.Count; i++)
-            {
-                workdayHours += (jobDTO.EndDate[i] - jobDTO.StartDate[i]).TotalHours;
-            }
-            string workdayHours2 = workdayHours.ToString("N2");
-            return workdayHours2;
+            double workdayHours = CalculateWorkedHours();
+            return workdayHours.ToString("N2");
         }
 
         public string RetrieveWeekendHours(int accountID)
@@ -78,21 +69,24 @@ namespace BusinessLogicLayer.Logic
             jobDTO = new JobDTO();
 
             DateTime monday = GetFirstDayOfWeek(DateTime.Now);
-            DateTime saturday = monday.AddDays(5);
-            DateTime sunday = monday.AddDays(6);
-
             List<DateTime> weekendDates = new List<DateTime>();
-            weekendDates.Add(saturday);
-            weekendDates.Add(sunday);
+            weekendDates.Add(monday.AddDays(5));
+            weekendDates.Add(monday.AddDays(6));
 
             jobDTO = _appointmentContainer.GetHoursForWeekendJob(accountID, weekendDates);
 
-            string weekendHours = null;
+            double workdayHours = CalculateWorkedHours();
+            return workdayHours.ToString("N2");
+        }
+
+        public double CalculateWorkedHours()
+        {
+            double workedHours = 0;
             for (int i = 0; i < jobDTO.StartDate.Count; i++)
             {
-                weekendHours += (jobDTO.EndDate[i] - jobDTO.StartDate[i]).TotalHours.ToString("N2");
+                workedHours += (jobDTO.EndDate[i] - jobDTO.StartDate[i]).TotalHours;
             }
-            return weekendHours;
+            return workedHours;
         }
 
         public static DateTime GetFirstDayOfWeek(DateTime date)

@@ -31,6 +31,11 @@ namespace TimeMateTest.Stubs
             }
         }
 
+        public string GetAgendaID(string agendaName, int accountID)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<AgendaDTO> GetAllAgendas(int accountID)
         {
             List<AgendaDTO> agendaNames = new List<AgendaDTO>();
@@ -48,16 +53,6 @@ namespace TimeMateTest.Stubs
             }
 
             return agendaNames;
-        }
-
-        public JobDTO GetHoursForWeekendJob(int agendaID, List<DateTime> weekDates)
-        {
-            throw new NotImplementedException();
-        }
-
-        public JobDTO GetHoursForWorkdayJob(int agendaID, List<DateTime> weekendDates)
-        {
-            throw new NotImplementedException();
         }
     }
 }
