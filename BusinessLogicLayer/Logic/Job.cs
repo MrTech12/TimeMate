@@ -20,7 +20,7 @@ namespace BusinessLogicLayer.Logic
             this._appointmentContainer = appointmentContainer;
         }
 
-        public JobDTO CalculateWeeklyPay(int accountID)
+        public JobDTO CalculateJobDetails(int accountID)
         {
             JobDTO jobDetails = new JobDTO();
             double workdayWage = _jobContainer.GetWorkdayPayRate(accountID);
@@ -41,15 +41,15 @@ namespace BusinessLogicLayer.Logic
             else if (workdayWage != 0 && weekendWage != 0)
             {
                 int agendaID = Convert.ToInt32(_agendaContainer.GetAgendaID("Bijbaan", accountID));
-                string workdays = RetrieveWorkdayHours(agendaID);
-                string weekend = RetrieveWeekendHours(agendaID);
+                double workdays = RetrieveWorkdayHours(agendaID);
+                double weekend = RetrieveWeekendHours(agendaID);
                 jobDetails.WeeklyHours = workdays + weekend;
                 jobDetails.WeeklyPay = Convert.ToDouble(jobDetails.WeeklyHours) * weekendWage;
             }
             return jobDetails;
         }
 
-        public string RetrieveWorkdayHours(int agendaID)
+        public double RetrieveWorkdayHours(int agendaID)
         {
             jobDTO = new JobDTO();
 
@@ -60,12 +60,10 @@ namespace BusinessLogicLayer.Logic
 
             jobDTO = _appointmentContainer.GetWorkHours(agendaID, weekDates);
 
-            double workdayHours = CalculateWorkedHours();
-            string test = workdayHours.ToString("N2");
-            return test;
+            return CalculateWorkedHours();
         }
 
-        public string RetrieveWeekendHours(int accountID)
+        public double RetrieveWeekendHours(int accountID)
         {
             jobDTO = new JobDTO();
 
@@ -76,9 +74,7 @@ namespace BusinessLogicLayer.Logic
 
             jobDTO = _appointmentContainer.GetWorkHours(accountID, weekendDates);
 
-            double workdayHours = CalculateWorkedHours();
-            string test = workdayHours.ToString("N2");
-            return test;
+            return CalculateWorkedHours();
         }
 
         public double CalculateWorkedHours()

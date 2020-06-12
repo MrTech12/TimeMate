@@ -9,7 +9,7 @@ namespace DataAccessLayer.DTO
         private List<DateTime> startDate = new List<DateTime>();
         private List<DateTime> endDate = new List<DateTime>();
         private double weeklyPay;
-        private string weeklyHours;
+        private double weeklyHours;
 
         public List<DateTime> StartDate { get { return this.startDate; } set { this.startDate = value; } }
 
@@ -17,6 +17,6 @@ namespace DataAccessLayer.DTO
 
         public double WeeklyPay { get { return this.weeklyPay; } set { this.weeklyPay = value; } }
 
-        public string WeeklyHours { get { return this.weeklyHours; } set { this.weeklyHours = value; } }
+        public double WeeklyHours { get { return this.weeklyHours; } set { this.weeklyHours = value; } }
     }
 }
