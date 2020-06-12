@@ -16,11 +16,23 @@ namespace TimeMateTest.BLL
         private AccountDTO accountDTO;
 
         [Fact]
-        public void RetrieveAppointmentsTest()
+        public void RetrieveNoAppointments()
+        {
+            List<AppointmentDTO> output = new List<AppointmentDTO>();
+            accountDTO = new AccountDTO() { AccountID = -5 };
+            agenda = new Agenda(accountDTO, new StubAppointmentContainer());
+
+            output = agenda.RetrieveAppointments();
+
+            Assert.True(output.Count == 0);
+        }
+
+        [Fact]
+        public void RetrieveAppointments()
         {
             List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = 12 };
-            agenda = new Agenda(accountDTO, new StubAppointmentContext());
+            agenda = new Agenda(accountDTO, new StubAppointmentContainer());
 
             output = agenda.RetrieveAppointments();
 
@@ -29,11 +41,11 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void RetrieveAppointmentsWithTasksTest()
+        public void RetrieveAppointmentsWithTasks()
         {
             List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = 42 };
-            agenda = new Agenda(accountDTO, new StubAppointmentContext());
+            agenda = new Agenda(accountDTO, new StubAppointmentContainer());
 
             output = agenda.RetrieveAppointments();
 
@@ -44,11 +56,11 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void RetrieveAppointmentsWithDescriptionTest()
+        public void RetrieveAppointmentsWithDescription()
         {
             List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = 54 };
-            agenda = new Agenda(accountDTO, new StubAppointmentContext());
+            agenda = new Agenda(accountDTO, new StubAppointmentContainer());
 
             output = agenda.RetrieveAppointments();
 

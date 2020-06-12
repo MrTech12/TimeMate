@@ -7,8 +7,10 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IJobContainer
     {
-        double GetWorkdayPay(AccountDTO accountDTO, JobDTO jobDTO);
+        void AddPayDetails(AccountDTO accountDTO);
 
-        double GetWeekendPay(AccountDTO accountDTO, JobDTO jobDTO);
+        double GetWorkdayPayWage(int accountID);
+
+        double GetWeekendPayWage(int accountID);
     }
 }

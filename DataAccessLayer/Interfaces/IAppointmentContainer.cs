@@ -10,5 +10,7 @@ namespace DataAccessLayer.Interfaces
         int AddAppointment(AppointmentDTO appointmentDTO);
 
         List<AppointmentDTO> GetAppointments(int accountID);
+
+        JobDTO GetWorkHours(int agendaID, List<DateTime> dates);
     }
 }

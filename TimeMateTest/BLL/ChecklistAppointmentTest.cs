@@ -12,10 +12,10 @@ namespace TimeMateTest.BLL
         private ChecklistAppointment checklistAppointment;
 
         [Fact]
-        public void GetTasksTest()
+        public void GetTasks()
         {
             int appointmentID = 14;
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
 
             var output = checklistAppointment.RetrieveTasks(appointmentID);
 
@@ -26,10 +26,10 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void GetNoTasksTest()
+        public void GetNoTasks()
         {
             int appointmentID = 0;
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
 
             var output = checklistAppointment.RetrieveTasks(appointmentID);
 
@@ -37,9 +37,9 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void ChangeTaskStatusToDoneTest()
+        public void ChangeTaskStatusToDone()
         {
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
             ChecklistDTO checklistDTO = new ChecklistDTO();
             checklistDTO.TaskID = 62;
             checklistDTO.TaskName = "Get cake";
@@ -59,9 +59,9 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void ChangeTaskStatusToNotDoneTest()
+        public void ChangeTaskStatusToNotDone()
         {
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContext());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
             ChecklistDTO checklistDTO = new ChecklistDTO();
             checklistDTO.TaskID = 74;
             checklistDTO.TaskName = "Buy new monitor";

@@ -37,42 +37,6 @@ namespace DataAccessLayer.Containers
             return agendaID;
         }
 
-        public void AddPayDetails(int agendaID, AccountDTO accountDTO)
-        {
-            try
-            {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
-                {
-                    string query = @"INSERT INTO [Job](AgendaID, HourlyWageBuss, HourlyWageWeek) Values (@0,@1,@2)";
-
-                    databaseConn.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
-
-                    for (int i = 0; i < accountDTO.JobHourlyWage.Count; i++)
-                    {
-                        insertQuery.Parameters.Clear();
-                        insertQuery.Parameters.AddWithValue("0", agendaID);
-
-                        if (accountDTO.JobDayType[i] == "Doordeweeks" && accountDTO.JobHourlyWage[i] != 0)
-                        {
-                            insertQuery.Parameters.AddWithValue("1", accountDTO.JobHourlyWage[i]);
-                            insertQuery.Parameters.AddWithValue("2", "0.00");
-                        }
-                        else if (accountDTO.JobDayType[i] == "Weekend" && accountDTO.JobHourlyWage[i] != 0)
-                        {
-                            insertQuery.Parameters.AddWithValue("1", "0.00");
-                            insertQuery.Parameters.AddWithValue("2", accountDTO.JobHourlyWage[i]);
-                        }
-                        insertQuery.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (SqlException exception)
-            {
-                throw new Exception("Er is op dit moment een probleem met de database.", exception);
-            }
-        }
-
         public void DeleteAgenda(int accountID, int agendaID)
         {
             try
@@ -127,14 +91,37 @@ namespace DataAccessLayer.Containers
             return agendas;
         }
 
-        public List<DateTime> GetWorkdayHours(int agendaIndex)
+        public string GetAgendaID(string agendaName, int accountID)
         {
-            throw new NotImplementedException();
-        }
+            string agendaID;
+            try
+            {
+                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                {
+                    string query = @"SELECT AgendaID FROM [Agenda] WHERE Name = @0 AND AccountID = @1";
 
-        public List<DateTime> GetWeekendHours(int agendaIndex)
-        {
-            throw new NotImplementedException();
+                    databaseConn.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+
+                    selectQuery.Parameters.AddWithValue("0", agendaName);
+                    selectQuery.Parameters.AddWithValue("1", accountID);
+                    var resultedAgendaID = selectQuery.ExecuteScalar();
+
+                    if (resultedAgendaID == null)
+                    {
+                        agendaID = null;
+                    }
+                    else
+                    {
+                        agendaID = resultedAgendaID.ToString();
+                    }
+                }
+            }
+            catch (SqlException exception)
+            {
+                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+            }
+            return agendaID;
         }
     }
 }

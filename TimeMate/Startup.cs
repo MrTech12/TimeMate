@@ -40,7 +40,7 @@ namespace TimeMate
             services.AddTransient<IAgendaContainer, SQLAgendaContainer>();
             services.AddTransient<IAppointmentContainer, SQLAppointmentContainer>();
             services.AddTransient<IChecklistAppointmentContainer, SQLChecklistAppointmentContainer>();
-            services.AddTransient<IJobContainer, SQLJobContext>();
+            services.AddTransient<IJobContainer, SQLJobContainer>();
             services.AddTransient<INormalAppointmentContainer, SQLNormalAppointmentContainer>();
             services.AddTransient<ISenderContainer, MailSenderContainer>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();

@@ -9,14 +9,10 @@ namespace DataAccessLayer.Interfaces
     {
         int AddAgenda(int accountID, AgendaDTO agendaDTO);
 
-        void AddPayDetails(int agendaID, AccountDTO accountDTO);
-
         void DeleteAgenda(int accountID, int agendaID);
 
         List<AgendaDTO> GetAllAgendas(int accountID);
 
-        List<DateTime> GetWorkdayHours(int agendaID);
-
-        List<DateTime> GetWeekendHours(int agendaID);
+        string GetAgendaID(string agendaName, int accountID);
     }
 }

@@ -8,7 +8,7 @@ using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs
 {
-    class StubAgendaContext : IAgendaContainer
+    class StubAgendaContainer : IAgendaContainer
     {
         public int AddAgenda(int accountID, AgendaDTO agendaDTO)
         {
@@ -21,15 +21,6 @@ namespace TimeMateTest.Stubs
                 streamWriter.WriteLine(agendaDTO.NotificationType);
             }          
             return agendaID;
-        }
-
-        public void AddPayDetails(int agendaID, AccountDTO accountDTO)
-        {
-            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addWorkPayDetails.txt"))
-            {
-                streamWriter.WriteLine(accountDTO.JobHourlyWage[0]);
-                streamWriter.WriteLine(accountDTO.JobDayType[0]);
-            }
         }
 
         public void DeleteAgenda(int accountID, int agendaID)
@@ -55,18 +46,25 @@ namespace TimeMateTest.Stubs
                 agenda2.AgendaName = "Personal";
                 agendaNames.Add(agenda2);
             }
-
             return agendaNames;
         }
 
-        public List<DateTime> GetWeekendHours(int agendaIndex)
+        public string GetAgendaID(string agendaName, int accountID)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<DateTime> GetWorkdayHours(int agendaIndex)
-        {
-            throw new NotImplementedException();
+            string agendaID = null;
+            if (accountID == 15 & agendaName == "Bijbaan")
+            {
+                agendaID = "1";
+            }
+            else if (accountID == 25 && agendaName == "Bijbaan")
+            {
+                agendaID = "2";
+            }
+            else if (accountID == 30 && agendaName == "Bijbaan")
+            {
+                agendaID = "3";
+            }
+            return agendaID;
         }
     }
 }

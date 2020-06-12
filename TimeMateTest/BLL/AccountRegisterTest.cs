@@ -2,6 +2,7 @@
 using DataAccessLayer.DTO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using TimeMateTest.Stubs;
 using Xunit;
@@ -14,46 +15,57 @@ namespace TimeMateTest.BLL
         private AccountDTO accountDTO;
 
         [Fact]
-        public void CreateAccountNoJobTest()
+        public void CreateAccountNoJob()
         {
-            string[] output;
+            string[] file;
             accountDTO = new AccountDTO();
             accountDTO.FirstName = "Hans";
             accountDTO.Mail = "sina1240@gmail.com";
             accountDTO.Password = "QWEwieiwi231@#";
 
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext(), new StubSenderContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer(), new StubJobContainer(), new StubSenderContainer());
 
-            output = account.NewAccountValidation();
+            account.CreateAccount();
 
-            Assert.Equal("6", output[0]);
+            file = File.ReadAllLines(@"C:\tmp\CreateAccountTest.txt");
+            File.Delete(@"C:\tmp\CreateAccountTest.txt");
+
+            Assert.Equal("6", file[0]);
+            Assert.Equal("Hans", file[1]);
+            Assert.Equal("sina1240@gmail.com", file[2]);
         }
 
         [Fact]
-        public void CreateAccountJobTest()
+        public void CreateAccountJob()
         {
-            string[] output;
+            string[] file;
             accountDTO = new AccountDTO();
             accountDTO.FirstName = "Hans";
-            accountDTO.Mail = "sina1240@gmail.com";
+            accountDTO.Mail = "sina1242@gmail.com";
             accountDTO.Password = "QWEwieiwi231@#";
             accountDTO.JobCount = 1;
             accountDTO.JobHourlyWage.Add(1.20);
             accountDTO.JobDayType.Add("Doordeweeks");
 
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext(), new StubSenderContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer(), new StubJobContainer(), new StubSenderContainer());
 
-            output = account.NewAccountValidation();
+            account.CreateAccount();
 
-            Assert.Equal("6", output[0]);
+            file = File.ReadAllLines(@"C:\tmp\CreateAccountTest.txt");
+            File.Delete(@"C:\tmp\CreateAccountTest.txt");
+
+            Assert.Equal("14", file[0]);
+            Assert.Equal("Hans", file[1]);
+            Assert.Equal("sina1242@gmail.com", file[2]);
+            Assert.Equal("1,2", file[4]);
         }
 
         [Fact]
-        public void CreateAccountLowercasePasswordTest()
+        public void CreateAccountLowercasePassword()
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwieiwi231@#" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.NewAccountValidation();
 
@@ -61,11 +73,11 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountNoSpecialCharactersPasswordTest()
+        public void CreateAccountNoSpecialCharactersPassword()
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwiEEWwi231WE" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.NewAccountValidation();
 
@@ -73,11 +85,11 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountNoNumbersPasswordTest()
+        public void CreateAccountNoNumbersPassword()
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwieiwieWE@#" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.NewAccountValidation();
 
@@ -85,11 +97,11 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccounExistingMailTest()
+        public void CreateAccounExistingMail()
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Bert", Mail = "bert@gmail.com", Password = "qwieEW12iwieWE@#" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.NewAccountValidation();
 
@@ -97,11 +109,11 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateAccountIncorrectMailTest()
+        public void CreateAccountIncorrectMail()
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Bert", Mail = "bert@gmail.", Password = "qwieEW12iwieWE@#" };
-            account = new Account(accountDTO, new StubAccountContext(), new StubAgendaContext());
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
             output = account.NewAccountValidation();
 

@@ -15,9 +15,9 @@ namespace TimeMateTest.BLL
         private AppointmentDTO appointmentDTO;
 
         [Fact]
-        public void NormalAppointmentTest()
+        public void NormalAppointment()
         {
-            agenda = new Agenda(new StubAppointmentContext(), new StubNormalAppointmentContext());
+            agenda = new Agenda(new StubAppointmentContainer(), new StubNormalAppointmentContainer());
             DescriptionDTO descriptionDTO = new DescriptionDTO() { Description = "This is <b> a </b> test." };
 
             appointmentDTO = new AppointmentDTO()
@@ -38,9 +38,9 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void NormalAppointmentNoDescriptionTest()
+        public void NormalAppointmentNoDescription()
         {
-            agenda = new Agenda(new StubAppointmentContext(), new StubNormalAppointmentContext());
+            agenda = new Agenda(new StubAppointmentContainer(), new StubNormalAppointmentContainer());
 
             appointmentDTO = new AppointmentDTO()
             {
@@ -59,9 +59,9 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void ChecklistAppointmentTest()
+        public void ChecklistAppointment()
         {
-            agenda = new Agenda(new StubAppointmentContext(), new StubChecklistAppointmentContext());
+            agenda = new Agenda(new StubAppointmentContainer(), new StubChecklistAppointmentContainer());
             ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = "Get inspiration" };
 
             appointmentDTO = new AppointmentDTO();
@@ -80,9 +80,9 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void ChecklistAppointmenNoChecklistTest()
+        public void ChecklistAppointmenNoChecklist()
         {
-            agenda = new Agenda(new StubAppointmentContext(), new StubChecklistAppointmentContext());
+            agenda = new Agenda(new StubAppointmentContainer(), new StubChecklistAppointmentContainer());
 
             appointmentDTO = new AppointmentDTO();
             appointmentDTO.AppointmentName = "Create 3D render";
