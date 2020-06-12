@@ -10,7 +10,13 @@ $(document).ready(function () {
     });
 
     $("#confirm-deletion").click(function () {
-        SendDeleteRequest();
+        if (CheckAgendaName()) {
+            SendDeleteRequest();
+        }
+        else {
+            alert("Deze agenda mag u niet verwijderen.");
+        }
+
     });
 });
 
@@ -18,6 +24,15 @@ function GetSelectedOptionInformation() {
     selectInput = document.getElementById("agenda-select");
     agendaName = $("#agenda-select :selected").val();
     agendaID = $("#agenda-select :selected").attr("id");
+};
+
+function CheckAgendaName() {
+    if (agendaName == "Bijbaan") {
+        return false;
+    }
+    else {
+        return true;
+    }
 };
 
 function SendDeleteRequest() {
@@ -30,6 +45,7 @@ function SendDeleteRequest() {
         traditional: true,
         success: function (data) {
             selectInput.remove(selectInput.selectedIndex);
+            alert("Agenda succesvol verwijderd.");
         },
         error: function (ts) {
             alert('Een error is ontstaan. Probeer het laten opnieuw a.u.b.');
