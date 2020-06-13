@@ -11,7 +11,7 @@ namespace TimeMateTest.Stubs
     {
         public int GetUserID(string mail)
         {
-            int accountID = 0;
+            int accountID = -1;
             if (mail == "bert@gmail.com")
             {
                 accountID = 0;
@@ -21,7 +21,12 @@ namespace TimeMateTest.Stubs
 
         public string GetFirstName(string mail)
         {
-            return "test";
+            string firstName = null;
+            if (mail == "intel12@gmail.com")
+            {
+                firstName = "Intel";
+            }
+            return firstName;
         }
 
         public string SearchForPasswordHash(string mail)
@@ -64,6 +69,17 @@ namespace TimeMateTest.Stubs
                     streamWriter.WriteLine(accountDTO.JobDayType[0]);
                 }
                 accountID = 14;
+            }
+            else if (accountDTO.Mail == "intel12@gmail.com")
+            {
+                using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\CreateAccountTest.txt"))
+                {
+                    streamWriter.WriteLine(39);
+                    streamWriter.WriteLine(accountDTO.FirstName);
+                    streamWriter.WriteLine(accountDTO.Mail);
+                    streamWriter.WriteLine(accountDTO.Password);
+                }
+                accountID = 39;
             }
             return accountID;
         }

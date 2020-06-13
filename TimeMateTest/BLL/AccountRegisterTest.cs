@@ -61,6 +61,31 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
+        public void CreateAccounSendMail()
+        {
+            string[] file;
+            string[] output;
+            accountDTO = new AccountDTO();
+            accountDTO.FirstName = "Intel";
+            accountDTO.Mail = "intel12@gmail.com";
+            accountDTO.Password = "QWEwieiwi231@#";
+
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer(), new StubJobContainer(), new StubSenderContainer());
+
+            output = account.NewAccountValidation();
+
+            file = File.ReadAllLines(@"C:\tmp\CreateAccountTest.txt");
+            File.Delete(@"C:\tmp\CreateAccountTest.txt");
+
+            Assert.Equal("39", output[0]);
+            Assert.Equal("Intel", output[1]);
+            Assert.Equal("39", file[0]);
+            Assert.Equal("Intel", file[1]);
+            Assert.Equal("intel12@gmail.com", file[2]);
+            Assert.Equal("Een mail is verstuurd naar intel12@gmail.com", file[4]);
+        }
+
+        [Fact]
         public void CreateAccountLowercasePassword()
         {
             string[] output;
