@@ -23,7 +23,6 @@ namespace TimeMateTest.Stubs
         public List<ChecklistDTO> GetTasks(int appointmentID)
         {
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
-
             if (appointmentID == 14)
             {
                 ChecklistDTO checklist1 = new ChecklistDTO();
@@ -43,7 +42,6 @@ namespace TimeMateTest.Stubs
                 checklist3.TaskID = 3;
                 checklist3.TaskName = "Zo";
                 checklists.Add(checklist3);
-
             }
             return checklists;
         }

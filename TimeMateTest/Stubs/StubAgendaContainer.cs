@@ -13,7 +13,6 @@ namespace TimeMateTest.Stubs
         public int AddAgenda(int accountID, AgendaDTO agendaDTO)
         {
             int agendaID = 0;
-
             using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addAgendaTest.txt"))
             {
                 streamWriter.WriteLine(agendaDTO.AgendaName);

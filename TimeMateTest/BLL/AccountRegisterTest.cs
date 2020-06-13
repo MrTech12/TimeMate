@@ -24,21 +24,21 @@ namespace TimeMateTest.BLL
             accountDTO.Password = "QWEwieiwi231@#";
 
             account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer(), new StubJobContainer(), new StubSenderContainer());
-
             account.CreateAccount();
 
             file = File.ReadAllLines(@"C:\tmp\CreateAccountTest.txt");
             File.Delete(@"C:\tmp\CreateAccountTest.txt");
 
-            Assert.Equal("6", file[0]);
-            Assert.Equal("Hans", file[1]);
-            Assert.Equal("sina1240@gmail.com", file[2]);
+            Assert.Equal("Hans", file[0]);
+            Assert.Equal("sina1240@gmail.com", file[1]);
+            Assert.Equal("6", file[3]);
         }
 
         [Fact]
         public void CreateAccountJob()
         {
-            string[] file;
+            string[] fileAccount;
+            string[] filePayDetails;
             accountDTO = new AccountDTO();
             accountDTO.FirstName = "Hans";
             accountDTO.Mail = "sina1242@gmail.com";
@@ -48,16 +48,17 @@ namespace TimeMateTest.BLL
             accountDTO.JobDayType.Add("Doordeweeks");
 
             account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer(), new StubJobContainer(), new StubSenderContainer());
-
             account.CreateAccount();
 
-            file = File.ReadAllLines(@"C:\tmp\CreateAccountTest.txt");
+            fileAccount = File.ReadAllLines(@"C:\tmp\CreateAccountTest.txt");
+            filePayDetails = File.ReadAllLines(@"C:\tmp\addWorkPayDetails.txt");
             File.Delete(@"C:\tmp\CreateAccountTest.txt");
+            File.Delete(@"C:\tmp\addWorkPayDetails.txt");
 
-            Assert.Equal("14", file[0]);
-            Assert.Equal("Hans", file[1]);
-            Assert.Equal("sina1242@gmail.com", file[2]);
-            Assert.Equal("1,2", file[4]);
+            Assert.Equal("Hans", fileAccount[0]);
+            Assert.Equal("sina1242@gmail.com", fileAccount[1]);
+            Assert.Equal("14", fileAccount[3]);
+            Assert.Equal("1,2", filePayDetails[0]);
         }
 
         [Fact]
@@ -71,7 +72,6 @@ namespace TimeMateTest.BLL
             accountDTO.Password = "QWEwieiwi231@#";
 
             account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer(), new StubJobContainer(), new StubSenderContainer());
-
             output = account.NewAccountValidation();
 
             file = File.ReadAllLines(@"C:\tmp\CreateAccountTest.txt");
@@ -79,9 +79,9 @@ namespace TimeMateTest.BLL
 
             Assert.Equal("39", output[0]);
             Assert.Equal("Intel", output[1]);
-            Assert.Equal("39", file[0]);
-            Assert.Equal("Intel", file[1]);
-            Assert.Equal("intel12@gmail.com", file[2]);
+            Assert.Equal("Intel", file[0]);
+            Assert.Equal("intel12@gmail.com", file[1]);
+            Assert.Equal("39", file[3]);
             Assert.Equal("Een mail is verstuurd naar intel12@gmail.com", file[4]);
         }
 
@@ -90,8 +90,8 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwieiwi231@#" };
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
             output = account.NewAccountValidation();
 
             Assert.Equal("Het wachtwoord moet een hoofdletter bevatten.", output[0]);
@@ -102,8 +102,8 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwiEEWwi231WE" };
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
             output = account.NewAccountValidation();
 
             Assert.Equal("Het wachtwoord moet een speciale karakter bevatten.", output[0]);
@@ -114,8 +114,8 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Hans", Mail = "hans@bing.com", Password = "qwieiwieWE@#" };
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
             output = account.NewAccountValidation();
 
             Assert.Equal("Het wachtwoord moet een cijfer bevatten.", output[0]);
@@ -126,8 +126,8 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Bert", Mail = "bert@gmail.com", Password = "qwieEW12iwieWE@#" };
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
             output = account.NewAccountValidation();
 
             Assert.Equal("Er bestaat al een account met dit mailadres.", output[0]);
@@ -138,8 +138,8 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Bert", Mail = "bert@gmail.", Password = "qwieEW12iwieWE@#" };
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
             output = account.NewAccountValidation();
 
             Assert.Equal("Het emailadres is niet geldig.", output[0]);

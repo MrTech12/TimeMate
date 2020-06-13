@@ -46,40 +46,27 @@ namespace TimeMateTest.Stubs
         public int CreateAccount(AccountDTO accountDTO)
         {
             int accountID = 0;
-            if (accountDTO.Mail == "sina1240@gmail.com")
+            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\CreateAccountTest.txt"))
             {
-                using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\CreateAccountTest.txt"))
+                streamWriter.WriteLine(accountDTO.FirstName);
+                streamWriter.WriteLine(accountDTO.Mail);
+                streamWriter.WriteLine(accountDTO.Password);
+
+                if (accountDTO.Mail == "sina1240@gmail.com")
                 {
                     streamWriter.WriteLine(6);
-                    streamWriter.WriteLine(accountDTO.FirstName);
-                    streamWriter.WriteLine(accountDTO.Mail);
-                    streamWriter.WriteLine(accountDTO.Password);
+                    accountID = 6;
                 }
-                accountID = 6;
-            }
-            else if (accountDTO.Mail == "sina1242@gmail.com")
-            {
-                using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\CreateAccountTest.txt"))
+                else if (accountDTO.Mail == "sina1242@gmail.com")
                 {
                     streamWriter.WriteLine(14);
-                    streamWriter.WriteLine(accountDTO.FirstName);
-                    streamWriter.WriteLine(accountDTO.Mail);
-                    streamWriter.WriteLine(accountDTO.Password);
-                    streamWriter.WriteLine(accountDTO.JobHourlyWage[0]);
-                    streamWriter.WriteLine(accountDTO.JobDayType[0]);
+                    accountID = 14;
                 }
-                accountID = 14;
-            }
-            else if (accountDTO.Mail == "intel12@gmail.com")
-            {
-                using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\CreateAccountTest.txt"))
+                else if (accountDTO.Mail == "intel12@gmail.com")
                 {
                     streamWriter.WriteLine(39);
-                    streamWriter.WriteLine(accountDTO.FirstName);
-                    streamWriter.WriteLine(accountDTO.Mail);
-                    streamWriter.WriteLine(accountDTO.Password);
+                    accountID = 39;
                 }
-                accountID = 39;
             }
             return accountID;
         }
