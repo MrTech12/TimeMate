@@ -36,6 +36,7 @@ namespace TimeMateTest.BLL
 
             Assert.Contains("Reorder cables", file[0]);
             Assert.Contains("This is <b> a </b> test.", file[4]);
+            Assert.True(file.Length == 5);
         }
 
         [Fact]
@@ -58,6 +59,7 @@ namespace TimeMateTest.BLL
 
             Assert.Contains("Reorder cables", file[0]);
             Assert.Contains("Firefox", file[3]);
+            Assert.True(file.Length == 4);
         }
 
         [Fact]
@@ -79,6 +81,7 @@ namespace TimeMateTest.BLL
 
             Assert.Contains("Create 3D render", file[0]);
             Assert.Contains("Get inspiration", file[4]);
+            Assert.True(file.Length == 5);
         }
 
         [Fact]
@@ -99,6 +102,7 @@ namespace TimeMateTest.BLL
 
             Assert.Contains("Create 3D render", file[0]);
             Assert.Contains("Firefox", file[3]);
+            Assert.True(file.Length == 4);
         }
     }
 }
