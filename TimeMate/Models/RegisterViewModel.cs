@@ -11,13 +11,14 @@ namespace TimeMate.Models
         [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Voor uw voornaam in.")]
         [DataType(DataType.Text)]
-        [RegularExpression("[A-Za-z]+", ErrorMessage = "Gebruik letters in plaats van nummers")]
+        [RegularExpression("[A-Za-z]+", ErrorMessage = "Gebruik letters")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Dit veld is verplicht.")]
-        [Display(Name = "Voor een geldige E-mailadres in.")]
+        [Display(Name = "Voor een geldig E-mailadres in.")]
         [DataType(DataType.EmailAddress)]
-        [EmailAddress(ErrorMessage = "Voor een geldige E-mailadres in.")]
+        [EmailAddress(ErrorMessage = "Voor een geldig E-mailadres in.")]
+        [RegularExpression("^([0-9a-zA-Z-_]([-\\.\\w]*[0-9a-zA-Z-_])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$", ErrorMessage = "Voor een geldig E-mailadres in.")]
         public string Mail { get; set; }
 
         [Required(ErrorMessage = "Dit veld is verplicht.")]
