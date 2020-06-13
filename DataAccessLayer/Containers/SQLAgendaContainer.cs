@@ -91,9 +91,9 @@ namespace DataAccessLayer.Containers
             return agendas;
         }
 
-        public string GetAgendaID(string agendaName, int accountID)
+        public int GetAgendaID(string agendaName, int accountID)
         {
-            string agendaID;
+            int agendaID;
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
@@ -109,11 +109,11 @@ namespace DataAccessLayer.Containers
 
                     if (resultedAgendaID == null)
                     {
-                        agendaID = null;
+                        agendaID = -1;
                     }
                     else
                     {
-                        agendaID = resultedAgendaID.ToString();
+                        agendaID = Convert.ToInt32(resultedAgendaID);
                     }
                 }
             }

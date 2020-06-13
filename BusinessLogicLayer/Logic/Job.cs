@@ -28,19 +28,19 @@ namespace BusinessLogicLayer.Logic
 
             if (workdayWage != 0 && weekendWage == 0)
             {
-                int agendaID = Convert.ToInt32(_agendaContainer.GetAgendaID("Bijbaan", accountID));
+                int agendaID =_agendaContainer.GetAgendaID("Bijbaan", accountID);
                 jobDetails.WeeklyHours = RetrieveWorkdayHours(agendaID);
                 jobDetails.WeeklyPay = jobDetails.WeeklyHours * workdayWage;
             }
             else if (workdayWage == 0 && weekendWage != 0)
             {
-                int agendaID = Convert.ToInt32(_agendaContainer.GetAgendaID("Bijbaan", accountID));
+                int agendaID = _agendaContainer.GetAgendaID("Bijbaan", accountID);
                 jobDetails.WeeklyHours = RetrieveWeekendHours(agendaID);
                 jobDetails.WeeklyPay = jobDetails.WeeklyHours * weekendWage;
             }
             else if (workdayWage != 0 && weekendWage != 0)
             {
-                int agendaID = Convert.ToInt32(_agendaContainer.GetAgendaID("Bijbaan", accountID));
+                int agendaID = _agendaContainer.GetAgendaID("Bijbaan", accountID);
                 double workdays = RetrieveWorkdayHours(agendaID);
                 double weekend = RetrieveWeekendHours(agendaID);
                 jobDetails.WeeklyHours = workdays + weekend;

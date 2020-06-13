@@ -63,7 +63,7 @@ namespace TimeMate.Controllers
                 account = new Account(accountDTO, _accountContainer);
                 string[] result = account.LoggingIn();
 
-                if (result == null || result[0] == null)
+                if (result == null || result[1] == null)
                 {
                     ModelState.AddModelError("", "Verkeerd mailadres en/of wachtwoord.");
                     return View(viewModel);
@@ -109,13 +109,12 @@ namespace TimeMate.Controllers
                 accountDTO.Password = viewModel.Password;
                 accountDTO.JobCount = viewModel.JobAmount;
 
-                if (viewModel.Job1HourlyWage != "0.00")
+                if (viewModel.Job1HourlyWage != null)
                 {
                     accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job1HourlyWage));
                     accountDTO.JobDayType.Add(viewModel.Job1DayType);
-
                 }
-                if (viewModel.Job2HourlyWage != "0.00")
+                if (viewModel.Job2HourlyWage != null)
                 {
                     accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job2HourlyWage));
                     accountDTO.JobDayType.Add(viewModel.Job2DayType);
@@ -125,9 +124,9 @@ namespace TimeMate.Controllers
 
                 string[] result = account.NewAccountValidation();
 
-                if (result == null || result[0] == null)
+                if (result[1] == null)
                 {
-                    ModelState.AddModelError("", result[1]);
+                    ModelState.AddModelError("", result[0]);
                     return View(viewModel);
                 }
                 else

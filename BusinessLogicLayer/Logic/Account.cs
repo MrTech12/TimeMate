@@ -66,7 +66,7 @@ namespace BusinessLogicLayer.Logic
                 }
                 else
                 {
-                    returnMessage[0] = _accountContainer.GetUserID(accountDTO.Mail);
+                    returnMessage[0] = Convert.ToString(_accountContainer.GetUserID(accountDTO.Mail));
                     returnMessage[1] = _accountContainer.GetFirstName(accountDTO.Mail);
                 }
             }
@@ -102,8 +102,8 @@ namespace BusinessLogicLayer.Logic
             }
             else if (returnMessage[0] == null)
             {
-                string databaseOutput = _accountContainer.GetUserID(accountDTO.Mail);
-                if (databaseOutput != null)
+                int databaseOutput = _accountContainer.GetUserID(accountDTO.Mail);
+                if (databaseOutput != -1)
                 {
                     returnMessage[0] = "Er bestaat al een account met dit mailadres.";
                 }

@@ -14,9 +14,9 @@ namespace DataAccessLayer.Containers
     {
         private SQLDatabaseContainer SQLDatabaseContainer = new SQLDatabaseContainer();
 
-        public string GetUserID(string mail)
+        public int GetUserID(string mail)
         {
-            string databaseOutput;
+            int userID;
             try
             {
                 using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
@@ -31,11 +31,11 @@ namespace DataAccessLayer.Containers
 
                     if (resultedAccountID == null)
                     {
-                        databaseOutput = null;
+                        userID = -1;
                     }
                     else
                     {
-                        databaseOutput = resultedAccountID.ToString();
+                        userID = Convert.ToInt32(resultedAccountID);
                     }
                 }
             }
@@ -43,7 +43,7 @@ namespace DataAccessLayer.Containers
             {
                 throw new Exception("Er is op dit moment een probleem met de database.", exception);
             }
-            return databaseOutput;
+            return userID;
         }
 
         public string GetFirstName(string mail)

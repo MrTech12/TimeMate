@@ -9,12 +9,12 @@ namespace TimeMateTest.Stubs
 {
     class StubAccountContainer : IAccountContainer
     {
-        public string GetUserID(string mail)
+        public int GetUserID(string mail)
         {
-            string accountID = null;
+            int accountID = 0;
             if (mail == "bert@gmail.com")
             {
-                accountID = "0";
+                accountID = 0;
             }
             return accountID;
         }

@@ -7,7 +7,7 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IAccountContainer
     {
-        string GetUserID(string mail);
+        int GetUserID(string mail);
 
         string GetFirstName(string mail);
 

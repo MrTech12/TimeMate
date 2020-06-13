@@ -49,20 +49,20 @@ namespace TimeMateTest.Stubs
             return agendaNames;
         }
 
-        public string GetAgendaID(string agendaName, int accountID)
+        public int GetAgendaID(string agendaName, int accountID)
         {
-            string agendaID = null;
+            int agendaID = 0;
             if (accountID == 15 & agendaName == "Bijbaan")
             {
-                agendaID = "1";
+                agendaID = 1;
             }
             else if (accountID == 25 && agendaName == "Bijbaan")
             {
-                agendaID = "2";
+                agendaID = 2;
             }
             else if (accountID == 30 && agendaName == "Bijbaan")
             {
-                agendaID = "3";
+                agendaID = 3;
             }
             return agendaID;
         }
