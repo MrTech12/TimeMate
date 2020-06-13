@@ -16,7 +16,7 @@ namespace TimeMateTest.BLL
             int appointmentID = 24;
             normalAppointment = new NormalAppointment(new StubNormalAppointmentContainer());
 
-            var output = normalAppointment.RetrieveDescription(appointmentID);
+            string output = normalAppointment.RetrieveDescription(appointmentID);
 
             Assert.Equal("Dit is een beschrijving", output);
         }
@@ -27,7 +27,7 @@ namespace TimeMateTest.BLL
             int appointmentID = 0;
             normalAppointment = new NormalAppointment(new StubNormalAppointmentContainer());
 
-            var output = normalAppointment.RetrieveDescription(appointmentID);
+            string output = normalAppointment.RetrieveDescription(appointmentID);
 
             Assert.Null(output);
         }

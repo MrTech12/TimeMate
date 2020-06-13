@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer.Logic;
 using DataAccessLayer.DTO;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using TimeMateTest.Stubs;
 using Xunit;
@@ -10,6 +11,7 @@ namespace TimeMateTest.BLL
     public class ChecklistAppointmentTest
     {
         private ChecklistAppointment checklistAppointment;
+        string filePath = @"C:\tmp\getTaskStatusTest.txt";
 
         [Fact]
         public void GetTasks()
@@ -17,7 +19,7 @@ namespace TimeMateTest.BLL
             int appointmentID = 14;
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
 
-            var output = checklistAppointment.RetrieveTasks(appointmentID);
+            List<string> output = checklistAppointment.RetrieveTasks(appointmentID);
 
             Assert.Equal("Dit", output[1]);
             Assert.Equal("Dat", output[3]);
@@ -31,7 +33,7 @@ namespace TimeMateTest.BLL
             int appointmentID = 0;
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
 
-            var output = checklistAppointment.RetrieveTasks(appointmentID);
+            List<string> output = checklistAppointment.RetrieveTasks(appointmentID);
 
             Assert.True(output.Count == 0);
         }
@@ -39,21 +41,23 @@ namespace TimeMateTest.BLL
         [Fact]
         public void ChangeTaskStatusToDone()
         {
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
+            string filePath = @"C:\tmp\getTaskStatusTest.txt";
             ChecklistDTO checklistDTO = new ChecklistDTO();
             checklistDTO.TaskID = 62;
             checklistDTO.TaskName = "Get cake";
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
 
-            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\getTaskStatusTest.txt"))
+            using (StreamWriter streamWriter = new StreamWriter(filePath))
             {
                 streamWriter.WriteLine(checklistDTO.TaskID);
                 streamWriter.WriteLine(checklistDTO.TaskName);
                 streamWriter.WriteLine("False");
             }
+
             checklistAppointment.ChangeTaskStatus(62);
 
-            string[] file = File.ReadAllLines(@"C:\tmp\getTaskStatusTest.txt");
-            File.Delete(@"C:\tmp\getTaskStatusTest.txt");
+            string[] file = File.ReadAllLines(filePath);
+            File.Delete(filePath);
 
             Assert.Equal("True", file[2]);
         }
@@ -61,12 +65,12 @@ namespace TimeMateTest.BLL
         [Fact]
         public void ChangeTaskStatusToNotDone()
         {
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
             ChecklistDTO checklistDTO = new ChecklistDTO();
             checklistDTO.TaskID = 74;
             checklistDTO.TaskName = "Buy new monitor";
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
 
-            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\getTaskStatusTest.txt"))
+            using (StreamWriter streamWriter = new StreamWriter(filePath))
             {
                 streamWriter.WriteLine(checklistDTO.TaskID);
                 streamWriter.WriteLine(checklistDTO.TaskName);
@@ -75,8 +79,8 @@ namespace TimeMateTest.BLL
 
             checklistAppointment.ChangeTaskStatus(74);
 
-            string[] file = File.ReadAllLines(@"C:\tmp\getTaskStatusTest.txt");
-            File.Delete(@"C:\tmp\getTaskStatusTest.txt");
+            string[] file = File.ReadAllLines(filePath);
+            File.Delete(filePath);
 
             Assert.Equal("False", file[2]);
         }

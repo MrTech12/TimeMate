@@ -13,6 +13,9 @@ namespace TimeMateTest.BLL
     {
         private Account account;
         private AccountDTO accountDTO;
+        private string filePathAgendaCreation = @"C:\tmp\addAgendaTest.txt";
+        private string filePathWorkDetails = @"C:\tmp\addWorkPayDetails.txt";
+        private string filePathAgendaDeletion = @"C:\tmp\removeAgendaTest.txt";
 
         [Fact]
         public void CreateAgenda1()
@@ -22,8 +25,9 @@ namespace TimeMateTest.BLL
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000", NotificationType = "Nee" };
 
             account.CreateAgenda(agendaDTO);
-            string[] file = File.ReadAllLines(@"C:\tmp\addAgendaTest.txt");
-            File.Delete(@"C:\tmp\addAgendaTest.txt");
+
+            string[] file = File.ReadAllLines(filePathAgendaCreation);
+            File.Delete(filePathAgendaCreation);
 
             Assert.Contains("Homework", file[0]);
             Assert.Contains("#0x0000", file[1]);
@@ -37,8 +41,9 @@ namespace TimeMateTest.BLL
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560", NotificationType = "Nee" };
 
             account.CreateAgenda(agendaDTO);
-            string[] file = File.ReadAllLines(@"C:\tmp\addAgendaTest.txt");
-            File.Delete(@"C:\tmp\addAgendaTest.txt");
+
+            string[] file = File.ReadAllLines(filePathAgendaCreation);
+            File.Delete(filePathAgendaCreation);
 
             Assert.Contains("Skype", file[0]);
             Assert.Contains("#15F560", file[1]);
@@ -53,11 +58,11 @@ namespace TimeMateTest.BLL
             account = new Account(accountDTO, new StubAgendaContainer(), new StubJobContainer());
 
             account.CreateWorkAgenda();
-            string[] fileAgenda = File.ReadAllLines(@"C:\tmp\addAgendaTest.txt");
-            string[] filePay = File.ReadAllLines(@"C:\tmp\addWorkPayDetails.txt");
 
-            File.Delete(@"C:\tmp\addAgendaTest.txt");
-            File.Delete(@"C:\tmp\addWorkPayDetails.txt");
+            string[] fileAgenda = File.ReadAllLines(filePathAgendaCreation);
+            string[] filePay = File.ReadAllLines(filePathWorkDetails);
+            File.Delete(filePathAgendaCreation);
+            File.Delete(filePathWorkDetails);
 
             Assert.Contains("Bijbaan", fileAgenda[0]);
             Assert.Contains("#FF0000", fileAgenda[1]);
@@ -77,11 +82,11 @@ namespace TimeMateTest.BLL
             account = new Account(accountDTO, new StubAgendaContainer(), new StubJobContainer());
 
             account.CreateWorkAgenda();
-            string[] fileAgenda = File.ReadAllLines(@"C:\tmp\addAgendaTest.txt");
-            string[] filePay = File.ReadAllLines(@"C:\tmp\addWorkPayDetails.txt");
 
-            File.Delete(@"C:\tmp\addAgendaTest.txt");
-            File.Delete(@"C:\tmp\addWorkPayDetails.txt");
+            string[] fileAgenda = File.ReadAllLines(filePathAgendaCreation);
+            string[] filePay = File.ReadAllLines(filePathWorkDetails);
+            File.Delete(filePathAgendaCreation);
+            File.Delete(filePathWorkDetails);
 
             Assert.Contains("Bijbaan", fileAgenda[0]);
             Assert.Contains("#FF0000", fileAgenda[1]);
@@ -124,7 +129,7 @@ namespace TimeMateTest.BLL
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", NotificationType = "Nee" };
             Account account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
-            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\removeAgendaTest.txt"))
+            using (StreamWriter streamWriter = new StreamWriter(filePathAgendaDeletion))
             {
                 streamWriter.WriteLine(agendaDTO.AgendaID);
                 streamWriter.WriteLine(agendaDTO.AgendaName);
@@ -134,8 +139,8 @@ namespace TimeMateTest.BLL
 
             account.DeleteAgenda(agendaDTO.AgendaID);
 
-            string[] file = File.ReadAllLines(@"C:\tmp\removeAgendaTest.txt");
-            File.Delete(@"C:\tmp\removeAgendaTest.txt");
+            string[] file = File.ReadAllLines(filePathAgendaDeletion);
+            File.Delete(filePathAgendaDeletion);
 
             Assert.Equal("System.String[]", file.ToString());
 
@@ -148,7 +153,7 @@ namespace TimeMateTest.BLL
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", NotificationType = "Nee" };
             Account account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
 
-            using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\removeAgendaTest.txt"))
+            using (StreamWriter streamWriter = new StreamWriter(filePathAgendaDeletion))
             {
                 streamWriter.WriteLine(agendaDTO.AgendaID);
                 streamWriter.WriteLine(agendaDTO.AgendaName);
@@ -158,8 +163,8 @@ namespace TimeMateTest.BLL
 
             account.DeleteAgenda(-5);
 
-            string[] file = File.ReadAllLines(@"C:\tmp\removeAgendaTest.txt");
-            File.Delete(@"C:\tmp\removeAgendaTest.txt");
+            string[] file = File.ReadAllLines(filePathAgendaDeletion);
+            File.Delete(filePathAgendaDeletion);
 
             Assert.Equal("51", file[0]);
             Assert.Equal("qwerty", file[1]);

@@ -13,7 +13,7 @@ namespace TimeMateTest.BLL
     {
         private Agenda agenda;
         private AppointmentDTO appointmentDTO;
-
+        private string filePath = @"C:\tmp\addAppointmentTest.txt";
         [Fact]
         public void NormalAppointment()
         {
@@ -30,8 +30,9 @@ namespace TimeMateTest.BLL
             };
 
             agenda.CreateNormalAppointment(appointmentDTO);
-            string[] file = File.ReadAllLines(@"C:\tmp\addAppointmentTest.txt");
-            File.Delete(@"C:\tmp\addAppointmentTest.txt");
+
+            string[] file = File.ReadAllLines(filePath);
+            File.Delete(filePath);
 
             Assert.Contains("Reorder cables", file[0]);
             Assert.Contains("This is <b> a </b> test.", file[4]);
@@ -51,8 +52,9 @@ namespace TimeMateTest.BLL
             };
 
             agenda.CreateNormalAppointment(appointmentDTO);
-            string[] file = File.ReadAllLines(@"C:\tmp\addAppointmentTest.txt");
-            File.Delete(@"C:\tmp\addAppointmentTest.txt");
+
+            string[] file = File.ReadAllLines(filePath);
+            File.Delete(filePath);
 
             Assert.Contains("Reorder cables", file[0]);
             Assert.Contains("Firefox", file[3]);
@@ -61,19 +63,19 @@ namespace TimeMateTest.BLL
         [Fact]
         public void ChecklistAppointment()
         {
-            agenda = new Agenda(new StubAppointmentContainer(), new StubChecklistAppointmentContainer());
             ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = "Get inspiration" };
-
             appointmentDTO = new AppointmentDTO();
             appointmentDTO.AppointmentName = "Create 3D render";
             appointmentDTO.StartDate = DateTime.Now.AddHours(3);
             appointmentDTO.EndDate = DateTime.Now.AddHours(4);
             appointmentDTO.AgendaName = "Firefox";
             appointmentDTO.ChecklistDTOs.Add(checklistDTO);
+            agenda = new Agenda(new StubAppointmentContainer(), new StubChecklistAppointmentContainer());
 
             agenda.CreateChecklistAppointment(appointmentDTO);
-            string[] file = File.ReadAllLines(@"C:\tmp\addAppointmentTest.txt");
-            File.Delete(@"C:\tmp\addAppointmentTest.txt");
+
+            string[] file = File.ReadAllLines(filePath);
+            File.Delete(filePath);
 
             Assert.Contains("Create 3D render", file[0]);
             Assert.Contains("Get inspiration", file[4]);
@@ -91,6 +93,7 @@ namespace TimeMateTest.BLL
             appointmentDTO.AgendaName = "Firefox";
 
             agenda.CreateChecklistAppointment(appointmentDTO);
+
             string[] file = File.ReadAllLines(@"C:\tmp\addAppointmentTest.txt");
             File.Delete(@"C:\tmp\addAppointmentTest.txt");
 
