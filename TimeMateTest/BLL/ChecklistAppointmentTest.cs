@@ -41,7 +41,6 @@ namespace TimeMateTest.BLL
         [Fact]
         public void ChangeTaskStatusToDone()
         {
-            string filePath = @"C:\tmp\getTaskStatusTest.txt";
             ChecklistDTO checklistDTO = new ChecklistDTO();
             checklistDTO.TaskID = 62;
             checklistDTO.TaskName = "Get cake";
@@ -78,6 +77,29 @@ namespace TimeMateTest.BLL
             }
 
             checklistAppointment.ChangeTaskStatus(74);
+
+            string[] file = File.ReadAllLines(filePath);
+            File.Delete(filePath);
+
+            Assert.Equal("False", file[2]);
+        }
+
+        [Fact]
+        public void NoTaskStatusChange()
+        {
+            ChecklistDTO checklistDTO = new ChecklistDTO();
+            checklistDTO.TaskID = 28;
+            checklistDTO.TaskName = "Bake a cake";
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
+
+            using (StreamWriter streamWriter = new StreamWriter(filePath))
+            {
+                streamWriter.WriteLine(checklistDTO.TaskID);
+                streamWriter.WriteLine(checklistDTO.TaskName);
+                streamWriter.WriteLine("False");
+            }
+
+            checklistAppointment.ChangeTaskStatus(-5);
 
             string[] file = File.ReadAllLines(filePath);
             File.Delete(filePath);

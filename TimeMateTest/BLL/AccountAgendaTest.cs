@@ -50,6 +50,22 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
+        public void CreateNoAgenda()
+        {
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            account = new Account(accountDTO, new StubAgendaContainer());
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "", AgendaColor = "", NotificationType = "" };
+
+            account.CreateAgenda(agendaDTO);
+
+            string[] file = File.ReadAllLines(filePathAgendaCreation);
+            File.Delete(filePathAgendaCreation);
+
+            Assert.Contains("", file[0]);
+            Assert.Contains("", file[1]);
+        }
+
+        [Fact]
         public void CreateWorkAgenda1()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
@@ -95,6 +111,24 @@ namespace TimeMateTest.BLL
             Assert.Contains("10", filePay[2]);
             Assert.Contains("Weekend", filePay[3]);
             Assert.True(filePay.Length == 4);
+        }
+
+        [Fact]
+        public void CreateNoWorkAgenda()
+        {
+            accountDTO = new AccountDTO() { AccountID = 23 };
+            account = new Account(accountDTO, new StubAgendaContainer(), new StubJobContainer());
+
+            account.CreateWorkAgenda();
+
+            string[] fileAgenda = File.ReadAllLines(filePathAgendaCreation);
+            string[] filePay = File.ReadAllLines(filePathWorkDetails);
+            File.Delete(filePathAgendaCreation);
+            File.Delete(filePathWorkDetails);
+
+            Assert.Contains("Bijbaan", fileAgenda[0]);
+            Assert.Contains("#FF0000", fileAgenda[1]);
+            Assert.True(filePay.Length == 0);
         }
 
         [Fact]

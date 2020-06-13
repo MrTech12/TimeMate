@@ -57,11 +57,11 @@ namespace TimeMateTest.Stubs
         public void CheckOffTask(int taskID, bool status)
         {
             string[] file = File.ReadAllLines(@"C:\tmp\getTaskStatusTest.txt");
-            if (status == true)
+            if (status == true && taskID != -5)
             {
                 file[2] = "True";
             }
-            else
+            else if (status == false && taskID != -5)
             {
                 file[2] = "False";
             }
