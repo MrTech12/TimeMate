@@ -16,12 +16,12 @@ namespace DataAccessLayer.Containers
             int appointmentID;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"INSERT INTO [Appointment](AgendaID, Name, Starting, Ending) VALUES (@0, @1, @2, @3); SELECT SCOPE_IDENTITY();";
 
-                    databaseConn.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
 
                     insertQuery.Parameters.AddWithValue("0", appointmentDTO.AgendaID);
                     insertQuery.Parameters.AddWithValue("1", appointmentDTO.AppointmentName);
@@ -42,7 +42,7 @@ namespace DataAccessLayer.Containers
             List<AppointmentDTO> appointments = new List<AppointmentDTO>();
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT app.*, Agenda.Name AS AgendaName, description.*, task.* FROM [Appointment] app
                         LEFT JOIN Appointment_Description description ON app.AppointmentID = description.AppointmentID
@@ -50,8 +50,8 @@ namespace DataAccessLayer.Containers
                         INNER JOIN Agenda ON app.AgendaID = Agenda.AgendaID
                         AND Agenda.AccountID = @0";
 
-                    databaseConn.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
 
                     selectQuery.Parameters.AddWithValue("0", accountID);
                     SqlDataReader dataReader = selectQuery.ExecuteReader();
@@ -95,13 +95,13 @@ namespace DataAccessLayer.Containers
             JobDTO jobDTO = new JobDTO();
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT Starting, Ending FROM [Appointment] WHERE AgendaID = @0 
                                     AND Starting >= @1 AND Ending <= @2";
 
-                    databaseConn.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
 
                     selectQuery.Parameters.AddWithValue("0", agendaID);
                     selectQuery.Parameters.AddWithValue("1", dates[0]);

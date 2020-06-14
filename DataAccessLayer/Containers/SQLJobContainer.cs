@@ -15,12 +15,12 @@ namespace DataAccessLayer.Containers
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"INSERT INTO [Job](AccountID, HourlyWageBuss, HourlyWageWeek) Values (@0,@1,@2)";
 
-                    databaseConn.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
 
                     for (int i = 0; i < accountDTO.JobHourlyWage.Count; i++)
                     {
@@ -52,12 +52,12 @@ namespace DataAccessLayer.Containers
             double wage = 0;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT HourlyWageBuss FROM [Job] WHERE AccountID = @0";
 
-                    databaseConn.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
 
                     selectQuery.Parameters.AddWithValue("0", accountID);
                     SqlDataReader dataReader = selectQuery.ExecuteReader();
@@ -83,12 +83,12 @@ namespace DataAccessLayer.Containers
             double wage = 0;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT HourlyWageWeek FROM [Job] WHERE AccountID = @0";
 
-                    databaseConn.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
 
                     selectQuery.Parameters.AddWithValue("0", accountID);
                     SqlDataReader dataReader = selectQuery.ExecuteReader();

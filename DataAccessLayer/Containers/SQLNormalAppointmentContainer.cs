@@ -15,12 +15,12 @@ namespace DataAccessLayer.Containers
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"INSERT INTO [Appointment_Description](AppointmentID, Description) VALUES (@0, @1)";
 
-                    databaseConn.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
 
                     insertQuery.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
                     insertQuery.Parameters.AddWithValue("1", appointmentDTO.DescriptionDTO.Description);
@@ -38,12 +38,12 @@ namespace DataAccessLayer.Containers
             string description;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT Description FROM [Appointment_Description] WHERE AppointmentID = @0";
 
-                    databaseConn.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
 
                     selectQuery.Parameters.AddWithValue("0", appointmentID);
                     description = Convert.ToString(selectQuery.ExecuteScalar());

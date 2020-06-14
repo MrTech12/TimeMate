@@ -16,12 +16,12 @@ namespace DataAccessLayer.Containers
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"INSERT INTO [Appointment_Task](AppointmentID, TaskName, TaskChecked) VALUES (@0, @1, @2)";
 
-                    databaseConn.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
 
                     foreach (var item in appointmentDTO.ChecklistDTOs)
                     {
@@ -44,12 +44,12 @@ namespace DataAccessLayer.Containers
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT TaskID, TaskName FROM [Appointment_Task] WHERE AppointmentID = @0";
 
-                    databaseConn.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
 
                     selectQuery.Parameters.AddWithValue("0", appointmentID);
                     SqlDataReader dataReader = selectQuery.ExecuteReader();
@@ -75,12 +75,12 @@ namespace DataAccessLayer.Containers
             bool taskStatus;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT TaskChecked FROM [Appointment_Task] WHERE TaskID = @0";
 
-                    databaseConn.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
 
                     selectQuery.Parameters.AddWithValue("0", taskID);
                     taskStatus = Convert.ToBoolean(selectQuery.ExecuteScalar());
@@ -97,12 +97,12 @@ namespace DataAccessLayer.Containers
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"UPDATE [Appointment_Task] SET TaskChecked=@0 WHERE TaskID = @1";
 
-                    databaseConn.Open();
-                    SqlCommand updateQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand updateQuery = new SqlCommand(query, sqlConnection);
 
                     updateQuery.Parameters.AddWithValue("0", status);
                     updateQuery.Parameters.AddWithValue("1", taskID);

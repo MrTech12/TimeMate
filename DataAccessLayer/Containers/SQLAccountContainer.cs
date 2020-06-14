@@ -19,12 +19,12 @@ namespace DataAccessLayer.Containers
             int userID;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT AccountID FROM [Account] WHERE Mail = @0";
 
-                    databaseConn.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
 
                     selectQuery.Parameters.AddWithValue("0", mail);
                     var resultedAccountID = selectQuery.ExecuteScalar();
@@ -51,12 +51,12 @@ namespace DataAccessLayer.Containers
             string firstName;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT FirstName FROM [Account] WHERE Mail = @0";
 
-                    databaseConn.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
 
                     selectQuery.Parameters.AddWithValue("0", mail);
                     var resultedUserName = selectQuery.ExecuteScalar();
@@ -83,12 +83,12 @@ namespace DataAccessLayer.Containers
             string passwordHash;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT Password FROM [Account] WHERE Mail = @0";
 
-                    databaseConn.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
                     
                     selectQuery.Parameters.AddWithValue("0", mail);
                     var resultedPasswordHash = selectQuery.ExecuteScalar();
@@ -115,12 +115,12 @@ namespace DataAccessLayer.Containers
             int accountID;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"INSERT INTO [Account](FirstName, Mail, Password) Values (@0,@1,@2); SELECT SCOPE_IDENTITY();";
 
-                    databaseConn.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
 
                     insertQuery.Parameters.AddWithValue("0", accountDTO.FirstName);
                     insertQuery.Parameters.AddWithValue("1", accountDTO.Mail);

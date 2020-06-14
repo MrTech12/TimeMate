@@ -16,12 +16,12 @@ namespace DataAccessLayer.Containers
             int agendaID;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"INSERT INTO [Agenda](AccountID, Name, Color, NotificationType) VALUES (@0,@1,@2,@3); SELECT SCOPE_IDENTITY();";
                     
-                    databaseConn.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
 
                     insertQuery.Parameters.AddWithValue("0", accountID);
                     insertQuery.Parameters.AddWithValue("1", agendaDTO.AgendaName);
@@ -41,12 +41,12 @@ namespace DataAccessLayer.Containers
         {
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1";
 
-                    databaseConn.Open();
-                    SqlCommand deleteQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand deleteQuery = new SqlCommand(query, sqlConnection);
 
                     deleteQuery.Parameters.AddWithValue("0", agendaID);
                     deleteQuery.Parameters.AddWithValue("1", accountID);
@@ -64,12 +64,12 @@ namespace DataAccessLayer.Containers
             List<AgendaDTO> agendas = new List<AgendaDTO>();
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT a.* FROM [Agenda] a WHERE AccountID = @0";
 
-                    databaseConn.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
 
                     insertQuery.Parameters.AddWithValue("0", accountID);
                     SqlDataReader dataReader = insertQuery.ExecuteReader();
@@ -96,12 +96,12 @@ namespace DataAccessLayer.Containers
             int agendaID;
             try
             {
-                using (SqlConnection databaseConn = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
                 {
                     string query = @"SELECT AgendaID FROM [Agenda] WHERE Name = @0 AND AccountID = @1";
 
-                    databaseConn.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, databaseConn);
+                    sqlConnection.Open();
+                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
 
                     selectQuery.Parameters.AddWithValue("0", agendaName);
                     selectQuery.Parameters.AddWithValue("1", accountID);
