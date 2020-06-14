@@ -11,7 +11,7 @@ namespace TimeMate.Models
         [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Voor uw voornaam in.")]
         [DataType(DataType.Text)]
-        [RegularExpression("[A-Za-z]+", ErrorMessage = "Gebruik letters")]
+        [RegularExpression("[A-Za-z]+", ErrorMessage = "Gebruik letters vooor de voornaam.")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Dit veld is verplicht.")]
@@ -31,7 +31,7 @@ namespace TimeMate.Models
         [Range(0, 2)]
         public int JobAmount { get; set; }
 
-        [Display(Name = "Voer de uurloon van bijbaan 1 in.")]
+        [Display(Name = "Voer het uurloon van bijbaan 1 in.")]
         [DisplayFormat(DataFormatString = "{0:0,0}")]
         [RegularExpression(@"\d{1,}(?:\,?\d)*%?", ErrorMessage = "Gebruik een nummer met een komma.")]
         public string Job1HourlyWage { get; set; }
@@ -39,7 +39,7 @@ namespace TimeMate.Models
         [Display(Name = "Is de bijbaan doordeweeks of in het weekend?")]
         public string Job1DayType { get; set; }
 
-        [Display(Name = "Voer de uurloon van bijbaan 2 in.")]
+        [Display(Name = "Voer het uurloon van bijbaan 2 in.")]
         [DisplayFormat(DataFormatString = "{0:0,0}")]
         [RegularExpression(@"\d{1,}(?:\,?\d)*%?", ErrorMessage = "Gebruik een nummer met een komma.")]
         public string Job2HourlyWage { get; set; }

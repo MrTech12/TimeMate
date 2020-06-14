@@ -20,7 +20,7 @@ function ShowJobInputBoxes() {
             $("#job2").addClass("d-none");
         }
     }
-    else if (jobAmount == 1) {
+    if (jobAmount == 1) {
         if (!$("#job2").hasClass("d-none")) {
             $("#job2").addClass("d-none");
         }
@@ -28,7 +28,7 @@ function ShowJobInputBoxes() {
             $("#job1").removeClass("d-none");
         }
     }
-    else if (jobAmount == 2) {
+    if (jobAmount == 2) {
         if (!$("#job1").hasClass("d-none") && $("#job2").hasClass("d-none")) {
             $("#job1").removeClass("d-none");
             $("#job2").removeClass("d-none");
