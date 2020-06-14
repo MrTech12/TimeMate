@@ -88,6 +88,18 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
+        public void CreateEmptyAccount()
+        {
+            string[] output;
+            accountDTO = new AccountDTO();
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
+
+            output = account.NewAccountValidation();
+
+            Assert.Equal("Er is niks ingevuld", output[0]);
+        }
+
+        [Fact]
         public void CreateAccountLowercasePassword()
         {
             string[] output;
