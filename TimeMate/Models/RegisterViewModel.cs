@@ -11,7 +11,7 @@ namespace TimeMate.Models
         [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Voor uw voornaam in.")]
         [DataType(DataType.Text)]
-        [RegularExpression("[A-Za-z]+", ErrorMessage = "Gebruik letters vooor de voornaam.")]
+        [RegularExpression("[A-Za-z]+", ErrorMessage = "Gebruik letters voor de voornaam.")]
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "Dit veld is verplicht.")]
