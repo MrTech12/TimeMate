@@ -88,18 +88,6 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateEmptyAccount()
-        {
-            string[] output;
-            accountDTO = new AccountDTO();
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
-
-            output = account.NewAccountInputValidation();
-
-            Assert.Equal("Er is niks ingevuld", output[0]);
-        }
-
-        [Fact]
         public void CreateAccounExistingMail()
         {
             string[] output;
@@ -109,6 +97,32 @@ namespace TimeMateTest.BLL
             output = account.NewAccountInputValidation();
 
             Assert.Equal("Er bestaat al een account met dit mailadres.", output[0]);
+        }
+
+        [Fact]
+        public void CreateAccountNoMail()
+        {
+            accountDTO = new AccountDTO();
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
+
+            Action action = () => account.NewAccountInputValidation();
+
+            Exception exception = Assert.Throws<Exception>(action);
+
+            Assert.Equal("Het mailadres is niet geleverd.", exception.Message);
+        }
+
+        [Fact]
+        public void CreateAccountNoPassword()
+        {
+            accountDTO = new AccountDTO();
+            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
+
+            Action action = () => account.CreateAccount();
+
+            Exception exception = Assert.Throws<Exception>(action);
+
+            Assert.Equal("Het wachtwoord is niet geleverd.", exception.Message);
         }
     }
 }

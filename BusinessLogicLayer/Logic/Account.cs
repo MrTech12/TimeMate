@@ -83,8 +83,7 @@ namespace BusinessLogicLayer.Logic
 
             if (accountDTO.Mail == null)
             {
-                returnMessage[0] = "Er is niks ingevuld";
-                return returnMessage;
+                throw new Exception("Het mailadres is niet geleverd.");
             }
 
             int databaseOutput = _accountContainer.GetUserID(accountDTO.Mail);
@@ -104,6 +103,11 @@ namespace BusinessLogicLayer.Logic
 
         public void CreateAccount()
         {
+            if (accountDTO.Password == null)
+            {
+                throw new Exception("Het wachtwoord is niet geleverd.");
+            }
+
             accountDTO.Password = BCrypt.Net.BCrypt.HashPassword(accountDTO.Password, 10);
 
             if (accountDTO.JobCount == 0)
