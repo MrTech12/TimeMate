@@ -24,7 +24,7 @@ namespace BusinessLogicLayer.Logic
                 for (int i = 0; i < checklists.Count; i++)
                 {
                     tasks.Add(Convert.ToString(checklists[i].TaskID));
-                    tasks.Add(Convert.ToString(checklists[i].TaskName));
+                    tasks.Add(checklists[i].TaskName);
                 }
             }
             return tasks;
