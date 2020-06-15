@@ -19,11 +19,10 @@ namespace TimeMate.Controllers
         private readonly IChecklistAppointmentContainer _checklistAppointmentContainer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private AccountDTO accountDTO = new AccountDTO();
         private Account account;
         private Agenda agenda;
         private SessionService sessionService;
-        bool sessionHasValue;
+        private AccountDTO accountDTO = new AccountDTO();
 
         public ChecklistAppointmentController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer, IHttpContextAccessor httpContextAccessor)
         {
@@ -37,9 +36,8 @@ namespace TimeMate.Controllers
         public IActionResult Index()
         {
             sessionService = new SessionService(_httpContextAccessor);
-            sessionHasValue = sessionService.CheckSessionValue();
 
-            if (sessionHasValue)
+            if (sessionService.CheckSessionValue())
             {
                 ChecklistAppointmentViewModel viewModel = new ChecklistAppointmentViewModel();
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;

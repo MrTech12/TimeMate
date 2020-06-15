@@ -22,9 +22,8 @@ namespace TimeMate.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         private Account account;
-        private AccountDTO accountDTO;
         private SessionService sessionService;
-        bool sessionHasValue;
+        private AccountDTO accountDTO;
 
         public AccountController(IAccountContainer accountContainer, IAgendaContainer agendaContainer, IJobContainer jobContainer, ISenderContainer senderContainer, IHttpContextAccessor httpContextAccessor)
         {
@@ -39,9 +38,8 @@ namespace TimeMate.Controllers
         public IActionResult Index()
         {
             sessionService = new SessionService(_httpContextAccessor);
-            sessionHasValue = sessionService.CheckSessionValue();
-
-            if (sessionHasValue)
+            
+            if (sessionService.CheckSessionValue())
             {
                 return RedirectToAction("Index", "Agenda");
             }
@@ -86,9 +84,8 @@ namespace TimeMate.Controllers
         public IActionResult Register()
         {
             sessionService = new SessionService(_httpContextAccessor);
-            sessionHasValue = sessionService.CheckSessionValue();
 
-            if (sessionHasValue)
+            if (sessionService.CheckSessionValue())
             {
                 return RedirectToAction("Index", "Agenda");
             }
@@ -163,9 +160,8 @@ namespace TimeMate.Controllers
         public IActionResult AccountSettings()
         {
             sessionService = new SessionService(_httpContextAccessor);
-            sessionHasValue = sessionService.CheckSessionValue();
 
-            if (sessionHasValue)
+            if (sessionService.CheckSessionValue())
             {
                 accountDTO = new AccountDTO();
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;

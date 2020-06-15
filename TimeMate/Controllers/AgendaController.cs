@@ -22,12 +22,11 @@ namespace TimeMate.Controllers
         private readonly IJobContainer _jobContainer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private AccountDTO accountDTO = new AccountDTO();
-        private Agenda agenda;
         private Account account;
+        private Agenda agenda;
         private Job job;
         private SessionService sessionService;
-        bool sessionHasValue;
+        private AccountDTO accountDTO = new AccountDTO();
 
         public AgendaController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, INormalAppointmentContainer normalAppointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer, IJobContainer jobContainer, IHttpContextAccessor httpContextAccessor)
         {
@@ -43,9 +42,8 @@ namespace TimeMate.Controllers
         public IActionResult Index()
         {
             sessionService = new SessionService(_httpContextAccessor);
-            sessionHasValue = sessionService.CheckSessionValue();
 
-            if (sessionHasValue)
+            if (sessionService.CheckSessionValue())
             {
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
@@ -73,9 +71,8 @@ namespace TimeMate.Controllers
         public IActionResult AddAgenda()
         {
             sessionService = new SessionService(_httpContextAccessor);
-            sessionHasValue = sessionService.CheckSessionValue();
 
-            if (sessionHasValue)
+            if (sessionService.CheckSessionValue())
             {
                 AgendaViewModel viewModel = new AgendaViewModel();
                 return View(viewModel);
