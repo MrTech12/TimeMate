@@ -121,12 +121,24 @@ namespace TimeMateTest.BLL
         public void FirstDayOfWeekSix()
         {
             DateTime output;
-            DateTime weekSix = DateTime.Parse("2020-02-06");
+            DateTime weekSixThursday = DateTime.Parse("2020-02-06");
             job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
 
-            output = job.GetFirstDayOfWeek(weekSix);
+            output = job.GetFirstDayOfWeek(weekSixThursday);
 
             Assert.Equal(DateTime.Parse("2020-02-03"), output);
+        }
+
+        [Fact]
+        public void FirstDayOfWeekFour()
+        {
+            DateTime output;
+            DateTime weekFourSunday = DateTime.Parse("2020-01-26");
+            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+
+            output = job.GetFirstDayOfWeek(weekFourSunday);
+
+            Assert.Equal(DateTime.Parse("2020-01-20"), output);
         }
 
         [Fact]

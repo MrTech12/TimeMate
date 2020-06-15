@@ -73,12 +73,15 @@ namespace TimeMate.Controllers
                 appointmentDTO.EndDate = viewModel.AppointmentViewModel.EndDate + viewModel.AppointmentViewModel.EndTime;
                 appointmentDTO.AgendaID = viewModel.AppointmentViewModel.AgendaID;
 
-                foreach (var item in viewModel.Task)
+                if (viewModel.Task != null)
                 {
-                    if (item != null)
+                    foreach (var item in viewModel.Task)
                     {
-                        ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = item };
-                        appointmentDTO.ChecklistDTOs.Add(checklistDTO);
+                        if (item != null)
+                        {
+                            ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = item };
+                            appointmentDTO.ChecklistDTOs.Add(checklistDTO);
+                        }
                     }
                 }
 
