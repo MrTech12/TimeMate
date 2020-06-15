@@ -9,6 +9,7 @@ using BusinessLogicLayer.Logic;
 using Microsoft.AspNetCore.Http;
 using DataAccessLayer.Interfaces;
 using TimeMate.Services;
+using System.Text.RegularExpressions;
 
 namespace TimeMate.Controllers
 {
@@ -103,6 +104,23 @@ namespace TimeMate.Controllers
         {
             if (ModelState.IsValid)
             {
+                string specialCharacterValidate = @"[~`!@#$%^&*()+=|\\{}':;.,<>/?[\]""_-]";
+
+                if (!viewModel.Password.Any(char.IsUpper))
+                {
+                    ModelState.AddModelError("", "Het wachtwoord moet een hoofdletter bevatten.");
+                    return View(viewModel);
+                }
+                else if (!Regex.IsMatch(viewModel.Password, specialCharacterValidate))
+                {
+                    ModelState.AddModelError("", "Het wachtwoord moet een speciale karakter bevatten.");
+                    return View(viewModel);
+                }
+                else if (!viewModel.Password.Any(char.IsDigit))
+                {
+                    ModelState.AddModelError("", "Het wachtwoord moet een cijfer bevatten.");
+                    return View(viewModel);
+                }
                 accountDTO = new AccountDTO();
                 accountDTO.FirstName = viewModel.FirstName;
                 accountDTO.Mail = viewModel.Mail;
@@ -121,8 +139,7 @@ namespace TimeMate.Controllers
                 }
 
                 account = new Account(accountDTO, _accountContainer, _agendaContainer, _jobContainer, _senderContainer);
-
-                string[] result = account.NewAccountValidation();
+                string[] result = account.NewAccountInputValidation();
 
                 if (result[1] == null)
                 {

@@ -74,51 +74,30 @@ namespace BusinessLogicLayer.Logic
             {
                 returnMessage[0] = null;
             }
-
             return returnMessage;
         }
 
-        public string[] NewAccountValidation()
+        public string[] NewAccountInputValidation()
         {
             string[] returnMessage = new string[2];
-            string mailValidate = "^([0-9a-zA-Z-_]([-\\.\\w]*[0-9a-zA-Z-_])*@([0-9a-zA-Z][-\\w]*[0-9a-zA-Z]\\.)+[a-zA-Z]{2,9})$";
-            string specialCharacterValidate = @"[~`!@#$%^&*()+=|\\{}':;.,<>/?[\]""_-]";
 
-            if (accountDTO.FirstName == null)
+            if (accountDTO.Mail == null)
             {
                 returnMessage[0] = "Er is niks ingevuld";
                 return returnMessage;
             }
-            else if (Regex.IsMatch(accountDTO.Mail, mailValidate) == false)
+
+            int databaseOutput = _accountContainer.GetUserID(accountDTO.Mail);
+            if (databaseOutput != -1)
             {
-                returnMessage[0] = "Het emailadres is niet geldig.";
+                returnMessage[0] = "Er bestaat al een account met dit mailadres.";
             }
-            else if (accountDTO.Password.Any(char.IsUpper) == false)
+            else
             {
-                returnMessage[0] = "Het wachtwoord moet een hoofdletter bevatten.";
-            }
-            else if (Regex.IsMatch(accountDTO.Password, specialCharacterValidate) == false)
-            {
-                returnMessage[0] = "Het wachtwoord moet een speciale karakter bevatten.";
-            }
-            else if (accountDTO.Password.Any(char.IsDigit) == false)
-            {
-                returnMessage[0] = "Het wachtwoord moet een cijfer bevatten.";
-            }
-            else if (returnMessage[0] == null)
-            {
-                int databaseOutput = _accountContainer.GetUserID(accountDTO.Mail);
-                if (databaseOutput != -1)
-                {
-                    returnMessage[0] = "Er bestaat al een account met dit mailadres.";
-                }
-                else
-                {
-                    CreateAccount();
-                    _senderContainer.SendAccountCreationMessage(accountDTO.Mail);
-                    returnMessage[0] = Convert.ToString(accountDTO.AccountID);
-                    returnMessage[1] = _accountContainer.GetFirstName(accountDTO.Mail);
-                }
+                CreateAccount();
+                _senderContainer.SendAccountCreationMessage(accountDTO.Mail);
+                returnMessage[0] = Convert.ToString(accountDTO.AccountID);
+                returnMessage[1] = _accountContainer.GetFirstName(accountDTO.Mail);
             }
             return returnMessage;
         }

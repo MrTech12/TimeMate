@@ -21,6 +21,7 @@ namespace TimeMateTest.Presentation_Layer
         public string FirstNameErrorMessage => _driver.FindElement(By.Id("FirstName-error")).Text;
         public string MailErrorMessage => _driver.FindElement(By.Id("Mail-error")).Text;
         public string PasswordErrorMessage => _driver.FindElement(By.Id("Password-error")).Text;
+        public string ValidationSummaryErrorMessage => _driver.FindElement(By.ClassName("validation-summary-errors")).Text;
 
         public RegisterPage(IWebDriver driver)
         {

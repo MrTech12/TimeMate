@@ -20,7 +20,7 @@ namespace TimeMateTest.Presentation_Layer
         }
 
         [Fact]
-        public void RegisterNoCredentialsTest()
+        public void RegisterNoCredentials()
         {
             _registerPage.PopulateFirstName("");
             _registerPage.PopulateMail("");
@@ -34,7 +34,7 @@ namespace TimeMateTest.Presentation_Layer
         }
 
         [Fact]
-        public void RegisterNoFirstNameTest()
+        public void RegisterNoFirstName()
         {
             _registerPage.PopulateFirstName("");
             _registerPage.PopulateMail("plant@duckduckgo.com");
@@ -46,7 +46,7 @@ namespace TimeMateTest.Presentation_Layer
         }
 
         [Fact]
-        public void RegisterNoMailTest()
+        public void RegisterNoMail()
         {
             _registerPage.PopulateFirstName("Ben");
             _registerPage.PopulateMail("");
@@ -58,7 +58,7 @@ namespace TimeMateTest.Presentation_Layer
         }
 
         [Fact]
-        public void RegisterWrongMailTest()
+        public void RegisterWrongMail()
         {
             _registerPage.PopulateFirstName("");
             _registerPage.PopulateMail("plant@duckduckgo.");
@@ -66,11 +66,11 @@ namespace TimeMateTest.Presentation_Layer
 
             _registerPage.ClickRegister();
 
-            Assert.Equal("Voor een geldige E-mailadres in.", _registerPage.MailErrorMessage);
+            Assert.Equal("Voor een geldig E-mailadres in.", _registerPage.MailErrorMessage);
         }
 
         [Fact]
-        public void RegisterNoPasswordTest()
+        public void RegisterNoPassword()
         {
             _registerPage.PopulateFirstName("Ben");
             _registerPage.PopulateMail("plant@duckduckgo.com");
@@ -82,7 +82,7 @@ namespace TimeMateTest.Presentation_Layer
         }
 
         [Fact]
-        public void RegisterShortPasswordTest()
+        public void RegisterShortPassword()
         {
             _registerPage.PopulateFirstName("Ben");
             _registerPage.PopulateMail("plant@duckduckgo.com");
@@ -91,6 +91,42 @@ namespace TimeMateTest.Presentation_Layer
             _registerPage.ClickRegister();
 
             Assert.Equal("The field Voor een wachtwoord in. must be a string or array type with a minimum length of '9'.", _registerPage.PasswordErrorMessage);
+        }
+
+        [Fact]
+        public void RegisterLowerCasePassword()
+        {
+            _registerPage.PopulateFirstName("Ben");
+            _registerPage.PopulateMail("plant@duckduckgo.com");
+            _registerPage.PopulatePassword("qweeeweue23!");
+
+            _registerPage.ClickRegister();
+
+            Assert.Equal("Het wachtwoord moet een hoofdletter bevatten.", _registerPage.ValidationSummaryErrorMessage);
+        }
+
+        [Fact]
+        public void RegisterNoSpecialCharactersPassword()
+        {
+            _registerPage.PopulateFirstName("Ben");
+            _registerPage.PopulateMail("plant@duckduckgo.com");
+            _registerPage.PopulatePassword("EEweeeweue23");
+
+            _registerPage.ClickRegister();
+
+            Assert.Equal("Het wachtwoord moet een speciale karakter bevatten.", _registerPage.ValidationSummaryErrorMessage);
+        }
+
+        [Fact]
+        public void RegisterNoNumberPassword()
+        {
+            _registerPage.PopulateFirstName("Ben");
+            _registerPage.PopulateMail("plant@duckduckgo.com");
+            _registerPage.PopulatePassword("qweEeweu!!ee");
+
+            _registerPage.ClickRegister();
+
+            Assert.Equal("Het wachtwoord moet een cijfer bevatten.", _registerPage.ValidationSummaryErrorMessage);
         }
 
         [Fact]

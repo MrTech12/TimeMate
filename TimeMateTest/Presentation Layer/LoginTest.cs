@@ -20,7 +20,7 @@ namespace TimeMateTest.Presentation_Layer
         }
 
         [Fact]
-        public void LoggingInNoCredentialsTest()
+        public void LoggingInNoCredentials()
         {
             _loginPage.PopulateMail("");
             _loginPage.PopulatePassword("");
@@ -32,7 +32,7 @@ namespace TimeMateTest.Presentation_Layer
         }
 
         [Fact]
-        public void LoggingInNoEmailTest()
+        public void LoggingInNoEmail()
         {
             _loginPage.PopulateMail("");
             _loginPage.PopulatePassword("euwuur1238dSQ");
@@ -43,7 +43,7 @@ namespace TimeMateTest.Presentation_Layer
         }
 
         [Fact]
-        public void LoggingInNoPasswordTest()
+        public void LoggingInNoPassword()
         {
             _loginPage.PopulateMail("plant@duckduckgo.com");
             _loginPage.PopulatePassword("");
@@ -54,7 +54,7 @@ namespace TimeMateTest.Presentation_Layer
         }
 
         [Fact]
-        public void GoToRegisterViewTest()
+        public void GoToRegisterView()
         {
             _loginPage.ClickRegister();
 
