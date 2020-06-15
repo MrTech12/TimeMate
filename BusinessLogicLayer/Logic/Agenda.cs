@@ -53,13 +53,9 @@ namespace BusinessLogicLayer.Logic
 
             if (checklists.Count != 0)
             {
-                for (int i = 0; i < sortedAppointments.Count; i++)
-                {
-                    sortedAppointments[i].ChecklistDTOs.RemoveAt(0);
-                }
-
                 foreach (var item in sortedAppointments)
                 {
+                    item.ChecklistDTOs.RemoveAt(0);
                     for (int i = 0; i < checklists.Count; i++)
                     {
                         if (item.AppointmentID == checklists[i].AppointmentID)
