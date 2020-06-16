@@ -103,7 +103,7 @@ namespace BusinessLogicLayer.Logic
             {
                 diff += 7;
             }
-            return date.AddDays(-diff).Date;
+            return date.AddDays(-diff);
         }
     }
 }
