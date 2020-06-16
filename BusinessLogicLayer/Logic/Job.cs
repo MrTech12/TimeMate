@@ -98,12 +98,12 @@ namespace BusinessLogicLayer.Logic
         public DateTime GetFirstDayOfWeek(DateTime date)
         {
             var culture = System.Threading.Thread.CurrentThread.CurrentCulture;
-            var diff = date.DayOfWeek - culture.DateTimeFormat.FirstDayOfWeek;
-            if (diff < 0)
+            var difference = date.DayOfWeek - culture.DateTimeFormat.FirstDayOfWeek;
+            if (difference < 0)
             {
-                diff += 7;
+                difference += 7;
             }
-            return date.AddDays(-diff).Date;
+            return date.AddDays(-difference).Date;
         }
     }
 }
