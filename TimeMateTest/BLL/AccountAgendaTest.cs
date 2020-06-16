@@ -66,7 +66,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateWorkAgenda1()
+        public void CreateWorkAgendaWithPayDetails1()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             accountDTO.JobHourlyWage.Add(12.23);
@@ -88,7 +88,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateWorkAgenda2()
+        public void CreateWorkAgendaWithPayDetails2()
         {
             accountDTO = new AccountDTO() { AccountID = 56 };
             accountDTO.JobHourlyWage.Add(12.23);
@@ -114,7 +114,7 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void CreateNoWorkAgenda()
+        public void CreateOnlyWorkAgenda()
         {
             accountDTO = new AccountDTO() { AccountID = 23 };
             account = new Account(accountDTO, new StubAgendaContainer(), new StubJobContainer());
