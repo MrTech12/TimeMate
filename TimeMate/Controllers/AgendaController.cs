@@ -111,10 +111,8 @@ namespace TimeMate.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteAgenda(string json)
+        public IActionResult DeleteAgenda(int agendaID)
         {
-            int agendaID = JsonConvert.DeserializeObject<int>(json);
-
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
             account = new Account(accountDTO, _agendaContainer);
             account.DeleteAgenda(agendaID);
@@ -122,20 +120,16 @@ namespace TimeMate.Controllers
         }
 
         [HttpGet]
-        public IActionResult ChangeTaskStatus(string json)
+        public IActionResult ChangeTaskStatus(int taskID)
         {
-            int taskID = JsonConvert.DeserializeObject<int>(json);
-
             ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentContainer);
             checklistAppointment.ChangeTaskStatus(taskID);
             return Ok();
         }
 
         [HttpGet]
-        public IActionResult RetrieveAppointmentExtra(string json)
+        public IActionResult RetrieveAppointmentExtra(int appointmentID)
         {
-            int appointmentID = JsonConvert.DeserializeObject<int>(json);
-
             NormalAppointment normalAppointment = new NormalAppointment(_normalAppointmentContainer);
 
             string description = normalAppointment.RetrieveDescription(appointmentID);

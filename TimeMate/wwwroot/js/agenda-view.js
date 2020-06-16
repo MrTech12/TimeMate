@@ -61,11 +61,11 @@ function GetPopoverContent() {
 
 function GetAppointmentExtra() {
     return $.ajax({
-        type: "get",
+        type: "GET",
         async: "no",
         url: "/Agenda/RetrieveAppointmentExtra",
         contenttype: "application/json; charset=utf-8",
-        data: { json: appointmentData[1]},
+        data: { "appointmentID": appointmentData[1]},
         datatype: "text",
         traditional: true,
         success: function (data) {
@@ -132,11 +132,11 @@ function CheckOffTask() {
     var taskID = (selectInput.options[selectInput.selectedIndex].id);
 
     $.ajax({
-        type: "get",
+        type: "GET",
         async: "no",
         url: "/Agenda/ChangeTaskStatus",
         contenttype: "application/json; charset=utf-8",
-        data: { json: taskID },
+        data: { "taskID": taskID },
         datatype: "text",
         traditional: true,
         success: function (data) {

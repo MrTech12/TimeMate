@@ -40,7 +40,7 @@ function SendDeleteRequest() {
         type: "GET",
         url: "/Agenda/DeleteAgenda",
         contenttype: "application/json; charset=utf-8",
-        data: { json: agendaID },
+        data: { "agendaID": agendaID },
         datatype: "text",
         traditional: true,
         success: function (data) {
