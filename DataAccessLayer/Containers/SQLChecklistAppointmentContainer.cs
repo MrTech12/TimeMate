@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.DTO;
+using DataAccessLayer.Exceptions;
 using DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace DataAccessLayer.Containers
             }
             catch (SqlException exception)
             {
-                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+                throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
         }
 
@@ -65,7 +66,7 @@ namespace DataAccessLayer.Containers
             }
             catch (SqlException exception)
             {
-                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+                throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
             return checklists;
         }
@@ -88,7 +89,7 @@ namespace DataAccessLayer.Containers
             }
             catch (SqlException exception)
             {
-                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+                throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
             return taskStatus;
         }
@@ -111,7 +112,7 @@ namespace DataAccessLayer.Containers
             }
             catch (SqlException exception)
             {
-                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+                throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
         }
     }

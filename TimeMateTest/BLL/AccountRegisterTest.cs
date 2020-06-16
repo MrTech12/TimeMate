@@ -1,5 +1,6 @@
 ﻿using BusinessLogicLayer.Logic;
 using DataAccessLayer.DTO;
+using DataAccessLayer.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -107,7 +108,7 @@ namespace TimeMateTest.BLL
 
             Action action = () => account.NewAccountInputValidation();
 
-            Exception exception = Assert.Throws<Exception>(action);
+            Exception exception = Assert.Throws<AccountException>(action);
 
             Assert.Equal("Het mailadres is niet geleverd.", exception.Message);
         }
@@ -120,7 +121,7 @@ namespace TimeMateTest.BLL
 
             Action action = () => account.CreateAccount();
 
-            Exception exception = Assert.Throws<Exception>(action);
+            Exception exception = Assert.Throws<AccountException>(action);
 
             Assert.Equal("Het wachtwoord is niet geleverd.", exception.Message);
         }

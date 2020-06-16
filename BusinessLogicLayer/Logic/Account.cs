@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.DTO;
+using DataAccessLayer.Exceptions;
 using DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -83,7 +84,7 @@ namespace BusinessLogicLayer.Logic
 
             if (accountDTO.Mail == null)
             {
-                throw new Exception("Het mailadres is niet geleverd.");
+                throw new AccountException("Het mailadres is niet geleverd.");
             }
 
             int databaseOutput = _accountContainer.GetUserID(accountDTO.Mail);
@@ -105,7 +106,7 @@ namespace BusinessLogicLayer.Logic
         {
             if (accountDTO.Password == null)
             {
-                throw new Exception("Het wachtwoord is niet geleverd.");
+                throw new AccountException("Het wachtwoord is niet geleverd.");
             }
 
             accountDTO.Password = BCrypt.Net.BCrypt.HashPassword(accountDTO.Password, 10);

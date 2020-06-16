@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Text;
+using DataAccessLayer.Exceptions;
 
 namespace DataAccessLayer.Containers
 {
@@ -41,7 +42,7 @@ namespace DataAccessLayer.Containers
             }
             catch (SqlException exception)
             {
-                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+                throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
             return userID;
         }
@@ -73,7 +74,7 @@ namespace DataAccessLayer.Containers
             }
             catch (SqlException exception)
             {
-                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+                throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
             return firstName;
         }
@@ -105,7 +106,7 @@ namespace DataAccessLayer.Containers
             }
             catch (SqlException exception)
             {
-                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+                throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
             return passwordHash;
         }
@@ -130,7 +131,7 @@ namespace DataAccessLayer.Containers
             }
             catch (SqlException exception)
             {
-                throw new Exception("Er is op dit moment een probleem met de database.", exception);
+                throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
             return accountID;
         }

@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.Interfaces;
+﻿using DataAccessLayer.Exceptions;
+using DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
@@ -29,7 +30,7 @@ namespace DataAccessLayer.Containers
             }
             catch (Exception exception)
             {
-                throw new Exception("Er is op dit moment een probleem met het versturen van de account creatie mail.", exception);
+                throw new MailException("Er is op dit moment een probleem met het versturen van de account creatie mail.", exception);
             }
         }
     }
