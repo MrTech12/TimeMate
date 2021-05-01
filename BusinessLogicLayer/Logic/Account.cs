@@ -3,22 +3,19 @@ using DataAccessLayer.Exceptions;
 using DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace BusinessLogicLayer.Logic
 {
     public class Account
     {
         private readonly IAccountContainer _accountContainer;
+        private readonly ISender _senderContainer;
         private readonly IAgendaContainer _agendaContainer;
-        private readonly ISenderContainer _senderContainer;
         private readonly IJobContainer _jobContainer;
 
         private AccountDTO accountDTO;
 
-        public Account(AccountDTO accountDTO, IAccountContainer accountContainer, IAgendaContainer agendaContainer, IJobContainer jobContainer, ISenderContainer senderContainer)
+        public Account(AccountDTO accountDTO, IAccountContainer accountContainer, IAgendaContainer agendaContainer, IJobContainer jobContainer, ISender senderContainer)
         {
             this.accountDTO = accountDTO;
             this._accountContainer = accountContainer;
@@ -95,7 +92,7 @@ namespace BusinessLogicLayer.Logic
             else
             {
                 CreateAccount();
-                _senderContainer.SendAccountCreationMessage(accountDTO.Mail);
+                _senderContainer.SendAccountCreationMail(accountDTO.Mail);
                 returnMessage[0] = Convert.ToString(accountDTO.AccountID);
                 returnMessage[1] = _accountContainer.GetFirstName(accountDTO.Mail);
             }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using DataAccessLayer.Interfaces;
 using TimeMate.Services;
 using System.Text.RegularExpressions;
+using BusinessLogicLayer;
 
 namespace TimeMate.Controllers
 {
@@ -18,14 +19,14 @@ namespace TimeMate.Controllers
         private readonly IAccountContainer _accountContainer;
         private readonly IAgendaContainer _agendaContainer;
         private readonly IJobContainer _jobContainer;
-        private readonly ISenderContainer _senderContainer;
+        private readonly ISender _senderContainer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         private Account account;
         private SessionService sessionService;
         private AccountDTO accountDTO;
 
-        public AccountController(IAccountContainer accountContainer, IAgendaContainer agendaContainer, IJobContainer jobContainer, ISenderContainer senderContainer, IHttpContextAccessor httpContextAccessor)
+        public AccountController(IAccountContainer accountContainer, IAgendaContainer agendaContainer, IJobContainer jobContainer, ISender senderContainer, IHttpContextAccessor httpContextAccessor)
         {
             _accountContainer = accountContainer;
             _agendaContainer = agendaContainer;

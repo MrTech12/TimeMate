@@ -7,6 +7,7 @@ using DataAccessLayer.Containers;
 using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
+using BusinessLogicLayer;
 
 namespace TimeMate
 {
@@ -36,7 +37,7 @@ namespace TimeMate
             services.AddSingleton<IChecklistAppointmentContainer, SQLChecklistAppointmentContainer>();
             services.AddSingleton<IJobContainer, SQLJobContainer>();
             services.AddSingleton<INormalAppointmentContainer, SQLNormalAppointmentContainer>();
-            services.AddSingleton<ISenderContainer, MailSenderContainer>();
+            services.AddSingleton<ISender, MailSender>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSession(options =>

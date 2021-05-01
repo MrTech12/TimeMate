@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.Interfaces;
+﻿using BusinessLogicLayer;
+using DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,9 +7,9 @@ using System.Text;
 
 namespace TimeMateTest.Stubs
 {
-    public class StubSenderContainer : ISenderContainer
+    public class StubSender : ISender
     {
-        public void SendAccountCreationMessage(string mail)
+        public void SendAccountCreationMail(string mail)
         {
             using (StreamWriter streamWriter = File.AppendText(@"C:\tmp\CreateAccountTest.txt"))
             {

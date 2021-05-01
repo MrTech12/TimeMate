@@ -1,19 +1,25 @@
-﻿using DataAccessLayer.Exceptions;
-using DataAccessLayer.Interfaces;
+﻿using BusinessLogicLayer;
+using DataAccessLayer.Exceptions;
+using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Net.Mail;
-using System.Text;
 
 namespace DataAccessLayer.Containers
 {
-    public class MailSenderContainer : ISenderContainer
+    public class MailSender : ISender
     {
-        public void SendAccountCreationMessage(string mail)
+        private readonly IConfiguration Configuration;
+
+        public MailSender(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public void SendAccountCreationMail(string recipient)
         {
             try
             {
-                MailMessage message = new MailMessage("primedsoon12@gmail.com", mail);
+                MailMessage message = new MailMessage("primedsoon12@gmail.com", recipient);
                 message.Subject = "Registratie bij TimeMate";
                 message.IsBodyHtml = true;
                 message.Body = "Uw mailadres is gebruikt om een account te maken bij TimeMate.";
@@ -23,7 +29,7 @@ namespace DataAccessLayer.Containers
                 smtp.Port = 587;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new System.Net.NetworkCredential("primedsoon12@gmail.com", "415ZejFfAC7u@r4m&FSdnw1pfe");
+                smtp.Credentials = new System.Net.NetworkCredential(Configuration["Mailserver:Username"], Configuration["Mailserver:Password"]);
                 smtp.EnableSsl = true;
 
                 smtp.Send(message);
