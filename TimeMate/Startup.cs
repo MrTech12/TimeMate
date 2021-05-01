@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,25 +24,26 @@ namespace TimeMate
         {
             services.AddControllersWithViews();
 
-            services.AddTransient<AccountDTO>();
-            services.AddTransient<AgendaDTO>();
-            services.AddTransient<AppointmentDTO>();
-            services.AddTransient<JobDTO>();
+            // Create a single instance of the DTO's & interface implementations for the duration of the application lifetime.
+            services.AddSingleton<AccountDTO>();
+            services.AddSingleton<AgendaDTO>();
+            services.AddSingleton<AppointmentDTO>();
+            services.AddSingleton<JobDTO>();
 
-            services.AddTransient<IAccountContainer, SQLAccountContainer>();
-            services.AddTransient<IAgendaContainer, SQLAgendaContainer>();
-            services.AddTransient<IAppointmentContainer, SQLAppointmentContainer>();
-            services.AddTransient<IChecklistAppointmentContainer, SQLChecklistAppointmentContainer>();
-            services.AddTransient<IJobContainer, SQLJobContainer>();
-            services.AddTransient<INormalAppointmentContainer, SQLNormalAppointmentContainer>();
-            services.AddTransient<ISenderContainer, MailSenderContainer>();
-            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IAccountContainer, SQLAccountContainer>();
+            services.AddSingleton<IAgendaContainer, SQLAgendaContainer>();
+            services.AddSingleton<IAppointmentContainer, SQLAppointmentContainer>();
+            services.AddSingleton<IChecklistAppointmentContainer, SQLChecklistAppointmentContainer>();
+            services.AddSingleton<IJobContainer, SQLJobContainer>();
+            services.AddSingleton<INormalAppointmentContainer, SQLNormalAppointmentContainer>();
+            services.AddSingleton<ISenderContainer, MailSenderContainer>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSession(options =>
             {
                 options.Cookie.HttpOnly = false;
                 options.Cookie.IsEssential = true;
-                options.Cookie.Name = "Empyrean";
+                options.Cookie.Name = "Account_Session";
             });
         }
 
@@ -62,8 +56,8 @@ namespace TimeMate
             }
             else
             {
-                //app.UseExceptionHandler("/Home/Error");
-                app.UseExceptionHandler("/Error");
+                //app.UseExceptionHandler("/Home/Error"); // Default error controller.
+                app.UseExceptionHandler("/Error"); // Custom error controller.
                 app.UseStatusCodePagesWithReExecute("Error/{0}");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();

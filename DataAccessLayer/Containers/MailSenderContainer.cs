@@ -23,7 +23,7 @@ namespace DataAccessLayer.Containers
                 smtp.Port = 587;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new System.Net.NetworkCredential("primedsoon12@gmail.com", "!@Iskf23ND*Eb1t26oM*P0@x8");
+                smtp.Credentials = new System.Net.NetworkCredential("primedsoon12@gmail.com", "415ZejFfAC7u@r4m&FSdnw1pfe");
                 smtp.EnableSsl = true;
 
                 smtp.Send(message);
