@@ -356,4 +356,4 @@ MigrationBackup/
 .ionide/
 
 # Configuration file
-TimeMate\appsettings.json
+TimeMate/appsettings.json
