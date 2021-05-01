@@ -110,12 +110,12 @@ namespace TimeMate.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult DeleteAgenda(int agendaID)
+        [HttpPost]
+        public IActionResult DeleteAgenda([FromBody] AgendaModel acceptModel)
         {
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
             account = new Account(accountDTO, _agendaContainer);
-            account.DeleteAgenda(agendaID);
+            account.DeleteAgenda(acceptModel.AgendaID);
             return Ok();
         }
 

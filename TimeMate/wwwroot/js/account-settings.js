@@ -1,12 +1,10 @@
-﻿var agendaName;
-var agendaID;
-var selectInput;
+﻿let agendaName;
+let agendaID;
+let selectInput;
 
 $(document).ready(function () {
     $("#delete-agenda").click(function () {
-        GetSelectedOptionInformation();
-        $("#agenda-name").text(agendaName);
-        console.log("Name: " + agendaName + "; Id: " + agendaID);
+        GetSelectionInfo();
     });
 
     $("#confirm-deletion").click(function () {
@@ -16,15 +14,14 @@ $(document).ready(function () {
         else {
             alert("Deze agenda mag u niet verwijderen.");
         }
-
     });
 });
 
-function GetSelectedOptionInformation() {
+function GetSelectionInfo() {
     selectInput = document.getElementById("agenda-select");
     agendaName = $("#agenda-select :selected").val();
     agendaID = $("#agenda-select :selected").attr("id");
-};
+}
 
 function CheckAgendaName() {
     if (agendaName == "Bijbaan") {
@@ -33,23 +30,16 @@ function CheckAgendaName() {
     else {
         return true;
     }
-};
+}
 
-function SendDeleteRequest() {
-    $.ajax({
-        type: "GET",
-        url: "/Agenda/DeleteAgenda",
-        contenttype: "application/json; charset=utf-8",
-        data: { "agendaID": agendaID },
-        datatype: "text",
-        traditional: true,
-        success: function (data) {
-            selectInput.remove(selectInput.selectedIndex);
-            alert("Agenda succesvol verwijderd.");
-        },
-        error: function (ts) {
-            alert('Een error is ontstaan. Probeer het laten opnieuw a.u.b.');
-            onerror(console.info(ts));
-        }
-    });
-};
+async function SendDeleteRequest() {
+    await fetch('/Agenda/DeleteAgenda', {
+        method: 'POST',
+        headers: {'Accept': 'application/json','Content-Type': 'application/json'},
+        body: JSON.stringify({"AgendaID": parseInt(agendaID)})
+    })
+    .then(response => {
+        selectInput.remove(selectInput.selectedIndex);
+        alert("Agenda succesvol verwijderd.");
+    }).catch((error => console.error('Kan de agenda niet verwijderen.', error)));
+}
