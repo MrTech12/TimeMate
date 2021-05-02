@@ -21,7 +21,7 @@ namespace TimeMateTest.BLL
         public void CreateAgenda1()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            account = new Account(accountDTO, new StubAgendaContainer());
+            account = new Account(accountDTO, new StubAgendaRepository());
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000", NotificationType = "Nee" };
 
             account.CreateAgenda(agendaDTO);
@@ -37,7 +37,7 @@ namespace TimeMateTest.BLL
         public void CreateAgenda2()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            account = new Account(accountDTO, new StubAgendaContainer());
+            account = new Account(accountDTO, new StubAgendaRepository());
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560", NotificationType = "Nee" };
 
             account.CreateAgenda(agendaDTO);
@@ -53,7 +53,7 @@ namespace TimeMateTest.BLL
         public void CreateNoAgenda()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            account = new Account(accountDTO, new StubAgendaContainer());
+            account = new Account(accountDTO, new StubAgendaRepository());
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "", AgendaColor = "", NotificationType = "" };
 
             account.CreateAgenda(agendaDTO);
@@ -71,7 +71,7 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { AccountID = 12 };
             accountDTO.JobHourlyWage.Add(12.23);
             accountDTO.JobDayType.Add("Doordeweeks");
-            account = new Account(accountDTO, new StubAgendaContainer(), new StubJobContainer());
+            account = new Account(accountDTO, new StubAgendaRepository(), new StubJobRepository());
 
             account.CreateWorkAgenda();
 
@@ -95,7 +95,7 @@ namespace TimeMateTest.BLL
             accountDTO.JobDayType.Add("Doordeweeks");
             accountDTO.JobHourlyWage.Add(10);
             accountDTO.JobDayType.Add("Weekend");
-            account = new Account(accountDTO, new StubAgendaContainer(), new StubJobContainer());
+            account = new Account(accountDTO, new StubAgendaRepository(), new StubJobRepository());
 
             account.CreateWorkAgenda();
 
@@ -117,7 +117,7 @@ namespace TimeMateTest.BLL
         public void CreateOnlyWorkAgenda()
         {
             accountDTO = new AccountDTO() { AccountID = 23 };
-            account = new Account(accountDTO, new StubAgendaContainer(), new StubJobContainer());
+            account = new Account(accountDTO, new StubAgendaRepository(), new StubJobRepository());
 
             account.CreateWorkAgenda();
 
@@ -136,7 +136,7 @@ namespace TimeMateTest.BLL
         {
             List<AgendaDTO> output = new List<AgendaDTO>();
             accountDTO = new AccountDTO() { AccountID = 12 };
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
+            account = new Account(accountDTO, new StubAccountRepository(), new StubAgendaRepository());
 
             output = account.RetrieveAgendas();
 
@@ -149,7 +149,7 @@ namespace TimeMateTest.BLL
         {
             List<AgendaDTO> output = new List<AgendaDTO>();
             accountDTO = new AccountDTO() { AccountID = 128 };
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
+            account = new Account(accountDTO, new StubAccountRepository(), new StubAgendaRepository());
 
             output = account.RetrieveAgendas();
 
@@ -161,7 +161,7 @@ namespace TimeMateTest.BLL
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", NotificationType = "Nee" };
-            Account account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
+            Account account = new Account(accountDTO, new StubAccountRepository(), new StubAgendaRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePathAgendaDeletion))
             {
@@ -185,7 +185,7 @@ namespace TimeMateTest.BLL
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", NotificationType = "Nee" };
-            Account account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
+            Account account = new Account(accountDTO, new StubAccountRepository(), new StubAgendaRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePathAgendaDeletion))
             {

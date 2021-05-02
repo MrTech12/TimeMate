@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccessLayer.Interfaces
 {
-    public interface IAppointmentContainer
+    public interface IAppointmentRepository
     {
         int AddAppointment(AppointmentDTO appointmentDTO);
 

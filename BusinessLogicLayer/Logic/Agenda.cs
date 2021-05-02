@@ -10,25 +10,25 @@ namespace BusinessLogicLayer.Logic
 {
     public class Agenda
     {
-        private IAppointmentContainer _appointmentContainer;
-        private INormalAppointmentContainer _normalAppointmentContainer;
-        private IChecklistAppointmentContainer _checklistAppointmentContainer;
+        private IAppointmentRepository _appointmentContainer;
+        private INormalAppointmentRepository _normalAppointmentContainer;
+        private IChecklistAppointmentRepository _checklistAppointmentContainer;
 
         private AccountDTO accountDTO = new AccountDTO();
 
-        public Agenda(AccountDTO accountDTO, IAppointmentContainer appointmentContainer)
+        public Agenda(AccountDTO accountDTO, IAppointmentRepository appointmentContainer)
         {
             this.accountDTO = accountDTO;
             this._appointmentContainer = appointmentContainer;
         }
 
-        public Agenda(IAppointmentContainer appointmentContainer , INormalAppointmentContainer normalAppointmentContainer)
+        public Agenda(IAppointmentRepository appointmentContainer , INormalAppointmentRepository normalAppointmentContainer)
         {
             this._appointmentContainer = appointmentContainer;
             this._normalAppointmentContainer = normalAppointmentContainer;
         }
 
-        public Agenda(IAppointmentContainer appointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer)
+        public Agenda(IAppointmentRepository appointmentContainer, IChecklistAppointmentRepository checklistAppointmentContainer)
         {
             this._appointmentContainer = appointmentContainer;
             this._checklistAppointmentContainer = checklistAppointmentContainer;

@@ -25,7 +25,7 @@ namespace TimeMateTest.BLL
             accountDTO.FirstName = "Hans";
             accountDTO.Mail = "sina1240@gmail.com";
             accountDTO.Password = "QWEwieiwi231@#";
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer(), new StubJobContainer(), new StubSender());
+            account = new Account(accountDTO, new StubAccountRepository(), new StubAgendaRepository(), new StubJobRepository(), new StubSender());
             
             account.CreateAccount();
 
@@ -49,7 +49,7 @@ namespace TimeMateTest.BLL
             accountDTO.JobCount = 1;
             accountDTO.JobHourlyWage.Add(1.20);
             accountDTO.JobDayType.Add("Doordeweeks");
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer(), new StubJobContainer(), new StubSender());
+            account = new Account(accountDTO, new StubAccountRepository(), new StubAgendaRepository(), new StubJobRepository(), new StubSender());
             
             account.CreateAccount();
 
@@ -73,7 +73,7 @@ namespace TimeMateTest.BLL
             accountDTO.FirstName = "Intel";
             accountDTO.Mail = "intel12@gmail.com";
             accountDTO.Password = "QWEwieiwi231@#";
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer(), new StubJobContainer(), new StubSender());
+            account = new Account(accountDTO, new StubAccountRepository(), new StubAgendaRepository(), new StubJobRepository(), new StubSender());
             
             output = account.NewAccountInputValidation();
 
@@ -93,7 +93,7 @@ namespace TimeMateTest.BLL
         {
             string[] output;
             accountDTO = new AccountDTO() { FirstName = "Bert", Mail = "bert@gmail.com", Password = "qwieEW12iwieWE@#" };
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
+            account = new Account(accountDTO, new StubAccountRepository(), new StubAgendaRepository());
             
             output = account.NewAccountInputValidation();
 
@@ -104,7 +104,7 @@ namespace TimeMateTest.BLL
         public void CreateAccountNoMail()
         {
             accountDTO = new AccountDTO();
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
+            account = new Account(accountDTO, new StubAccountRepository(), new StubAgendaRepository());
 
             Action action = () => account.NewAccountInputValidation();
 
@@ -117,7 +117,7 @@ namespace TimeMateTest.BLL
         public void CreateAccountNoPassword()
         {
             accountDTO = new AccountDTO();
-            account = new Account(accountDTO, new StubAccountContainer(), new StubAgendaContainer());
+            account = new Account(accountDTO, new StubAccountRepository(), new StubAgendaRepository());
 
             Action action = () => account.CreateAccount();
 

@@ -6,18 +6,18 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace DataAccessLayer.Containers
+namespace DataAccessLayer.Repositories
 {
-    public class SQLAgendaContainer : IAgendaContainer
+    public class SQLAgendaRepository : IAgendaRepository
     {
-        private SQLDatabaseContainer SQLDatabaseContainer = new SQLDatabaseContainer();
+        private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
         public int AddAgenda(int accountID, AgendaDTO agendaDTO)
         {
             int agendaID;
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"INSERT INTO [Agenda](AccountID, Name, Color, NotificationType) VALUES (@0,@1,@2,@3); SELECT SCOPE_IDENTITY();";
                     
@@ -42,7 +42,7 @@ namespace DataAccessLayer.Containers
         {
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1";
 
@@ -65,7 +65,7 @@ namespace DataAccessLayer.Containers
             List<AgendaDTO> agendas = new List<AgendaDTO>();
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"SELECT a.* FROM [Agenda] a WHERE AccountID = @0";
 
@@ -97,7 +97,7 @@ namespace DataAccessLayer.Containers
             int agendaID;
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"SELECT AgendaID FROM [Agenda] WHERE Name = @0 AND AccountID = @1";
 

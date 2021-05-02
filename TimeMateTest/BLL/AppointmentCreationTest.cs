@@ -17,7 +17,7 @@ namespace TimeMateTest.BLL
         [Fact]
         public void NormalAppointment()
         {
-            agenda = new Agenda(new StubAppointmentContainer(), new StubNormalAppointmentContainer());
+            agenda = new Agenda(new StubAppointmentRepository(), new StubNormalAppointmentRepository());
             DescriptionDTO descriptionDTO = new DescriptionDTO() { Description = "This is <b> a </b> test." };
 
             appointmentDTO = new AppointmentDTO()
@@ -42,7 +42,7 @@ namespace TimeMateTest.BLL
         [Fact]
         public void NormalAppointmentNoDescription()
         {
-            agenda = new Agenda(new StubAppointmentContainer(), new StubNormalAppointmentContainer());
+            agenda = new Agenda(new StubAppointmentRepository(), new StubNormalAppointmentRepository());
 
             appointmentDTO = new AppointmentDTO()
             {
@@ -72,7 +72,7 @@ namespace TimeMateTest.BLL
             appointmentDTO.EndDate = DateTime.Now.AddHours(4);
             appointmentDTO.AgendaName = "Firefox";
             appointmentDTO.ChecklistDTOs.Add(checklistDTO);
-            agenda = new Agenda(new StubAppointmentContainer(), new StubChecklistAppointmentContainer());
+            agenda = new Agenda(new StubAppointmentRepository(), new StubChecklistAppointmentRepository());
 
             agenda.CreateChecklistAppointment(appointmentDTO);
 
@@ -87,7 +87,7 @@ namespace TimeMateTest.BLL
         [Fact]
         public void ChecklistAppointmenNoChecklist()
         {
-            agenda = new Agenda(new StubAppointmentContainer(), new StubChecklistAppointmentContainer());
+            agenda = new Agenda(new StubAppointmentRepository(), new StubChecklistAppointmentRepository());
 
             appointmentDTO = new AppointmentDTO();
             appointmentDTO.AppointmentName = "Create 3D render";

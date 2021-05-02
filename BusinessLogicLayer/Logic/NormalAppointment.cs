@@ -8,9 +8,9 @@ namespace BusinessLogicLayer.Logic
 {
     public class NormalAppointment
     {
-        private INormalAppointmentContainer _normalAppointmentContainer;
+        private INormalAppointmentRepository _normalAppointmentContainer;
 
-        public NormalAppointment(INormalAppointmentContainer normalAppointmentContainer)
+        public NormalAppointment(INormalAppointmentRepository normalAppointmentContainer)
         {
             this._normalAppointmentContainer = normalAppointmentContainer;
         }

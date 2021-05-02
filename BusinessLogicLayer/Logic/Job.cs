@@ -8,12 +8,12 @@ namespace BusinessLogicLayer.Logic
 {
     public class Job
     {
-        private IJobContainer _jobContainer;
-        private IAgendaContainer _agendaContainer;
-        private IAppointmentContainer _appointmentContainer;
+        private IJobRepository _jobContainer;
+        private IAgendaRepository _agendaContainer;
+        private IAppointmentRepository _appointmentContainer;
         private JobDTO jobDTO;
 
-        public Job(IJobContainer jobContainer, IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer)
+        public Job(IJobRepository jobContainer, IAgendaRepository agendaContainer, IAppointmentRepository appointmentContainer)
         {
             this._jobContainer = jobContainer;
             this._agendaContainer = agendaContainer;

@@ -14,9 +14,9 @@ namespace TimeMate.Controllers
 {
     public class NormalAppointmentController : Controller
     {
-        private readonly IAgendaContainer _agendaContainer;
-        private readonly IAppointmentContainer _appointmentContainer;
-        private readonly INormalAppointmentContainer _normalAppointmentContainer;
+        private readonly IAgendaRepository _agendaContainer;
+        private readonly IAppointmentRepository _appointmentContainer;
+        private readonly INormalAppointmentRepository _normalAppointmentContainer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         private Account account;
@@ -24,7 +24,7 @@ namespace TimeMate.Controllers
         private SessionService sessionService;
         private AccountDTO accountDTO = new AccountDTO();
 
-        public NormalAppointmentController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, INormalAppointmentContainer normalAppointmentContainer, IHttpContextAccessor httpContextAccessor)
+        public NormalAppointmentController(IAgendaRepository agendaContainer, IAppointmentRepository appointmentContainer, INormalAppointmentRepository normalAppointmentContainer, IHttpContextAccessor httpContextAccessor)
         {
             _agendaContainer = agendaContainer;
             _appointmentContainer = appointmentContainer;

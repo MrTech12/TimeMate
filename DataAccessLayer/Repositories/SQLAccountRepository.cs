@@ -9,18 +9,18 @@ using System.Data.SqlClient;
 using System.Text;
 using DataAccessLayer.Exceptions;
 
-namespace DataAccessLayer.Containers
+namespace DataAccessLayer.Repositories
 {
-    public class SQLAccountContainer : IAccountContainer
+    public class SQLAccountRepository : IAccountRepository
     {
-        private SQLDatabaseContainer SQLDatabaseContainer = new SQLDatabaseContainer();
+        private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
         public int GetUserID(string mail)
         {
             int userID;
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"SELECT AccountID FROM [Account] WHERE Mail = @0";
 
@@ -52,7 +52,7 @@ namespace DataAccessLayer.Containers
             string firstName;
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"SELECT FirstName FROM [Account] WHERE Mail = @0";
 
@@ -84,7 +84,7 @@ namespace DataAccessLayer.Containers
             string passwordHash;
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"SELECT Password FROM [Account] WHERE Mail = @0";
 
@@ -116,7 +116,7 @@ namespace DataAccessLayer.Containers
             int accountID;
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"INSERT INTO [Account](FirstName, Mail, Password) Values (@0,@1,@2); SELECT SCOPE_IDENTITY();";
 

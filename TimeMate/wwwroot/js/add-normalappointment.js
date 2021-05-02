@@ -1,4 +1,4 @@
-﻿var index = 0;
+﻿let index = 0;
 
 $(document).ready(function () {
     $("#bolding-text").click(function () {
@@ -31,7 +31,7 @@ function MakeTextBold() {
         range.deleteContents(); 
         range.insertNode(e);
     }
-};
+}
 
 function MakeTextNormal() {
     if (highlight.rangeCount) {
@@ -43,9 +43,9 @@ function MakeTextNormal() {
         range.deleteContents();
         range.insertNode(e);
     }
-};
+}
 
 function GetDescriptionInput() {
     var descriptionText = document.getElementById('description-box').innerHTML;
     $("#description-controller").val(descriptionText);
-};
+}

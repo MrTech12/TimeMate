@@ -7,7 +7,7 @@ using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs
 {
-    class StubNormalAppointmentContainer : INormalAppointmentContainer
+    class StubNormalAppointmentRepository : INormalAppointmentRepository
     {
         public void AddDescription(AppointmentDTO appointmentDTO)
         {

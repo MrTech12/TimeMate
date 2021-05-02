@@ -14,9 +14,9 @@ namespace TimeMate.Controllers
 {
     public class ChecklistAppointmentController : Controller
     {
-        private readonly IAgendaContainer _agendaContainer;
-        private readonly IAppointmentContainer _appointmentContainer;
-        private readonly IChecklistAppointmentContainer _checklistAppointmentContainer;
+        private readonly IAgendaRepository _agendaContainer;
+        private readonly IAppointmentRepository _appointmentContainer;
+        private readonly IChecklistAppointmentRepository _checklistAppointmentContainer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         private Account account;
@@ -24,7 +24,7 @@ namespace TimeMate.Controllers
         private SessionService sessionService;
         private AccountDTO accountDTO = new AccountDTO();
 
-        public ChecklistAppointmentController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer, IHttpContextAccessor httpContextAccessor)
+        public ChecklistAppointmentController(IAgendaRepository agendaContainer, IAppointmentRepository appointmentContainer, IChecklistAppointmentRepository checklistAppointmentContainer, IHttpContextAccessor httpContextAccessor)
         {
             _agendaContainer = agendaContainer;
             _appointmentContainer = appointmentContainer;

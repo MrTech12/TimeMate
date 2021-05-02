@@ -6,18 +6,18 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace DataAccessLayer.Containers
+namespace DataAccessLayer.Repositories
 {
-    public class SQLAppointmentContainer : IAppointmentContainer
+    public class SQLAppointmentRepository : IAppointmentRepository
     {
-        private SQLDatabaseContainer SQLDatabaseContainer = new SQLDatabaseContainer();
+        private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
         public int AddAppointment(AppointmentDTO appointmentDTO)
         {
             int appointmentID;
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"INSERT INTO [Appointment](AgendaID, Name, Starting, Ending) VALUES (@0, @1, @2, @3); SELECT SCOPE_IDENTITY();";
 
@@ -43,7 +43,7 @@ namespace DataAccessLayer.Containers
             List<AppointmentDTO> appointments = new List<AppointmentDTO>();
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"SELECT app.*, Agenda.Name AS AgendaName, description.*, task.* FROM [Appointment] app
                         LEFT JOIN Appointment_Description description ON app.AppointmentID = description.AppointmentID
@@ -96,7 +96,7 @@ namespace DataAccessLayer.Containers
             JobDTO jobDTO = new JobDTO();
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"SELECT Starting, Ending FROM [Appointment] WHERE AgendaID = @0 
                                     AND Starting >= @1 AND Ending <= @2";

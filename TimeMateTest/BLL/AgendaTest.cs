@@ -20,7 +20,7 @@ namespace TimeMateTest.BLL
         {
             List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = -5 };
-            agenda = new Agenda(accountDTO, new StubAppointmentContainer());
+            agenda = new Agenda(accountDTO, new StubAppointmentRepository());
 
             output = agenda.RetrieveAppointments();
 
@@ -32,7 +32,7 @@ namespace TimeMateTest.BLL
         {
             List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = 12 };
-            agenda = new Agenda(accountDTO, new StubAppointmentContainer());
+            agenda = new Agenda(accountDTO, new StubAppointmentRepository());
 
             output = agenda.RetrieveAppointments();
 
@@ -45,7 +45,7 @@ namespace TimeMateTest.BLL
         {
             List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = 42 };
-            agenda = new Agenda(accountDTO, new StubAppointmentContainer());
+            agenda = new Agenda(accountDTO, new StubAppointmentRepository());
 
             output = agenda.RetrieveAppointments();
 
@@ -60,7 +60,7 @@ namespace TimeMateTest.BLL
         {
             List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = 54 };
-            agenda = new Agenda(accountDTO, new StubAppointmentContainer());
+            agenda = new Agenda(accountDTO, new StubAppointmentRepository());
 
             output = agenda.RetrieveAppointments();
 

@@ -15,11 +15,11 @@ namespace TimeMate.Controllers
 {
     public class AgendaController : Controller
     {
-        private readonly IAgendaContainer _agendaContainer;
-        private readonly IAppointmentContainer _appointmentContainer;
-        private readonly INormalAppointmentContainer _normalAppointmentContainer;
-        private readonly IChecklistAppointmentContainer _checklistAppointmentContainer;
-        private readonly IJobContainer _jobContainer;
+        private readonly IAgendaRepository _agendaContainer;
+        private readonly IAppointmentRepository _appointmentContainer;
+        private readonly INormalAppointmentRepository _normalAppointmentContainer;
+        private readonly IChecklistAppointmentRepository _checklistAppointmentContainer;
+        private readonly IJobRepository _jobContainer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         private Account account;
@@ -28,7 +28,7 @@ namespace TimeMate.Controllers
         private SessionService sessionService;
         private AccountDTO accountDTO = new AccountDTO();
 
-        public AgendaController(IAgendaContainer agendaContainer, IAppointmentContainer appointmentContainer, INormalAppointmentContainer normalAppointmentContainer, IChecklistAppointmentContainer checklistAppointmentContainer, IJobContainer jobContainer, IHttpContextAccessor httpContextAccessor)
+        public AgendaController(IAgendaRepository agendaContainer, IAppointmentRepository appointmentContainer, INormalAppointmentRepository normalAppointmentContainer, IChecklistAppointmentRepository checklistAppointmentContainer, IJobRepository jobContainer, IHttpContextAccessor httpContextAccessor)
         {
             _agendaContainer = agendaContainer;
             _appointmentContainer = appointmentContainer;
@@ -111,15 +111,16 @@ namespace TimeMate.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteAgenda([FromBody] AgendaModel acceptModel)
+        public IActionResult DeleteAgenda([FromBody] AgendaModel agendaModel)
         {
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
             account = new Account(accountDTO, _agendaContainer);
-            account.DeleteAgenda(acceptModel.AgendaID);
+            account.DeleteAgenda(agendaModel.AgendaID);
             return Ok();
         }
 
-        [HttpGet]
+        [HttpPatch]
+        [Route("Agenda/ChangeTaskStatus/{taskID}")]
         public IActionResult ChangeTaskStatus(int taskID)
         {
             ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentContainer);
@@ -128,7 +129,8 @@ namespace TimeMate.Controllers
         }
 
         [HttpGet]
-        public IActionResult RetrieveAppointmentExtra(int appointmentID)
+        [Route("Agenda/AppointmentExtra/{appointmentID}")]
+        public IActionResult AppointmentExtra(int appointmentID)
         {
             NormalAppointment normalAppointment = new NormalAppointment(_normalAppointmentContainer);
 

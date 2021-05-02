@@ -8,9 +8,9 @@ namespace BusinessLogicLayer.Logic
 {
     public class ChecklistAppointment
     {
-        private IChecklistAppointmentContainer _checklistAppointmentContainer;
+        private IChecklistAppointmentRepository _checklistAppointmentContainer;
 
-        public ChecklistAppointment(IChecklistAppointmentContainer checklistAppointmentContainer)
+        public ChecklistAppointment(IChecklistAppointmentRepository checklistAppointmentContainer)
         {
             this._checklistAppointmentContainer = checklistAppointmentContainer;
         }

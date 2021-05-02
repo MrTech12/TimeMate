@@ -7,7 +7,7 @@ using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs
 {
-    class StubJobContainer : IJobContainer
+    class StubJobRepository : IJobRepository
     {
         public void AddPayDetails(AccountDTO accountDTO)
         {

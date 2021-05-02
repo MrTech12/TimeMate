@@ -15,7 +15,7 @@ namespace TimeMateTest.BLL
         public void NoJob()
         {
             JobDTO jobDTO = new JobDTO();
-            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+            job = new Job(new StubJobRepository(), new StubAgendaRepository(), new StubAppointmentRepository());
 
             jobDTO = job.RetrieveJobDetails(-5);
 
@@ -27,7 +27,7 @@ namespace TimeMateTest.BLL
         public void WorkdayJob()
         {
             JobDTO jobDTO = new JobDTO();
-            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+            job = new Job(new StubJobRepository(), new StubAgendaRepository(), new StubAppointmentRepository());
 
             jobDTO = job.RetrieveJobDetails(15);
 
@@ -39,7 +39,7 @@ namespace TimeMateTest.BLL
         public void WeekendJob()
         {
             JobDTO jobDTO = new JobDTO();
-            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+            job = new Job(new StubJobRepository(), new StubAgendaRepository(), new StubAppointmentRepository());
 
             jobDTO = job.RetrieveJobDetails(25);
 
@@ -51,7 +51,7 @@ namespace TimeMateTest.BLL
         public void TwoWorkHoursForWorkdays()
         {
             double output;
-            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+            job = new Job(new StubJobRepository(), new StubAgendaRepository(), new StubAppointmentRepository());
 
             output = job.RetrieveWorkdayHours(6);
 
@@ -62,7 +62,7 @@ namespace TimeMateTest.BLL
         public void ZeroWorkHoursForWorkdays()
         {
             double output;
-            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+            job = new Job(new StubJobRepository(), new StubAgendaRepository(), new StubAppointmentRepository());
 
             output = job.RetrieveWorkdayHours(7);
 
@@ -73,7 +73,7 @@ namespace TimeMateTest.BLL
         public void TwoWorkHoursForWeekend()
         {
             double output;
-            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+            job = new Job(new StubJobRepository(), new StubAgendaRepository(), new StubAppointmentRepository());
 
             output = job.RetrieveWeekendHours(8);
 
@@ -84,7 +84,7 @@ namespace TimeMateTest.BLL
         public void ZeroWorkHoursForWeekend()
         {
             double output;
-            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+            job = new Job(new StubJobRepository(), new StubAgendaRepository(), new StubAppointmentRepository());
 
             output = job.RetrieveWeekendHours(9);
 
@@ -95,7 +95,7 @@ namespace TimeMateTest.BLL
         public void FourAndHalfWorkedHours()
         {
             double output;
-            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+            job = new Job(new StubJobRepository(), new StubAgendaRepository(), new StubAppointmentRepository());
             JobDTO jobDTO = new JobDTO();
             jobDTO.StartDate.Add(DateTime.Parse("2020-06-01 14:00:00"));
             jobDTO.EndDate.Add(DateTime.Parse("2020-06-01 18:20:00"));
@@ -109,7 +109,7 @@ namespace TimeMateTest.BLL
         public void ZeroWorkedHours()
         {
             double output;
-            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+            job = new Job(new StubJobRepository(), new StubAgendaRepository(), new StubAppointmentRepository());
             JobDTO jobDTO = new JobDTO();
 
             output = job.CalculateWorkedHours(jobDTO);
@@ -122,7 +122,7 @@ namespace TimeMateTest.BLL
         {
             DateTime output;
             DateTime weekSixThursday = DateTime.Parse("2020-02-06");
-            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+            job = new Job(new StubJobRepository(), new StubAgendaRepository(), new StubAppointmentRepository());
 
             output = job.GetFirstDayOfWeek(weekSixThursday);
 
@@ -134,7 +134,7 @@ namespace TimeMateTest.BLL
         {
             DateTime output;
             DateTime weekFourSunday = DateTime.Parse("2020-01-26");
-            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+            job = new Job(new StubJobRepository(), new StubAgendaRepository(), new StubAppointmentRepository());
 
             output = job.GetFirstDayOfWeek(weekFourSunday);
 
@@ -146,7 +146,7 @@ namespace TimeMateTest.BLL
         {
             DateTime output;
             DateTime empty = new DateTime();
-            job = new Job(new StubJobContainer(), new StubAgendaContainer(), new StubAppointmentContainer());
+            job = new Job(new StubJobRepository(), new StubAgendaRepository(), new StubAppointmentRepository());
 
             output = job.GetFirstDayOfWeek(empty);
 

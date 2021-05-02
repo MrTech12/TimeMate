@@ -6,9 +6,9 @@ using System.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
-namespace DataAccessLayer.Containers
+namespace DataAccessLayer.Repositories
 {
-    public class SQLDatabaseContainer
+    public class SQLDatabaseRepository
     {
         public string GetConnectionString()
         {

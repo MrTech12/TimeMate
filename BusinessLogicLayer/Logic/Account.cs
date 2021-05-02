@@ -8,14 +8,14 @@ namespace BusinessLogicLayer.Logic
 {
     public class Account
     {
-        private readonly IAccountContainer _accountContainer;
+        private readonly IAccountRepository _accountContainer;
         private readonly ISender _senderContainer;
-        private readonly IAgendaContainer _agendaContainer;
-        private readonly IJobContainer _jobContainer;
+        private readonly IAgendaRepository _agendaContainer;
+        private readonly IJobRepository _jobContainer;
 
         private AccountDTO accountDTO;
 
-        public Account(AccountDTO accountDTO, IAccountContainer accountContainer, IAgendaContainer agendaContainer, IJobContainer jobContainer, ISender senderContainer)
+        public Account(AccountDTO accountDTO, IAccountRepository accountContainer, IAgendaRepository agendaContainer, IJobRepository jobContainer, ISender senderContainer)
         {
             this.accountDTO = accountDTO;
             this._accountContainer = accountContainer;
@@ -24,27 +24,27 @@ namespace BusinessLogicLayer.Logic
             this._senderContainer = senderContainer;
         }
 
-        public Account(AccountDTO accountDTO, IAccountContainer accountContainer, IAgendaContainer agendaContainer)
+        public Account(AccountDTO accountDTO, IAccountRepository accountContainer, IAgendaRepository agendaContainer)
         {
             this.accountDTO = accountDTO;
             this._accountContainer = accountContainer;
             this._agendaContainer = agendaContainer;
         }
 
-        public Account(AccountDTO accountDTO, IAgendaContainer agendaContainer)
+        public Account(AccountDTO accountDTO, IAgendaRepository agendaContainer)
         {
             this.accountDTO = accountDTO;
             this._agendaContainer = agendaContainer;
         }
 
-        public Account(AccountDTO accountDTO, IAgendaContainer agendaContainer, IJobContainer jobContainer)
+        public Account(AccountDTO accountDTO, IAgendaRepository agendaContainer, IJobRepository jobContainer)
         {
             this.accountDTO = accountDTO;
             this._agendaContainer = agendaContainer;
             this._jobContainer = jobContainer;
         }
 
-        public Account(AccountDTO accountDTO, IAccountContainer accountContainer)
+        public Account(AccountDTO accountDTO, IAccountRepository accountContainer)
         {
             this.accountDTO = accountDTO;
             this._accountContainer = accountContainer;

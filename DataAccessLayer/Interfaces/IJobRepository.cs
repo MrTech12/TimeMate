@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccessLayer.Interfaces
 {
-    public interface IJobContainer
+    public interface IJobRepository
     {
         void AddPayDetails(AccountDTO accountDTO);
 

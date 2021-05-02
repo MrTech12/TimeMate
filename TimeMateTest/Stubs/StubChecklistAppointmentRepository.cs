@@ -7,7 +7,7 @@ using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs
 {
-    class StubChecklistAppointmentContainer : IChecklistAppointmentContainer
+    class StubChecklistAppointmentRepository : IChecklistAppointmentRepository
     {
         public void AddTask(AppointmentDTO appointmentDTO)
         {

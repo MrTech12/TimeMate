@@ -7,17 +7,17 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
-namespace DataAccessLayer.Containers
+namespace DataAccessLayer.Repositories
 {
-    public class SQLChecklistAppointmentContainer : IChecklistAppointmentContainer
+    public class SQLChecklistAppointmentRepository : IChecklistAppointmentRepository
     {
-        private SQLDatabaseContainer SQLDatabaseContainer = new SQLDatabaseContainer();
+        private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
         public void AddTask(AppointmentDTO appointmentDTO)
         {
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"INSERT INTO [Appointment_Task](AppointmentID, TaskName, TaskChecked) VALUES (@0, @1, @2)";
 
@@ -45,7 +45,7 @@ namespace DataAccessLayer.Containers
             List<ChecklistDTO> checklists = new List<ChecklistDTO>();
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"SELECT TaskID, TaskName FROM [Appointment_Task] WHERE AppointmentID = @0";
 
@@ -76,7 +76,7 @@ namespace DataAccessLayer.Containers
             bool taskStatus;
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"SELECT TaskChecked FROM [Appointment_Task] WHERE TaskID = @0";
 
@@ -98,7 +98,7 @@ namespace DataAccessLayer.Containers
         {
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"UPDATE [Appointment_Task] SET TaskChecked=@0 WHERE TaskID = @1";
 

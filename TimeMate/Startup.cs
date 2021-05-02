@@ -8,6 +8,7 @@ using DataAccessLayer.DTO;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using BusinessLogicLayer;
+using DataAccessLayer.Repositories;
 
 namespace TimeMate
 {
@@ -31,12 +32,12 @@ namespace TimeMate
             services.AddSingleton<AppointmentDTO>();
             services.AddSingleton<JobDTO>();
 
-            services.AddSingleton<IAccountContainer, SQLAccountContainer>();
-            services.AddSingleton<IAgendaContainer, SQLAgendaContainer>();
-            services.AddSingleton<IAppointmentContainer, SQLAppointmentContainer>();
-            services.AddSingleton<IChecklistAppointmentContainer, SQLChecklistAppointmentContainer>();
-            services.AddSingleton<IJobContainer, SQLJobContainer>();
-            services.AddSingleton<INormalAppointmentContainer, SQLNormalAppointmentContainer>();
+            services.AddSingleton<IAccountRepository, SQLAccountRepository>();
+            services.AddSingleton<IAgendaRepository, SQLAgendaRepository>();
+            services.AddSingleton<IAppointmentRepository, SQLAppointmentRepository>();
+            services.AddSingleton<IChecklistAppointmentRepository, SQLChecklistAppointmentRepository>();
+            services.AddSingleton<IJobRepository, SQLJobRepository>();
+            services.AddSingleton<INormalAppointmentRepository, SQLNormalAppointmentRepository>();
             services.AddSingleton<ISender, MailSender>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

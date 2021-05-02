@@ -17,7 +17,7 @@ namespace TimeMateTest.BLL
         public void GetTasks()
         {
             int appointmentID = 14;
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
             List<string> output = checklistAppointment.RetrieveTasks(appointmentID);
 
@@ -31,7 +31,7 @@ namespace TimeMateTest.BLL
         public void GetNoTasks()
         {
             int appointmentID = 0;
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
             List<string> output = checklistAppointment.RetrieveTasks(appointmentID);
 
@@ -44,7 +44,7 @@ namespace TimeMateTest.BLL
             ChecklistDTO checklistDTO = new ChecklistDTO();
             checklistDTO.TaskID = 62;
             checklistDTO.TaskName = "Get cake";
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePath))
             {
@@ -67,7 +67,7 @@ namespace TimeMateTest.BLL
             ChecklistDTO checklistDTO = new ChecklistDTO();
             checklistDTO.TaskID = 74;
             checklistDTO.TaskName = "Buy new monitor";
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePath))
             {
@@ -90,7 +90,7 @@ namespace TimeMateTest.BLL
             ChecklistDTO checklistDTO = new ChecklistDTO();
             checklistDTO.TaskID = 28;
             checklistDTO.TaskName = "Bake a cake";
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentContainer());
+            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePath))
             {

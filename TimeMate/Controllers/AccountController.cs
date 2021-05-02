@@ -16,9 +16,9 @@ namespace TimeMate.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IAccountContainer _accountContainer;
-        private readonly IAgendaContainer _agendaContainer;
-        private readonly IJobContainer _jobContainer;
+        private readonly IAccountRepository _accountContainer;
+        private readonly IAgendaRepository _agendaContainer;
+        private readonly IJobRepository _jobContainer;
         private readonly ISender _senderContainer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -26,7 +26,7 @@ namespace TimeMate.Controllers
         private SessionService sessionService;
         private AccountDTO accountDTO;
 
-        public AccountController(IAccountContainer accountContainer, IAgendaContainer agendaContainer, IJobContainer jobContainer, ISender senderContainer, IHttpContextAccessor httpContextAccessor)
+        public AccountController(IAccountRepository accountContainer, IAgendaRepository agendaContainer, IJobRepository jobContainer, ISender senderContainer, IHttpContextAccessor httpContextAccessor)
         {
             _accountContainer = accountContainer;
             _agendaContainer = agendaContainer;

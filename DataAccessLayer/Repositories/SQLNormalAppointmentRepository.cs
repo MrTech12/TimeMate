@@ -6,17 +6,17 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace DataAccessLayer.Containers
+namespace DataAccessLayer.Repositories
 {
-    public class SQLNormalAppointmentContainer : INormalAppointmentContainer
+    public class SQLNormalAppointmentRepository : INormalAppointmentRepository
     {
-        private SQLDatabaseContainer SQLDatabaseContainer = new SQLDatabaseContainer();
+        private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
         public void AddDescription(AppointmentDTO appointmentDTO)
         {
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"INSERT INTO [Appointment_Description](AppointmentID, Description) VALUES (@0, @1)";
 
@@ -39,7 +39,7 @@ namespace DataAccessLayer.Containers
             string description;
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"SELECT Description FROM [Appointment_Description] WHERE AppointmentID = @0";
 

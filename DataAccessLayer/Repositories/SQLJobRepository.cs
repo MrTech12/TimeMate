@@ -6,17 +6,17 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 
-namespace DataAccessLayer.Containers
+namespace DataAccessLayer.Repositories
 {
-    public class SQLJobContainer : IJobContainer
+    public class SQLJobRepository : IJobRepository
     {
-        private SQLDatabaseContainer SQLDatabaseContainer = new SQLDatabaseContainer();
+        private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
         public void AddPayDetails(AccountDTO accountDTO)
         {
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"INSERT INTO [Job](AccountID, HourlyWageBuss, HourlyWageWeek) Values (@0,@1,@2)";
 
@@ -53,7 +53,7 @@ namespace DataAccessLayer.Containers
             double wage = 0;
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"SELECT HourlyWageBuss FROM [Job] WHERE AccountID = @0";
 
@@ -84,7 +84,7 @@ namespace DataAccessLayer.Containers
             double wage = 0;
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseContainer.GetConnectionString()))
+                using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
                     string query = @"SELECT HourlyWageWeek FROM [Job] WHERE AccountID = @0";
 

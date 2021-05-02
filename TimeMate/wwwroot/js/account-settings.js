@@ -41,5 +41,5 @@ async function SendDeleteRequest() {
     .then(response => {
         selectInput.remove(selectInput.selectedIndex);
         alert("Agenda succesvol verwijderd.");
-    }).catch((error => console.error('Kan de agenda niet verwijderen.', error)));
+    }).catch((error => console.error('Cannot remove the agenda.', error)));
 }
