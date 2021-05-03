@@ -20,7 +20,6 @@
                 <li>1 cijfer bevatten</li>
                 <li>1 speciale teken bevatten</li>
             </ul>
-
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
@@ -36,13 +35,11 @@
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="JobAmount" class="control-label"></label>
-                <input asp-for="JobAmount" class="form-control" id="job-amount" min="0" max="2" />
+                <input asp-for="JobAmount" class="form-control" id="job-amount" min="0" max="2" value="0"/>
                 <span asp-validation-for="JobAmount" class="text-danger"></span>
             </div>
-
             <div class="d-none" id="job1">
                 <div class="form-group">
                     <label asp-for="Job1HourlyWage" class="control-label"></label>
@@ -58,7 +55,6 @@
                     <span asp-validation-for="Job1DayType" class="text-danger"></span>
                 </div>
             </div>
-
             <div class="d-none" id="job2">
                 <div class="form-group">
                     <label asp-for="Job2HourlyWage" class="control-label"></label>
@@ -74,7 +70,6 @@
                     <span asp-validation-for="Job2DayType" class="text-danger"></span>
                 </div>
             </div>
-
             <div class="form-group">
                 <input id="register-button" type="submit" value="Registeer" class="btn btn-success" />
                 <input id="go-login-button" type="button" value="Terug naar inloggen" onclick="location.href='@Url.Action("Index", "Account")'" class="btn btn-warning" />

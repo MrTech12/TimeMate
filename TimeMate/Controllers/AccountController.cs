@@ -16,22 +16,22 @@ namespace TimeMate.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IAccountRepository _accountContainer;
-        private readonly IAgendaRepository _agendaContainer;
-        private readonly IJobRepository _jobContainer;
-        private readonly ISender _senderContainer;
+        private readonly IAccountRepository _accountRepository;
+        private readonly IAgendaRepository _agendaRepository;
+        private readonly IJobRepository _jobRepository;
+        private readonly ISender _sender;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         private Account account;
         private SessionService sessionService;
         private AccountDTO accountDTO;
 
-        public AccountController(IAccountRepository accountContainer, IAgendaRepository agendaContainer, IJobRepository jobContainer, ISender senderContainer, IHttpContextAccessor httpContextAccessor)
+        public AccountController(IAccountRepository accountRepository, IAgendaRepository agendaRepository, IJobRepository jobRepository, ISender senderRepository, IHttpContextAccessor httpContextAccessor)
         {
-            _accountContainer = accountContainer;
-            _agendaContainer = agendaContainer;
-            _jobContainer = jobContainer;
-            _senderContainer = senderContainer;
+            _accountRepository = accountRepository;
+            _agendaRepository = agendaRepository;
+            _jobRepository = jobRepository;
+            _sender = senderRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -60,7 +60,7 @@ namespace TimeMate.Controllers
                 accountDTO.Mail = viewModel.Mail;
                 accountDTO.Password = viewModel.Password;
 
-                account = new Account(accountDTO, _accountContainer);
+                account = new Account(accountDTO, _accountRepository);
                 string[] result = account.LoggingIn();
 
                 if (result == null || result[1] == null)
@@ -136,7 +136,7 @@ namespace TimeMate.Controllers
                     accountDTO.JobDayType.Add(viewModel.Job2DayType);
                 }
 
-                account = new Account(accountDTO, _accountContainer, _agendaContainer, _jobContainer, _senderContainer);
+                account = new Account(accountDTO, _accountRepository, _agendaRepository, _jobRepository, _sender);
                 string[] result = account.NewAccountInputValidation();
 
                 if (result[1] == null)
@@ -167,7 +167,7 @@ namespace TimeMate.Controllers
                 accountDTO = new AccountDTO();
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
-                account = new Account(accountDTO, _agendaContainer);
+                account = new Account(accountDTO, _agendaRepository);
                 List<AgendaDTO> viewModel = account.RetrieveAgendas();
                 return View(viewModel);
             }

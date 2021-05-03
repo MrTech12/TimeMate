@@ -8,16 +8,14 @@
 <script src="~/js/add-normalappointment.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/addnormalappointment.css" />
 
-<h1>Nieuwe afspraak toevoegen</h1>
+<h1>Nieuwe normale afspraak toevoegen</h1>
 
 <hr />
 <form asp-action="Index" id="appointment-form">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
         <div class="col-md-6">
-
             <partial name="_AddAppointment" for="@Model.AppointmentViewModel" />
-
             <br />
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
@@ -25,10 +23,8 @@
                     <input type="button" id="bolding-text" class="btn btn-info" value="Maak tekst dikgedrukt/niet dikgedrukt" />
                     <input type="button" id="save-description" class="btn btn-secondary" value="Tekst opslaan" />
                 </div>
-                
                 <div class="description" id="description-box" contenteditable="true"></div>
                 <input type="text" id="description-controller" asp-for="Description" hidden="hidden" />
-
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
         </div>

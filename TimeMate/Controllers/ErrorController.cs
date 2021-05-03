@@ -33,7 +33,7 @@ namespace TimeMate.Controllers
             ViewBag.ExceptionPath = exceptionDetails.Path;
             ViewBag.ExceptionMessage = exceptionDetails.Error.Message;
 
-            return View("BetterError");
+            return View("CustomError");
         }
     }
 }
