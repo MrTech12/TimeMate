@@ -22,11 +22,6 @@ namespace BusinessLogicLayer.Logic
             _normalAppointmentRepository = normalAppointmentRepository;
         }
 
-        public string RetrieveDescription(int appointmentID)
-        {
-            return _normalAppointmentRepository.GetDescription(appointmentID);
-        }
-
         public void CreateNormalAppointment(AppointmentDTO appointmentDTO)
         {
             appointmentDTO.AppointmentID = _appointmentRepository.AddAppointment(appointmentDTO);
@@ -35,6 +30,11 @@ namespace BusinessLogicLayer.Logic
             {
                 _normalAppointmentRepository.AddDescription(appointmentDTO);
             }
+        }
+
+        public string RetrieveDescription(int appointmentID)
+        {
+            return _normalAppointmentRepository.GetDescription(appointmentID);
         }
     }
 }

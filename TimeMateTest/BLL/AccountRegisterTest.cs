@@ -75,7 +75,6 @@ namespace TimeMateTest.BLL
         public void CreateAccounSendMail()
         {
             string[] file;
-            string[] output;
             accountDTO = new AccountDTO();
             accountDTO.FirstName = "Intel";
             accountDTO.Mail = "intel12@gmail.com";
@@ -87,8 +86,6 @@ namespace TimeMateTest.BLL
             file = File.ReadAllLines(filePathAccount);
             File.Delete(filePathAccount);
 
-            //Assert.Equal("39", output[0]);
-            //Assert.Equal("Intel", output[1]);
             Assert.Equal("Intel", file[0]);
             Assert.Equal("intel12@gmail.com", file[1]);
             Assert.Equal("39", file[3]);

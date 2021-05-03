@@ -79,7 +79,7 @@ namespace DataAccessLayer.Repositories
             return firstName;
         }
 
-        public string SearchForPasswordHash(string mail)
+        public string GetPasswordHash(string mail)
         {
             string passwordHash;
             try

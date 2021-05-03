@@ -30,7 +30,7 @@ namespace BusinessLogicLayer.Logic
         {
             string[] returnMessage = new string[2];
 
-            string databaseOutput = _accountRepository.SearchForPasswordHash(accountDTO.Mail);
+            string databaseOutput = _accountRepository.GetPasswordHash(accountDTO.Mail);
             if (databaseOutput != null)
             {
                 bool passwordValid = BCrypt.Net.BCrypt.Verify(accountDTO.Password, databaseOutput);

@@ -29,7 +29,7 @@ namespace TimeMateTest.Stubs
             return firstName;
         }
 
-        public string SearchForPasswordHash(string mail)
+        public string GetPasswordHash(string mail)
         {
             string returnMessage = null;
             if (mail == "test@gmail.com")

@@ -11,7 +11,7 @@ namespace DataAccessLayer.Interfaces
 
         string GetFirstName(string mail);
 
-        string SearchForPasswordHash(string mail);
+        string GetPasswordHash(string mail);
 
         int CreateAccount(AccountDTO AccountDTO);
     }
