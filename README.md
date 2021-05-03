@@ -1,5 +1,7 @@
 # TimeMate
 
+## Overview
+
 An online agenda, build with the ASP.NET Core MVC framework.
 
 With this application you can perform the following:
@@ -33,7 +35,7 @@ keys and values that are needed. Replace the hashtag symbol (**#**) with your ow
 ## Limitations (As of 3-5-2021)
 * An account can have a maximum of 2 jobs.
 * The color of an agenda is not reflected in the UI.
-* The type of notication, that can be set per agenda, is not reflected in the application. There aren't any sounds that play when an appointment is almost due. There is also no notification system in place.
+* The type of notification, that can be set per agenda, is not reflected in the application. There aren't any sounds that play when an appointment is almost due. There is also no notification system in place.
 * The color and notification type of the "Bijbaan" agenda cannot be adjusted by the user.
 * Appointments get displayed in a regular table view.
 * There is no filtering or search functionality for appointments.
