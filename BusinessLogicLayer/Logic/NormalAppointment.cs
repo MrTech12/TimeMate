@@ -8,16 +8,33 @@ namespace BusinessLogicLayer.Logic
 {
     public class NormalAppointment
     {
-        private INormalAppointmentRepository _normalAppointmentContainer;
+        private INormalAppointmentRepository _normalAppointmentRepository;
+        private IAppointmentRepository _appointmentRepository;
 
-        public NormalAppointment(INormalAppointmentRepository normalAppointmentContainer)
+        public NormalAppointment(INormalAppointmentRepository normalAppointmentRepository)
         {
-            this._normalAppointmentContainer = normalAppointmentContainer;
+            _normalAppointmentRepository = normalAppointmentRepository;
+        }
+
+        public NormalAppointment(IAppointmentRepository appointmentRepository, INormalAppointmentRepository normalAppointmentRepository)
+        {
+            _appointmentRepository = appointmentRepository;
+            _normalAppointmentRepository = normalAppointmentRepository;
         }
 
         public string RetrieveDescription(int appointmentID)
         {
-            return _normalAppointmentContainer.GetDescription(appointmentID);
+            return _normalAppointmentRepository.GetDescription(appointmentID);
+        }
+
+        public void CreateNormalAppointment(AppointmentDTO appointmentDTO)
+        {
+            appointmentDTO.AppointmentID = _appointmentRepository.AddAppointment(appointmentDTO);
+
+            if (appointmentDTO.DescriptionDTO.Description != null)
+            {
+                _normalAppointmentRepository.AddDescription(appointmentDTO);
+            }
         }
     }
 }

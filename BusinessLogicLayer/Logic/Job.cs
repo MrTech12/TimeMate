@@ -8,23 +8,23 @@ namespace BusinessLogicLayer.Logic
 {
     public class Job
     {
-        private IJobRepository _jobContainer;
-        private IAgendaRepository _agendaContainer;
-        private IAppointmentRepository _appointmentContainer;
+        private IJobRepository _jobRepository;
+        private IAgendaRepository _agendaRepository;
+        private IAppointmentRepository _appointmentRepository;
         private JobDTO jobDTO;
 
-        public Job(IJobRepository jobContainer, IAgendaRepository agendaContainer, IAppointmentRepository appointmentContainer)
+        public Job(IJobRepository jobRepository, IAgendaRepository agendaRepository, IAppointmentRepository appointmentRepository)
         {
-            this._jobContainer = jobContainer;
-            this._agendaContainer = agendaContainer;
-            this._appointmentContainer = appointmentContainer;
+            _jobRepository = jobRepository;
+            _agendaRepository = agendaRepository;
+            _appointmentRepository = appointmentRepository;
         }
 
         public JobDTO RetrieveJobDetails(int accountID)
         {
             JobDTO jobDetails = new JobDTO();
-            double workdayWage = _jobContainer.GetWorkdayPayWage(accountID);
-            double weekendWage = _jobContainer.GetWeekendPayWage(accountID);
+            double workdayWage = _jobRepository.GetWorkdayPayWage(accountID);
+            double weekendWage = _jobRepository.GetWeekendPayWage(accountID);
 
             if (workdayWage == 0 && weekendWage == 0)
             {
@@ -32,7 +32,7 @@ namespace BusinessLogicLayer.Logic
             }
             else
             {
-                int agendaID = _agendaContainer.GetAgendaID("Bijbaan", accountID);
+                int agendaID = _agendaRepository.GetAgendaID("Bijbaan", accountID);
                 if (workdayWage != 0 && weekendWage == 0)
                 {
                     jobDetails.WeeklyHours = RetrieveWorkdayHours(agendaID);
@@ -65,7 +65,7 @@ namespace BusinessLogicLayer.Logic
             workdayDates.Add(monday);
             workdayDates.Add(monday.AddDays(5));
 
-            jobDTO = _appointmentContainer.GetWorkHours(agendaID, workdayDates);
+            jobDTO = _appointmentRepository.GetWorkHours(agendaID, workdayDates);
 
             return CalculateWorkedHours(jobDTO);
         }
@@ -79,7 +79,7 @@ namespace BusinessLogicLayer.Logic
             weekendDates.Add(monday.AddDays(5));
             weekendDates.Add(monday.AddDays(7));
 
-            jobDTO = _appointmentContainer.GetWorkHours(accountID, weekendDates);
+            jobDTO = _appointmentRepository.GetWorkHours(accountID, weekendDates);
 
             return CalculateWorkedHours(jobDTO);
         }

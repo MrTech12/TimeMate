@@ -19,9 +19,10 @@ namespace TimeMate.Controllers
         private readonly IChecklistAppointmentRepository _checklistAppointmentContainer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private Account account;
+        private ChecklistAppointment checklistAppointment;
         private Agenda agenda;
         private SessionService sessionService;
+        private AppointmentService appointmentService = new AppointmentService();
         private AccountDTO accountDTO = new AccountDTO();
 
         public ChecklistAppointmentController(IAgendaRepository agendaContainer, IAppointmentRepository appointmentContainer, IChecklistAppointmentRepository checklistAppointmentContainer, IHttpContextAccessor httpContextAccessor)
@@ -42,8 +43,8 @@ namespace TimeMate.Controllers
                 ChecklistAppointmentViewModel viewModel = new ChecklistAppointmentViewModel();
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
-                account = new Account(accountDTO, _agendaContainer);
-                ViewBag.agendaList = account.RetrieveAgendas();
+                agenda = new Agenda(accountDTO, _agendaContainer);
+                ViewBag.agendaList = agenda.RetrieveAgendas();
 
                 if (ViewBag.agendaList.Count == 0)
                 {
@@ -65,6 +66,12 @@ namespace TimeMate.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (!appointmentService.ValidateDates(viewModel.AppointmentViewModel))
+                {
+                    ModelState.AddModelError("", "De startdatum en einddatum zijn niet correct.");
+                    return View(viewModel);
+                }
+
                 AppointmentDTO appointmentDTO = new AppointmentDTO();
                 appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.AppointmentName;
                 appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
@@ -83,14 +90,23 @@ namespace TimeMate.Controllers
                     }
                 }
 
-                agenda = new Agenda(_appointmentContainer, _checklistAppointmentContainer);
-                agenda.CreateChecklistAppointment(appointmentDTO);
-                return RedirectToAction("Index", "Agenda");
+                checklistAppointment = new ChecklistAppointment(_appointmentContainer, _checklistAppointmentContainer);
+                checklistAppointment.CreateChecklistAppointment(appointmentDTO);
+                return RedirectToAction("Index", "AgendaView");
             }
             else
             {
                 return View(viewModel);
             }
+        }
+
+        [HttpPatch]
+        [Route("ChecklistAppointment/TaskStatus/{taskID}")]
+        public IActionResult ChangeTaskStatus(int taskID)
+        {
+            checklistAppointment = new ChecklistAppointment(_checklistAppointmentContainer);
+            checklistAppointment.ChangeTaskStatus(taskID);
+            return Ok();
         }
     }
 }

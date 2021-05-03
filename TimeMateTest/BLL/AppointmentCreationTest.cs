@@ -11,38 +11,15 @@ namespace TimeMateTest.BLL
 {
     public class AppointmentCreationTest
     {
-        private Agenda agenda;
+        private NormalAppointment normalAppointment;
+        private ChecklistAppointment checklistAppointment;
         private AppointmentDTO appointmentDTO;
         private string filePath = @"C:\tmp\addAppointmentTest.txt";
-        [Fact]
-        public void NormalAppointment()
-        {
-            agenda = new Agenda(new StubAppointmentRepository(), new StubNormalAppointmentRepository());
-            DescriptionDTO descriptionDTO = new DescriptionDTO() { Description = "This is <b> a </b> test." };
-
-            appointmentDTO = new AppointmentDTO()
-            {
-                AppointmentName = "Reorder cables",
-                StartDate = DateTime.Now.AddHours(2),
-                EndDate = DateTime.Now.AddHours(4),
-                DescriptionDTO = descriptionDTO,
-                AgendaName = "Firefox"
-            };
-
-            agenda.CreateNormalAppointment(appointmentDTO);
-
-            string[] file = File.ReadAllLines(filePath);
-            File.Delete(filePath);
-
-            Assert.Contains("Reorder cables", file[0]);
-            Assert.Contains("This is <b> a </b> test.", file[4]);
-            Assert.True(file.Length == 5);
-        }
 
         [Fact]
         public void NormalAppointmentNoDescription()
         {
-            agenda = new Agenda(new StubAppointmentRepository(), new StubNormalAppointmentRepository());
+            normalAppointment = new NormalAppointment(new StubAppointmentRepository(), new StubNormalAppointmentRepository());
 
             appointmentDTO = new AppointmentDTO()
             {
@@ -52,7 +29,7 @@ namespace TimeMateTest.BLL
                 AgendaName = "Firefox"
             };
 
-            agenda.CreateNormalAppointment(appointmentDTO);
+            normalAppointment.CreateNormalAppointment(appointmentDTO);
 
             string[] file = File.ReadAllLines(filePath);
             File.Delete(filePath);
@@ -63,31 +40,9 @@ namespace TimeMateTest.BLL
         }
 
         [Fact]
-        public void ChecklistAppointment()
-        {
-            ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = "Get inspiration" };
-            appointmentDTO = new AppointmentDTO();
-            appointmentDTO.AppointmentName = "Create 3D render";
-            appointmentDTO.StartDate = DateTime.Now.AddHours(3);
-            appointmentDTO.EndDate = DateTime.Now.AddHours(4);
-            appointmentDTO.AgendaName = "Firefox";
-            appointmentDTO.ChecklistDTOs.Add(checklistDTO);
-            agenda = new Agenda(new StubAppointmentRepository(), new StubChecklistAppointmentRepository());
-
-            agenda.CreateChecklistAppointment(appointmentDTO);
-
-            string[] file = File.ReadAllLines(filePath);
-            File.Delete(filePath);
-
-            Assert.Contains("Create 3D render", file[0]);
-            Assert.Contains("Get inspiration", file[4]);
-            Assert.True(file.Length == 5);
-        }
-
-        [Fact]
         public void ChecklistAppointmenNoChecklist()
         {
-            agenda = new Agenda(new StubAppointmentRepository(), new StubChecklistAppointmentRepository());
+            checklistAppointment = new ChecklistAppointment(new StubAppointmentRepository(), new StubChecklistAppointmentRepository());
 
             appointmentDTO = new AppointmentDTO();
             appointmentDTO.AppointmentName = "Create 3D render";
@@ -95,7 +50,7 @@ namespace TimeMateTest.BLL
             appointmentDTO.EndDate = DateTime.Now.AddHours(4);
             appointmentDTO.AgendaName = "Firefox";
 
-            agenda.CreateChecklistAppointment(appointmentDTO);
+            checklistAppointment.CreateChecklistAppointment(appointmentDTO);
 
             string[] file = File.ReadAllLines(@"C:\tmp\addAppointmentTest.txt");
             File.Delete(@"C:\tmp\addAppointmentTest.txt");

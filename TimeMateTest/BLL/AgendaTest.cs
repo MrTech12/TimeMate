@@ -3,8 +3,7 @@ using DataAccessLayer.DTO;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
+using System.Text;
 using TimeMateTest.Stubs;
 using Xunit;
 
@@ -14,59 +13,202 @@ namespace TimeMateTest.BLL
     {
         private Agenda agenda;
         private AccountDTO accountDTO;
+        private StubJobRepository _stubJobRepository = new StubJobRepository();
+        private string filePathAgendaCreation = @"C:\tmp\addAgendaTest.txt";
+        private string filePathWorkDetails = @"C:\tmp\addWorkPayDetails.txt";
+        private string filePathAgendaDeletion = @"C:\tmp\removeAgendaTest.txt";
 
         [Fact]
-        public void RetrieveNoAppointments()
+        public void CreateAgenda1()
         {
-            List<AppointmentDTO> output = new List<AppointmentDTO>();
-            accountDTO = new AccountDTO() { AccountID = -5 };
-            agenda = new Agenda(accountDTO, new StubAppointmentRepository());
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000", NotificationType = "Nee" };
 
-            output = agenda.RetrieveAppointments();
+            agenda.CreateAgenda(agendaDTO);
+
+            string[] file = File.ReadAllLines(filePathAgendaCreation);
+            File.Delete(filePathAgendaCreation);
+
+            Assert.Contains("Homework", file[0]);
+            Assert.Contains("#0x0000", file[1]);
+        }
+
+        [Fact]
+        public void CreateAgenda2()
+        {
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560", NotificationType = "Nee" };
+
+            agenda.CreateAgenda(agendaDTO);
+
+            string[] file = File.ReadAllLines(filePathAgendaCreation);
+            File.Delete(filePathAgendaCreation);
+
+            Assert.Contains("Skype", file[0]);
+            Assert.Contains("#15F560", file[1]);
+        }
+
+        [Fact]
+        public void CreateNoAgenda()
+        {
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "", AgendaColor = "", NotificationType = "" };
+
+            agenda.CreateAgenda(agendaDTO);
+
+            string[] file = File.ReadAllLines(filePathAgendaCreation);
+            File.Delete(filePathAgendaCreation);
+
+            Assert.Contains("", file[0]);
+            Assert.Contains("", file[1]);
+        }
+
+        [Fact]
+        public void CreateWorkAgendaWithPayDetails1()
+        {
+            AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000", NotificationType = "Nee" };
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            accountDTO.JobHourlyWage.Add(12.23);
+            accountDTO.JobDayType.Add("Doordeweeks");
+            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+
+            agenda.CreateAgenda(workAgendaDTO);
+            _stubJobRepository.AddPayDetails(accountDTO);
+
+            string[] fileAgenda = File.ReadAllLines(filePathAgendaCreation);
+            string[] filePay = File.ReadAllLines(filePathWorkDetails);
+            File.Delete(filePathAgendaCreation);
+            File.Delete(filePathWorkDetails);
+
+            Assert.Contains("Bijbaan", fileAgenda[0]);
+            Assert.Contains("#FF0000", fileAgenda[1]);
+            Assert.Contains("12,23", filePay[0]);
+            Assert.Contains("Doordeweeks", filePay[1]);
+            Assert.True(filePay.Length == 2);
+        }
+
+        [Fact]
+        public void CreateWorkAgendaWithPayDetails2()
+        {
+            AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000", NotificationType = "Nee" };
+            accountDTO = new AccountDTO() { AccountID = 56 };
+            accountDTO.JobHourlyWage.Add(12.23);
+            accountDTO.JobDayType.Add("Doordeweeks");
+            accountDTO.JobHourlyWage.Add(10);
+            accountDTO.JobDayType.Add("Weekend");
+            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+
+            agenda.CreateAgenda(workAgendaDTO);
+            _stubJobRepository.AddPayDetails(accountDTO);
+
+            string[] fileAgenda = File.ReadAllLines(filePathAgendaCreation);
+            string[] filePay = File.ReadAllLines(filePathWorkDetails);
+            File.Delete(filePathAgendaCreation);
+            File.Delete(filePathWorkDetails);
+
+            Assert.Contains("Bijbaan", fileAgenda[0]);
+            Assert.Contains("#FF0000", fileAgenda[1]);
+            Assert.Contains("12,23", filePay[0]);
+            Assert.Contains("Doordeweeks", filePay[1]);
+            Assert.Contains("10", filePay[2]);
+            Assert.Contains("Weekend", filePay[3]);
+            Assert.True(filePay.Length == 4);
+        }
+
+        [Fact]
+        public void CreateOnlyWorkAgenda()
+        {
+            AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000", NotificationType = "Nee" };
+            accountDTO = new AccountDTO() { AccountID = 23 };
+            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+
+            agenda.CreateAgenda(workAgendaDTO);
+            _stubJobRepository.AddPayDetails(accountDTO);
+
+            string[] fileAgenda = File.ReadAllLines(filePathAgendaCreation);
+            string[] filePay = File.ReadAllLines(filePathWorkDetails);
+            File.Delete(filePathAgendaCreation);
+            File.Delete(filePathWorkDetails);
+
+            Assert.Contains("Bijbaan", fileAgenda[0]);
+            Assert.Contains("#FF0000", fileAgenda[1]);
+            Assert.True(filePay.Length == 0);
+        }
+
+        [Fact]
+        public void GetAgendaNames()
+        {
+            List<AgendaDTO> output = new List<AgendaDTO>();
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+
+            output = agenda.RetrieveAgendas();
+
+            Assert.Contains("Work", output[0].AgendaName);
+            Assert.True(output.Count == 2);
+        }
+
+        [Fact]
+        public void GetZeroAgendaNames()
+        {
+            List<AgendaDTO> output = new List<AgendaDTO>();
+            accountDTO = new AccountDTO() { AccountID = 128 };
+            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+
+            output = agenda.RetrieveAgendas();
 
             Assert.True(output.Count == 0);
         }
 
         [Fact]
-        public void RetrieveAppointments()
+        public void RemoveAgenda()
         {
-            List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = 12 };
-            agenda = new Agenda(accountDTO, new StubAppointmentRepository());
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", NotificationType = "Nee" };
+            agenda = new Agenda(accountDTO, new StubAgendaRepository());
 
-            output = agenda.RetrieveAppointments();
+            using (StreamWriter streamWriter = new StreamWriter(filePathAgendaDeletion))
+            {
+                streamWriter.WriteLine(agendaDTO.AgendaID);
+                streamWriter.WriteLine(agendaDTO.AgendaName);
+                streamWriter.WriteLine(agendaDTO.AgendaColor);
+                streamWriter.WriteLine(agendaDTO.NotificationType);
+            }
 
-            Assert.Contains("Walk the dog", output[1].AppointmentName);
-            Assert.True(output.Count == 3);
+            agenda.DeleteAgenda(agendaDTO.AgendaID);
+
+            string[] file = File.ReadAllLines(filePathAgendaDeletion);
+            File.Delete(filePathAgendaDeletion);
+
+            Assert.Equal("System.String[]", file.ToString());
+
         }
 
         [Fact]
-        public void RetrieveAppointmentsWithTasks()
+        public void RemoveNoAgenda()
         {
-            List<AppointmentDTO> output = new List<AppointmentDTO>();
-            accountDTO = new AccountDTO() { AccountID = 42 };
-            agenda = new Agenda(accountDTO, new StubAppointmentRepository());
+            accountDTO = new AccountDTO() { AccountID = 12 };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", NotificationType = "Nee" };
+            agenda = new Agenda(accountDTO, new StubAgendaRepository());
 
-            output = agenda.RetrieveAppointments();
+            using (StreamWriter streamWriter = new StreamWriter(filePathAgendaDeletion))
+            {
+                streamWriter.WriteLine(agendaDTO.AgendaID);
+                streamWriter.WriteLine(agendaDTO.AgendaName);
+                streamWriter.WriteLine(agendaDTO.AgendaColor);
+                streamWriter.WriteLine(agendaDTO.NotificationType);
+            }
 
-            Assert.Contains("Relax Sunday", output[0].AppointmentName);
-            Assert.Contains("Listen to music", output[0].ChecklistDTOs[1].TaskName);
-            Assert.Contains("Paint the birdhouse", output[1].ChecklistDTOs[0].TaskName);
-            Assert.True(output.Count == 2);
-        }
+            agenda.DeleteAgenda(-5);
 
-        [Fact]
-        public void RetrieveAppointmentsWithDescription()
-        {
-            List<AppointmentDTO> output = new List<AppointmentDTO>();
-            accountDTO = new AccountDTO() { AccountID = 54 };
-            agenda = new Agenda(accountDTO, new StubAppointmentRepository());
+            string[] file = File.ReadAllLines(filePathAgendaDeletion);
+            File.Delete(filePathAgendaDeletion);
 
-            output = agenda.RetrieveAppointments();
-
-            Assert.Contains("Look up info about render servers.", output[0].AppointmentName);
-            Assert.Contains("The render servers must support Blender.", output[0].DescriptionDTO.Description);
-            Assert.True(output.Count == 1);
+            Assert.Equal("51", file[0]);
+            Assert.Equal("qwerty", file[1]);
         }
     }
 }

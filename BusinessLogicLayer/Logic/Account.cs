@@ -8,64 +8,40 @@ namespace BusinessLogicLayer.Logic
 {
     public class Account
     {
-        private readonly IAccountRepository _accountContainer;
-        private readonly ISender _senderContainer;
-        private readonly IAgendaRepository _agendaContainer;
-        private readonly IJobRepository _jobContainer;
-
+        private readonly IAccountRepository _accountRepository;
+        private readonly ISender _senderRepository;
         private AccountDTO accountDTO;
+        public AccountDTO AccountDTO { get { return this.accountDTO; } set { this.accountDTO = value; } }
 
-        public Account(AccountDTO accountDTO, IAccountRepository accountContainer, IAgendaRepository agendaContainer, IJobRepository jobContainer, ISender senderContainer)
+        public Account(AccountDTO accountDTO, IAccountRepository accountRepository)
         {
             this.accountDTO = accountDTO;
-            this._accountContainer = accountContainer;
-            this._agendaContainer = agendaContainer;
-            this._jobContainer = jobContainer;
-            this._senderContainer = senderContainer;
+            _accountRepository = accountRepository;
         }
 
-        public Account(AccountDTO accountDTO, IAccountRepository accountContainer, IAgendaRepository agendaContainer)
+        public Account(AccountDTO accountDTO, IAccountRepository accountRepository, ISender senderRepository)
         {
             this.accountDTO = accountDTO;
-            this._accountContainer = accountContainer;
-            this._agendaContainer = agendaContainer;
-        }
-
-        public Account(AccountDTO accountDTO, IAgendaRepository agendaContainer)
-        {
-            this.accountDTO = accountDTO;
-            this._agendaContainer = agendaContainer;
-        }
-
-        public Account(AccountDTO accountDTO, IAgendaRepository agendaContainer, IJobRepository jobContainer)
-        {
-            this.accountDTO = accountDTO;
-            this._agendaContainer = agendaContainer;
-            this._jobContainer = jobContainer;
-        }
-
-        public Account(AccountDTO accountDTO, IAccountRepository accountContainer)
-        {
-            this.accountDTO = accountDTO;
-            this._accountContainer = accountContainer;
+            _accountRepository = accountRepository;
+            _senderRepository = senderRepository;
         }
 
         public string[] LoggingIn()
         {
             string[] returnMessage = new string[2];
 
-            string databaseOutput = _accountContainer.SearchForPasswordHash(accountDTO.Mail);
+            string databaseOutput = _accountRepository.SearchForPasswordHash(accountDTO.Mail);
             if (databaseOutput != null)
             {
                 bool passwordValid = BCrypt.Net.BCrypt.Verify(accountDTO.Password, databaseOutput);
                 if (!passwordValid)
                 {
-                    returnMessage = null;
+                    returnMessage[0] = null;
                 }
                 else
                 {
-                    returnMessage[0] = Convert.ToString(_accountContainer.GetUserID(accountDTO.Mail));
-                    returnMessage[1] = _accountContainer.GetFirstName(accountDTO.Mail);
+                    returnMessage[0] = Convert.ToString(_accountRepository.GetUserID(accountDTO.Mail));
+                    returnMessage[1] = _accountRepository.GetFirstName(accountDTO.Mail);
                 }
             }
             else
@@ -75,28 +51,22 @@ namespace BusinessLogicLayer.Logic
             return returnMessage;
         }
 
-        public string[] NewAccountInputValidation()
+        public string CheckExistingMail()
         {
-            string[] returnMessage = new string[2];
-
             if (accountDTO.Mail == null)
             {
                 throw new AccountException("Het mailadres is niet geleverd.");
             }
 
-            int databaseOutput = _accountContainer.GetUserID(accountDTO.Mail);
+            int databaseOutput = _accountRepository.GetUserID(accountDTO.Mail);
             if (databaseOutput != -1)
             {
-                returnMessage[0] = "Er bestaat al een account met dit mailadres.";
+                return "Er bestaat al een account met dit mailadres.";
             }
             else
             {
-                CreateAccount();
-                _senderContainer.SendAccountCreationMail(accountDTO.Mail);
-                returnMessage[0] = Convert.ToString(accountDTO.AccountID);
-                returnMessage[1] = _accountContainer.GetFirstName(accountDTO.Mail);
+                return null;
             }
-            return returnMessage;
         }
 
         public void CreateAccount()
@@ -105,44 +75,12 @@ namespace BusinessLogicLayer.Logic
             {
                 throw new AccountException("Het wachtwoord is niet geleverd.");
             }
-
-            accountDTO.Password = BCrypt.Net.BCrypt.HashPassword(accountDTO.Password, 10);
-
-            if (accountDTO.JobCount == 0)
+            else
             {
-                accountDTO.AccountID = _accountContainer.CreateAccount(accountDTO);
+                accountDTO.Password = BCrypt.Net.BCrypt.HashPassword(accountDTO.Password, 10);
+                accountDTO.AccountID = _accountRepository.CreateAccount(accountDTO);
+                _senderRepository.SendAccountCreationMail(accountDTO.Mail);
             }
-            else if (accountDTO.JobCount > 0)
-            {
-                accountDTO.AccountID = _accountContainer.CreateAccount(accountDTO);
-                CreateWorkAgenda();
-            }
-        }
-
-        public void CreateAgenda(AgendaDTO agendaDTO)
-        {
-            _agendaContainer.AddAgenda(accountDTO.AccountID, agendaDTO);
-        }
-
-        public void CreateWorkAgenda()
-        {
-            AgendaDTO agendaDTO = new AgendaDTO();
-            agendaDTO.AgendaName = "Bijbaan";
-            agendaDTO.AgendaColor = "#FF0000";
-            agendaDTO.NotificationType = "Nee";
-
-            agendaDTO.AgendaID = _agendaContainer.AddAgenda(accountDTO.AccountID, agendaDTO);
-            _jobContainer.AddPayDetails(accountDTO);
-        }
-
-        public List<AgendaDTO> RetrieveAgendas()
-        {
-            return _agendaContainer.GetAllAgendas(accountDTO.AccountID);
-        }
-
-        public void DeleteAgenda(int agendaID)
-        {
-            _agendaContainer.DeleteAgenda(accountDTO.AccountID,agendaID);
         }
     }
 }

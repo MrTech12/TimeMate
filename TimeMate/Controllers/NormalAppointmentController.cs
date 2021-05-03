@@ -14,21 +14,22 @@ namespace TimeMate.Controllers
 {
     public class NormalAppointmentController : Controller
     {
-        private readonly IAgendaRepository _agendaContainer;
-        private readonly IAppointmentRepository _appointmentContainer;
-        private readonly INormalAppointmentRepository _normalAppointmentContainer;
+        private readonly IAgendaRepository _agendaRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
+        private readonly INormalAppointmentRepository _normalAppointmentRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private Account account;
         private Agenda agenda;
+        private NormalAppointment normalAppointment;
         private SessionService sessionService;
+        private AppointmentService appointmentService = new AppointmentService();
         private AccountDTO accountDTO = new AccountDTO();
 
         public NormalAppointmentController(IAgendaRepository agendaContainer, IAppointmentRepository appointmentContainer, INormalAppointmentRepository normalAppointmentContainer, IHttpContextAccessor httpContextAccessor)
         {
-            _agendaContainer = agendaContainer;
-            _appointmentContainer = appointmentContainer;
-            _normalAppointmentContainer = normalAppointmentContainer;
+            _agendaRepository = agendaContainer;
+            _appointmentRepository = appointmentContainer;
+            _normalAppointmentRepository = normalAppointmentContainer;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -42,8 +43,8 @@ namespace TimeMate.Controllers
                 NormalAppointmentViewModel viewModel = new NormalAppointmentViewModel();
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
-                account = new Account(accountDTO, _agendaContainer);
-                ViewBag.agendaList = account.RetrieveAgendas();
+                agenda = new Agenda(accountDTO, _agendaRepository);
+                ViewBag.agendaList = agenda.RetrieveAgendas();
 
                 if (ViewBag.agendaList.Count == 0)
                 {
@@ -65,6 +66,13 @@ namespace TimeMate.Controllers
         {
             if (ModelState.IsValid)
             {
+                // The below code gives an error with the agenda select element.
+                //if (!appointmentService.ValidateDates(viewModel.AppointmentViewModel))
+                //{
+                //    ModelState.AddModelError("StartTime", "De startdatum en einddatum zijn niet correct.");
+                //    return View(viewModel);
+                //}
+
                 AppointmentDTO appointmentDTO = new AppointmentDTO();
                 appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.AppointmentName;
                 appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
@@ -82,9 +90,9 @@ namespace TimeMate.Controllers
                     appointmentDTO.DescriptionDTO.Description = null;
                 }
 
-                agenda = new Agenda(_appointmentContainer, _normalAppointmentContainer);
-                agenda.CreateNormalAppointment(appointmentDTO);
-                return RedirectToAction("Index", "Agenda");
+                normalAppointment = new NormalAppointment(_appointmentRepository, _normalAppointmentRepository);
+                normalAppointment.CreateNormalAppointment(appointmentDTO);
+                return RedirectToAction("Index", "AgendaView");
             }
             else
             {

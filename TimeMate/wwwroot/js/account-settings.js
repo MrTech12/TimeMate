@@ -1,10 +1,11 @@
-﻿let agendaName;
-let agendaID;
-let selectInput;
+﻿var agendaName;
+var agendaID;
+var selectInput;
 
 $(document).ready(function () {
     $("#delete-agenda").click(function () {
         GetSelectionInfo();
+        $("#agenda-name").text(agendaName);
     });
 
     $("#confirm-deletion").click(function () {

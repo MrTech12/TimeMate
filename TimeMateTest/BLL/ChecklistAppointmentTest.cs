@@ -11,7 +11,30 @@ namespace TimeMateTest.BLL
     public class ChecklistAppointmentTest
     {
         private ChecklistAppointment checklistAppointment;
-        string filePath = @"C:\tmp\getTaskStatusTest.txt";
+        private AppointmentDTO appointmentDTO;
+        string filePathtasks = @"C:\tmp\getTaskStatusTest.txt";
+
+        [Fact]
+        public void CreateChecklistAppointment()
+        {
+            ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = "Get inspiration" };
+            appointmentDTO = new AppointmentDTO();
+            appointmentDTO.AppointmentName = "Create 3D render";
+            appointmentDTO.StartDate = DateTime.Now.AddHours(3);
+            appointmentDTO.EndDate = DateTime.Now.AddHours(4);
+            appointmentDTO.AgendaName = "Firefox";
+            appointmentDTO.ChecklistDTOs.Add(checklistDTO);
+            checklistAppointment = new ChecklistAppointment(new StubAppointmentRepository(), new StubChecklistAppointmentRepository());
+
+            checklistAppointment.CreateChecklistAppointment(appointmentDTO);
+
+            string[] appointmentFile = File.ReadAllLines(@"C:\tmp\addAppointmentTest.txt");
+            File.Delete(filePathtasks);
+
+            Assert.Contains("Create 3D render", appointmentFile[0]);
+            Assert.Contains("Get inspiration", appointmentFile[4]);
+            Assert.True(appointmentFile.Length == 5);
+        }
 
         [Fact]
         public void GetTasks()
@@ -46,7 +69,7 @@ namespace TimeMateTest.BLL
             checklistDTO.TaskName = "Get cake";
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
-            using (StreamWriter streamWriter = new StreamWriter(filePath))
+            using (StreamWriter streamWriter = new StreamWriter(filePathtasks))
             {
                 streamWriter.WriteLine(checklistDTO.TaskID);
                 streamWriter.WriteLine(checklistDTO.TaskName);
@@ -55,8 +78,8 @@ namespace TimeMateTest.BLL
 
             checklistAppointment.ChangeTaskStatus(62);
 
-            string[] file = File.ReadAllLines(filePath);
-            File.Delete(filePath);
+            string[] file = File.ReadAllLines(filePathtasks);
+            File.Delete(filePathtasks);
 
             Assert.Equal("True", file[2]);
         }
@@ -69,7 +92,7 @@ namespace TimeMateTest.BLL
             checklistDTO.TaskName = "Buy new monitor";
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
-            using (StreamWriter streamWriter = new StreamWriter(filePath))
+            using (StreamWriter streamWriter = new StreamWriter(filePathtasks))
             {
                 streamWriter.WriteLine(checklistDTO.TaskID);
                 streamWriter.WriteLine(checklistDTO.TaskName);
@@ -78,8 +101,8 @@ namespace TimeMateTest.BLL
 
             checklistAppointment.ChangeTaskStatus(74);
 
-            string[] file = File.ReadAllLines(filePath);
-            File.Delete(filePath);
+            string[] file = File.ReadAllLines(filePathtasks);
+            File.Delete(filePathtasks);
 
             Assert.Equal("False", file[2]);
         }
@@ -92,7 +115,7 @@ namespace TimeMateTest.BLL
             checklistDTO.TaskName = "Bake a cake";
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
-            using (StreamWriter streamWriter = new StreamWriter(filePath))
+            using (StreamWriter streamWriter = new StreamWriter(filePathtasks))
             {
                 streamWriter.WriteLine(checklistDTO.TaskID);
                 streamWriter.WriteLine(checklistDTO.TaskName);
@@ -101,8 +124,8 @@ namespace TimeMateTest.BLL
 
             checklistAppointment.ChangeTaskStatus(-5);
 
-            string[] file = File.ReadAllLines(filePath);
-            File.Delete(filePath);
+            string[] file = File.ReadAllLines(filePathtasks);
+            File.Delete(filePathtasks);
 
             Assert.Equal("False", file[2]);
         }

@@ -15,56 +15,17 @@ namespace TimeMate.Controllers
 {
     public class AgendaController : Controller
     {
-        private readonly IAgendaRepository _agendaContainer;
-        private readonly IAppointmentRepository _appointmentContainer;
-        private readonly INormalAppointmentRepository _normalAppointmentContainer;
-        private readonly IChecklistAppointmentRepository _checklistAppointmentContainer;
-        private readonly IJobRepository _jobContainer;
+        private readonly IAgendaRepository _agendaRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private Account account;
         private Agenda agenda;
-        private Job job;
         private SessionService sessionService;
         private AccountDTO accountDTO = new AccountDTO();
 
-        public AgendaController(IAgendaRepository agendaContainer, IAppointmentRepository appointmentContainer, INormalAppointmentRepository normalAppointmentContainer, IChecklistAppointmentRepository checklistAppointmentContainer, IJobRepository jobContainer, IHttpContextAccessor httpContextAccessor)
+        public AgendaController(IAgendaRepository agendaContainer, IHttpContextAccessor httpContextAccessor)
         {
-            _agendaContainer = agendaContainer;
-            _appointmentContainer = appointmentContainer;
-            _normalAppointmentContainer = normalAppointmentContainer;
-            _checklistAppointmentContainer = checklistAppointmentContainer;
-            _jobContainer = jobContainer;
+            _agendaRepository = agendaContainer;
             _httpContextAccessor = httpContextAccessor;
-        }
-
-        [HttpGet]
-        public IActionResult Index()
-        {
-            sessionService = new SessionService(_httpContextAccessor);
-
-            if (sessionService.CheckSessionValue())
-            {
-                accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
-
-                agenda = new Agenda(accountDTO, _appointmentContainer);
-                List<AppointmentDTO> appointments = agenda.RetrieveAppointments();
-
-                job = new Job(_jobContainer, _agendaContainer, _appointmentContainer);
-                JobDTO jobDTO = job.RetrieveJobDetails(accountDTO.AccountID);
-
-                if (jobDTO.WeeklyPay != 0)
-                {
-                    ViewBag.pay = jobDTO.WeeklyPay.ToString("N2");
-                    ViewBag.hours = jobDTO.WeeklyHours.ToString("N1");
-                }
-
-                return View(appointments);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Account");
-            }
         }
 
         [HttpGet]
@@ -100,9 +61,9 @@ namespace TimeMate.Controllers
                 agendaDTO.NotificationType = viewModel.NotificationType;
 
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
-                account = new Account(accountDTO, _agendaContainer);
-                account.CreateAgenda(agendaDTO);
-                return RedirectToAction("Index", "Agenda");
+                agenda = new Agenda(accountDTO, _agendaRepository);
+                agenda.CreateAgenda(agendaDTO);
+                return RedirectToAction("Index", "AgendaView");
             }
             else
             {
@@ -114,38 +75,9 @@ namespace TimeMate.Controllers
         public IActionResult DeleteAgenda([FromBody] AgendaModel agendaModel)
         {
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
-            account = new Account(accountDTO, _agendaContainer);
-            account.DeleteAgenda(agendaModel.AgendaID);
+            agenda = new Agenda(accountDTO, _agendaRepository);
+            agenda.DeleteAgenda(agendaModel.AgendaID);
             return Ok();
-        }
-
-        [HttpPatch]
-        [Route("Agenda/ChangeTaskStatus/{taskID}")]
-        public IActionResult ChangeTaskStatus(int taskID)
-        {
-            ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentContainer);
-            checklistAppointment.ChangeTaskStatus(taskID);
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("Agenda/AppointmentExtra/{appointmentID}")]
-        public IActionResult AppointmentExtra(int appointmentID)
-        {
-            NormalAppointment normalAppointment = new NormalAppointment(_normalAppointmentContainer);
-
-            string description = normalAppointment.RetrieveDescription(appointmentID);
-
-            if (description == "")
-            {
-                ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentContainer);
-                var tasks = checklistAppointment.RetrieveTasks(appointmentID);
-                return Json(tasks);
-            }
-            else
-            {
-                return Json(description);
-            }
         }
     }
 }

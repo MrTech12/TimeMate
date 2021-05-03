@@ -23,6 +23,7 @@ namespace TimeMate.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         private Account account;
+        private Agenda agenda;
         private SessionService sessionService;
         private AccountDTO accountDTO;
 
@@ -42,7 +43,7 @@ namespace TimeMate.Controllers
             
             if (sessionService.CheckSessionValue())
             {
-                return RedirectToAction("Index", "Agenda");
+                return RedirectToAction("Index", "AgendaView");
             }
             else
             {
@@ -63,7 +64,7 @@ namespace TimeMate.Controllers
                 account = new Account(accountDTO, _accountRepository);
                 string[] result = account.LoggingIn();
 
-                if (result == null || result[1] == null)
+                if (result[1] == null)
                 {
                     ModelState.AddModelError("", "Verkeerd mailadres en/of wachtwoord.");
                     return View(viewModel);
@@ -72,7 +73,7 @@ namespace TimeMate.Controllers
                 {
                     HttpContext.Session.SetInt32("accountID", Convert.ToInt32(result[0]));
                     HttpContext.Session.SetString("firstName", (result[1]));
-                    return RedirectToAction("Index", "Agenda");
+                    return RedirectToAction("Index", "AgendaView");
                 }
             }
             else
@@ -88,7 +89,7 @@ namespace TimeMate.Controllers
 
             if (sessionService.CheckSessionValue())
             {
-                return RedirectToAction("Index", "Agenda");
+                return RedirectToAction("Index", "AgendaView");
             }
             else
             {
@@ -136,20 +137,31 @@ namespace TimeMate.Controllers
                     accountDTO.JobDayType.Add(viewModel.Job2DayType);
                 }
 
-                account = new Account(accountDTO, _accountRepository, _agendaRepository, _jobRepository, _sender);
-                string[] result = account.NewAccountInputValidation();
+                account = new Account(accountDTO, _accountRepository, _sender);
+                string mailCheck = account.CheckExistingMail();
 
-                if (result[1] == null)
+                if (mailCheck != null)
                 {
-                    ModelState.AddModelError("", result[0]);
+                    ModelState.AddModelError("", mailCheck);
                     return View(viewModel);
                 }
-                else
+                else if(mailCheck == null)
                 {
-                    HttpContext.Session.SetInt32("accountID", Convert.ToInt32(result[0]));
-                    HttpContext.Session.SetString("firstName", (result[1]));
-                    return RedirectToAction("Index", "Agenda");
+                    account.CreateAccount();
                 }
+
+                if(accountDTO.JobCount > 0)
+                {
+                    agenda = new Agenda(account.AccountDTO, _agendaRepository);
+                    AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000", NotificationType = "Nee" };
+
+                    agenda.CreateAgenda(workAgendaDTO);
+                    _jobRepository.AddPayDetails(accountDTO);
+                }
+
+                HttpContext.Session.SetInt32("accountID", Convert.ToInt32(account.AccountDTO.AccountID));
+                HttpContext.Session.SetString("firstName", accountDTO.FirstName);
+                return RedirectToAction("Index", "AgendaView");
             }
             else
             {
@@ -164,11 +176,9 @@ namespace TimeMate.Controllers
 
             if (sessionService.CheckSessionValue())
             {
-                accountDTO = new AccountDTO();
-                accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
-
-                account = new Account(accountDTO, _agendaRepository);
-                List<AgendaDTO> viewModel = account.RetrieveAgendas();
+                accountDTO = new AccountDTO() { AccountID = HttpContext.Session.GetInt32("accountID").Value };
+                agenda = new Agenda(accountDTO, _agendaRepository);
+                List<AgendaDTO> viewModel = agenda.RetrieveAgendas();
                 return View(viewModel);
             }
             else
