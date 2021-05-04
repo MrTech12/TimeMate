@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccessLayer.Exceptions
+namespace Error
 {
     public class AccountException : Exception
     {
@@ -11,7 +11,12 @@ namespace DataAccessLayer.Exceptions
 
         }
 
-        public AccountException(string message): base(message)
+        public AccountException(string message) : base(message)
+        {
+
+        }
+
+        public AccountException(string message, Exception innerException) : base(message, innerException)
         {
 
         }

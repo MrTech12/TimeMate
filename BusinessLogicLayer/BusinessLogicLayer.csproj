@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\Error\Error.csproj" />
+    <ProjectReference Include="..\Model\Model.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>

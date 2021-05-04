@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TimeMate.Models;
-using DataAccessLayer.DTO;
+using Model.DTO_s;
 using BusinessLogicLayer.Logic;
 using Microsoft.AspNetCore.Http;
 using DataAccessLayer.Interfaces;

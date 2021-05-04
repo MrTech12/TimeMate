@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccessLayer.Exceptions
+namespace Error
 {
     public class DatabaseException : Exception
     {

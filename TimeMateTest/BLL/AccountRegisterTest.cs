@@ -1,12 +1,12 @@
 ﻿using BusinessLogicLayer.Logic;
-using DataAccessLayer.DTO;
-using DataAccessLayer.Exceptions;
+using Model.DTO_s;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using TimeMateTest.Stubs;
 using Xunit;
+using Error;
 
 namespace TimeMateTest.BLL
 {

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DataAccessLayer.Containers;
-using DataAccessLayer.DTO;
+using Model.DTO_s;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using BusinessLogicLayer;

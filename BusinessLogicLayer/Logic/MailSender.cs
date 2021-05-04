@@ -1,5 +1,5 @@
 ﻿using BusinessLogicLayer;
-using DataAccessLayer.Exceptions;
+using Error;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Net.Mail;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccessLayer.DTO
+namespace Model.DTO_s
 {
     public class ChecklistDTO
     {

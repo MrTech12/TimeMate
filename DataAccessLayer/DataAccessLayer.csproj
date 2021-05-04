@@ -11,4 +11,13 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Error\Error.csproj" />
+    <ProjectReference Include="..\Model\Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
 </Project>

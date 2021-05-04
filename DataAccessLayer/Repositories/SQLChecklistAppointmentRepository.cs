@@ -1,11 +1,11 @@
-﻿using DataAccessLayer.DTO;
-using DataAccessLayer.Exceptions;
+﻿using Model.DTO_s;
 using DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using Error;
 
 namespace DataAccessLayer.Repositories
 {

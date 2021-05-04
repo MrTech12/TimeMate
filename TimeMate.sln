@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicLayer", "BusinessLogicLayer\BusinessLogicLayer.csproj", "{510C3043-FBBC-4CEE-B2C5-2BFB60C64338}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeMateTest", "TimeMateTest\TimeMateTest.csproj", "{95AE284C-24EB-46D1-AD7A-B00F7A742E30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeMateTest", "TimeMateTest\TimeMateTest.csproj", "{95AE284C-24EB-46D1-AD7A-B00F7A742E30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{C377B250-350F-4626-967C-975AD69E78E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Error", "Error\Error.csproj", "{4FCC79E2-C030-4D7D-B919-72613A274B5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{95AE284C-24EB-46D1-AD7A-B00F7A742E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95AE284C-24EB-46D1-AD7A-B00F7A742E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95AE284C-24EB-46D1-AD7A-B00F7A742E30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C377B250-350F-4626-967C-975AD69E78E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C377B250-350F-4626-967C-975AD69E78E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C377B250-350F-4626-967C-975AD69E78E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C377B250-350F-4626-967C-975AD69E78E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FCC79E2-C030-4D7D-B919-72613A274B5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FCC79E2-C030-4D7D-B919-72613A274B5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FCC79E2-C030-4D7D-B919-72613A274B5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FCC79E2-C030-4D7D-B919-72613A274B5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

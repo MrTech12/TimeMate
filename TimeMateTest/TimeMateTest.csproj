@@ -21,6 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogicLayer\BusinessLogicLayer.csproj" />
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
+    <ProjectReference Include="..\Error\Error.csproj" />
+    <ProjectReference Include="..\Model\Model.csproj" />
     <ProjectReference Include="..\TimeMate\TimeMate.csproj" />
   </ItemGroup>
 

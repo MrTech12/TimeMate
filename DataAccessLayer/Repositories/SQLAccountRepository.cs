@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.DTO;
+﻿using Model.DTO_s;
 using DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Text;
-using DataAccessLayer.Exceptions;
+using Error;
 
 namespace DataAccessLayer.Repositories
 {

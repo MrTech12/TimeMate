@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using DataAccessLayer.DTO;
+using Model.DTO_s;
 using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs

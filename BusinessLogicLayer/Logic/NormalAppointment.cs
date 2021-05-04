@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.DTO;
+﻿using Model.DTO_s;
 using DataAccessLayer.Interfaces;
 using System;
 using System.Collections.Generic;

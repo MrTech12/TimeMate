@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Logic;
-using DataAccessLayer.DTO;
+using Model.DTO_s;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
