@@ -22,7 +22,6 @@ namespace TimeMate.Controllers
         private ChecklistAppointment checklistAppointment;
         private Agenda agenda;
         private SessionService sessionService;
-        private AppointmentService appointmentService = new AppointmentService();
         private AccountDTO accountDTO = new AccountDTO();
 
         public ChecklistAppointmentController(IAgendaRepository agendaContainer, IAppointmentRepository appointmentContainer, IChecklistAppointmentRepository checklistAppointmentContainer, IHttpContextAccessor httpContextAccessor)
@@ -66,12 +65,6 @@ namespace TimeMate.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!appointmentService.ValidateDates(viewModel.AppointmentViewModel))
-                {
-                    ModelState.AddModelError("", "De startdatum en einddatum zijn niet correct.");
-                    return View(viewModel);
-                }
-
                 AppointmentDTO appointmentDTO = new AppointmentDTO();
                 appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.AppointmentName;
                 appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;

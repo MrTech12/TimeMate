@@ -6,6 +6,7 @@
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/js/add-checklistappointment.js"></script>
+<script src="~/js/add-appointment-date.js"></script>
 
 <h1>Nieuwe afspraak met taken toevoegen</h1>
 
@@ -22,11 +23,14 @@
                 <div id="new-task-collection"></div>
             </div>
         </div>
-        <div class="col-md-6 float-right">
+        <div class="col-md-4 float-right">
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Afspraak toevoegen" />
+                <input type="submit" id="submit-appointment-btn" class="btn btn-primary" value="Afspraak toevoegen" />
                 <input type="button" class="btn btn-outline-primary" value="Negeren" onclick="location.href='@Url.Action("Index", "AgendaView")'" />
             </div>
+        </div>
+        <div class="col-md-2 float-right">
+            <div class="text-danger" id="date-error"></div>
         </div>
     </div>
 </form>

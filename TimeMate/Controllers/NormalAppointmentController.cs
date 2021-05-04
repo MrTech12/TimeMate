@@ -22,7 +22,6 @@ namespace TimeMate.Controllers
         private Agenda agenda;
         private NormalAppointment normalAppointment;
         private SessionService sessionService;
-        private AppointmentService appointmentService = new AppointmentService();
         private AccountDTO accountDTO = new AccountDTO();
 
         public NormalAppointmentController(IAgendaRepository agendaContainer, IAppointmentRepository appointmentContainer, INormalAppointmentRepository normalAppointmentContainer, IHttpContextAccessor httpContextAccessor)
@@ -66,13 +65,6 @@ namespace TimeMate.Controllers
         {
             if (ModelState.IsValid)
             {
-                // The below code gives an error with the agenda select element.
-                //if (!appointmentService.ValidateDates(viewModel.AppointmentViewModel))
-                //{
-                //    ModelState.AddModelError("StartTime", "De startdatum en einddatum zijn niet correct.");
-                //    return View(viewModel);
-                //}
-
                 AppointmentDTO appointmentDTO = new AppointmentDTO();
                 appointmentDTO.AppointmentName = viewModel.AppointmentViewModel.AppointmentName;
                 appointmentDTO.StartDate = viewModel.AppointmentViewModel.StartDate + viewModel.AppointmentViewModel.StartTime;
