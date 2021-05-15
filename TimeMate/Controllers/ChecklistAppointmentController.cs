@@ -77,14 +77,14 @@ namespace TimeMate.Controllers
                     {
                         if (item != null)
                         {
-                            ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = item };
-                            appointmentDTO.ChecklistDTOs.Add(checklistDTO);
+                            TaskDTO taskDTO = new TaskDTO() { TaskName = item };
+                            appointmentDTO.TaskList.Add(taskDTO);
                         }
                     }
                 }
 
                 checklistAppointment = new ChecklistAppointment(_appointmentContainer, _checklistAppointmentContainer);
-                checklistAppointment.CreateChecklistAppointment(appointmentDTO);
+                checklistAppointment.AddChecklistAppointment(appointmentDTO);
                 return RedirectToAction("Index", "AgendaView");
             }
             else
@@ -94,7 +94,7 @@ namespace TimeMate.Controllers
         }
 
         [HttpPatch]
-        [Route("ChecklistAppointment/TaskStatus/{taskID}")]
+        [Route("ChecklistAppointment/ChangeTaskStatus/{taskID}")]
         public IActionResult ChangeTaskStatus(int taskID)
         {
             checklistAppointment = new ChecklistAppointment(_checklistAppointmentContainer);

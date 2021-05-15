@@ -83,7 +83,7 @@ namespace TimeMate.Controllers
                 }
 
                 normalAppointment = new NormalAppointment(_appointmentRepository, _normalAppointmentRepository);
-                normalAppointment.CreateNormalAppointment(appointmentDTO);
+                normalAppointment.AddNormalAppointment(appointmentDTO);
                 return RedirectToAction("Index", "AgendaView");
             }
             else

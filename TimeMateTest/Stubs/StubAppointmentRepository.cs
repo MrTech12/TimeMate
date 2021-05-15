@@ -8,7 +8,7 @@ namespace TimeMateTest.Stubs
 {
     class StubAppointmentRepository : IAppointmentRepository
     {
-        public int AddAppointment(AppointmentDTO appointmentDTO)
+        public int CreateAppointment(AppointmentDTO appointmentDTO)
         {
             int appointmentID = 0;
             using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addAppointmentTest.txt"))
@@ -27,63 +27,63 @@ namespace TimeMateTest.Stubs
             List<AppointmentDTO> appointmentDTO = new List<AppointmentDTO>();
             if (accountID == 12)
             {
-                ChecklistDTO checklist1 = new ChecklistDTO() { TaskName = null, TaskID = 0, AppointmentID = 0 };
+                TaskDTO taskDTO = new TaskDTO() { TaskName = null, TaskID = 0, AppointmentID = 0 };
 
                 AppointmentDTO appointment1 = new AppointmentDTO();
                 appointment1.AppointmentID = 1;
                 appointment1.AppointmentName = "Walk the dog";
                 appointment1.StartDate = DateTime.Now.AddHours(3);
-                appointment1.ChecklistDTOs.Add(checklist1);
+                appointment1.TaskList.Add(taskDTO);
                 appointmentDTO.Add(appointment1);
 
                 AppointmentDTO appointment2 = new AppointmentDTO();
                 appointment2.AppointmentID = 2;
                 appointment2.AppointmentName = "Do the dishes";
                 appointment2.StartDate = DateTime.Now.AddHours(2);
-                appointment2.ChecklistDTOs.Add(checklist1);
+                appointment2.TaskList.Add(taskDTO);
                 appointmentDTO.Add(appointment2);
 
                 AppointmentDTO appointment3 = new AppointmentDTO();
                 appointment3.AppointmentID = 3;
                 appointment3.AppointmentName = "Sleep for 7 hours";
                 appointment3.StartDate = DateTime.Now.AddHours(7);
-                appointment3.ChecklistDTOs.Add(checklist1);
+                appointment3.TaskList.Add(taskDTO);
                 appointmentDTO.Add(appointment3);
             }
             else if (accountID == 42)
             {
                 AppointmentDTO appointment1 = new AppointmentDTO();
-                ChecklistDTO checklist1 = new ChecklistDTO() { TaskName = "Walk the dog", TaskID = 1, AppointmentID = 1 };
-                ChecklistDTO checklist2 = new ChecklistDTO() { TaskName = "Paint the birdhouse", TaskID = 2, AppointmentID = 1 };
-                ChecklistDTO checklist3 = new ChecklistDTO() { TaskName = "Buy a poster", TaskID = 3, AppointmentID = 1 };
+                TaskDTO taskDTO1 = new TaskDTO() { TaskName = "Walk the dog", TaskID = 1, AppointmentID = 1 };
+                TaskDTO taskDTO2 = new TaskDTO() { TaskName = "Paint the birdhouse", TaskID = 2, AppointmentID = 1 };
+                TaskDTO taskDTO3 = new TaskDTO() { TaskName = "Buy a poster", TaskID = 3, AppointmentID = 1 };
                 appointment1.AppointmentID = 1;
                 appointment1.AppointmentName = "Maintenancy Saturday";
                 appointment1.StartDate = DateTime.Now.AddHours(3);
-                appointment1.ChecklistDTOs.Add(checklist1);
-                appointment1.ChecklistDTOs.Add(checklist2);
-                appointment1.ChecklistDTOs.Add(checklist3);
+                appointment1.TaskList.Add(taskDTO1);
+                appointment1.TaskList.Add(taskDTO2);
+                appointment1.TaskList.Add(taskDTO3);
                 appointmentDTO.Add(appointment1);
 
                 AppointmentDTO appointment2 = new AppointmentDTO();
-                ChecklistDTO checklist4 = new ChecklistDTO() { TaskName = "Listen to music", TaskID = 4, AppointmentID = 2 };
-                ChecklistDTO checklist5 = new ChecklistDTO() { TaskName = "Make coffee", TaskID = 5, AppointmentID = 2 };
+                TaskDTO taskDTO4 = new TaskDTO() { TaskName = "Listen to music", TaskID = 4, AppointmentID = 2 };
+                TaskDTO taskDTO5 = new TaskDTO() { TaskName = "Make coffee", TaskID = 5, AppointmentID = 2 };
                 appointment2.AppointmentID = 2;
                 appointment2.AppointmentName = "Relax Sunday";
                 appointment2.StartDate = DateTime.Now.AddHours(2);
-                appointment2.ChecklistDTOs.Add(checklist4);
-                appointment2.ChecklistDTOs.Add(checklist5);
+                appointment2.TaskList.Add(taskDTO4);
+                appointment2.TaskList.Add(taskDTO5);
                 appointmentDTO.Add(appointment2);
             }
             else if (accountID == 54)
             {
-                ChecklistDTO checklist1 = new ChecklistDTO() { TaskName = null, TaskID = 0, AppointmentID = 0 };
+                TaskDTO taskDTO = new TaskDTO() { TaskName = null, TaskID = 0, AppointmentID = 0 };
 
                 AppointmentDTO appointment1 = new AppointmentDTO();
                 appointment1.AppointmentID = 1;
                 appointment1.AppointmentName = "Look up info about render servers.";
                 appointment1.StartDate = DateTime.Now.AddHours(3);
                 appointment1.DescriptionDTO.Description = "The render servers must support Blender.";
-                appointment1.ChecklistDTOs.Add(checklist1);
+                appointment1.TaskList.Add(taskDTO);
                 appointmentDTO.Add(appointment1);
             }
             return appointmentDTO;

@@ -9,41 +9,41 @@ namespace TimeMateTest.Stubs
 {
     class StubChecklistAppointmentRepository : IChecklistAppointmentRepository
     {
-        public void AddTask(AppointmentDTO appointmentDTO)
+        public void CreateTask(AppointmentDTO appointmentDTO)
         {
             if (appointmentDTO.AppointmentID == 60)
             {
                 using (StreamWriter streamWriter = File.AppendText(@"C:\tmp\addAppointmentTest.txt"))
                 {
-                    streamWriter.WriteLine(appointmentDTO.ChecklistDTOs[0].TaskName);
+                    streamWriter.WriteLine(appointmentDTO.TaskList[0].TaskName);
                 }
             }
         }
 
-        public List<ChecklistDTO> GetTasks(int appointmentID)
+        public List<TaskDTO> GetTasks(int appointmentID)
         {
-            List<ChecklistDTO> checklists = new List<ChecklistDTO>();
+            List<TaskDTO> tasklist = new List<TaskDTO>();
             if (appointmentID == 14)
             {
-                ChecklistDTO checklist1 = new ChecklistDTO();
-                checklist1.AppointmentID = 14;
-                checklist1.TaskID = 1;
-                checklist1.TaskName = "Dit";
-                checklists.Add(checklist1);
+                TaskDTO taskDTO1 = new TaskDTO();
+                taskDTO1.AppointmentID = 14;
+                taskDTO1.TaskID = 1;
+                taskDTO1.TaskName = "Dit";
+                tasklist.Add(taskDTO1);
 
-                ChecklistDTO checklist2 = new ChecklistDTO();
-                checklist2.AppointmentID = 14;
-                checklist2.TaskID = 2;
-                checklist2.TaskName = "Dat";
-                checklists.Add(checklist2);
+                TaskDTO taskDTO2 = new TaskDTO();
+                taskDTO2.AppointmentID = 14;
+                taskDTO2.TaskID = 2;
+                taskDTO2.TaskName = "Dat";
+                tasklist.Add(taskDTO2);
 
-                ChecklistDTO checklist3 = new ChecklistDTO();
-                checklist3.AppointmentID = 14;
-                checklist3.TaskID = 3;
-                checklist3.TaskName = "Zo";
-                checklists.Add(checklist3);
+                TaskDTO taskDTO3 = new TaskDTO();
+                taskDTO3.AppointmentID = 14;
+                taskDTO3.TaskID = 3;
+                taskDTO3.TaskName = "Zo";
+                tasklist.Add(taskDTO3);
             }
-            return checklists;
+            return tasklist;
         }
 
         public bool GetTaskStatus(int taskID)
@@ -54,7 +54,7 @@ namespace TimeMateTest.Stubs
             return taskstatus;
         }
 
-        public void CheckOffTask(int taskID, bool status)
+        public void UpdateTaskStatus(int taskID, bool status)
         {
             string[] file = File.ReadAllLines(@"C:\tmp\getTaskStatusTest.txt");
             if (status == true && taskID != -5)

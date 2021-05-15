@@ -22,13 +22,13 @@ namespace BusinessLogicLayer.Logic
             _normalAppointmentRepository = normalAppointmentRepository;
         }
 
-        public void CreateNormalAppointment(AppointmentDTO appointmentDTO)
+        public void AddNormalAppointment(AppointmentDTO appointmentDTO)
         {
-            appointmentDTO.AppointmentID = _appointmentRepository.AddAppointment(appointmentDTO);
+            appointmentDTO.AppointmentID = _appointmentRepository.CreateAppointment(appointmentDTO);
 
             if (appointmentDTO.DescriptionDTO.Description != null)
             {
-                _normalAppointmentRepository.AddDescription(appointmentDTO);
+                _normalAppointmentRepository.CreateDescription(appointmentDTO);
             }
         }
 

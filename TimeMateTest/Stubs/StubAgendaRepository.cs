@@ -10,7 +10,7 @@ namespace TimeMateTest.Stubs
 {
     class StubAgendaRepository : IAgendaRepository
     {
-        public int AddAgenda(int accountID, AgendaDTO agendaDTO)
+        public int CreateAgenda(int accountID, AgendaDTO agendaDTO)
         {
             int agendaID = 0;
             using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addAgendaTest.txt"))
@@ -30,7 +30,7 @@ namespace TimeMateTest.Stubs
             }
         }
 
-        public List<AgendaDTO> GetAllAgendas(int accountID)
+        public List<AgendaDTO> GetAgendas(int accountID)
         {
             List<AgendaDTO> agendaNames = new List<AgendaDTO>();
             if (accountID == 12)

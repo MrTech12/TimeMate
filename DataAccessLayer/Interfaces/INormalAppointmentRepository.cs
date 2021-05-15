@@ -7,7 +7,7 @@ namespace DataAccessLayer.Interfaces
 {
     public interface INormalAppointmentRepository
     {
-        void AddDescription(AppointmentDTO appointmentDTO);
+        void CreateDescription(AppointmentDTO appointmentDTO);
 
         string GetDescription(int appointmentID);
     }

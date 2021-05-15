@@ -62,7 +62,7 @@ namespace TimeMate.Controllers
 
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
                 agenda = new Agenda(accountDTO, _agendaRepository);
-                agenda.CreateAgenda(agendaDTO);
+                agenda.AddAgenda(agendaDTO);
                 return RedirectToAction("Index", "AgendaView");
             }
             else

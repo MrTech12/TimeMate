@@ -13,7 +13,7 @@ namespace DataAccessLayer.Repositories
     {
         private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
-        public void AddTask(AppointmentDTO appointmentDTO)
+        public void CreateTask(AppointmentDTO appointmentDTO)
         {
             try
             {
@@ -22,15 +22,15 @@ namespace DataAccessLayer.Repositories
                     string query = @"INSERT INTO [Appointment_Task](AppointmentID, TaskName, TaskChecked) VALUES (@0, @1, @2)";
 
                     sqlConnection.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
 
-                    foreach (var item in appointmentDTO.ChecklistDTOs)
+                    foreach (var item in appointmentDTO.TaskList)
                     {
-                        insertQuery.Parameters.Clear();
-                        insertQuery.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
-                        insertQuery.Parameters.AddWithValue("1", item.TaskName);
-                        insertQuery.Parameters.AddWithValue("2", false);
-                        insertQuery.ExecuteNonQuery();
+                        insertCommand.Parameters.Clear();
+                        insertCommand.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
+                        insertCommand.Parameters.AddWithValue("1", item.TaskName);
+                        insertCommand.Parameters.AddWithValue("2", false);
+                        insertCommand.ExecuteNonQuery();
                     }
                 }
             }
@@ -40,9 +40,9 @@ namespace DataAccessLayer.Repositories
             }
         }
 
-        public List<ChecklistDTO> GetTasks(int appointmentID)
+        public List<TaskDTO> GetTasks(int appointmentID)
         {
-            List<ChecklistDTO> checklists = new List<ChecklistDTO>();
+            List<TaskDTO> taskList = new List<TaskDTO>();
             try
             {
                 using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
@@ -50,17 +50,17 @@ namespace DataAccessLayer.Repositories
                     string query = @"SELECT TaskID, TaskName FROM [Appointment_Task] WHERE AppointmentID = @0";
 
                     sqlConnection.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
 
-                    selectQuery.Parameters.AddWithValue("0", appointmentID);
-                    SqlDataReader dataReader = selectQuery.ExecuteReader();
+                    selectCommand.Parameters.AddWithValue("0", appointmentID);
+                    SqlDataReader dataReader = selectCommand.ExecuteReader();
 
                     while (dataReader.Read())
                     {
-                        ChecklistDTO checklistDTO = new ChecklistDTO();
-                        checklistDTO.TaskID = Convert.ToInt32(dataReader["TaskID"]);
-                        checklistDTO.TaskName = dataReader["TaskName"].ToString();
-                        checklists.Add(checklistDTO);
+                        TaskDTO taskDTO = new TaskDTO();
+                        taskDTO.TaskID = Convert.ToInt32(dataReader["TaskID"]);
+                        taskDTO.TaskName = dataReader["TaskName"].ToString();
+                        taskList.Add(taskDTO);
                     }
                 }
             }
@@ -68,7 +68,7 @@ namespace DataAccessLayer.Repositories
             {
                 throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
-            return checklists;
+            return taskList;
         }
 
         public bool GetTaskStatus(int taskID)
@@ -81,10 +81,10 @@ namespace DataAccessLayer.Repositories
                     string query = @"SELECT TaskChecked FROM [Appointment_Task] WHERE TaskID = @0";
 
                     sqlConnection.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
 
-                    selectQuery.Parameters.AddWithValue("0", taskID);
-                    taskStatus = Convert.ToBoolean(selectQuery.ExecuteScalar());
+                    selectCommand.Parameters.AddWithValue("0", taskID);
+                    taskStatus = Convert.ToBoolean(selectCommand.ExecuteScalar());
                 }
             }
             catch (SqlException exception)
@@ -94,7 +94,7 @@ namespace DataAccessLayer.Repositories
             return taskStatus;
         }
 
-        public void CheckOffTask(int taskID, bool status)
+        public void UpdateTaskStatus(int taskID, bool status)
         {
             try
             {
@@ -103,11 +103,11 @@ namespace DataAccessLayer.Repositories
                     string query = @"UPDATE [Appointment_Task] SET TaskChecked=@0 WHERE TaskID = @1";
 
                     sqlConnection.Open();
-                    SqlCommand updateQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand updateCommand = new SqlCommand(query, sqlConnection);
 
-                    updateQuery.Parameters.AddWithValue("0", status);
-                    updateQuery.Parameters.AddWithValue("1", taskID);
-                    updateQuery.ExecuteScalar();
+                    updateCommand.Parameters.AddWithValue("0", status);
+                    updateCommand.Parameters.AddWithValue("1", taskID);
+                    updateCommand.ExecuteScalar();
                 }
             }
             catch (SqlException exception)

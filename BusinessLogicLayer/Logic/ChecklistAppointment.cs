@@ -22,29 +22,29 @@ namespace BusinessLogicLayer.Logic
             _checklistAppointmentRepository = checklistAppointmentRepository;
         }
 
-        public void CreateChecklistAppointment(AppointmentDTO appointmentDTO)
+        public void AddChecklistAppointment(AppointmentDTO appointmentDTO)
         {
-            appointmentDTO.AppointmentID = _appointmentRepository.AddAppointment(appointmentDTO);
+            appointmentDTO.AppointmentID = _appointmentRepository.CreateAppointment(appointmentDTO);
 
-            if (appointmentDTO.ChecklistDTOs.Count != 0)
+            if (appointmentDTO.TaskList.Count != 0)
             {
-                _checklistAppointmentRepository.AddTask(appointmentDTO);
+                _checklistAppointmentRepository.CreateTask(appointmentDTO);
             }
         }
 
         public List<string> RetrieveTasks(int appointmentID)
         {
-            var checklists = _checklistAppointmentRepository.GetTasks(appointmentID);
-            List<string> tasks = new List<string>();
-            if (checklists.Count != 0)
+            var tasks = _checklistAppointmentRepository.GetTasks(appointmentID);
+            List<string> taskList = new List<string>();
+            if (tasks.Count != 0)
             {
-                for (int i = 0; i < checklists.Count; i++)
+                for (int i = 0; i < tasks.Count; i++)
                 {
-                    tasks.Add(Convert.ToString(checklists[i].TaskID));
-                    tasks.Add(checklists[i].TaskName);
+                    taskList.Add(Convert.ToString(tasks[i].TaskID));
+                    taskList.Add(tasks[i].TaskName);
                 }
             }
-            return tasks;
+            return taskList;
         }
 
         public void ChangeTaskStatus(int taskID)
@@ -52,11 +52,11 @@ namespace BusinessLogicLayer.Logic
             bool taskStatus = _checklistAppointmentRepository.GetTaskStatus(taskID);
             if (!taskStatus)
             {
-                _checklistAppointmentRepository.CheckOffTask(taskID, true);
+                _checklistAppointmentRepository.UpdateTaskStatus(taskID, true);
             }
             else
             {
-                _checklistAppointmentRepository.CheckOffTask(taskID, false);
+                _checklistAppointmentRepository.UpdateTaskStatus(taskID, false);
             }
         }
     }

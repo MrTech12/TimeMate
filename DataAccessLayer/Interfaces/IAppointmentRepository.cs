@@ -7,7 +7,7 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IAppointmentRepository
     {
-        int AddAppointment(AppointmentDTO appointmentDTO);
+        int CreateAppointment(AppointmentDTO appointmentDTO);
 
         List<AppointmentDTO> GetAppointments(int accountID);
 

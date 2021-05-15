@@ -29,7 +29,7 @@ namespace TimeMateTest.BLL
                 AgendaName = "Firefox"
             };
 
-            normalAppointment.CreateNormalAppointment(appointmentDTO);
+            normalAppointment.AddNormalAppointment(appointmentDTO);
 
             string[] file = File.ReadAllLines(filePath);
             File.Delete(filePath);
@@ -50,7 +50,7 @@ namespace TimeMateTest.BLL
             appointmentDTO.EndDate = DateTime.Now.AddHours(4);
             appointmentDTO.AgendaName = "Firefox";
 
-            checklistAppointment.CreateChecklistAppointment(appointmentDTO);
+            checklistAppointment.AddChecklistAppointment(appointmentDTO);
 
             string[] file = File.ReadAllLines(@"C:\tmp\addAppointmentTest.txt");
             File.Delete(@"C:\tmp\addAppointmentTest.txt");

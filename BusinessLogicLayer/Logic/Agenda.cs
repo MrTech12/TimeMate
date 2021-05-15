@@ -11,7 +11,6 @@ namespace BusinessLogicLayer.Logic
     public class Agenda
     {
         private IAgendaRepository _agendaRepository;
-
         private AccountDTO accountDTO = new AccountDTO();
 
         public Agenda(AccountDTO accountDTO, IAgendaRepository agendaRepository)
@@ -20,14 +19,14 @@ namespace BusinessLogicLayer.Logic
             _agendaRepository = agendaRepository;
         }
 
-        public void CreateAgenda(AgendaDTO agendaDTO)
+        public void AddAgenda(AgendaDTO agendaDTO)
         {
-            _agendaRepository.AddAgenda(accountDTO.AccountID, agendaDTO);
+            _agendaRepository.CreateAgenda(accountDTO.AccountID, agendaDTO);
         }
 
         public List<AgendaDTO> RetrieveAgendas()
         {
-            return _agendaRepository.GetAllAgendas(accountDTO.AccountID);
+            return _agendaRepository.GetAgendas(accountDTO.AccountID);
         }
 
         public void DeleteAgenda(int agendaID)

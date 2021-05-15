@@ -23,34 +23,34 @@ namespace BusinessLogicLayer.Logic
         public JobDTO RetrieveJobDetails(int accountID)
         {
             JobDTO jobDetails = new JobDTO();
-            double workdayWage = _jobRepository.GetWorkdayPayWage(accountID);
-            double weekendWage = _jobRepository.GetWeekendPayWage(accountID);
+            double workdayPayWage = _jobRepository.GetWorkdayPayWage(accountID);
+            double weekendPayWage = _jobRepository.GetWeekendPayWage(accountID);
 
-            if (workdayWage == 0 && weekendWage == 0)
+            if (workdayPayWage == 0 && weekendPayWage == 0)
             {
                 return jobDetails;
             }
             else
             {
                 int agendaID = _agendaRepository.GetAgendaID("Bijbaan", accountID);
-                if (workdayWage != 0 && weekendWage == 0)
+                if (workdayPayWage != 0 && weekendPayWage == 0)
                 {
                     jobDetails.WeeklyHours = RetrieveWorkdayHours(agendaID);
-                    jobDetails.WeeklyPay = jobDetails.WeeklyHours * workdayWage;
+                    jobDetails.WeeklyPay = jobDetails.WeeklyHours * workdayPayWage;
                 }
-                else if (workdayWage == 0 && weekendWage != 0)
+                else if (workdayPayWage == 0 && weekendPayWage != 0)
                 {
                     jobDetails.WeeklyHours = RetrieveWeekendHours(agendaID);
-                    jobDetails.WeeklyPay = jobDetails.WeeklyHours * weekendWage;
+                    jobDetails.WeeklyPay = jobDetails.WeeklyHours * weekendPayWage;
                 }
                 else
                 {
-                    double workdays = RetrieveWorkdayHours(agendaID);
-                    double weekend = RetrieveWeekendHours(agendaID);
-                    jobDetails.WeeklyHours = workdays + weekend;
+                    double workdayHours = RetrieveWorkdayHours(agendaID);
+                    double weekendHours = RetrieveWeekendHours(agendaID);
+                    jobDetails.WeeklyHours = workdayHours + weekendHours;
 
-                    jobDetails.WeeklyPay += workdays * workdayWage;
-                    jobDetails.WeeklyPay += weekend * weekendWage;
+                    jobDetails.WeeklyPay += workdayHours * workdayPayWage;
+                    jobDetails.WeeklyPay += weekendHours * weekendPayWage;
                 }
             }
             return jobDetails;

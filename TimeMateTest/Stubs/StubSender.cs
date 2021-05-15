@@ -9,11 +9,19 @@ namespace TimeMateTest.Stubs
 {
     public class StubSender : ISender
     {
-        public void SendAccountCreationMail(string mail)
+        public void CreateAccountCreationMail(string recipient)
         {
             using (StreamWriter streamWriter = File.AppendText(@"C:\tmp\CreateAccountTest.txt"))
             {
-                streamWriter.WriteLine("Een mail is verstuurd naar " + mail);
+                streamWriter.WriteLine("De ontvanger " + recipient);
+            }
+        }
+
+        public void SendAccountCreationMail(string recipient)
+        {
+            using (StreamWriter streamWriter = File.AppendText(@"C:\tmp\CreateAccountTest.txt"))
+            {
+                streamWriter.WriteLine("Een mail is verstuurd naar " + recipient);
             }
         }
     }

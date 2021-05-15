@@ -7,5 +7,7 @@ namespace BusinessLogicLayer
     public interface ISender
     {
         void SendAccountCreationMail(string recipient);
+
+        void CreateAccountCreationMail(string recipient);
     }
 }

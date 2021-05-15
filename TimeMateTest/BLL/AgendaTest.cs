@@ -25,7 +25,7 @@ namespace TimeMateTest.BLL
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000", NotificationType = "Nee" };
 
-            agenda.CreateAgenda(agendaDTO);
+            agenda.AddAgenda(agendaDTO);
 
             string[] file = File.ReadAllLines(filePathAgendaCreation);
             File.Delete(filePathAgendaCreation);
@@ -41,7 +41,7 @@ namespace TimeMateTest.BLL
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560", NotificationType = "Nee" };
 
-            agenda.CreateAgenda(agendaDTO);
+            agenda.AddAgenda(agendaDTO);
 
             string[] file = File.ReadAllLines(filePathAgendaCreation);
             File.Delete(filePathAgendaCreation);
@@ -57,7 +57,7 @@ namespace TimeMateTest.BLL
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "", AgendaColor = "", NotificationType = "" };
 
-            agenda.CreateAgenda(agendaDTO);
+            agenda.AddAgenda(agendaDTO);
 
             string[] file = File.ReadAllLines(filePathAgendaCreation);
             File.Delete(filePathAgendaCreation);
@@ -75,8 +75,8 @@ namespace TimeMateTest.BLL
             accountDTO.JobDayType.Add("Doordeweeks");
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
 
-            agenda.CreateAgenda(workAgendaDTO);
-            _stubJobRepository.AddPayDetails(accountDTO);
+            agenda.AddAgenda(workAgendaDTO);
+            _stubJobRepository.CreatePayDetails(accountDTO);
 
             string[] fileAgenda = File.ReadAllLines(filePathAgendaCreation);
             string[] filePay = File.ReadAllLines(filePathWorkDetails);
@@ -101,8 +101,8 @@ namespace TimeMateTest.BLL
             accountDTO.JobDayType.Add("Weekend");
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
 
-            agenda.CreateAgenda(workAgendaDTO);
-            _stubJobRepository.AddPayDetails(accountDTO);
+            agenda.AddAgenda(workAgendaDTO);
+            _stubJobRepository.CreatePayDetails(accountDTO);
 
             string[] fileAgenda = File.ReadAllLines(filePathAgendaCreation);
             string[] filePay = File.ReadAllLines(filePathWorkDetails);
@@ -125,8 +125,8 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { AccountID = 23 };
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
 
-            agenda.CreateAgenda(workAgendaDTO);
-            _stubJobRepository.AddPayDetails(accountDTO);
+            agenda.AddAgenda(workAgendaDTO);
+            _stubJobRepository.CreatePayDetails(accountDTO);
 
             string[] fileAgenda = File.ReadAllLines(filePathAgendaCreation);
             string[] filePay = File.ReadAllLines(filePathWorkDetails);

@@ -20,7 +20,7 @@ namespace BusinessLogicLayer.Logic
 
         public List<AppointmentDTO> RetrieveAppointments()
         {
-            List<ChecklistDTO> checklists = new List<ChecklistDTO>();
+            List<TaskDTO> taskList = new List<TaskDTO>();
             var appointments = _appointmentRepository.GetAppointments(accountDTO.AccountID);
 
             // Because using an ORM is prohibited, the below code links appointments with the right task(s).
@@ -28,26 +28,26 @@ namespace BusinessLogicLayer.Logic
             // The below 'for' loop stored every checklist it can find, which has a taskname, in a seperate list.
             for (int i = 0; i < appointments.Count; i++)
             {
-                ChecklistDTO checklist = new ChecklistDTO();
-                if (appointments[i].ChecklistDTOs[0].TaskName != null)
+                TaskDTO taskDTO = new TaskDTO();
+                if (appointments[i].TaskList.Count > 0 && appointments[i].TaskList[0].TaskName != null)
                 {
-                    checklist = appointments[i].ChecklistDTOs[0];
-                    checklists.Add(checklist);
+                    taskDTO = appointments[i].TaskList[0];
+                    taskList.Add(taskDTO);
+                    appointments[i].TaskList.RemoveAt(0);
                 }
             }
             // Sorting the retrieved appointments, so that duplicate appointments would be removed.
             List<AppointmentDTO> sortedAppointments = appointments.OrderBy(x => x.StartDate).GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
 
-            if (checklists.Count != 0)
+            if (taskList.Count != 0)
             {
                 foreach (var item in sortedAppointments)
                 {
-                    item.ChecklistDTOs.RemoveAt(0);
-                    for (int i = 0; i < checklists.Count; i++)
+                    for (int i = 0; i < taskList.Count; i++)
                     {
-                        if (item.AppointmentID == checklists[i].AppointmentID) // Adding tasks to the right appointment, by looking at the appointmentID.
+                        if (item.AppointmentID == taskList[i].AppointmentID) // Adding tasks to the right appointment, by looking at the appointmentID.
                         {
-                            item.ChecklistDTOs.Add(checklists[i]);
+                            item.TaskList.Add(taskList[i]);
                         }
                     }
                 }

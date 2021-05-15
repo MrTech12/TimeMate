@@ -7,11 +7,11 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IAgendaRepository
     {
-        int AddAgenda(int accountID, AgendaDTO agendaDTO);
+        int CreateAgenda(int accountID, AgendaDTO agendaDTO);
 
         void DeleteAgenda(int accountID, int agendaID);
 
-        List<AgendaDTO> GetAllAgendas(int accountID);
+        List<AgendaDTO> GetAgendas(int accountID);
 
         int GetAgendaID(string agendaName, int accountID);
     }

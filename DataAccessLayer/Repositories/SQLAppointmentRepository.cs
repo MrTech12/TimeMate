@@ -12,7 +12,7 @@ namespace DataAccessLayer.Repositories
     {
         private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
-        public int AddAppointment(AppointmentDTO appointmentDTO)
+        public int CreateAppointment(AppointmentDTO appointmentDTO)
         {
             int appointmentID;
             try
@@ -22,13 +22,13 @@ namespace DataAccessLayer.Repositories
                     string query = @"INSERT INTO [Appointment](AgendaID, Name, Starting, Ending) VALUES (@0, @1, @2, @3); SELECT SCOPE_IDENTITY();";
 
                     sqlConnection.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
 
-                    insertQuery.Parameters.AddWithValue("0", appointmentDTO.AgendaID);
-                    insertQuery.Parameters.AddWithValue("1", appointmentDTO.AppointmentName);
-                    insertQuery.Parameters.AddWithValue("2", appointmentDTO.StartDate);
-                    insertQuery.Parameters.AddWithValue("3", appointmentDTO.EndDate);
-                    appointmentID = Convert.ToInt32(insertQuery.ExecuteScalar());
+                    insertCommand.Parameters.AddWithValue("0", appointmentDTO.AgendaID);
+                    insertCommand.Parameters.AddWithValue("1", appointmentDTO.AppointmentName);
+                    insertCommand.Parameters.AddWithValue("2", appointmentDTO.StartDate);
+                    insertCommand.Parameters.AddWithValue("3", appointmentDTO.EndDate);
+                    appointmentID = Convert.ToInt32(insertCommand.ExecuteScalar());
                 }
             }
             catch (SqlException exception)
@@ -52,15 +52,15 @@ namespace DataAccessLayer.Repositories
                         AND Agenda.AccountID = @0";
 
                     sqlConnection.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
 
-                    selectQuery.Parameters.AddWithValue("0", accountID);
-                    SqlDataReader dataReader = selectQuery.ExecuteReader();
+                    selectCommand.Parameters.AddWithValue("0", accountID);
+                    SqlDataReader dataReader = selectCommand.ExecuteReader();
 
                     while (dataReader.Read())
                     {
                         AppointmentDTO appointmentModel = new AppointmentDTO();
-                        ChecklistDTO checklistDTO = new ChecklistDTO();
+                        TaskDTO taskDTO = new TaskDTO();
                         appointmentModel.AppointmentID = Convert.ToInt32(dataReader["AppointmentID"]);
                         appointmentModel.AppointmentName = dataReader["Name"].ToString();
                         appointmentModel.StartDate = Convert.ToDateTime(dataReader["Starting"]);
@@ -74,12 +74,12 @@ namespace DataAccessLayer.Repositories
                         }
                         else if (dataReader["TaskID"] != DBNull.Value)
                         {
-                            checklistDTO.TaskID = Convert.ToInt32(dataReader["TaskID"]);
-                            checklistDTO.AppointmentID = Convert.ToInt32(dataReader["AppointmentID"]);
-                            checklistDTO.TaskName = dataReader["TaskName"].ToString();
-                            checklistDTO.TaskChecked = Convert.ToBoolean(dataReader["TaskChecked"]);
+                            taskDTO.TaskID = Convert.ToInt32(dataReader["TaskID"]);
+                            taskDTO.AppointmentID = Convert.ToInt32(dataReader["AppointmentID"]);
+                            taskDTO.TaskName = dataReader["TaskName"].ToString();
+                            taskDTO.TaskChecked = Convert.ToBoolean(dataReader["TaskChecked"]);
+                            appointmentModel.TaskList.Add(taskDTO);
                         }
-                        appointmentModel.ChecklistDTOs.Add(checklistDTO);
                         appointments.Add(appointmentModel);
                     }
                 }
@@ -102,12 +102,12 @@ namespace DataAccessLayer.Repositories
                                     AND Starting >= @1 AND Ending <= @2";
 
                     sqlConnection.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
 
-                    selectQuery.Parameters.AddWithValue("0", agendaID);
-                    selectQuery.Parameters.AddWithValue("1", dates[0]);
-                    selectQuery.Parameters.AddWithValue("2", dates[1]);
-                    SqlDataReader dataReader = selectQuery.ExecuteReader();
+                    selectCommand.Parameters.AddWithValue("0", agendaID);
+                    selectCommand.Parameters.AddWithValue("1", dates[0]);
+                    selectCommand.Parameters.AddWithValue("2", dates[1]);
+                    SqlDataReader dataReader = selectCommand.ExecuteReader();
 
                     while (dataReader.Read())
                     {

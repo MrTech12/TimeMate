@@ -56,8 +56,8 @@ namespace TimeMateTest.BLL
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
 
             account.CreateAccount();
-            agenda.CreateAgenda(workAgendaDTO);
-            _stubJobRepository.AddPayDetails(accountDTO);
+            agenda.AddAgenda(workAgendaDTO);
+            _stubJobRepository.CreatePayDetails(accountDTO);
             
 
             fileAccount = File.ReadAllLines(filePathAccount);
@@ -114,7 +114,7 @@ namespace TimeMateTest.BLL
 
             Exception exception = Assert.Throws<AccountException>(action);
 
-            Assert.Equal("Het mailadres is niet geleverd.", exception.Message);
+            Assert.Equal("Het mailadres voor een nieuw account is niet geleverd.", exception.Message);
         }
 
         [Fact]
@@ -127,7 +127,7 @@ namespace TimeMateTest.BLL
 
             Exception exception = Assert.Throws<AccountException>(action);
 
-            Assert.Equal("Het wachtwoord is niet geleverd.", exception.Message);
+            Assert.Equal("Het wachtwoord voor een nieuw account is niet geleverd.", exception.Message);
         }
     }
 }

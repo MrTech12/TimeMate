@@ -9,7 +9,7 @@ namespace TimeMateTest.Stubs
 {
     class StubJobRepository : IJobRepository
     {
-        public void AddPayDetails(AccountDTO accountDTO)
+        public void CreatePayDetails(AccountDTO accountDTO)
         {
             using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addWorkPayDetails.txt"))
             {

@@ -9,7 +9,7 @@ namespace TimeMateTest.Stubs
 {
     class StubNormalAppointmentRepository : INormalAppointmentRepository
     {
-        public void AddDescription(AppointmentDTO appointmentDTO)
+        public void CreateDescription(AppointmentDTO appointmentDTO)
         {
             if (appointmentDTO.AppointmentName == "Reorder cables")
             {

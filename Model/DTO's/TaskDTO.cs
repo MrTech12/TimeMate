@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Model.DTO_s
 {
-    public class ChecklistDTO
+    public class TaskDTO
     {
         private int taskID;
         private int appointmentID;

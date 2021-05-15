@@ -12,7 +12,7 @@ namespace DataAccessLayer.Repositories
     {
         private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
-        public void AddPayDetails(AccountDTO accountDTO)
+        public void CreatePayDetails(AccountDTO accountDTO)
         {
             try
             {
@@ -21,24 +21,24 @@ namespace DataAccessLayer.Repositories
                     string query = @"INSERT INTO [Job](AccountID, HourlyWageBuss, HourlyWageWeek) Values (@0,@1,@2)";
 
                     sqlConnection.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
 
                     for (int i = 0; i < accountDTO.JobHourlyWage.Count; i++)
                     {
-                        insertQuery.Parameters.Clear();
-                        insertQuery.Parameters.AddWithValue("0", accountDTO.AccountID);
+                        insertCommand.Parameters.Clear();
+                        insertCommand.Parameters.AddWithValue("0", accountDTO.AccountID);
 
                         if (accountDTO.JobDayType[i] == "Doordeweeks" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            insertQuery.Parameters.AddWithValue("1", accountDTO.JobHourlyWage[i]);
-                            insertQuery.Parameters.AddWithValue("2", DBNull.Value);
+                            insertCommand.Parameters.AddWithValue("1", accountDTO.JobHourlyWage[i]);
+                            insertCommand.Parameters.AddWithValue("2", DBNull.Value);
                         }
                         else if (accountDTO.JobDayType[i] == "Weekend" && accountDTO.JobHourlyWage[i] != 0)
                         {
-                            insertQuery.Parameters.AddWithValue("1", DBNull.Value);
-                            insertQuery.Parameters.AddWithValue("2", accountDTO.JobHourlyWage[i]);
+                            insertCommand.Parameters.AddWithValue("1", DBNull.Value);
+                            insertCommand.Parameters.AddWithValue("2", accountDTO.JobHourlyWage[i]);
                         }
-                        insertQuery.ExecuteNonQuery();
+                        insertCommand.ExecuteNonQuery();
                     }
                 }
             }
@@ -47,10 +47,10 @@ namespace DataAccessLayer.Repositories
                 throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
         }
-
+        //TODO 2 methods that kind off perform the same function
         public double GetWorkdayPayWage(int accountID)
         {
-            double wage = 0;
+            double payWage = 0;
             try
             {
                 using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
@@ -58,16 +58,16 @@ namespace DataAccessLayer.Repositories
                     string query = @"SELECT HourlyWageBuss FROM [Job] WHERE AccountID = @0";
 
                     sqlConnection.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
 
-                    selectQuery.Parameters.AddWithValue("0", accountID);
-                    SqlDataReader dataReader = selectQuery.ExecuteReader();
+                    selectCommand.Parameters.AddWithValue("0", accountID);
+                    SqlDataReader dataReader = selectCommand.ExecuteReader();
 
                     while (dataReader.Read())
                     {
                         if (dataReader["HourlyWageBuss"] != DBNull.Value)
                         {
-                            wage = Convert.ToDouble(dataReader["HourlyWageBuss"]);
+                            payWage = Convert.ToDouble(dataReader["HourlyWageBuss"]);
                         }
                     }
                 }
@@ -76,12 +76,12 @@ namespace DataAccessLayer.Repositories
             {
                 throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
-            return wage;
+            return payWage;
         }
 
         public double GetWeekendPayWage(int accountID)
         {
-            double wage = 0;
+            double payWage = 0;
             try
             {
                 using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
@@ -89,16 +89,16 @@ namespace DataAccessLayer.Repositories
                     string query = @"SELECT HourlyWageWeek FROM [Job] WHERE AccountID = @0";
 
                     sqlConnection.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
 
-                    selectQuery.Parameters.AddWithValue("0", accountID);
-                    SqlDataReader dataReader = selectQuery.ExecuteReader();
+                    selectCommand.Parameters.AddWithValue("0", accountID);
+                    SqlDataReader dataReader = selectCommand.ExecuteReader();
 
                     while (dataReader.Read())
                     {
                         if (dataReader["HourlyWageWeek"] != DBNull.Value)
                         {
-                            wage = Convert.ToDouble(dataReader["HourlyWageWeek"]);
+                            payWage = Convert.ToDouble(dataReader["HourlyWageWeek"]);
                         }
                     }
                 }
@@ -107,7 +107,7 @@ namespace DataAccessLayer.Repositories
             {
                 throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
-            return wage;
+            return payWage;
         }
     }
 }

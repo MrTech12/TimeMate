@@ -12,7 +12,7 @@ namespace DataAccessLayer.Repositories
     {
         private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
-        public void AddDescription(AppointmentDTO appointmentDTO)
+        public void CreateDescription(AppointmentDTO appointmentDTO)
         {
             try
             {
@@ -21,11 +21,11 @@ namespace DataAccessLayer.Repositories
                     string query = @"INSERT INTO [Appointment_Description](AppointmentID, Description) VALUES (@0, @1)";
 
                     sqlConnection.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
 
-                    insertQuery.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
-                    insertQuery.Parameters.AddWithValue("1", appointmentDTO.DescriptionDTO.Description);
-                    insertQuery.ExecuteNonQuery();
+                    insertCommand.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
+                    insertCommand.Parameters.AddWithValue("1", appointmentDTO.DescriptionDTO.Description);
+                    insertCommand.ExecuteNonQuery();
                 }
             }
             catch (SqlException exception)
@@ -44,10 +44,10 @@ namespace DataAccessLayer.Repositories
                     string query = @"SELECT Description FROM [Appointment_Description] WHERE AppointmentID = @0";
 
                     sqlConnection.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
 
-                    selectQuery.Parameters.AddWithValue("0", appointmentID);
-                    description = Convert.ToString(selectQuery.ExecuteScalar());
+                    selectCommand.Parameters.AddWithValue("0", appointmentID);
+                    description = Convert.ToString(selectCommand.ExecuteScalar());
                 }
             }
             catch (SqlException exception)

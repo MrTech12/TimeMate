@@ -25,10 +25,10 @@ namespace DataAccessLayer.Repositories
                     string query = @"SELECT AccountID FROM [Account] WHERE Mail = @0";
 
                     sqlConnection.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
 
-                    selectQuery.Parameters.AddWithValue("0", mail);
-                    var resultedAccountID = selectQuery.ExecuteScalar();
+                    selectCommand.Parameters.AddWithValue("0", mail);
+                    var resultedAccountID = selectCommand.ExecuteScalar();
 
                     if (resultedAccountID == null)
                     {
@@ -57,18 +57,18 @@ namespace DataAccessLayer.Repositories
                     string query = @"SELECT FirstName FROM [Account] WHERE Mail = @0";
 
                     sqlConnection.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
 
-                    selectQuery.Parameters.AddWithValue("0", mail);
-                    var resultedUserName = selectQuery.ExecuteScalar();
+                    selectCommand.Parameters.AddWithValue("0", mail);
+                    var resultedFirstName = selectCommand.ExecuteScalar();
 
-                    if (resultedUserName == null)
+                    if (resultedFirstName == null)
                     {
                         firstName = null;
                     }
                     else
                     {
-                        firstName = resultedUserName.ToString();
+                        firstName = resultedFirstName.ToString();
                     }
                 }
             }
@@ -89,10 +89,10 @@ namespace DataAccessLayer.Repositories
                     string query = @"SELECT Password FROM [Account] WHERE Mail = @0";
 
                     sqlConnection.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
                     
-                    selectQuery.Parameters.AddWithValue("0", mail);
-                    var resultedPasswordHash = selectQuery.ExecuteScalar();
+                    selectCommand.Parameters.AddWithValue("0", mail);
+                    var resultedPasswordHash = selectCommand.ExecuteScalar();
 
                     if (resultedPasswordHash == null)
                     {
@@ -121,12 +121,12 @@ namespace DataAccessLayer.Repositories
                     string query = @"INSERT INTO [Account](FirstName, Mail, Password) Values (@0,@1,@2); SELECT SCOPE_IDENTITY();";
 
                     sqlConnection.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
 
-                    insertQuery.Parameters.AddWithValue("0", accountDTO.FirstName);
-                    insertQuery.Parameters.AddWithValue("1", accountDTO.Mail);
-                    insertQuery.Parameters.AddWithValue("2", accountDTO.Password);
-                    accountID = Convert.ToInt32(insertQuery.ExecuteScalar());
+                    insertCommand.Parameters.AddWithValue("0", accountDTO.FirstName);
+                    insertCommand.Parameters.AddWithValue("1", accountDTO.Mail);
+                    insertCommand.Parameters.AddWithValue("2", accountDTO.Password);
+                    accountID = Convert.ToInt32(insertCommand.ExecuteScalar());
                 }
             }
             catch (SqlException exception)

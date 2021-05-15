@@ -62,17 +62,17 @@ namespace TimeMate.Controllers
                 accountDTO.Password = viewModel.Password;
 
                 account = new Account(accountDTO, _accountRepository);
-                string[] result = account.LoggingIn();
+                string[] response = account.LoggingIn();
 
-                if (result[1] == null)
+                if (response[1] == null)
                 {
                     ModelState.AddModelError("", "Verkeerd mailadres en/of wachtwoord.");
                     return View(viewModel);
                 }
                 else
                 {
-                    HttpContext.Session.SetInt32("accountID", Convert.ToInt32(result[0]));
-                    HttpContext.Session.SetString("firstName", (result[1]));
+                    HttpContext.Session.SetInt32("accountID", Convert.ToInt32(response[0]));
+                    HttpContext.Session.SetString("firstName", (response[1]));
                     return RedirectToAction("Index", "AgendaView");
                 }
             }
@@ -101,7 +101,7 @@ namespace TimeMate.Controllers
         [HttpPost]
         public IActionResult Register(RegisterViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) // TODO: find how to structure this differently. This is a very long method.
             {
                 string specialCharacterValidate = @"[~`!@#$%^&*()+=|\\{}':;.,<>/?[\]""_-]";
 
@@ -120,6 +120,7 @@ namespace TimeMate.Controllers
                     ModelState.AddModelError("", "Het wachtwoord moet een cijfer bevatten.");
                     return View(viewModel);
                 }
+
                 accountDTO = new AccountDTO();
                 accountDTO.FirstName = viewModel.FirstName;
                 accountDTO.Mail = viewModel.Mail;
@@ -155,8 +156,8 @@ namespace TimeMate.Controllers
                     agenda = new Agenda(account.AccountDTO, _agendaRepository);
                     AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000", NotificationType = "Nee" };
 
-                    agenda.CreateAgenda(workAgendaDTO);
-                    _jobRepository.AddPayDetails(accountDTO);
+                    agenda.AddAgenda(workAgendaDTO);
+                    _jobRepository.CreatePayDetails(accountDTO);
                 }
 
                 HttpContext.Session.SetInt32("accountID", Convert.ToInt32(account.AccountDTO.AccountID));

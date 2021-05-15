@@ -17,16 +17,16 @@ namespace TimeMateTest.BLL
         [Fact]
         public void CreateChecklistAppointment()
         {
-            ChecklistDTO checklistDTO = new ChecklistDTO() { TaskName = "Get inspiration" };
+            TaskDTO taskDTO = new TaskDTO() { TaskName = "Get inspiration" };
             appointmentDTO = new AppointmentDTO();
             appointmentDTO.AppointmentName = "Create 3D render";
             appointmentDTO.StartDate = DateTime.Now.AddHours(3);
             appointmentDTO.EndDate = DateTime.Now.AddHours(4);
             appointmentDTO.AgendaName = "Firefox";
-            appointmentDTO.ChecklistDTOs.Add(checklistDTO);
+            appointmentDTO.TaskList.Add(taskDTO);
             checklistAppointment = new ChecklistAppointment(new StubAppointmentRepository(), new StubChecklistAppointmentRepository());
 
-            checklistAppointment.CreateChecklistAppointment(appointmentDTO);
+            checklistAppointment.AddChecklistAppointment(appointmentDTO);
 
             string[] appointmentFile = File.ReadAllLines(@"C:\tmp\addAppointmentTest.txt");
             File.Delete(filePathtasks);
@@ -64,15 +64,15 @@ namespace TimeMateTest.BLL
         [Fact]
         public void ChangeTaskStatusToDone()
         {
-            ChecklistDTO checklistDTO = new ChecklistDTO();
-            checklistDTO.TaskID = 62;
-            checklistDTO.TaskName = "Get cake";
+            TaskDTO taskDTO = new TaskDTO();
+            taskDTO.TaskID = 62;
+            taskDTO.TaskName = "Get cake";
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePathtasks))
             {
-                streamWriter.WriteLine(checklistDTO.TaskID);
-                streamWriter.WriteLine(checklistDTO.TaskName);
+                streamWriter.WriteLine(taskDTO.TaskID);
+                streamWriter.WriteLine(taskDTO.TaskName);
                 streamWriter.WriteLine("False");
             }
 
@@ -87,15 +87,15 @@ namespace TimeMateTest.BLL
         [Fact]
         public void ChangeTaskStatusToNotDone()
         {
-            ChecklistDTO checklistDTO = new ChecklistDTO();
-            checklistDTO.TaskID = 74;
-            checklistDTO.TaskName = "Buy new monitor";
+            TaskDTO taskDTO = new TaskDTO();
+            taskDTO.TaskID = 74;
+            taskDTO.TaskName = "Buy new monitor";
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePathtasks))
             {
-                streamWriter.WriteLine(checklistDTO.TaskID);
-                streamWriter.WriteLine(checklistDTO.TaskName);
+                streamWriter.WriteLine(taskDTO.TaskID);
+                streamWriter.WriteLine(taskDTO.TaskName);
                 streamWriter.WriteLine("True");
             }
 
@@ -110,15 +110,15 @@ namespace TimeMateTest.BLL
         [Fact]
         public void NoTaskStatusChange()
         {
-            ChecklistDTO checklistDTO = new ChecklistDTO();
-            checklistDTO.TaskID = 28;
-            checklistDTO.TaskName = "Bake a cake";
+            TaskDTO taskDTO = new TaskDTO();
+            taskDTO.TaskID = 28;
+            taskDTO.TaskName = "Bake a cake";
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePathtasks))
             {
-                streamWriter.WriteLine(checklistDTO.TaskID);
-                streamWriter.WriteLine(checklistDTO.TaskName);
+                streamWriter.WriteLine(taskDTO.TaskID);
+                streamWriter.WriteLine(taskDTO.TaskName);
                 streamWriter.WriteLine("False");
             }
 

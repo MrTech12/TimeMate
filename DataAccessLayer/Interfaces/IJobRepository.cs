@@ -7,7 +7,7 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IJobRepository
     {
-        void AddPayDetails(AccountDTO accountDTO);
+        void CreatePayDetails(AccountDTO accountDTO);
 
         double GetWorkdayPayWage(int accountID);
 

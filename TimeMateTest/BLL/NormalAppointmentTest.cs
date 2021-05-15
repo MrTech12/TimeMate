@@ -28,7 +28,7 @@ namespace TimeMateTest.BLL
                 AgendaName = "Firefox"
             };
 
-            normalAppointment.CreateNormalAppointment(appointmentDTO);
+            normalAppointment.AddNormalAppointment(appointmentDTO);
 
             string[] appointmentFile = File.ReadAllLines(filePath);
             File.Delete(filePath);

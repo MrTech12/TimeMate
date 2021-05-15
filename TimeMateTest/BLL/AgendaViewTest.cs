@@ -50,8 +50,8 @@ namespace TimeMateTest.BLL
             output = agendaView.RetrieveAppointments();
 
             Assert.Contains("Relax Sunday", output[0].AppointmentName);
-            Assert.Contains("Listen to music", output[0].ChecklistDTOs[1].TaskName);
-            Assert.Contains("Paint the birdhouse", output[1].ChecklistDTOs[0].TaskName);
+            Assert.Contains("Listen to music", output[0].TaskList[1].TaskName);
+            Assert.Contains("Paint the birdhouse", output[1].TaskList[0].TaskName);
             Assert.True(output.Count == 2);
         }
 

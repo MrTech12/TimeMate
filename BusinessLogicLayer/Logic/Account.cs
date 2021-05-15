@@ -55,7 +55,7 @@ namespace BusinessLogicLayer.Logic
         {
             if (accountDTO.Mail == null)
             {
-                throw new AccountException("Het mailadres is niet geleverd.");
+                throw new AccountException("Het mailadres voor een nieuw account is niet geleverd.");
             }
 
             int databaseOutput = _accountRepository.GetUserID(accountDTO.Mail);
@@ -73,7 +73,7 @@ namespace BusinessLogicLayer.Logic
         {
             if (accountDTO.Password == null)
             {
-                throw new AccountException("Het wachtwoord is niet geleverd.");
+                throw new AccountException("Het wachtwoord voor een nieuw account is niet geleverd.");
             }
             else
             {

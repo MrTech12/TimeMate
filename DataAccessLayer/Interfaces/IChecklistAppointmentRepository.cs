@@ -7,12 +7,12 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IChecklistAppointmentRepository
     {
-        void AddTask(AppointmentDTO appointmentDTO);
+        void CreateTask(AppointmentDTO appointmentDTO);
 
-        List<ChecklistDTO> GetTasks(int appointmentID);
+        List<TaskDTO> GetTasks(int appointmentID);
 
         bool GetTaskStatus(int taskID);
 
-        void CheckOffTask(int taskID, bool status);
+        void UpdateTaskStatus(int taskID, bool status);
     }
 }

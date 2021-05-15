@@ -12,7 +12,7 @@ namespace DataAccessLayer.Repositories
     {
         private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
-        public int AddAgenda(int accountID, AgendaDTO agendaDTO)
+        public int CreateAgenda(int accountID, AgendaDTO agendaDTO)
         {
             int agendaID;
             try
@@ -22,13 +22,13 @@ namespace DataAccessLayer.Repositories
                     string query = @"INSERT INTO [Agenda](AccountID, Name, Color, NotificationType) VALUES (@0,@1,@2,@3); SELECT SCOPE_IDENTITY();";
                     
                     sqlConnection.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
 
-                    insertQuery.Parameters.AddWithValue("0", accountID);
-                    insertQuery.Parameters.AddWithValue("1", agendaDTO.AgendaName);
-                    insertQuery.Parameters.AddWithValue("2", agendaDTO.AgendaColor);
-                    insertQuery.Parameters.AddWithValue("3", agendaDTO.NotificationType);
-                    agendaID = Convert.ToInt32(insertQuery.ExecuteScalar());
+                    insertCommand.Parameters.AddWithValue("0", accountID);
+                    insertCommand.Parameters.AddWithValue("1", agendaDTO.AgendaName);
+                    insertCommand.Parameters.AddWithValue("2", agendaDTO.AgendaColor);
+                    insertCommand.Parameters.AddWithValue("3", agendaDTO.NotificationType);
+                    agendaID = Convert.ToInt32(insertCommand.ExecuteScalar());
                 }
             }
             catch (SqlException exception)
@@ -47,11 +47,11 @@ namespace DataAccessLayer.Repositories
                     string query = @"DELETE FROM [Agenda] WHERE AgendaID = @0 AND AccountID = @1";
 
                     sqlConnection.Open();
-                    SqlCommand deleteQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand deleteCommand = new SqlCommand(query, sqlConnection);
 
-                    deleteQuery.Parameters.AddWithValue("0", agendaID);
-                    deleteQuery.Parameters.AddWithValue("1", accountID);
-                    deleteQuery.ExecuteNonQuery();
+                    deleteCommand.Parameters.AddWithValue("0", agendaID);
+                    deleteCommand.Parameters.AddWithValue("1", accountID);
+                    deleteCommand.ExecuteNonQuery();
                 }
             }
             catch (SqlException exception)
@@ -60,7 +60,7 @@ namespace DataAccessLayer.Repositories
             }
         }
 
-        public List<AgendaDTO> GetAllAgendas(int accountID)
+        public List<AgendaDTO> GetAgendas(int accountID)
         {
             List<AgendaDTO> agendas = new List<AgendaDTO>();
             try
@@ -70,10 +70,10 @@ namespace DataAccessLayer.Repositories
                     string query = @"SELECT a.* FROM [Agenda] a WHERE AccountID = @0";
 
                     sqlConnection.Open();
-                    SqlCommand insertQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
 
-                    insertQuery.Parameters.AddWithValue("0", accountID);
-                    SqlDataReader dataReader = insertQuery.ExecuteReader();
+                    selectCommand.Parameters.AddWithValue("0", accountID);
+                    SqlDataReader dataReader = selectCommand.ExecuteReader();
 
                     while (dataReader.Read())
                     {
@@ -102,11 +102,11 @@ namespace DataAccessLayer.Repositories
                     string query = @"SELECT AgendaID FROM [Agenda] WHERE Name = @0 AND AccountID = @1";
 
                     sqlConnection.Open();
-                    SqlCommand selectQuery = new SqlCommand(query, sqlConnection);
+                    SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
 
-                    selectQuery.Parameters.AddWithValue("0", agendaName);
-                    selectQuery.Parameters.AddWithValue("1", accountID);
-                    var resultedAgendaID = selectQuery.ExecuteScalar();
+                    selectCommand.Parameters.AddWithValue("0", agendaName);
+                    selectCommand.Parameters.AddWithValue("1", accountID);
+                    var resultedAgendaID = selectCommand.ExecuteScalar();
 
                     if (resultedAgendaID == null)
                     {

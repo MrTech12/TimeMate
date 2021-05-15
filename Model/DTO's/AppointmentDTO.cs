@@ -52,6 +52,6 @@ namespace Model.DTO_s
             set { this.descriptionDTO = value; }
         }
 
-        public List<ChecklistDTO> ChecklistDTOs { get; set; } = new List<ChecklistDTO>();
+        public List<TaskDTO> TaskList { get; set; } = new List<TaskDTO>();
     }
 }
