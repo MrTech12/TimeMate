@@ -24,7 +24,7 @@ namespace TimeMate
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson();
 
             // Create a single instance of the DTO's & interface implementations for the duration of the application lifetime.
             services.AddSingleton<AccountDTO>();

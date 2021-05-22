@@ -71,7 +71,7 @@ namespace TimeMate.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpDelete]
         public IActionResult DeleteAgenda([FromBody] AgendaModel agendaModel)
         {
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;

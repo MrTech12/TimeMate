@@ -35,7 +35,7 @@ function CheckAgendaName() {
 
 async function SendDeleteRequest() {
     await fetch('/Agenda/DeleteAgenda', {
-        method: 'POST',
+        method: 'DELETE',
         headers: {'Accept': 'application/json','Content-Type': 'application/json'},
         body: JSON.stringify({"AgendaID": parseInt(agendaID)})
     })
