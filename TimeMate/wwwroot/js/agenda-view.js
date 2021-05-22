@@ -69,12 +69,8 @@ async function GetAppointmentExtra() {
         descriptionData = "";
         if (Array.isArray(data)) {
             for (var i = 0; i < data.length; i++) {
-                if (i % 2 === 0) {
-                    taskIDs.push(data[i]);
-                }
-                else if (i % 2 === 0 === false) {
-                    taskNames.push(data[i]);
-                }
+                taskIDs.push(data[i].taskID);
+                taskNames.push(data[i].taskName);
             }
         }
         if (data == "") 

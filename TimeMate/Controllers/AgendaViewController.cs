@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TimeMate.Services;
+using TimeMate.Models.BodyModels;
 
 namespace TimeMate.Controllers
 {
@@ -74,7 +75,14 @@ namespace TimeMate.Controllers
             {
                 ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentRepository);
                 var tasks = checklistAppointment.RetrieveTasks(appointmentID);
-                return Json(tasks);
+
+                List<TaskBodyModel> taskBodyModel = new List<TaskBodyModel>();
+                foreach (KeyValuePair<int, string> kvp in tasks)
+                {
+                    taskBodyModel.Add(new TaskBodyModel() { TaskID = kvp.Key, TaskName = kvp.Value });
+                }
+
+                return Json(taskBodyModel);
             }
             else
             {

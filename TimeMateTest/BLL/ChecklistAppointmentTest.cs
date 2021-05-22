@@ -42,12 +42,12 @@ namespace TimeMateTest.BLL
             int appointmentID = 14;
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
-            List<string> output = checklistAppointment.RetrieveTasks(appointmentID);
+            Dictionary<int, string> output = checklistAppointment.RetrieveTasks(appointmentID);
 
             Assert.Equal("Dit", output[1]);
-            Assert.Equal("Dat", output[3]);
-            Assert.Equal("Zo", output[5]);
-            Assert.True(output.Count == 6);
+            Assert.Equal("Dat", output[2]);
+            Assert.Equal("Zo", output[3]);
+            Assert.True(output.Count == 3);
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace TimeMateTest.BLL
             int appointmentID = 0;
             checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
 
-            List<string> output = checklistAppointment.RetrieveTasks(appointmentID);
+            Dictionary<int, string> output = checklistAppointment.RetrieveTasks(appointmentID);
 
             Assert.True(output.Count == 0);
         }

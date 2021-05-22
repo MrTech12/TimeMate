@@ -32,19 +32,9 @@ namespace BusinessLogicLayer.Logic
             }
         }
 
-        public List<string> RetrieveTasks(int appointmentID)
+        public Dictionary<int, string> RetrieveTasks(int appointmentID)
         {
-            var tasks = _checklistAppointmentRepository.GetTasks(appointmentID);
-            List<string> taskList = new List<string>();
-            if (tasks.Count != 0)
-            {
-                for (int i = 0; i < tasks.Count; i++)
-                {
-                    taskList.Add(Convert.ToString(tasks[i].TaskID));
-                    taskList.Add(tasks[i].TaskName);
-                }
-            }
-            return taskList;
+            return _checklistAppointmentRepository.GetTasks(appointmentID);
         }
 
         public void ChangeTaskStatus(int taskID)

@@ -20,30 +20,16 @@ namespace TimeMateTest.Stubs
             }
         }
 
-        public List<TaskDTO> GetTasks(int appointmentID)
+        public Dictionary<int, string> GetTasks(int appointmentID)
         {
-            List<TaskDTO> tasklist = new List<TaskDTO>();
+            Dictionary<int, string> taskDict = new Dictionary<int, string>();
             if (appointmentID == 14)
             {
-                TaskDTO taskDTO1 = new TaskDTO();
-                taskDTO1.AppointmentID = 14;
-                taskDTO1.TaskID = 1;
-                taskDTO1.TaskName = "Dit";
-                tasklist.Add(taskDTO1);
-
-                TaskDTO taskDTO2 = new TaskDTO();
-                taskDTO2.AppointmentID = 14;
-                taskDTO2.TaskID = 2;
-                taskDTO2.TaskName = "Dat";
-                tasklist.Add(taskDTO2);
-
-                TaskDTO taskDTO3 = new TaskDTO();
-                taskDTO3.AppointmentID = 14;
-                taskDTO3.TaskID = 3;
-                taskDTO3.TaskName = "Zo";
-                tasklist.Add(taskDTO3);
+                taskDict.Add(1, "Dit");
+                taskDict.Add(2, "Dat");
+                taskDict.Add(3, "Zo");
             }
-            return tasklist;
+            return taskDict;
         }
 
         public bool GetTaskStatus(int taskID)

@@ -72,11 +72,11 @@ namespace TimeMate.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteAgenda([FromBody] AgendaModel agendaModel)
+        public IActionResult DeleteAgenda([FromBody] AgendaBodyModel bodyModel)
         {
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
             agenda = new Agenda(accountDTO, _agendaRepository);
-            agenda.DeleteAgenda(agendaModel.AgendaID);
+            agenda.DeleteAgenda(bodyModel.AgendaID);
             return Ok();
         }
     }

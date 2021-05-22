@@ -9,7 +9,7 @@ namespace DataAccessLayer.Interfaces
     {
         void CreateTask(AppointmentDTO appointmentDTO);
 
-        List<TaskDTO> GetTasks(int appointmentID);
+        Dictionary<int, string> GetTasks(int appointmentID);
 
         bool GetTaskStatus(int taskID);
 

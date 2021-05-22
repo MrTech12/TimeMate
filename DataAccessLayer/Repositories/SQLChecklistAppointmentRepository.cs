@@ -40,9 +40,9 @@ namespace DataAccessLayer.Repositories
             }
         }
 
-        public List<TaskDTO> GetTasks(int appointmentID)
+        public Dictionary<int, string> GetTasks(int appointmentID)
         {
-            List<TaskDTO> taskList = new List<TaskDTO>();
+            Dictionary<int, string> tasksDict = new Dictionary<int, string>();
             try
             {
                 using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
@@ -57,10 +57,7 @@ namespace DataAccessLayer.Repositories
 
                     while (dataReader.Read())
                     {
-                        TaskDTO taskDTO = new TaskDTO();
-                        taskDTO.TaskID = Convert.ToInt32(dataReader["TaskID"]);
-                        taskDTO.TaskName = dataReader["TaskName"].ToString();
-                        taskList.Add(taskDTO);
+                        tasksDict.Add(Convert.ToInt32(dataReader["TaskID"]), dataReader["TaskName"].ToString());
                     }
                 }
             }
@@ -68,7 +65,7 @@ namespace DataAccessLayer.Repositories
             {
                 throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
-            return taskList;
+            return tasksDict;
         }
 
         public bool GetTaskStatus(int taskID)

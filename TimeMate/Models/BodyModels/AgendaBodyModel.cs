@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TimeMate.Models
 {
-    public class AgendaModel
+    public class AgendaBodyModel
     {
         public int AgendaID { get; set; }
     }
