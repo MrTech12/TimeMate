@@ -125,17 +125,14 @@ namespace TimeMate.Controllers
                 accountDTO.FirstName = viewModel.FirstName;
                 accountDTO.Mail = viewModel.Mail;
                 accountDTO.Password = viewModel.Password;
-                accountDTO.JobCount = viewModel.JobAmount;
 
-                if (viewModel.Job1HourlyWage != null)
+                if (viewModel.JobHourlyWage != null)
                 {
-                    accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job1HourlyWage));
-                    accountDTO.JobDayType.Add(viewModel.Job1DayType);
-                }
-                if (viewModel.Job2HourlyWage != null)
-                {
-                    accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.Job2HourlyWage));
-                    accountDTO.JobDayType.Add(viewModel.Job2DayType);
+                    for (int i = 0; i < viewModel.JobHourlyWage.Count; i++)
+                    {
+                        accountDTO.JobHourlyWage.Add(Convert.ToDouble(viewModel.JobHourlyWage[i]));
+                        accountDTO.JobDayType.Add(viewModel.JobDayType[i]);
+                    }
                 }
 
                 account = new Account(accountDTO, _accountRepository, _sender);
@@ -151,10 +148,10 @@ namespace TimeMate.Controllers
                     account.CreateAccount();
                 }
 
-                if(accountDTO.JobCount > 0)
+                if(accountDTO.JobHourlyWage != null)
                 {
                     agenda = new Agenda(account.AccountDTO, _agendaRepository);
-                    AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000", NotificationType = "Nee" };
+                    AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = accountDTO.AgendaName, AgendaColor = accountDTO.AgendaColor, NotificationType = "Nee" };
 
                     agenda.AddAgenda(workAgendaDTO);
                     _jobRepository.CreatePayDetails(accountDTO);

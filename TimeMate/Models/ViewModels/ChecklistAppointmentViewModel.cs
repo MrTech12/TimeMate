@@ -15,7 +15,6 @@ namespace TimeMate.Models
 
         public AppointmentViewModel AppointmentViewModel { get; set; }
 
-        [Display(Name = "Voer een taak in.")]
         public List<string> Task { get; set; }
     }
 }

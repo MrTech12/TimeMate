@@ -48,7 +48,6 @@ namespace TimeMateTest.BLL
             accountDTO.FirstName = "Hans";
             accountDTO.Mail = "sina1242@gmail.com";
             accountDTO.Password = "QWEwieiwi231@#";
-            accountDTO.JobCount = 1;
             accountDTO.JobHourlyWage.Add(1.20);
             accountDTO.JobDayType.Add("Doordeweeks");
             AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000", NotificationType = "Nee" };

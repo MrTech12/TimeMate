@@ -8,7 +8,7 @@ function AddTaskField() {
 }
 
 function GenerateTextField() {
-    return "<label class='control-label'>Taak "+ taskIndex + "</label><input type='text' class='form-control' id='Task_" + taskIndex + "' name='Task[" + taskIndex + "]'/>";
+    return "<label class='control-label'>Voer de naam van de taak in.</label><input type='text' class='form-control' name='Task[" + taskIndex + "]' required/>";
 }
 
 function RemoveTaskField() {

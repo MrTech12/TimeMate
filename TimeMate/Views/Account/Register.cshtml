@@ -12,7 +12,7 @@
 <form asp-action="Register">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-md-5">
             <div>Wachwoordeisen:</div>
             <ul>
                 <li>Minimaal 9 tekens lang</li>
@@ -35,45 +35,36 @@
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="JobAmount" class="control-label"></label>
-                <input asp-for="JobAmount" class="form-control" id="job-amount" min="0" max="2" value="0"/>
-                <span asp-validation-for="JobAmount" class="text-danger"></span>
+                <input type="button" id="add-job-fields" onclick="AddJobFields()" class="btn btn-info" value="Bijbaan toevoegen" />
+                <input type="button" id="remove-job-fields" onclick="RemoveJobFields()" class="btn btn-danger" value="Bijbaan verwijderen" />
             </div>
-            <div class="d-none" id="job1">
-                <div class="form-group">
-                    <label asp-for="Job1HourlyWage" class="control-label"></label>
-                    <input asp-for="Job1HourlyWage" class="form-control" />
-                    <span asp-validation-for="Job1HourlyWage" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Job1DayType" class="control-label"></label>
-                    <select asp-for="Job1DayType" class="form-control">
-                        <option>Doordeweeks</option>
-                        <option>Weekend</option>
-                    </select>
-                    <span asp-validation-for="Job1DayType" class="text-danger"></span>
-                </div>
+
+            <div class="form-group">
+                <div id="job-collection"></div>
             </div>
-            <div class="d-none" id="job2">
+
+            <div class="d-none" id="JobAgendaElement">
                 <div class="form-group">
-                    <label asp-for="Job2HourlyWage" class="control-label"></label>
-                    <input asp-for="Job2HourlyWage" class="form-control" />
-                    <span asp-validation-for="Job2HourlyWage" class="text-danger"></span>
+                    <label asp-for="AgendaName" class="control-label"></label>
+                    <input asp-for="AgendaName" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label asp-for="Job2DayType" class="control-label"></label>
-                    <select asp-for="Job2DayType" class="form-control">
-                        <option>Doordeweeks</option>
-                        <option>Weekend</option>
-                    </select>
-                    <span asp-validation-for="Job2DayType" class="text-danger"></span>
+                    <label asp-for="AgendaColor" class="control-label"></label>
+                    <input type="color" asp-for="AgendaColor" class="control-label" />
                 </div>
             </div>
+        </div>
+
+        <div class="col-md-4 float-right">
             <div class="form-group">
                 <input id="register-button" type="submit" value="Registeer" class="btn btn-success" />
                 <input id="go-login-button" type="button" value="Terug naar inloggen" onclick="location.href='@Url.Action("Index", "Account")'" class="btn btn-warning" />
             </div>
+        </div>
+        <div class="col-md-2 float-right">
+            <div class="text-danger" id="hourlywage-error"></div>
         </div>
     </div>
 </form>
