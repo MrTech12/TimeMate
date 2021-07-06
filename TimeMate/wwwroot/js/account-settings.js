@@ -1,22 +1,23 @@
-﻿var agendaName;
-var agendaID;
-var selectInput;
+﻿let agendaName;
+let agendaID;
+let selectInput;
 
 $(document).ready(function () {
-    $("#delete-agenda").click(function () {
-        GetSelectionInfo();
-        $("#agenda-name").text(agendaName);
-    });
-
     $("#confirm-deletion").click(function () {
-        SendDeleteRequest();
+        if(agendaName === undefined) {
+            alert("Er zijn geen agenda's om te verwijderen.");
+        }
+        else if (agendaName !== undefined) {
+            SendDeleteRequest();
+        }
     });
 });
 
-function GetSelectionInfo() {
-    selectInput = document.getElementById("agenda-select");
+function GetSelectInfo() {
     agendaName = $("#agenda-select :selected").val();
     agendaID = $("#agenda-select :selected").attr("id");
+    $("#agenda-name").text(agendaName);
+    selectInput = document.getElementById("agenda-select");
 }
 
 async function SendDeleteRequest() {
@@ -28,5 +29,6 @@ async function SendDeleteRequest() {
     .then(response => {
         selectInput.remove(selectInput.selectedIndex);
         alert("Agenda succesvol verwijderd.");
+        $("#agenda-name").text("");
     }).catch((error => console.error('Cannot remove the agenda.', error)));
 }

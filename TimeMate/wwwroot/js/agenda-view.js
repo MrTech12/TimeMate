@@ -10,21 +10,12 @@ $(document).ready(function() {
         appointmentData.length = 0;
         GetAppointmentInfo(this);
         CreatePopover();
-        console.info("From view: " + appointmentData);
     });
 
     $(".extra-modal").click(function () {
         appointmentData.length = 0;
         GetAppointmentInfo(this);
         DisplayExtra();
-    });
-
-    $("#checkoff-task").click(function () {
-        ChangeTaskStatus();
-    });
-
-    $(".close").click(function () {
-        HideModalElements();
     });
 
     $(window).keydown(function (event) {
