@@ -14,8 +14,33 @@ function AddJobFields() {
 }
 
 function GenerateTextFields() {
-    return "<div class='form-group'><label class='control-label'>Voer het uurloon van bijbaan " + jobIndex + " in.</label><input type='text' class='form-control' name='JobHourlyWage[" + jobIndex + "]' oninput='ValidateHourlyWageInput(this.value)' required/></div>" +
-        "<div class='form-group'><label class='control-label'>Is de bijbaan doordeweeks of in het weekend?</label><select class='form-control' name='JobDayType[" + jobIndex + "]'><option>Doordeweeks</option><option>Weekend</option></select></div>";
+    let textFields = "<div class='form-group'><label class='control-label'>Voer het uurloon van bijbaan " + jobIndex + " in.</label><input type='text' class='form-control' name='JobHourlyWage[" + jobIndex + "]' oninput='ValidateHourlyWageInput(this.value)' required/></div>";
+
+    if (jobIndex === 0) {
+        textFields +=  "<div class='form-group'><label class='control-label'>Is de bijbaan doordeweeks of in het weekend?</label><select class='form-control' name='JobDayType[" + jobIndex + "]' onchange='SetSecondJobDayType()'><option>Doordeweeks</option><option>Weekend</option></select></div>";
+    }
+    else if (jobIndex === 1) {
+        let secondJobType = SetSecondJobDayType();
+        textFields +=  "<div class='form-group'><label class='control-label'>Is de bijbaan doordeweeks of in het weekend?</label><input class='form-control' type='text' name='JobDayType[" + jobIndex + "]' value='" + secondJobType + "' readonly></input></div>";
+    }
+    return textFields;
+}
+
+function SetSecondJobDayType() {
+    let firstJobDayType = $('[name="JobDayType[0]"] :selected').text();
+
+    if (firstJobDayType === "Doordeweeks" && $('[name="JobDayType[1]"]').length > 0) {
+        $('[name="JobDayType[1]"]').val("Weekend");
+    }
+    else if (firstJobDayType === "Doordeweeks" && $('[name="JobDayType[1]"]').length === 0) {
+        return "Weekend";
+    }
+    else if (firstJobDayType === "Weekend" && $('[name="JobDayType[1]"]').length > 0) {
+        $('[name="JobDayType[1]"]').val("Doordeweeks");
+    }
+    else if (firstJobDayType === "Weekend" && $('[name="JobDayType[1]"]').length === 0) {
+        return "Doordeweeks";
+    }
 }
 
 function RemoveJobFields() {
