@@ -11,10 +11,12 @@ namespace TimeMateTest.Presentation_Layer
     {
         private readonly IWebDriver _driver;
         private readonly RegisterPage _registerPage;
+        private readonly ChromeOptions options = new ChromeOptions();
 
         public RegisterTest()
         {
-            _driver = new ChromeDriver();
+            options.AddArgument("--headless");
+            _driver = new ChromeDriver(options);
             _registerPage = new RegisterPage(_driver);
             _registerPage.Navigate();
         }

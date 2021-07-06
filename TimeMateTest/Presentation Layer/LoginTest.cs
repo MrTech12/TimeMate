@@ -1,8 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
-using TimeMate.Controllers;
-using TimeMate.Models;
 using Xunit;
 
 namespace TimeMateTest.Presentation_Layer
@@ -11,10 +9,12 @@ namespace TimeMateTest.Presentation_Layer
     {
         private readonly IWebDriver _driver;
         private readonly LoginPage _loginPage;
+        private readonly ChromeOptions options = new ChromeOptions();
 
         public LoginTest()
         {
-            _driver = new ChromeDriver();
+            options.AddArgument("--headless");
+            _driver = new ChromeDriver(options);
             _loginPage = new LoginPage(_driver);
             _loginPage.Navigate();
         }
