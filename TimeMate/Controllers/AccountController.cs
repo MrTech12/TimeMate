@@ -151,7 +151,7 @@ namespace TimeMate.Controllers
                 if(accountDTO.JobHourlyWage != null)
                 {
                     agenda = new Agenda(account.AccountDTO, _agendaRepository);
-                    AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = accountDTO.AgendaName, AgendaColor = accountDTO.AgendaColor };
+                    AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = viewModel.AgendaName, AgendaColor = viewModel.AgendaColor };
 
                     agenda.AddAgenda(workAgendaDTO);
                     _jobRepository.CreatePayDetails(accountDTO);
@@ -177,7 +177,14 @@ namespace TimeMate.Controllers
                 accountDTO = new AccountDTO() { AccountID = HttpContext.Session.GetInt32("accountID").Value };
                 agenda = new Agenda(accountDTO, _agendaRepository);
                 List<AgendaDTO> viewModel = agenda.RetrieveAgendas();
-                return View(viewModel);
+                if (viewModel.Count == 0)
+                {
+                    return RedirectToAction("AddAgenda", "Agenda");
+                }
+                else
+                {
+                    return View(viewModel);
+                }
             }
             else
             {
