@@ -19,7 +19,7 @@ namespace DataAccessLayer.Repositories
             {
                 using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
-                    string query = @"INSERT INTO [Agenda](AccountID, Name, Color, NotificationType) VALUES (@0,@1,@2,@3); SELECT SCOPE_IDENTITY();";
+                    string query = @"INSERT INTO [Agenda](AccountID, Name, Color) VALUES (@0,@1,@2); SELECT SCOPE_IDENTITY();";
                     
                     sqlConnection.Open();
                     SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
@@ -27,7 +27,6 @@ namespace DataAccessLayer.Repositories
                     insertCommand.Parameters.AddWithValue("0", accountID);
                     insertCommand.Parameters.AddWithValue("1", agendaDTO.AgendaName);
                     insertCommand.Parameters.AddWithValue("2", agendaDTO.AgendaColor);
-                    insertCommand.Parameters.AddWithValue("3", agendaDTO.NotificationType);
                     agendaID = Convert.ToInt32(insertCommand.ExecuteScalar());
                 }
             }

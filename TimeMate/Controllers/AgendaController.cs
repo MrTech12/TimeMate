@@ -58,7 +58,6 @@ namespace TimeMate.Controllers
                 AgendaDTO agendaDTO = new AgendaDTO();
                 agendaDTO.AgendaName = viewModel.AgendaName;
                 agendaDTO.AgendaColor = viewModel.AgendaColor;
-                agendaDTO.NotificationType = viewModel.NotificationType;
 
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
                 agenda = new Agenda(accountDTO, _agendaRepository);

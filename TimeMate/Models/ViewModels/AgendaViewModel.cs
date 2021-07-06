@@ -15,9 +15,5 @@ namespace TimeMate.Models
         [Required(ErrorMessage = "Dit veld is verplicht.")]
         [Display(Name = "Kies de kleur van de agenda.")]
         public string AgendaColor { get; set; }
-
-        [Required(ErrorMessage = "Dit veld is verplicht.")]
-        [Display(Name = "Kies wat voor melding je te zien krijgt.")]
-        public string NotificationType { get; set; }
     }
 }

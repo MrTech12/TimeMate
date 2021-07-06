@@ -151,7 +151,7 @@ namespace TimeMate.Controllers
                 if(accountDTO.JobHourlyWage != null)
                 {
                     agenda = new Agenda(account.AccountDTO, _agendaRepository);
-                    AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = accountDTO.AgendaName, AgendaColor = accountDTO.AgendaColor, NotificationType = "Nee" };
+                    AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = accountDTO.AgendaName, AgendaColor = accountDTO.AgendaColor };
 
                     agenda.AddAgenda(workAgendaDTO);
                     _jobRepository.CreatePayDetails(accountDTO);

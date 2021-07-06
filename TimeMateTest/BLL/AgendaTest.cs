@@ -23,7 +23,7 @@ namespace TimeMateTest.BLL
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
-            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000", NotificationType = "Nee" };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000" };
 
             agenda.AddAgenda(agendaDTO);
 
@@ -39,7 +39,7 @@ namespace TimeMateTest.BLL
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
-            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560", NotificationType = "Nee" };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560" };
 
             agenda.AddAgenda(agendaDTO);
 
@@ -55,7 +55,7 @@ namespace TimeMateTest.BLL
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
-            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "", AgendaColor = "", NotificationType = "" };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "", AgendaColor = "" };
 
             agenda.AddAgenda(agendaDTO);
 
@@ -69,7 +69,7 @@ namespace TimeMateTest.BLL
         [Fact]
         public void CreateWorkAgendaWithPayDetails1()
         {
-            AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000", NotificationType = "Nee" };
+            AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000" };
             accountDTO = new AccountDTO() { AccountID = 12 };
             accountDTO.JobHourlyWage.Add(12.23);
             accountDTO.JobDayType.Add("Doordeweeks");
@@ -93,7 +93,7 @@ namespace TimeMateTest.BLL
         [Fact]
         public void CreateWorkAgendaWithPayDetails2()
         {
-            AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000", NotificationType = "Nee" };
+            AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000" };
             accountDTO = new AccountDTO() { AccountID = 56 };
             accountDTO.JobHourlyWage.Add(12.23);
             accountDTO.JobDayType.Add("Doordeweeks");
@@ -121,7 +121,7 @@ namespace TimeMateTest.BLL
         [Fact]
         public void CreateOnlyWorkAgenda()
         {
-            AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000", NotificationType = "Nee" };
+            AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000" };
             accountDTO = new AccountDTO() { AccountID = 23 };
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
 
@@ -167,7 +167,7 @@ namespace TimeMateTest.BLL
         public void RemoveAgenda()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", NotificationType = "Nee" };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312" };
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePathAgendaDeletion))
@@ -175,7 +175,6 @@ namespace TimeMateTest.BLL
                 streamWriter.WriteLine(agendaDTO.AgendaID);
                 streamWriter.WriteLine(agendaDTO.AgendaName);
                 streamWriter.WriteLine(agendaDTO.AgendaColor);
-                streamWriter.WriteLine(agendaDTO.NotificationType);
             }
 
             agenda.DeleteAgenda(agendaDTO.AgendaID);
@@ -191,7 +190,7 @@ namespace TimeMateTest.BLL
         public void RemoveNoAgenda()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312", NotificationType = "Nee" };
+            AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312" };
             agenda = new Agenda(accountDTO, new StubAgendaRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePathAgendaDeletion))
@@ -199,7 +198,6 @@ namespace TimeMateTest.BLL
                 streamWriter.WriteLine(agendaDTO.AgendaID);
                 streamWriter.WriteLine(agendaDTO.AgendaName);
                 streamWriter.WriteLine(agendaDTO.AgendaColor);
-                streamWriter.WriteLine(agendaDTO.NotificationType);
             }
 
             agenda.DeleteAgenda(-5);

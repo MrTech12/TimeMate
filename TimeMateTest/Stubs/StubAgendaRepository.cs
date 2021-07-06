@@ -17,7 +17,6 @@ namespace TimeMateTest.Stubs
             {
                 streamWriter.WriteLine(agendaDTO.AgendaName);
                 streamWriter.WriteLine(agendaDTO.AgendaColor);
-                streamWriter.WriteLine(agendaDTO.NotificationType);
             }          
             return agendaID;
         }
