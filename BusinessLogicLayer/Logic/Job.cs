@@ -32,7 +32,7 @@ namespace BusinessLogicLayer.Logic
             }
             else
             {
-                int agendaID = _agendaRepository.GetAgendaID("Bijbaan", accountID);
+                int agendaID = _agendaRepository.GetWorkAgendaID(accountID);
                 if (workdayPayWage != 0 && weekendPayWage == 0)
                 {
                     jobDetails.WeeklyHours = RetrieveWorkdayHours(agendaID);

@@ -143,15 +143,15 @@ namespace TimeMate.Controllers
                     ModelState.AddModelError("", mailCheck);
                     return View(viewModel);
                 }
-                else if(mailCheck == null)
+                else if (mailCheck == null)
                 {
                     account.CreateAccount();
                 }
 
-                if(accountDTO.JobHourlyWage != null)
+                if(accountDTO.JobHourlyWage.Count != 0)
                 {
                     agenda = new Agenda(account.AccountDTO, _agendaRepository);
-                    AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = viewModel.AgendaName, AgendaColor = viewModel.AgendaColor };
+                    AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = viewModel.AgendaName, AgendaColor = viewModel.AgendaColor, IsWorkAgenda = true };
 
                     agenda.AddAgenda(workAgendaDTO);
                     _jobRepository.CreatePayDetails(accountDTO);

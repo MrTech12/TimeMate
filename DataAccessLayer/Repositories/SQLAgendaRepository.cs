@@ -19,7 +19,7 @@ namespace DataAccessLayer.Repositories
             {
                 using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
-                    string query = @"INSERT INTO [Agenda](AccountID, Name, Color) VALUES (@0,@1,@2); SELECT SCOPE_IDENTITY();";
+                    string query = @"INSERT INTO [Agenda](AccountID, Name, Color, IsWorkAgenda) VALUES (@0,@1,@2, @3); SELECT SCOPE_IDENTITY();";
                     
                     sqlConnection.Open();
                     SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
@@ -27,6 +27,7 @@ namespace DataAccessLayer.Repositories
                     insertCommand.Parameters.AddWithValue("0", accountID);
                     insertCommand.Parameters.AddWithValue("1", agendaDTO.AgendaName);
                     insertCommand.Parameters.AddWithValue("2", agendaDTO.AgendaColor);
+                    insertCommand.Parameters.AddWithValue("3", agendaDTO.IsWorkAgenda);
                     agendaID = Convert.ToInt32(insertCommand.ExecuteScalar());
                 }
             }
@@ -91,37 +92,26 @@ namespace DataAccessLayer.Repositories
             return agendas;
         }
 
-        public int GetAgendaID(string agendaName, int accountID)
+        public int GetWorkAgendaID(int accountID)
         {
-            int agendaID;
             try
             {
                 using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
                 {
-                    string query = @"SELECT AgendaID FROM [Agenda] WHERE Name = @0 AND AccountID = @1";
+                    string query = @"SELECT AgendaID FROM [Agenda] WHERE AccountID = @0 AND IsWorkAgenda = 1";
 
                     sqlConnection.Open();
                     SqlCommand selectCommand = new SqlCommand(query, sqlConnection);
 
-                    selectCommand.Parameters.AddWithValue("0", agendaName);
-                    selectCommand.Parameters.AddWithValue("1", accountID);
+                    selectCommand.Parameters.AddWithValue("0", accountID);
                     var resultedAgendaID = selectCommand.ExecuteScalar();
-
-                    if (resultedAgendaID == null)
-                    {
-                        agendaID = -1;
-                    }
-                    else
-                    {
-                        agendaID = Convert.ToInt32(resultedAgendaID);
-                    }
+                    return Convert.ToInt32(resultedAgendaID);
                 }
             }
             catch (SqlException exception)
             {
                 throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
-            return agendaID;
         }
     }
 }

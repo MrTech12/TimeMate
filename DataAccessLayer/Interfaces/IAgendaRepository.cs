@@ -13,6 +13,6 @@ namespace DataAccessLayer.Interfaces
 
         List<AgendaDTO> GetAgendas(int accountID);
 
-        int GetAgendaID(string agendaName, int accountID);
+        int GetWorkAgendaID(int accountID);
     }
 }

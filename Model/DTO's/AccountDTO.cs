@@ -12,8 +12,6 @@ namespace Model.DTO_s
         private string password;
         private List<double> jobHourlyWage = new List<double>();
         private List<string> jobDayType = new List<string>();
-        private string agendaName;
-        private string agendaColor;
 
 
         public int AccountID { get { return this.accountID; } set { this.accountID = value; } }
@@ -27,9 +25,5 @@ namespace Model.DTO_s
         public List<double> JobHourlyWage { get { return this.jobHourlyWage; } set { this.jobHourlyWage = value; } }
 
         public List<string> JobDayType { get { return this.jobDayType; } set { this.jobDayType = value; } }
-
-        public string AgendaName { get { return this.agendaName; } set { this.agendaName = value; } }
-
-        public string AgendaColor { get { return this.agendaColor; } set { this.agendaColor = value; } }
     }
 }

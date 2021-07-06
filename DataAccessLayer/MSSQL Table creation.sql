@@ -31,6 +31,7 @@ CREATE TABLE [Agenda] (
   [AccountID] int FOREIGN KEY REFERENCES [Account] (AccountID) ON DELETE CASCADE,
   [Name] nvarchar(100),
   [Color] nvarchar(100),
+  [IsWorkAgenda] bit  
 );
 
 CREATE TABLE [Appointment] (

@@ -49,15 +49,10 @@ namespace TimeMate.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (viewModel.AgendaName == "Bijbaan" || viewModel.AgendaName == "bijbaan")
-                {
-                    ModelState.AddModelError("", "Deze agendanaam mag niet gebruikt worden.");
-                    return View(viewModel);
-                }
-
                 AgendaDTO agendaDTO = new AgendaDTO();
                 agendaDTO.AgendaName = viewModel.AgendaName;
                 agendaDTO.AgendaColor = viewModel.AgendaColor;
+                agendaDTO.IsWorkAgenda = false;
 
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
                 agenda = new Agenda(accountDTO, _agendaRepository);
