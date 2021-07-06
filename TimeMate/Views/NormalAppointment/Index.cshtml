@@ -5,7 +5,6 @@
 }
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/js/add-normalappointment.js"></script>
 <script src="~/js/add-appointment-date.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/addnormalappointment.css" />
 
@@ -20,12 +19,7 @@
             <br />
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <div class="btn-group">
-                    <input type="button" id="bolding-text" class="btn btn-info" value="Maak tekst dikgedrukt/niet dikgedrukt" />
-                    <input type="button" id="save-description" class="btn btn-secondary" value="Tekst opslaan" />
-                </div>
-                <div class="description" id="description-box" contenteditable="true"></div>
-                <input type="text" id="description-controller" asp-for="Description" hidden="hidden" />
+                <input type="text" asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
         </div>

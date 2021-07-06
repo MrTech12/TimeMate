@@ -73,9 +73,7 @@ namespace TimeMate.Controllers
 
                 if (viewModel.Description != null)
                 {
-                    string description = viewModel.Description.Replace("<span class=\"bolding\">", "<b>").Replace("</span>", "</b>")
-                        .Replace("<span class=\"normal-text\">", "</b>").Replace("<script>", "");
-                    appointmentDTO.DescriptionDTO.Description = description;
+                    appointmentDTO.DescriptionDTO.Description = viewModel.Description;
                 }
                 else
                 {

@@ -47,7 +47,7 @@ namespace DataAccessLayer.Repositories
                 throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
         }
-        //TODO 2 methods that kind off perform the same function
+
         public double GetWorkdayPayWage(int accountID)
         {
             double payWage = 0;
