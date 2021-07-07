@@ -120,6 +120,35 @@ namespace TimeMateTest.Presentation_Layer
         }
 
         [Fact]
+        public void RegisterOneJobWithDotHourlyRate()
+        {
+            _registerPage.PopulateFirstName("Ben");
+            _registerPage.PopulateMail("plant@duckduckgo.com");
+            _registerPage.PopulatePassword("EEweeeweue23");
+            _registerPage.ClickAddJob();
+            _registerPage.PopulateFirstJobHourlyWage("7.50");
+
+            _registerPage.ClickRegister();
+
+            Assert.Equal("Gebruik uurloon nummers met een komma.", _registerPage.HourlyWageErrorMessage);
+            Assert.False(_registerPage.RegisterButtonActive);
+        }
+
+        [Fact]
+        public void RegisterVerifySecondJobDayTypeWithoutChange()
+        {
+            _registerPage.PopulateFirstName("Ben");
+            _registerPage.PopulateMail("plant@duckduckgo.com");
+            _registerPage.PopulatePassword("EEweeeweue23");
+            _registerPage.ClickAddJob();
+            _registerPage.PopulateFirstJobHourlyWage("7,50");
+            _registerPage.ClickAddJob();
+
+            Assert.Equal("Weekend", _registerPage.SecondJobDayType);
+            Assert.True(_registerPage.RegisterButtonActive);
+        }
+
+        [Fact]
         public void RegisterNoNumberPassword()
         {
             _registerPage.PopulateFirstName("Ben");
