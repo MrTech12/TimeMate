@@ -59,7 +59,7 @@ namespace BusinessLogicLayer.Logic
             }
 
             int databaseOutput = _accountRepository.GetUserID(accountDTO.Mail);
-            if (databaseOutput != -1)// TODO: change to an Enum
+            if (databaseOutput != -1)
             {
                 return "Er bestaat al een account met dit mailadres.";
             }
