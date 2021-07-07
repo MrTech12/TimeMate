@@ -65,7 +65,7 @@ namespace TimeMate.Controllers
         }
 
         [HttpGet]
-        [Route("AgendaView/RetrieveAppointmentExtra/{appointmentID}")]
+        [Route("AgendaView/AppointmentExtra/{appointmentID}")]
         public IActionResult RetrieveAppointmentExtra(int appointmentID)
         {
             NormalAppointment normalAppointment = new NormalAppointment(_normalAppointmentRepository);

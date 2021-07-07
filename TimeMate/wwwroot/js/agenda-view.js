@@ -49,7 +49,7 @@ function GetPopoverContent() {
 }
 
 async function GetAppointmentExtra() {
-    return await fetch(`AgendaView/RetrieveAppointmentExtra/${appointmentData[1]}`, {
+    return await fetch(`AgendaView/AppointmentExtra/${appointmentData[1]}`, {
         method: 'GET',
         headers: {'Accept': 'application/json','Content-Type': 'application/json'},
     })
@@ -102,7 +102,7 @@ async function ChangeTaskStatus() {
     let selectInput = document.getElementById("tasks");
     let taskID = (selectInput.options[selectInput.selectedIndex].id);
 
-    await fetch(`/ChecklistAppointment/ChangeTaskStatus/${taskID}`, {
+    await fetch(`/ChecklistAppointment/TaskStatus/${taskID}`, {
         method: 'PATCH',
         headers: {'Accept': 'application/json','Content-Type': 'application/json'},
     })

@@ -94,7 +94,7 @@ namespace TimeMate.Controllers
         }
 
         [HttpPatch]
-        [Route("ChecklistAppointment/ChangeTaskStatus/{taskID}")]
+        [Route("ChecklistAppointment/TaskStatus/{taskID}")]
         public IActionResult ChangeTaskStatus(int taskID)
         {
             checklistAppointment = new ChecklistAppointment(_checklistAppointmentContainer);

@@ -32,7 +32,7 @@ namespace DataAccessLayer.Repositories
 
                     if (resultedAccountID == null)
                     {
-                        userID = -1;
+                        userID = -1;// TODO: change to an Enum
                     }
                     else
                     {
