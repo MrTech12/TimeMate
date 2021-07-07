@@ -64,7 +64,7 @@ async function GetAppointmentExtra() {
                 taskNames.push(data[i].taskName);
             }
         }
-        if (data == "") 
+        if (data.length == 0) 
             {descriptionData = "Er is/zijn geen beschrijving of taken voor deze afspraak gevonden."}
         else
             {descriptionData = "<b>Afspraakbeschrijving: </b> <br>" + data}
@@ -85,11 +85,9 @@ function DisplayExtra() {
             var selectElement = document.getElementById("tasks");
             $("#tasks").empty();
             for (var i = 0; i < taskNames.length; i++) {
-                var option = taskNames[i];
-                var optionElement = document.createElement("option");
-                optionElement.textContent = option;
-                optionElement.value = option;
+                let optionElement = document.createElement("option");
                 optionElement.id = taskIDs[i];
+                optionElement.textContent = taskNames[i];
                 selectElement.appendChild(optionElement);
             }
 
