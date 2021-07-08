@@ -71,7 +71,7 @@ namespace TimeMate.Controllers
             NormalAppointment normalAppointment = new NormalAppointment(_normalAppointmentRepository);
             string description = normalAppointment.RetrieveDescription(appointmentID);
 
-            if (description == "")
+            if (description == String.Empty)
             {
                 ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentRepository);
                 var tasks = checklistAppointment.RetrieveTasks(appointmentID);
