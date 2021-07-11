@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model.DTO_s
+namespace Core.DTOs
 {
     public class AccountDTO
     {

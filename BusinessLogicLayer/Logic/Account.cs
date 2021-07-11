@@ -1,8 +1,8 @@
-﻿using Model.DTO_s;
-using DataAccessLayer.Interfaces;
+﻿using Core.DTOs;
+using Core.Errors;
+using Core.Repositories;
 using System;
 using System.Collections.Generic;
-using Error;
 
 namespace BusinessLogicLayer.Logic
 {

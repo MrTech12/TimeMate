@@ -4,11 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DataAccessLayer.Containers;
-using Model.DTO_s;
-using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using BusinessLogicLayer;
 using DataAccessLayer.Repositories;
+using Core.DTOs;
+using Core.Repositories;
 
 namespace TimeMate
 {

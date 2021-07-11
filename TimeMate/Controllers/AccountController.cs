@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TimeMate.Models;
-using Model.DTO_s;
 using BusinessLogicLayer.Logic;
 using Microsoft.AspNetCore.Http;
-using DataAccessLayer.Interfaces;
 using TimeMate.Services;
 using System.Text.RegularExpressions;
 using BusinessLogicLayer;
+using Core.Repositories;
+using Core.DTOs;
 
 namespace TimeMate.Controllers
 {

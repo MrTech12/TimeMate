@@ -1,9 +1,9 @@
-﻿using Model.DTO_s;
+﻿using Core.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataAccessLayer.Interfaces
+namespace Core.Repositories
 {
     public interface IAccountRepository
     {

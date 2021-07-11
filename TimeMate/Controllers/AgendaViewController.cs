@@ -1,6 +1,4 @@
 ﻿using BusinessLogicLayer.Logic;
-using Model.DTO_s;
-using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using TimeMate.Services;
 using TimeMate.Models.BodyModels;
+using Core.Repositories;
+using Core.DTOs;
 
 namespace TimeMate.Controllers
 {

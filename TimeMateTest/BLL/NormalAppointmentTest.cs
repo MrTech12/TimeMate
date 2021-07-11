@@ -1,5 +1,5 @@
 ﻿using BusinessLogicLayer.Logic;
-using Model.DTO_s;
+using Core.DTOs;
 using System;
 using System.IO;
 using TimeMateTest.Stubs;

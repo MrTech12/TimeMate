@@ -1,13 +1,13 @@
-﻿using Model.DTO_s;
-using DataAccessLayer.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Configuration;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Text;
-using Error;
+using Core.Repositories;
+using Core.DTOs;
+using Core.Errors;
 
 namespace DataAccessLayer.Repositories
 {

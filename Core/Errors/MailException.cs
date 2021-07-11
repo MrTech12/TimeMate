@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Error
+namespace Core.Errors
 {
     public class MailException : Exception
     {

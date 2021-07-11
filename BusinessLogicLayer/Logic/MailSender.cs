@@ -1,5 +1,5 @@
 ﻿using BusinessLogicLayer;
-using Error;
+using Core.Errors;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Net;

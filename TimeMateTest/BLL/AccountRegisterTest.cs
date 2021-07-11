@@ -1,12 +1,12 @@
 ﻿using BusinessLogicLayer.Logic;
-using Model.DTO_s;
+using Core.DTOs;
+using Core.Errors;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using TimeMateTest.Stubs;
 using Xunit;
-using Error;
 
 namespace TimeMateTest.BLL
 {

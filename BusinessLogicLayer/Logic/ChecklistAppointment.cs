@@ -1,5 +1,5 @@
-﻿using Model.DTO_s;
-using DataAccessLayer.Interfaces;
+﻿using Core.DTOs;
+using Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;

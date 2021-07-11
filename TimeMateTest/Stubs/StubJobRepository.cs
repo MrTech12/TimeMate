@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Core.DTOs;
+using Core.Repositories;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Model.DTO_s;
-using DataAccessLayer.Interfaces;
 
 namespace TimeMateTest.Stubs
 {
