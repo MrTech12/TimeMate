@@ -1,4 +1,5 @@
 ﻿using Core.DTOs;
+using Core.Entities;
 using Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -6,17 +7,17 @@ using System.Text;
 
 namespace BusinessLogicLayer.Logic
 {
-    public class ChecklistAppointment
+    public class ChecklistAppointmentService
     {
         private IChecklistAppointmentRepository _checklistAppointmentRepository;
         private IAppointmentRepository _appointmentRepository;
 
-        public ChecklistAppointment(IChecklistAppointmentRepository checklistAppointmentRepository)
+        public ChecklistAppointmentService(IChecklistAppointmentRepository checklistAppointmentRepository)
         {
             _checklistAppointmentRepository = checklistAppointmentRepository;
         }
 
-        public ChecklistAppointment(IAppointmentRepository appointmentRepository, IChecklistAppointmentRepository checklistAppointmentRepository)
+        public ChecklistAppointmentService(IAppointmentRepository appointmentRepository, IChecklistAppointmentRepository checklistAppointmentRepository)
         {
             _appointmentRepository = appointmentRepository;
             _checklistAppointmentRepository = checklistAppointmentRepository;
@@ -24,11 +25,18 @@ namespace BusinessLogicLayer.Logic
 
         public void AddChecklistAppointment(AppointmentDTO appointmentDTO)
         {
-            appointmentDTO.AppointmentID = _appointmentRepository.CreateAppointment(appointmentDTO);
+            Appointment appointment = new Appointment() { AgendaID = appointmentDTO.AgendaID, AgendaName = appointmentDTO.AgendaName, AppointmentName = appointmentDTO.AppointmentName, StartDate = appointmentDTO.StartDate, EndDate = appointmentDTO.EndDate };
+
+            appointmentDTO.AppointmentID = _appointmentRepository.CreateAppointment(appointment);
 
             if (appointmentDTO.TaskList.Count != 0)
             {
-                _checklistAppointmentRepository.CreateTask(appointmentDTO);
+                List<Task> tasks = new List<Task>();
+                foreach (var item in appointmentDTO.TaskList)
+                {
+                    tasks.Add(new Task() { AppointmentID = appointmentDTO.AppointmentID, TaskName = item.TaskName });
+                }
+                _checklistAppointmentRepository.CreateTask(tasks);
             }
         }
 

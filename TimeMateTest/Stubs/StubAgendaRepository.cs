@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.Entities;
 using Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -10,36 +10,35 @@ namespace TimeMateTest.Stubs
 {
     class StubAgendaRepository : IAgendaRepository
     {
-        public int CreateAgenda(int accountID, AgendaDTO agendaDTO)
+        public int CreateAgenda(Agenda agenda)
         {
-            int agendaID = 0;
             using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addAgendaTest.txt"))
             {
-                streamWriter.WriteLine(agendaDTO.AgendaName);
-                streamWriter.WriteLine(agendaDTO.AgendaColor);
+                streamWriter.WriteLine(agenda.AgendaName);
+                streamWriter.WriteLine(agenda.AgendaColor);
             }          
-            return agendaID;
+            return 0;
         }
 
-        public void DeleteAgenda(int accountID, int agendaID)
+        public void DeleteAgenda(Agenda agenda)
         {
-            if (agendaID == 51 && accountID == 12)
+            if (agenda.AgendaID == 51 && agenda.AccountID == 12)
             {
                 File.WriteAllText(@"C:\tmp\removeAgendaTest.txt", String.Empty);
             }
         }
 
-        public List<AgendaDTO> GetAgendas(int accountID)
+        public List<Agenda> GetAgendas(int accountID)
         {
-            List<AgendaDTO> agendaNames = new List<AgendaDTO>();
+            List<Agenda> agendaNames = new List<Agenda>();
             if (accountID == 12)
             {
-                AgendaDTO agenda1 = new AgendaDTO();
+                Agenda agenda1 = new Agenda();
                 agenda1.AgendaID = 0;
                 agenda1.AgendaName = "Work";
                 agendaNames.Add(agenda1);
 
-                AgendaDTO agenda2 = new AgendaDTO();
+                Agenda agenda2 = new Agenda();
                 agenda2.AgendaID = 1;
                 agenda2.AgendaName = "Personal";
                 agendaNames.Add(agenda2);

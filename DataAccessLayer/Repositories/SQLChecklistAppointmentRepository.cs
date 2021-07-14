@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.Entities;
 using Core.Errors;
 using Core.Repositories;
 using System;
@@ -13,7 +13,7 @@ namespace DataAccessLayer.Repositories
     {
         private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
-        public void CreateTask(AppointmentDTO appointmentDTO)
+        public void CreateTask(List<Task> tasks)
         {
             try
             {
@@ -24,10 +24,10 @@ namespace DataAccessLayer.Repositories
                     sqlConnection.Open();
                     SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
 
-                    foreach (var item in appointmentDTO.TaskList)
+                    foreach (var item in tasks)
                     {
                         insertCommand.Parameters.Clear();
-                        insertCommand.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
+                        insertCommand.Parameters.AddWithValue("0", item.AppointmentID);
                         insertCommand.Parameters.AddWithValue("1", item.TaskName);
                         insertCommand.Parameters.AddWithValue("2", false);
                         insertCommand.ExecuteNonQuery();

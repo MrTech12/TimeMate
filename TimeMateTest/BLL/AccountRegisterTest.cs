@@ -12,9 +12,9 @@ namespace TimeMateTest.BLL
 {
     public class AccountRegisterTest
     {
-        private Account account;
-        private Agenda agenda;
-        private StubJobRepository _stubJobRepository = new StubJobRepository();
+        private AccountService accountService;
+        private AgendaService agendaService;
+        private JobService jobService;
         private AccountDTO accountDTO;
         private string filePathAccount = @"C:\tmp\CreateAccountTest.txt";
         private string filePathJob = @"C:\tmp\addWorkPayDetails.txt";
@@ -27,9 +27,9 @@ namespace TimeMateTest.BLL
             accountDTO.FirstName = "Hans";
             accountDTO.Mail = "sina1240@gmail.com";
             accountDTO.Password = "QWEwieiwi231@#";
-            account = new Account(accountDTO, new StubAccountRepository(), new StubSender());
+            accountService = new AccountService(accountDTO, new StubAccountRepository(), new StubSender());
             
-            account.CreateAccount();
+            accountService.CreateAccount();
 
             file = File.ReadAllLines(filePathAccount);
             File.Delete(filePathAccount);
@@ -51,13 +51,14 @@ namespace TimeMateTest.BLL
             accountDTO.JobHourlyWage.Add(1.20);
             accountDTO.JobDayType.Add("Doordeweeks");
             AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000" };
-            account = new Account(accountDTO, new StubAccountRepository(), new StubSender());
-            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            accountService = new AccountService(accountDTO, new StubAccountRepository(), new StubSender());
+            agendaService = new AgendaService(accountDTO, new StubAgendaRepository());
 
-            account.CreateAccount();
-            agenda.AddAgenda(workAgendaDTO);
-            _stubJobRepository.CreatePayDetails(accountDTO);
-            
+            accountService.CreateAccount();
+            agendaService.AddAgenda(workAgendaDTO);
+            jobService = new JobService(new StubJobRepository());
+            jobService.AddPayDetails(accountDTO);
+
 
             fileAccount = File.ReadAllLines(filePathAccount);
             filePayDetails = File.ReadAllLines(filePathJob);
@@ -78,9 +79,9 @@ namespace TimeMateTest.BLL
             accountDTO.FirstName = "Intel";
             accountDTO.Mail = "intel12@gmail.com";
             accountDTO.Password = "QWEwieiwi231@#";
-            account = new Account(accountDTO, new StubAccountRepository(), new StubSender());
+            accountService = new AccountService(accountDTO, new StubAccountRepository(), new StubSender());
 
-            account.CreateAccount();
+            accountService.CreateAccount();
 
             file = File.ReadAllLines(filePathAccount);
             File.Delete(filePathAccount);
@@ -96,9 +97,9 @@ namespace TimeMateTest.BLL
         {
             string output;
             accountDTO = new AccountDTO() { FirstName = "Bert", Mail = "bert@gmail.com", Password = "qwieEW12iwieWE@#" };
-            account = new Account(accountDTO, new StubAccountRepository(), new StubSender());
+            accountService = new AccountService(accountDTO, new StubAccountRepository(), new StubSender());
             
-            output = account.CheckExistingMail();
+            output = accountService.CheckExistingMail();
 
             Assert.Equal("Er bestaat al een account met dit mailadres.", output);
         }
@@ -107,9 +108,9 @@ namespace TimeMateTest.BLL
         public void CreateAccountNoMail()
         {
             accountDTO = new AccountDTO();
-            account = new Account(accountDTO, new StubAccountRepository(), new StubSender());
+            accountService = new AccountService(accountDTO, new StubAccountRepository(), new StubSender());
 
-            Action action = () => account.CheckExistingMail();
+            Action action = () => accountService.CheckExistingMail();
 
             Exception exception = Assert.Throws<AccountException>(action);
 
@@ -120,9 +121,9 @@ namespace TimeMateTest.BLL
         public void CreateAccountNoPassword()
         {
             accountDTO = new AccountDTO();
-            account = new Account(accountDTO, new StubAccountRepository(), new StubSender());
+            accountService = new AccountService(accountDTO, new StubAccountRepository(), new StubSender());
 
-            Action action = () => account.CreateAccount();
+            Action action = () => accountService.CreateAccount();
 
             Exception exception = Assert.Throws<AccountException>(action);
 

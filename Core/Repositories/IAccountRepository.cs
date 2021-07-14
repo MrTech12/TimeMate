@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +13,6 @@ namespace Core.Repositories
 
         string GetPasswordHash(string mail);
 
-        int CreateAccount(AccountDTO AccountDTO);
+        int CreateAccount(Account account);
     }
 }

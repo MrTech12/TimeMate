@@ -21,8 +21,8 @@ namespace TimeMate.Controllers
         private readonly IJobRepository _jobRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private AgendaView agendaView;
-        private Job job;
+        private AgendaViewService agendaViewService;
+        private JobService jobService;
         private SessionService sessionService;
         private AccountDTO accountDTO = new AccountDTO();
 
@@ -45,11 +45,11 @@ namespace TimeMate.Controllers
             {
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
-                agendaView = new AgendaView(accountDTO, _appointmentRepository);
-                List<AppointmentDTO> appointments = agendaView.RetrieveAppointments();
+                agendaViewService = new AgendaViewService(accountDTO, _appointmentRepository);
+                List<AppointmentDTO> appointments = agendaViewService.RetrieveAppointments();
 
-                job = new Job(_jobRepository, _agendaRepository, _appointmentRepository);
-                JobDTO jobDTO = job.RetrieveJobDetails(accountDTO.AccountID);
+                jobService = new JobService(_jobRepository, _agendaRepository, _appointmentRepository);
+                JobDTO jobDTO = jobService.RetrieveJobDetails(accountDTO.AccountID);
 
                 if (jobDTO.WeeklyPay != 0)
                 {
@@ -68,12 +68,12 @@ namespace TimeMate.Controllers
         [Route("AgendaView/AppointmentExtra/{appointmentID}")]
         public IActionResult RetrieveAppointmentExtra(int appointmentID)
         {
-            NormalAppointment normalAppointment = new NormalAppointment(_normalAppointmentRepository);
+            NormalAppointmentService normalAppointment = new NormalAppointmentService(_normalAppointmentRepository);
             string description = normalAppointment.RetrieveDescription(appointmentID);
 
             if (description == String.Empty)
             {
-                ChecklistAppointment checklistAppointment = new ChecklistAppointment(_checklistAppointmentRepository);
+                ChecklistAppointmentService checklistAppointment = new ChecklistAppointmentService(_checklistAppointmentRepository);
                 var tasks = checklistAppointment.RetrieveTasks(appointmentID);
 
                 List<TaskBodyModel> taskBodyModel = new List<TaskBodyModel>();

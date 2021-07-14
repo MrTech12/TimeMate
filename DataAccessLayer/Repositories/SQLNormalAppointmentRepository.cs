@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.Entities;
 using Core.Errors;
 using Core.Repositories;
 using System;
@@ -12,7 +12,7 @@ namespace DataAccessLayer.Repositories
     {
         private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
-        public void CreateDescription(AppointmentDTO appointmentDTO)
+        public void CreateDescription(Description description)
         {
             try
             {
@@ -23,8 +23,8 @@ namespace DataAccessLayer.Repositories
                     sqlConnection.Open();
                     SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
 
-                    insertCommand.Parameters.AddWithValue("0", appointmentDTO.AppointmentID);
-                    insertCommand.Parameters.AddWithValue("1", appointmentDTO.DescriptionDTO.Description);
+                    insertCommand.Parameters.AddWithValue("0", description.AppointmentID);
+                    insertCommand.Parameters.AddWithValue("1", description.DescriptionName);
                     insertCommand.ExecuteNonQuery();
                 }
             }

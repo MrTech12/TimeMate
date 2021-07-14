@@ -1,4 +1,4 @@
-﻿using BusinessLogicLayer;
+﻿using Core.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,7 @@ namespace TimeMateTest.Stubs
 {
     public class StubSender : ISender
     {
-        public void CreateAccountCreationMail(string recipient)
+        public void CreateAccountCreationMessage(string recipient)
         {
             using (StreamWriter streamWriter = File.AppendText(@"C:\tmp\CreateAccountTest.txt"))
             {
@@ -16,7 +16,7 @@ namespace TimeMateTest.Stubs
             }
         }
 
-        public void SendAccountCreationMail(string recipient)
+        public void SendAccountCreationMessage(string recipient)
         {
             using (StreamWriter streamWriter = File.AppendText(@"C:\tmp\CreateAccountTest.txt"))
             {

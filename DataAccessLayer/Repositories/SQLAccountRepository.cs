@@ -6,8 +6,8 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Text;
 using Core.Repositories;
-using Core.DTOs;
 using Core.Errors;
+using Core.Entities;
 
 namespace DataAccessLayer.Repositories
 {
@@ -111,7 +111,7 @@ namespace DataAccessLayer.Repositories
             return passwordHash;
         }
 
-        public int CreateAccount(AccountDTO accountDTO)
+        public int CreateAccount(Account account)
         {
             int accountID;
             try
@@ -123,9 +123,9 @@ namespace DataAccessLayer.Repositories
                     sqlConnection.Open();
                     SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
 
-                    insertCommand.Parameters.AddWithValue("0", accountDTO.FirstName);
-                    insertCommand.Parameters.AddWithValue("1", accountDTO.Mail);
-                    insertCommand.Parameters.AddWithValue("2", accountDTO.Password);
+                    insertCommand.Parameters.AddWithValue("0", account.FirstName);
+                    insertCommand.Parameters.AddWithValue("1", account.Mail);
+                    insertCommand.Parameters.AddWithValue("2", account.Password);
                     accountID = Convert.ToInt32(insertCommand.ExecuteScalar());
                 }
             }

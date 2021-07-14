@@ -12,7 +12,7 @@ namespace TimeMateTest.BLL
 {
     public class AgendaViewTest
     {
-        private AgendaView agendaView;
+        private AgendaViewService agendaViewService;
         private AccountDTO accountDTO;
 
         [Fact]
@@ -20,9 +20,9 @@ namespace TimeMateTest.BLL
         {
             List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = -5 };
-            agendaView = new AgendaView(accountDTO, new StubAppointmentRepository());
+            agendaViewService = new AgendaViewService(accountDTO, new StubAppointmentRepository());
 
-            output = agendaView.RetrieveAppointments();
+            output = agendaViewService.RetrieveAppointments();
 
             Assert.True(output.Count == 0);
         }
@@ -32,9 +32,9 @@ namespace TimeMateTest.BLL
         {
             List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = 12 };
-            agendaView = new AgendaView(accountDTO, new StubAppointmentRepository());
+            agendaViewService = new AgendaViewService(accountDTO, new StubAppointmentRepository());
 
-            output = agendaView.RetrieveAppointments();
+            output = agendaViewService.RetrieveAppointments();
 
             Assert.Contains("Walk the dog", output[1].AppointmentName);
             Assert.True(output.Count == 3);
@@ -45,9 +45,9 @@ namespace TimeMateTest.BLL
         {
             List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = 42 };
-            agendaView = new AgendaView(accountDTO, new StubAppointmentRepository());
+            agendaViewService = new AgendaViewService(accountDTO, new StubAppointmentRepository());
 
-            output = agendaView.RetrieveAppointments();
+            output = agendaViewService.RetrieveAppointments();
 
             Assert.Contains("Relax Sunday", output[0].AppointmentName);
             Assert.Contains("Listen to music", output[0].TaskList[1].TaskName);
@@ -60,9 +60,9 @@ namespace TimeMateTest.BLL
         {
             List<AppointmentDTO> output = new List<AppointmentDTO>();
             accountDTO = new AccountDTO() { AccountID = 54 };
-            agendaView = new AgendaView(accountDTO, new StubAppointmentRepository());
+            agendaViewService = new AgendaViewService(accountDTO, new StubAppointmentRepository());
 
-            output = agendaView.RetrieveAppointments();
+            output = agendaViewService.RetrieveAppointments();
 
             Assert.Contains("Look up info about render servers.", output[0].AppointmentName);
             Assert.Contains("The render servers must support Blender.", output[0].DescriptionDTO.Description);

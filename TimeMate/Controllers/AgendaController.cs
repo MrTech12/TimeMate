@@ -18,7 +18,7 @@ namespace TimeMate.Controllers
         private readonly IAgendaRepository _agendaRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private Agenda agenda;
+        private AgendaService agendaService;
         private SessionService sessionService;
         private AccountDTO accountDTO = new AccountDTO();
 
@@ -55,8 +55,8 @@ namespace TimeMate.Controllers
                 agendaDTO.IsWorkAgenda = false;
 
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
-                agenda = new Agenda(accountDTO, _agendaRepository);
-                agenda.AddAgenda(agendaDTO);
+                agendaService = new AgendaService(accountDTO, _agendaRepository);
+                agendaService.AddAgenda(agendaDTO);
                 return RedirectToAction("Index", "AgendaView");
             }
             else
@@ -69,8 +69,8 @@ namespace TimeMate.Controllers
         public IActionResult DeleteAgenda([FromBody] AgendaBodyModel bodyModel)
         {
             accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
-            agenda = new Agenda(accountDTO, _agendaRepository);
-            agenda.DeleteAgenda(bodyModel.AgendaID);
+            agendaService = new AgendaService(accountDTO, _agendaRepository);
+            agendaService.DeleteAgenda(bodyModel.AgendaID);
             return Ok();
         }
     }

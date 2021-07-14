@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +7,7 @@ namespace Core.Repositories
 {
     public interface IJobRepository
     {
-        void CreatePayDetails(AccountDTO accountDTO);
+        void CreatePayDetails(Account account);
 
         double GetWorkdayPayWage(int accountID);
 

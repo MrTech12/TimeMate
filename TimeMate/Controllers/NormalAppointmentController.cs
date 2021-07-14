@@ -19,8 +19,8 @@ namespace TimeMate.Controllers
         private readonly INormalAppointmentRepository _normalAppointmentRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private Agenda agenda;
-        private NormalAppointment normalAppointment;
+        private AgendaService agendaService;
+        private NormalAppointmentService normalAppointmentService;
         private SessionService sessionService;
         private AccountDTO accountDTO = new AccountDTO();
 
@@ -42,8 +42,8 @@ namespace TimeMate.Controllers
                 NormalAppointmentViewModel viewModel = new NormalAppointmentViewModel();
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
-                agenda = new Agenda(accountDTO, _agendaRepository);
-                ViewBag.agendaList = agenda.RetrieveAgendas();
+                agendaService = new AgendaService(accountDTO, _agendaRepository);
+                ViewBag.agendaList = agendaService.RetrieveAgendas();
 
                 if (ViewBag.agendaList.Count == 0)
                 {
@@ -80,8 +80,8 @@ namespace TimeMate.Controllers
                     appointmentDTO.DescriptionDTO.Description = null;
                 }
 
-                normalAppointment = new NormalAppointment(_appointmentRepository, _normalAppointmentRepository);
-                normalAppointment.AddNormalAppointment(appointmentDTO);
+                normalAppointmentService = new NormalAppointmentService(_appointmentRepository, _normalAppointmentRepository);
+                normalAppointmentService.AddNormalAppointment(appointmentDTO);
                 return RedirectToAction("Index", "AgendaView");
             }
             else

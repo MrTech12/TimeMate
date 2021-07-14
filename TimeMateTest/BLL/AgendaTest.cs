@@ -11,9 +11,9 @@ namespace TimeMateTest.BLL
 {
     public class AgendaTest
     {
-        private Agenda agenda;
+        private AgendaService agendaService;
+        private JobService jobService;
         private AccountDTO accountDTO;
-        private StubJobRepository _stubJobRepository = new StubJobRepository();
         private string filePathAgendaCreation = @"C:\tmp\addAgendaTest.txt";
         private string filePathWorkDetails = @"C:\tmp\addWorkPayDetails.txt";
         private string filePathAgendaDeletion = @"C:\tmp\removeAgendaTest.txt";
@@ -22,10 +22,10 @@ namespace TimeMateTest.BLL
         public void CreateAgenda1()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            agendaService = new AgendaService(accountDTO, new StubAgendaRepository());
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Homework", AgendaColor = "#0x0000" };
 
-            agenda.AddAgenda(agendaDTO);
+            agendaService.AddAgenda(agendaDTO);
 
             string[] file = File.ReadAllLines(filePathAgendaCreation);
             File.Delete(filePathAgendaCreation);
@@ -38,10 +38,10 @@ namespace TimeMateTest.BLL
         public void CreateAgenda2()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            agendaService = new AgendaService(accountDTO, new StubAgendaRepository());
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "Skype", AgendaColor = "#15F560" };
 
-            agenda.AddAgenda(agendaDTO);
+            agendaService.AddAgenda(agendaDTO);
 
             string[] file = File.ReadAllLines(filePathAgendaCreation);
             File.Delete(filePathAgendaCreation);
@@ -54,10 +54,10 @@ namespace TimeMateTest.BLL
         public void CreateNoAgenda()
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
-            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            agendaService = new AgendaService(accountDTO, new StubAgendaRepository());
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaName = "", AgendaColor = "" };
 
-            agenda.AddAgenda(agendaDTO);
+            agendaService.AddAgenda(agendaDTO);
 
             string[] file = File.ReadAllLines(filePathAgendaCreation);
             File.Delete(filePathAgendaCreation);
@@ -73,10 +73,11 @@ namespace TimeMateTest.BLL
             accountDTO = new AccountDTO() { AccountID = 12 };
             accountDTO.JobHourlyWage.Add(12.23);
             accountDTO.JobDayType.Add("Doordeweeks");
-            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            agendaService = new AgendaService(accountDTO, new StubAgendaRepository());
 
-            agenda.AddAgenda(workAgendaDTO);
-            _stubJobRepository.CreatePayDetails(accountDTO);
+            agendaService.AddAgenda(workAgendaDTO);
+            jobService = new JobService(new StubJobRepository());
+            jobService.AddPayDetails(accountDTO);
 
             string[] fileAgenda = File.ReadAllLines(filePathAgendaCreation);
             string[] filePay = File.ReadAllLines(filePathWorkDetails);
@@ -99,10 +100,11 @@ namespace TimeMateTest.BLL
             accountDTO.JobDayType.Add("Doordeweeks");
             accountDTO.JobHourlyWage.Add(10);
             accountDTO.JobDayType.Add("Weekend");
-            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            agendaService = new AgendaService(accountDTO, new StubAgendaRepository());
 
-            agenda.AddAgenda(workAgendaDTO);
-            _stubJobRepository.CreatePayDetails(accountDTO);
+            agendaService.AddAgenda(workAgendaDTO);
+            jobService = new JobService(new StubJobRepository());
+            jobService.AddPayDetails(accountDTO);
 
             string[] fileAgenda = File.ReadAllLines(filePathAgendaCreation);
             string[] filePay = File.ReadAllLines(filePathWorkDetails);
@@ -123,10 +125,11 @@ namespace TimeMateTest.BLL
         {
             AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = "Bijbaan", AgendaColor = "#FF0000" };
             accountDTO = new AccountDTO() { AccountID = 23 };
-            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            agendaService = new AgendaService(accountDTO, new StubAgendaRepository());
 
-            agenda.AddAgenda(workAgendaDTO);
-            _stubJobRepository.CreatePayDetails(accountDTO);
+            agendaService.AddAgenda(workAgendaDTO);
+            jobService = new JobService(new StubJobRepository());
+            jobService.AddPayDetails(accountDTO);
 
             string[] fileAgenda = File.ReadAllLines(filePathAgendaCreation);
             string[] filePay = File.ReadAllLines(filePathWorkDetails);
@@ -143,9 +146,9 @@ namespace TimeMateTest.BLL
         {
             List<AgendaDTO> output = new List<AgendaDTO>();
             accountDTO = new AccountDTO() { AccountID = 12 };
-            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            agendaService = new AgendaService(accountDTO, new StubAgendaRepository());
 
-            output = agenda.RetrieveAgendas();
+            output = agendaService.RetrieveAgendas();
 
             Assert.Contains("Work", output[0].AgendaName);
             Assert.True(output.Count == 2);
@@ -156,9 +159,9 @@ namespace TimeMateTest.BLL
         {
             List<AgendaDTO> output = new List<AgendaDTO>();
             accountDTO = new AccountDTO() { AccountID = 128 };
-            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            agendaService = new AgendaService(accountDTO, new StubAgendaRepository());
 
-            output = agenda.RetrieveAgendas();
+            output = agendaService.RetrieveAgendas();
 
             Assert.True(output.Count == 0);
         }
@@ -168,7 +171,7 @@ namespace TimeMateTest.BLL
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312" };
-            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            agendaService = new AgendaService(accountDTO, new StubAgendaRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePathAgendaDeletion))
             {
@@ -177,7 +180,7 @@ namespace TimeMateTest.BLL
                 streamWriter.WriteLine(agendaDTO.AgendaColor);
             }
 
-            agenda.DeleteAgenda(agendaDTO.AgendaID);
+            agendaService.DeleteAgenda(agendaDTO.AgendaID);
 
             string[] file = File.ReadAllLines(filePathAgendaDeletion);
             File.Delete(filePathAgendaDeletion);
@@ -191,7 +194,7 @@ namespace TimeMateTest.BLL
         {
             accountDTO = new AccountDTO() { AccountID = 12 };
             AgendaDTO agendaDTO = new AgendaDTO() { AgendaID = 51, AgendaName = "qwerty", AgendaColor = "#0X2312" };
-            agenda = new Agenda(accountDTO, new StubAgendaRepository());
+            agendaService = new AgendaService(accountDTO, new StubAgendaRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePathAgendaDeletion))
             {
@@ -200,7 +203,7 @@ namespace TimeMateTest.BLL
                 streamWriter.WriteLine(agendaDTO.AgendaColor);
             }
 
-            agenda.DeleteAgenda(-5);
+            agendaService.DeleteAgenda(-5);
 
             string[] file = File.ReadAllLines(filePathAgendaDeletion);
             File.Delete(filePathAgendaDeletion);

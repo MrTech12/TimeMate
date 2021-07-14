@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.Entities;
 using Core.Errors;
 using Core.Repositories;
 using System;
@@ -12,7 +12,7 @@ namespace DataAccessLayer.Repositories
     {
         private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
-        public void CreatePayDetails(AccountDTO accountDTO)
+        public void CreatePayDetails(Account account)
         {
             try
             {
@@ -23,20 +23,20 @@ namespace DataAccessLayer.Repositories
                     sqlConnection.Open();
                     SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
 
-                    for (int i = 0; i < accountDTO.JobHourlyWage.Count; i++)
+                    for (int i = 0; i < account.JobHourlyWage.Count; i++)
                     {
                         insertCommand.Parameters.Clear();
-                        insertCommand.Parameters.AddWithValue("0", accountDTO.AccountID);
+                        insertCommand.Parameters.AddWithValue("0", account.AccountID);
 
-                        if (accountDTO.JobDayType[i] == "Doordeweeks" && accountDTO.JobHourlyWage[i] != 0)
+                        if (account.JobDayType[i] == "Doordeweeks" && account.JobHourlyWage[i] != 0)
                         {
-                            insertCommand.Parameters.AddWithValue("1", accountDTO.JobHourlyWage[i]);
+                            insertCommand.Parameters.AddWithValue("1", account.JobHourlyWage[i]);
                             insertCommand.Parameters.AddWithValue("2", DBNull.Value);
                         }
-                        else if (accountDTO.JobDayType[i] == "Weekend" && accountDTO.JobHourlyWage[i] != 0)
+                        else if (account.JobDayType[i] == "Weekend" && account.JobHourlyWage[i] != 0)
                         {
                             insertCommand.Parameters.AddWithValue("1", DBNull.Value);
-                            insertCommand.Parameters.AddWithValue("2", accountDTO.JobHourlyWage[i]);
+                            insertCommand.Parameters.AddWithValue("2", account.JobHourlyWage[i]);
                         }
                         insertCommand.ExecuteNonQuery();
                     }

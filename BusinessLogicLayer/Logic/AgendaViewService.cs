@@ -1,4 +1,5 @@
 ﻿using Core.DTOs;
+using Core.Entities;
 using Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,12 @@ using System.Text;
 
 namespace BusinessLogicLayer.Logic
 {
-    public class AgendaView
+    public class AgendaViewService
     {
         private IAppointmentRepository _appointmentRepository;
         private AccountDTO accountDTO = new AccountDTO();
 
-        public AgendaView(AccountDTO accountDTO, IAppointmentRepository appointmentRepository)
+        public AgendaViewService(AccountDTO accountDTO, IAppointmentRepository appointmentRepository)
         {
             this.accountDTO = accountDTO;
             _appointmentRepository = appointmentRepository;

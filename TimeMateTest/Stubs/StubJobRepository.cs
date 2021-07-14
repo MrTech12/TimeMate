@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.Entities;
 using Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,14 +9,14 @@ namespace TimeMateTest.Stubs
 {
     class StubJobRepository : IJobRepository
     {
-        public void CreatePayDetails(AccountDTO accountDTO)
+        public void CreatePayDetails(Account account)
         {
             using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\addWorkPayDetails.txt"))
             {
-                for (int i = 0; i < accountDTO.JobHourlyWage.Count; i++)
+                for (int i = 0; i < account.JobHourlyWage.Count; i++)
                 {
-                    streamWriter.WriteLine(accountDTO.JobHourlyWage[i]);
-                    streamWriter.WriteLine(accountDTO.JobDayType[i]);
+                    streamWriter.WriteLine(account.JobHourlyWage[i]);
+                    streamWriter.WriteLine(account.JobDayType[i]);
                 }
             }
         }

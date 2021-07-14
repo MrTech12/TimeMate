@@ -1,4 +1,5 @@
 ﻿using Core.DTOs;
+using Core.Entities;
 using Core.Errors;
 using Core.Repositories;
 using System;
@@ -12,7 +13,7 @@ namespace DataAccessLayer.Repositories
     {
         private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
-        public int CreateAppointment(AppointmentDTO appointmentDTO)
+        public int CreateAppointment(Appointment appointment)
         {
             int appointmentID;
             try
@@ -24,10 +25,10 @@ namespace DataAccessLayer.Repositories
                     sqlConnection.Open();
                     SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
 
-                    insertCommand.Parameters.AddWithValue("0", appointmentDTO.AgendaID);
-                    insertCommand.Parameters.AddWithValue("1", appointmentDTO.AppointmentName);
-                    insertCommand.Parameters.AddWithValue("2", appointmentDTO.StartDate);
-                    insertCommand.Parameters.AddWithValue("3", appointmentDTO.EndDate);
+                    insertCommand.Parameters.AddWithValue("0", appointment.AgendaID);
+                    insertCommand.Parameters.AddWithValue("1", appointment.AppointmentName);
+                    insertCommand.Parameters.AddWithValue("2", appointment.StartDate);
+                    insertCommand.Parameters.AddWithValue("3", appointment.EndDate);
                     appointmentID = Convert.ToInt32(insertCommand.ExecuteScalar());
                 }
             }
@@ -91,9 +92,9 @@ namespace DataAccessLayer.Repositories
             return appointments;
         }
 
-        public JobDTO GetWorkHours(int agendaID, List<DateTime> dates)
+        public Job GetWorkHours(int agendaID, List<DateTime> dates)
         {
-            JobDTO jobDTO = new JobDTO();
+            Job job = new Job();
             try
             {
                 using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
@@ -111,8 +112,8 @@ namespace DataAccessLayer.Repositories
 
                     while (dataReader.Read())
                     {
-                        jobDTO.StartDate.Add(Convert.ToDateTime(dataReader["Starting"]));
-                        jobDTO.EndDate.Add(Convert.ToDateTime(dataReader["Ending"]));
+                        job.StartDate.Add(Convert.ToDateTime(dataReader["Starting"]));
+                        job.EndDate.Add(Convert.ToDateTime(dataReader["Ending"]));
                     }
                 }
             }
@@ -120,7 +121,7 @@ namespace DataAccessLayer.Repositories
             {
                 throw new DatabaseException("Er is op dit moment een probleem met de database.", exception);
             }
-            return jobDTO;
+            return job;
         }
     }
 }

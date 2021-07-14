@@ -9,18 +9,19 @@ namespace TimeMateTest.BLL
 {
     public class NormalAppointmentTest
     {
-        private NormalAppointment normalAppointment;
+        private NormalAppointmentService normalAppointmentService;
         private AppointmentDTO appointmentDTO;
         private string filePath = @"C:\tmp\addAppointmentTest.txt";
 
         [Fact]
         public void CreateNormalAppointment()
         {
-            normalAppointment = new NormalAppointment(new StubAppointmentRepository(), new StubNormalAppointmentRepository());
+            normalAppointmentService = new NormalAppointmentService(new StubAppointmentRepository(), new StubNormalAppointmentRepository());
             DescriptionDTO descriptionDTO = new DescriptionDTO() { Description = "This is <b> a </b> test." };
 
             appointmentDTO = new AppointmentDTO()
             {
+                AppointmentID = 60,
                 AppointmentName = "Reorder cables",
                 StartDate = DateTime.Now.AddHours(2),
                 EndDate = DateTime.Now.AddHours(4),
@@ -28,7 +29,7 @@ namespace TimeMateTest.BLL
                 AgendaName = "Firefox"
             };
 
-            normalAppointment.AddNormalAppointment(appointmentDTO);
+            normalAppointmentService.AddNormalAppointment(appointmentDTO);
 
             string[] appointmentFile = File.ReadAllLines(filePath);
             File.Delete(filePath);
@@ -42,9 +43,9 @@ namespace TimeMateTest.BLL
         public void GetDescription()
         {
             int appointmentID = 24;
-            normalAppointment = new NormalAppointment(new StubNormalAppointmentRepository());
+            normalAppointmentService = new NormalAppointmentService(new StubNormalAppointmentRepository());
 
-            string output = normalAppointment.RetrieveDescription(appointmentID);
+            string output = normalAppointmentService.RetrieveDescription(appointmentID);
 
             Assert.Equal("Dit is een beschrijving", output);
         }
@@ -53,9 +54,9 @@ namespace TimeMateTest.BLL
         public void GetNoDescription()
         {
             int appointmentID = 0;
-            normalAppointment = new NormalAppointment(new StubNormalAppointmentRepository());
+            normalAppointmentService = new NormalAppointmentService(new StubNormalAppointmentRepository());
 
-            string output = normalAppointment.RetrieveDescription(appointmentID);
+            string output = normalAppointmentService.RetrieveDescription(appointmentID);
 
             Assert.Null(output);
         }

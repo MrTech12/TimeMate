@@ -1,25 +1,27 @@
 ﻿using Core.DTOs;
+using Core.Entities;
 using Core.Errors;
 using Core.Repositories;
+using Core.Services;
 using System;
 using System.Collections.Generic;
 
 namespace BusinessLogicLayer.Logic
 {
-    public class Account
+    public class AccountService
     {
         private readonly IAccountRepository _accountRepository;
         private readonly ISender _senderRepository;
         private AccountDTO accountDTO;
         public AccountDTO AccountDTO { get { return this.accountDTO; } set { this.accountDTO = value; } }
 
-        public Account(AccountDTO accountDTO, IAccountRepository accountRepository)
+        public AccountService(AccountDTO accountDTO, IAccountRepository accountRepository)
         {
             this.accountDTO = accountDTO;
             _accountRepository = accountRepository;
         }
 
-        public Account(AccountDTO accountDTO, IAccountRepository accountRepository, ISender senderRepository)
+        public AccountService(AccountDTO accountDTO, IAccountRepository accountRepository, ISender senderRepository)
         {
             this.accountDTO = accountDTO;
             _accountRepository = accountRepository;
@@ -77,9 +79,10 @@ namespace BusinessLogicLayer.Logic
             }
             else
             {
-                accountDTO.Password = BCrypt.Net.BCrypt.HashPassword(accountDTO.Password, 10);
-                accountDTO.AccountID = _accountRepository.CreateAccount(accountDTO);
-                _senderRepository.SendAccountCreationMail(accountDTO.Mail);
+                Account account = new Account() { FirstName = accountDTO.FirstName, Mail = accountDTO.Mail };
+                account.Password = BCrypt.Net.BCrypt.HashPassword(accountDTO.Password, 10);
+                accountDTO.AccountID = _accountRepository.CreateAccount(account);
+                _senderRepository.SendAccountCreationMessage(accountDTO.Mail);
             }
         }
     }

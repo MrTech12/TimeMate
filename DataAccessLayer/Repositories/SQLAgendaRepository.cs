@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.Entities;
 using Core.Errors;
 using Core.Repositories;
 using System;
@@ -12,7 +12,7 @@ namespace DataAccessLayer.Repositories
     {
         private SQLDatabaseRepository SQLDatabaseRepository = new SQLDatabaseRepository();
 
-        public int CreateAgenda(int accountID, AgendaDTO agendaDTO)
+        public int CreateAgenda(Agenda agenda)
         {
             int agendaID;
             try
@@ -24,10 +24,10 @@ namespace DataAccessLayer.Repositories
                     sqlConnection.Open();
                     SqlCommand insertCommand = new SqlCommand(query, sqlConnection);
 
-                    insertCommand.Parameters.AddWithValue("0", accountID);
-                    insertCommand.Parameters.AddWithValue("1", agendaDTO.AgendaName);
-                    insertCommand.Parameters.AddWithValue("2", agendaDTO.AgendaColor);
-                    insertCommand.Parameters.AddWithValue("3", agendaDTO.IsWorkAgenda);
+                    insertCommand.Parameters.AddWithValue("0", agenda.AccountID);
+                    insertCommand.Parameters.AddWithValue("1", agenda.AgendaName);
+                    insertCommand.Parameters.AddWithValue("2", agenda.AgendaColor);
+                    insertCommand.Parameters.AddWithValue("3", agenda.IsWorkAgenda);
                     agendaID = Convert.ToInt32(insertCommand.ExecuteScalar());
                 }
             }
@@ -38,7 +38,7 @@ namespace DataAccessLayer.Repositories
             return agendaID;
         }
 
-        public void DeleteAgenda(int accountID, int agendaID)
+        public void DeleteAgenda(Agenda agenda)
         {
             try
             {
@@ -49,8 +49,8 @@ namespace DataAccessLayer.Repositories
                     sqlConnection.Open();
                     SqlCommand deleteCommand = new SqlCommand(query, sqlConnection);
 
-                    deleteCommand.Parameters.AddWithValue("0", agendaID);
-                    deleteCommand.Parameters.AddWithValue("1", accountID);
+                    deleteCommand.Parameters.AddWithValue("0", agenda.AgendaID);
+                    deleteCommand.Parameters.AddWithValue("1", agenda.AccountID);
                     deleteCommand.ExecuteNonQuery();
                 }
             }
@@ -60,9 +60,9 @@ namespace DataAccessLayer.Repositories
             }
         }
 
-        public List<AgendaDTO> GetAgendas(int accountID)
+        public List<Agenda> GetAgendas(int accountID)
         {
-            List<AgendaDTO> agendas = new List<AgendaDTO>();
+            List<Agenda> agendas = new List<Agenda>();
             try
             {
                 using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
@@ -77,11 +77,11 @@ namespace DataAccessLayer.Repositories
 
                     while (dataReader.Read())
                     {
-                        AgendaDTO agendaDTO = new AgendaDTO();
-                        agendaDTO.AgendaID = Convert.ToInt32(dataReader["AgendaID"]);
-                        agendaDTO.AgendaName = dataReader["Name"].ToString();
-                        agendaDTO.AgendaColor = dataReader["Color"].ToString();
-                        agendas.Add(agendaDTO);
+                        Agenda agenda = new Agenda();
+                        agenda.AgendaID = Convert.ToInt32(dataReader["AgendaID"]);
+                        agenda.AgendaName = dataReader["Name"].ToString();
+                        agenda.AgendaColor = dataReader["Color"].ToString();
+                        agendas.Add(agenda);
                     }
                 }
             }

@@ -5,10 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DataAccessLayer.Containers;
 using Microsoft.AspNetCore.Http;
-using BusinessLogicLayer;
 using DataAccessLayer.Repositories;
 using Core.DTOs;
 using Core.Repositories;
+using Core.Services;
 
 namespace TimeMate
 {
@@ -38,7 +38,7 @@ namespace TimeMate
             services.AddSingleton<IChecklistAppointmentRepository, SQLChecklistAppointmentRepository>();
             services.AddSingleton<IJobRepository, SQLJobRepository>();
             services.AddSingleton<INormalAppointmentRepository, SQLNormalAppointmentRepository>();
-            services.AddSingleton<ISender, MailSender>();
+            services.AddSingleton<ISender, MailSenderService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSession(options =>

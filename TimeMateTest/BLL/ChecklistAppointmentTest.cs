@@ -10,7 +10,7 @@ namespace TimeMateTest.BLL
 {
     public class ChecklistAppointmentTest
     {
-        private ChecklistAppointment checklistAppointment;
+        private ChecklistAppointmentService checklistAppointmentService;
         private AppointmentDTO appointmentDTO;
         string filePathtasks = @"C:\tmp\getTaskStatusTest.txt";
 
@@ -24,9 +24,9 @@ namespace TimeMateTest.BLL
             appointmentDTO.EndDate = DateTime.Now.AddHours(4);
             appointmentDTO.AgendaName = "Firefox";
             appointmentDTO.TaskList.Add(taskDTO);
-            checklistAppointment = new ChecklistAppointment(new StubAppointmentRepository(), new StubChecklistAppointmentRepository());
+            checklistAppointmentService = new ChecklistAppointmentService(new StubAppointmentRepository(), new StubChecklistAppointmentRepository());
 
-            checklistAppointment.AddChecklistAppointment(appointmentDTO);
+            checklistAppointmentService.AddChecklistAppointment(appointmentDTO);
 
             string[] appointmentFile = File.ReadAllLines(@"C:\tmp\addAppointmentTest.txt");
             File.Delete(filePathtasks);
@@ -40,9 +40,9 @@ namespace TimeMateTest.BLL
         public void GetTasks()
         {
             int appointmentID = 14;
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
+            checklistAppointmentService = new ChecklistAppointmentService(new StubChecklistAppointmentRepository());
 
-            Dictionary<int, string> output = checklistAppointment.RetrieveTasks(appointmentID);
+            Dictionary<int, string> output = checklistAppointmentService.RetrieveTasks(appointmentID);
 
             Assert.Equal("Dit", output[1]);
             Assert.Equal("Dat", output[2]);
@@ -54,9 +54,9 @@ namespace TimeMateTest.BLL
         public void GetNoTasks()
         {
             int appointmentID = 0;
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
+            checklistAppointmentService = new ChecklistAppointmentService(new StubChecklistAppointmentRepository());
 
-            Dictionary<int, string> output = checklistAppointment.RetrieveTasks(appointmentID);
+            Dictionary<int, string> output = checklistAppointmentService.RetrieveTasks(appointmentID);
 
             Assert.True(output.Count == 0);
         }
@@ -67,7 +67,7 @@ namespace TimeMateTest.BLL
             TaskDTO taskDTO = new TaskDTO();
             taskDTO.TaskID = 62;
             taskDTO.TaskName = "Get cake";
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
+            checklistAppointmentService = new ChecklistAppointmentService(new StubChecklistAppointmentRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePathtasks))
             {
@@ -76,7 +76,7 @@ namespace TimeMateTest.BLL
                 streamWriter.WriteLine("False");
             }
 
-            checklistAppointment.ChangeTaskStatus(62);
+            checklistAppointmentService.ChangeTaskStatus(62);
 
             string[] file = File.ReadAllLines(filePathtasks);
             File.Delete(filePathtasks);
@@ -90,7 +90,7 @@ namespace TimeMateTest.BLL
             TaskDTO taskDTO = new TaskDTO();
             taskDTO.TaskID = 74;
             taskDTO.TaskName = "Buy new monitor";
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
+            checklistAppointmentService = new ChecklistAppointmentService(new StubChecklistAppointmentRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePathtasks))
             {
@@ -99,7 +99,7 @@ namespace TimeMateTest.BLL
                 streamWriter.WriteLine("True");
             }
 
-            checklistAppointment.ChangeTaskStatus(74);
+            checklistAppointmentService.ChangeTaskStatus(74);
 
             string[] file = File.ReadAllLines(filePathtasks);
             File.Delete(filePathtasks);
@@ -113,7 +113,7 @@ namespace TimeMateTest.BLL
             TaskDTO taskDTO = new TaskDTO();
             taskDTO.TaskID = 28;
             taskDTO.TaskName = "Bake a cake";
-            checklistAppointment = new ChecklistAppointment(new StubChecklistAppointmentRepository());
+            checklistAppointmentService = new ChecklistAppointmentService(new StubChecklistAppointmentRepository());
 
             using (StreamWriter streamWriter = new StreamWriter(filePathtasks))
             {
@@ -122,7 +122,7 @@ namespace TimeMateTest.BLL
                 streamWriter.WriteLine("False");
             }
 
-            checklistAppointment.ChangeTaskStatus(-5);
+            checklistAppointmentService.ChangeTaskStatus(-5);
 
             string[] file = File.ReadAllLines(filePathtasks);
             File.Delete(filePathtasks);

@@ -19,8 +19,8 @@ namespace TimeMate.Controllers
         private readonly IChecklistAppointmentRepository _checklistAppointmentContainer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private ChecklistAppointment checklistAppointment;
-        private Agenda agenda;
+        private ChecklistAppointmentService checklistAppointmentService;
+        private AgendaService agendaService;
         private SessionService sessionService;
         private AccountDTO accountDTO = new AccountDTO();
 
@@ -42,8 +42,8 @@ namespace TimeMate.Controllers
                 ChecklistAppointmentViewModel viewModel = new ChecklistAppointmentViewModel();
                 accountDTO.AccountID = HttpContext.Session.GetInt32("accountID").Value;
 
-                agenda = new Agenda(accountDTO, _agendaContainer);
-                ViewBag.agendaList = agenda.RetrieveAgendas();
+                agendaService = new AgendaService(accountDTO, _agendaContainer);
+                ViewBag.agendaList = agendaService.RetrieveAgendas();
 
                 if (ViewBag.agendaList.Count == 0)
                 {
@@ -83,8 +83,8 @@ namespace TimeMate.Controllers
                     }
                 }
 
-                checklistAppointment = new ChecklistAppointment(_appointmentContainer, _checklistAppointmentContainer);
-                checklistAppointment.AddChecklistAppointment(appointmentDTO);
+                checklistAppointmentService = new ChecklistAppointmentService(_appointmentContainer, _checklistAppointmentContainer);
+                checklistAppointmentService.AddChecklistAppointment(appointmentDTO);
                 return RedirectToAction("Index", "AgendaView");
             }
             else
@@ -97,8 +97,8 @@ namespace TimeMate.Controllers
         [Route("ChecklistAppointment/TaskStatus/{taskID}")]
         public IActionResult ChangeTaskStatus(int taskID)
         {
-            checklistAppointment = new ChecklistAppointment(_checklistAppointmentContainer);
-            checklistAppointment.ChangeTaskStatus(taskID);
+            checklistAppointmentService = new ChecklistAppointmentService(_checklistAppointmentContainer);
+            checklistAppointmentService.ChangeTaskStatus(taskID);
             return Ok();
         }
     }

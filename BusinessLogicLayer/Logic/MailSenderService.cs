@@ -1,5 +1,5 @@
-﻿using BusinessLogicLayer;
-using Core.Errors;
+﻿using Core.Errors;
+using Core.Services;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Net;
@@ -7,22 +7,22 @@ using System.Net.Mail;
 
 namespace DataAccessLayer.Containers
 {
-    public class MailSender : ISender
+    public class MailSenderService : ISender
     {
         MailMessage mail;
         SmtpClient smtp;
         private readonly IConfiguration Configuration;
 
-        public MailSender(IConfiguration configuration)
+        public MailSenderService(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public void SendAccountCreationMail(string recipient)
+        public void SendAccountCreationMessage(string recipient)
         {
             try
             {
-                CreateAccountCreationMail(recipient);
+                CreateAccountCreationMessage(recipient);
                 SetupSMTP();
                 smtp.Send(mail);
             }
@@ -32,7 +32,7 @@ namespace DataAccessLayer.Containers
             }
         }
 
-        public void CreateAccountCreationMail(string recipient)
+        public void CreateAccountCreationMessage(string recipient)
         {
             mail = new MailMessage(Configuration["Mailserver:Username"], recipient);
             mail.Subject = "Registratie bij TimeMate";

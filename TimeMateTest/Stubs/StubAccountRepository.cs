@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.Entities;
 using Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -43,26 +43,26 @@ namespace TimeMateTest.Stubs
             return returnMessage;
         }
 
-        public int CreateAccount(AccountDTO accountDTO)
+        public int CreateAccount(Account account)
         {
             int accountID = 0;
             using (StreamWriter streamWriter = new StreamWriter(@"C:\tmp\CreateAccountTest.txt"))
             {
-                streamWriter.WriteLine(accountDTO.FirstName);
-                streamWriter.WriteLine(accountDTO.Mail);
-                streamWriter.WriteLine(accountDTO.Password);
+                streamWriter.WriteLine(account.FirstName);
+                streamWriter.WriteLine(account.Mail);
+                streamWriter.WriteLine(account.Password);
 
-                if (accountDTO.Mail == "sina1240@gmail.com")
+                if (account.Mail == "sina1240@gmail.com")
                 {
                     streamWriter.WriteLine(6);
                     accountID = 6;
                 }
-                else if (accountDTO.Mail == "sina1242@gmail.com")
+                else if (account.Mail == "sina1242@gmail.com")
                 {
                     streamWriter.WriteLine(14);
                     accountID = 14;
                 }
-                else if (accountDTO.Mail == "intel12@gmail.com")
+                else if (account.Mail == "intel12@gmail.com")
                 {
                     streamWriter.WriteLine(39);
                     accountID = 39;

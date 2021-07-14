@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.Entities;
 using Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,13 +9,13 @@ namespace TimeMateTest.Stubs
 {
     class StubNormalAppointmentRepository : INormalAppointmentRepository
     {
-        public void CreateDescription(AppointmentDTO appointmentDTO)
+        public void CreateDescription(Description description)
         {
-            if (appointmentDTO.AppointmentName == "Reorder cables")
+            if (description.AppointmentID == 60)
             {
                 using (StreamWriter streamWriter = File.AppendText(@"C:\tmp\addAppointmentTest.txt"))
                 {
-                    streamWriter.WriteLine(appointmentDTO.DescriptionDTO.Description);
+                    streamWriter.WriteLine(description.DescriptionName);
                 }
             }
         }

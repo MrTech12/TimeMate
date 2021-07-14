@@ -8,9 +8,9 @@ using BusinessLogicLayer.Logic;
 using Microsoft.AspNetCore.Http;
 using TimeMate.Services;
 using System.Text.RegularExpressions;
-using BusinessLogicLayer;
 using Core.Repositories;
 using Core.DTOs;
+using Core.Services;
 
 namespace TimeMate.Controllers
 {
@@ -22,8 +22,9 @@ namespace TimeMate.Controllers
         private readonly ISender _sender;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        private Account account;
-        private Agenda agenda;
+        private AccountService accountService;
+        private AgendaService agendaService;
+        private JobService jobService;
         private SessionService sessionService;
         private AccountDTO accountDTO;
 
@@ -61,8 +62,8 @@ namespace TimeMate.Controllers
                 accountDTO.Mail = viewModel.Mail;
                 accountDTO.Password = viewModel.Password;
 
-                account = new Account(accountDTO, _accountRepository);
-                string[] response = account.LoggingIn();
+                accountService = new AccountService(accountDTO, _accountRepository);
+                string[] response = accountService.LoggingIn();
 
                 if (response[1] == null)
                 {
@@ -135,8 +136,8 @@ namespace TimeMate.Controllers
                     }
                 }
 
-                account = new Account(accountDTO, _accountRepository, _sender);
-                string mailCheck = account.CheckExistingMail();
+                accountService = new AccountService(accountDTO, _accountRepository, _sender);
+                string mailCheck = accountService.CheckExistingMail();
 
                 if (mailCheck != null)
                 {
@@ -145,19 +146,20 @@ namespace TimeMate.Controllers
                 }
                 else if (mailCheck == null)
                 {
-                    account.CreateAccount();
+                    accountService.CreateAccount();
                 }
 
                 if(accountDTO.JobHourlyWage.Count != 0)
                 {
-                    agenda = new Agenda(account.AccountDTO, _agendaRepository);
+                    agendaService = new AgendaService(accountService.AccountDTO, _agendaRepository);
                     AgendaDTO workAgendaDTO = new AgendaDTO() { AgendaName = viewModel.AgendaName, AgendaColor = viewModel.AgendaColor, IsWorkAgenda = true };
+                    agendaService.AddAgenda(workAgendaDTO);
 
-                    agenda.AddAgenda(workAgendaDTO);
-                    _jobRepository.CreatePayDetails(accountDTO);
+                    jobService = new JobService(_jobRepository);
+                    jobService.AddPayDetails(accountDTO);
                 }
 
-                HttpContext.Session.SetInt32("accountID", Convert.ToInt32(account.AccountDTO.AccountID));
+                HttpContext.Session.SetInt32("accountID", Convert.ToInt32(accountService.AccountDTO.AccountID));
                 HttpContext.Session.SetString("firstName", accountDTO.FirstName);
                 return RedirectToAction("Index", "AgendaView");
             }
@@ -175,8 +177,8 @@ namespace TimeMate.Controllers
             if (sessionService.CheckSessionValue())
             {
                 accountDTO = new AccountDTO() { AccountID = HttpContext.Session.GetInt32("accountID").Value };
-                agenda = new Agenda(accountDTO, _agendaRepository);
-                List<AgendaDTO> viewModel = agenda.RetrieveAgendas();
+                agendaService = new AgendaService(accountDTO, _agendaRepository);
+                List<AgendaDTO> viewModel = agendaService.RetrieveAgendas();
                 if (viewModel.Count == 0)
                 {
                     return RedirectToAction("AddAgenda", "Agenda");
