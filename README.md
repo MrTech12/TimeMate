@@ -32,6 +32,15 @@ I demonstrate the following aspect with this project:
 In order to run the application, you need to create a *appsettings.json* in the "TimeMate" folder. The *appsettings - template.json* file gives the specific
 keys and values that are needed. Replace the hashtag symbol (**#**) with your own credentials.
 
+<br>
+
+In order for the application to save userdata, it needs the following credentials of an SQL server:
+* Server adress
+* Database name
+* Username and password of the database user.
+
+In order for the application to send registration mails, it needs a **username** and **password** of a Google account.
+
 ---
 
 ## Current Limitations (As of 6-7-2021)
