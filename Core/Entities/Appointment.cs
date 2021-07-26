@@ -13,7 +13,7 @@ namespace Core.Entities
         public int AgendaID { get; set; }
         public string AgendaName { get; set; }
 
-        public Description Description { get; set; }
+        public Description Description { get; set; } = new Description();
 
         public List<Task> TaskList { get; set; } = new List<Task>();
     }

@@ -21,28 +21,46 @@ namespace BusinessLogicLayer.Logic
 
         public List<AppointmentDTO> RetrieveAppointments()
         {
-            List<TaskDTO> taskList = new List<TaskDTO>();
             var appointments = _appointmentRepository.GetAppointments(accountDTO.AccountID);
+            return MapEntityToDTO(appointments);
+        }
 
-            // Because using an ORM is prohibited, the below code links appointments with the right task(s).
+        public List<AppointmentDTO> MapEntityToDTO(List<Appointment> appointments)
+        {
+            // Because using an ORM is prohibited for the assignment, the below code links appointments with the right task(s).
             // Without the below code, an appointment with multiple tasks would be displayed two times.
-            // The below 'for' loop stored every checklist it can find, which has a taskname, in a seperate list.
+
+            // The below 'for' loop stores every checklist it can find, which has a taskname, in a seperate 'TaskDTO' list.
+            List<TaskDTO> taskList = new List<TaskDTO>();
             for (int i = 0; i < appointments.Count; i++)
             {
-                TaskDTO taskDTO = new TaskDTO();
                 if (appointments[i].TaskList.Count > 0 && appointments[i].TaskList[0].TaskName != null)
                 {
-                    taskDTO = appointments[i].TaskList[0];
+                    TaskDTO taskDTO = new TaskDTO() { TaskID = appointments[i].TaskList[0].TaskID, AppointmentID = appointments[i].TaskList[0].AppointmentID, TaskName = appointments[i].TaskList[0].TaskName, TaskChecked = appointments[i].TaskList[0].TaskChecked };
                     taskList.Add(taskDTO);
                     appointments[i].TaskList.RemoveAt(0);
                 }
             }
-            // Sorting the retrieved appointments, so that duplicate appointments would be removed.
-            List<AppointmentDTO> sortedAppointments = appointments.OrderBy(x => x.StartDate).GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
+
+            // Filling the list of appointment DTOs with the information that is stored in the list of appointment Entities.
+            List<AppointmentDTO> appointmentDTOs = new List<AppointmentDTO>();
+            foreach (var item in appointments)
+            {
+                AppointmentDTO appointmentDTO = new AppointmentDTO() { AgendaID = item.AgendaID, AppointmentID = item.AppointmentID, AppointmentName = item.AppointmentName, AgendaName = item.AgendaName, StartDate = item.StartDate, EndDate = item.EndDate };
+
+                if (item.Description.DescriptionName != null)
+                {
+                    appointmentDTO.DescriptionDTO.Description = item.Description.DescriptionName;
+                }
+                appointmentDTOs.Add(appointmentDTO);
+            }
+
+            // Sorting the list of appointment DTOs, so that duplicate entries would be removed.
+            List<AppointmentDTO> sortedAppointmentDTOs = appointmentDTOs.OrderBy(x => x.StartDate).GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
 
             if (taskList.Count != 0)
             {
-                foreach (var item in sortedAppointments)
+                foreach (var item in sortedAppointmentDTOs)
                 {
                     for (int i = 0; i < taskList.Count; i++)
                     {
@@ -53,7 +71,7 @@ namespace BusinessLogicLayer.Logic
                     }
                 }
             }
-            return sortedAppointments;
+            return sortedAppointmentDTOs;
         }
     }
 }

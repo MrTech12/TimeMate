@@ -1,5 +1,4 @@
-﻿using Core.DTOs;
-using Core.Entities;
+﻿using Core.Entities;
 using Core.Errors;
 using Core.Repositories;
 using System;
@@ -39,9 +38,9 @@ namespace DataAccessLayer.Repositories
             return appointmentID;
         }
 
-        public List<AppointmentDTO> GetAppointments(int accountID)
+        public List<Appointment> GetAppointments(int accountID)
         {
-            List<AppointmentDTO> appointments = new List<AppointmentDTO>();
+            List<Appointment> appointments = new List<Appointment>();
             try
             {
                 using (SqlConnection sqlConnection = new SqlConnection(SQLDatabaseRepository.GetConnectionString()))
@@ -60,28 +59,28 @@ namespace DataAccessLayer.Repositories
 
                     while (dataReader.Read())
                     {
-                        AppointmentDTO appointmentModel = new AppointmentDTO();
-                        TaskDTO taskDTO = new TaskDTO();
-                        appointmentModel.AppointmentID = Convert.ToInt32(dataReader["AppointmentID"]);
-                        appointmentModel.AppointmentName = dataReader["Name"].ToString();
-                        appointmentModel.StartDate = Convert.ToDateTime(dataReader["Starting"]);
-                        appointmentModel.EndDate = Convert.ToDateTime(dataReader["Ending"]);
-                        appointmentModel.AgendaName = dataReader["AgendaName"].ToString();
-                        appointmentModel.AgendaID = Convert.ToInt32(dataReader["AgendaID"]);
+                        Appointment appointment = new Appointment();
+                        Task task = new Task();
+                        appointment.AppointmentID = Convert.ToInt32(dataReader["AppointmentID"]);
+                        appointment.AppointmentName = dataReader["Name"].ToString();
+                        appointment.StartDate = Convert.ToDateTime(dataReader["Starting"]);
+                        appointment.EndDate = Convert.ToDateTime(dataReader["Ending"]);
+                        appointment.AgendaName = dataReader["AgendaName"].ToString();
+                        appointment.AgendaID = Convert.ToInt32(dataReader["AgendaID"]);
 
                         if (dataReader["Description"] != DBNull.Value)
                         {
-                            appointmentModel.DescriptionDTO.Description = dataReader["Description"].ToString();
+                            appointment.Description.DescriptionName = dataReader["Description"].ToString();
                         }
                         else if (dataReader["TaskID"] != DBNull.Value)
                         {
-                            taskDTO.TaskID = Convert.ToInt32(dataReader["TaskID"]);
-                            taskDTO.AppointmentID = Convert.ToInt32(dataReader["AppointmentID"]);
-                            taskDTO.TaskName = dataReader["TaskName"].ToString();
-                            taskDTO.TaskChecked = Convert.ToBoolean(dataReader["TaskChecked"]);
-                            appointmentModel.TaskList.Add(taskDTO);
+                            task.TaskID = Convert.ToInt32(dataReader["TaskID"]);
+                            task.AppointmentID = Convert.ToInt32(dataReader["AppointmentID"]);
+                            task.TaskName = dataReader["TaskName"].ToString();
+                            task.TaskChecked = Convert.ToBoolean(dataReader["TaskChecked"]);
+                            appointment.TaskList.Add(task);
                         }
-                        appointments.Add(appointmentModel);
+                        appointments.Add(appointment);
                     }
                 }
             }
