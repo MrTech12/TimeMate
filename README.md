@@ -2,7 +2,7 @@
 
 ## Overview
 
-An online agenda, build with the ASP.NET Core MVC framework.
+An online agenda, build with the ASP.NET Core MVC framework. The webpage is written in **Dutch**.
 
 With this application you can perform the following:
 
@@ -29,10 +29,15 @@ I demonstrate the following aspect with this project:
 ---
 
 ## Setup
-In order to run the application, you need to create a *appsettings.json* in the "TimeMate" folder. The *appsettings - template.json* file gives the specific
-keys and values that are needed. Replace the hashtag symbol (**#**) with your own credentials.
+
+The application is build and runs on **.Net Core 3.1**.
+The latest Visual Studio version that is used for development is **16.10.4**. (**16.0.30011.22** to be more specific.)
+The application makes use of **SQL Server 2014** as it's datastore.
 
 <br>
+
+In order to run the application, there need to be a *appsettings.json* in the "TimeMate" folder. The *appsettings - template.json* file shows the specific
+keys that are needed. Replace the hashtag symbol (**#**) with your own credentials.
 
 In order for the application to save userdata, it needs the following credentials of an SQL server:
 * Server adress
@@ -40,6 +45,12 @@ In order for the application to save userdata, it needs the following credential
 * Username and password of the database user.
 
 In order for the application to send registration mails, it needs a **username** and **password** of a Google account.
+
+<br>
+
+To run the solution in Visual Studio, the "TimeMate" project needs to be selected in the **Startup Projects** dropdown. After that, the **IIS Express** debug button can be pressed. 
+
+The URL of the standard webpage is **https://localhost:44329** 
 
 ---
 

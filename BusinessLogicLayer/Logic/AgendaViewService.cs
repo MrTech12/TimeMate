@@ -22,13 +22,11 @@ namespace BusinessLogicLayer.Logic
         public List<AppointmentDTO> RetrieveAppointments()
         {
             var appointments = _appointmentRepository.GetAppointments(accountDTO.AccountID);
-            return MapEntityToDTO(appointments);
-        }
 
-        public List<AppointmentDTO> MapEntityToDTO(List<Appointment> appointments)
-        {
-            // Because using an ORM is prohibited for the assignment, the below code links appointments with the right task(s).
-            // Without the below code, an appointment with multiple tasks would be displayed two times.
+            // Because using an ORM is prohibited for the assignment, the application makes use of a custom SQL query. The query is not very robust.
+            // As a result, an appointment with multiple tasks is given back more than once by the query.
+            // The below code transfers the list of appointment entities to a list of DTOs.
+            // It also filters out duplicate appointments and makes sure that only one appointment entry exists, which contains the right task(s).
 
             // The below 'for' loop stores every checklist it can find, which has a taskname, in a seperate 'TaskDTO' list.
             List<TaskDTO> taskList = new List<TaskDTO>();
@@ -42,7 +40,7 @@ namespace BusinessLogicLayer.Logic
                 }
             }
 
-            // Filling the list of appointment DTOs with the information that is stored in the list of appointment Entities.
+            // Filling the list of "appointmentDTO" with the entries that are stored in the list of appointment Entities.
             List<AppointmentDTO> appointmentDTOs = new List<AppointmentDTO>();
             foreach (var item in appointments)
             {
@@ -55,7 +53,7 @@ namespace BusinessLogicLayer.Logic
                 appointmentDTOs.Add(appointmentDTO);
             }
 
-            // Sorting the list of appointment DTOs, so that duplicate entries would be removed.
+            // Sorting the list of "appointmentDTO", so that duplicate entries would not be present.
             List<AppointmentDTO> sortedAppointmentDTOs = appointmentDTOs.OrderBy(x => x.StartDate).GroupBy(x => x.AppointmentID).Select(g => g.First()).ToList();
 
             if (taskList.Count != 0)
